@@ -1,0 +1,270 @@
+/*
+ * © 2013-2014 Conseils en Cuisine !
+ *
+ * CeCWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
+ * Toutes les modifications et la redistribution sont autorisés pour une utilisation NON COMMERCIALE.
+ * Par ailleurs, les modifications et la reproduction doivent respecter les règles ci-dessous :
+ *    - Cette en-tête doit être maintenue.
+ *    - Vous devez redistribuer la version modifiée ou non sous licence Creative Common au moins autant
+ *      restrictive.
+ *    - ConseilsEnCuisine! ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
+ *    - Toute utilisation commerciale partielle ou complète est interdite.
+ */
+
+#include "sendautomatic.h"
+#include "ui_sendautomatic.h"
+#include <QTextStream>
+
+extern QString confDir;
+extern QStringList otherPicts;
+extern QString cmdNav; //Command to launch navigator
+extern QString addrSite; //Address of the website
+extern QString addrPub; //Address of publication (XML-RPC)
+extern QString dirTmp;
+
+
+SendAutomatic::SendAutomatic(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::SendAutomatic)
+{
+    ui->setupUi(this);
+}
+
+SendAutomatic::~SendAutomatic()
+{
+    delete ui;
+}
+
+void SendAutomatic::closeEvent(QCloseEvent *e)
+{
+    if (!isSending)
+        envoiEnCours->close();
+    e->accept();
+}
+
+void SendAutomatic::keyPressEvent(QKeyEvent *e)
+{
+    //Disable hide dialog by press escape
+    if(e->key() != Qt::Key_Escape)
+        QDialog::keyPressEvent(e);
+}
+
+void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
+                         QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu)
+{
+    isSending = false;
+    QFile idFile (confDir + ".id");
+    if (idFile.exists())
+    {
+        idFile.open(QFile::ReadOnly);
+        QTextStream idStream (&idFile);
+        idStream.setCodec("UTF-8"); //Not useful on linux system as it's a default, but Windows has its own defaults....
+        ui->user->setText(idStream.readLine());
+        ui->password->setText(idStream.readLine());
+        idFile.close();
+        ui->saveId->setChecked(true);
+    }
+    isErrorDetailsOpened = false;
+    ui->user->setFocus();
+    htmlCode = htmlCode_lu;
+    titre = titre_lu;
+    categories = categories_lu;
+    mainPicture = mainPicture_lu;
+    excerpt = excerpt_lu;
+    tags = "null";
+    if (addrSite == "http://www.conseilsencuisine.fr" && (categories.size() > 1 || categories[0] != "Base"))
+        tags = makeTags(tpsPrep, tpsCuis, tpsRep);
+    envoiEnCours = new QDialog((QWidget*)this->parent());
+    envoiEnCours->setModal(true);
+    QLabel *lab = new QLabel("<b>Envoi en cours...</b>");
+    lab->setAlignment(Qt::AlignCenter);
+    envoiEnCours->setWindowTitle("CeC Writer");
+    QHBoxLayout *layEnvoiEnCours = new QHBoxLayout();
+    layEnvoiEnCours->addWidget(lab);
+    envoiEnCours->setLayout(layEnvoiEnCours);
+    envoiEnCours->setFixedSize(300,50);
+    envoiEnCours->setModal(false);
+    envoiEnCours->show();
+    this->exec();
+}
+
+QString SendAutomatic::makeExcerpt(QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep)
+{
+    QString descExpt = "";
+    for(int i=0; i<qMin(descWords.length(),20); ++i)
+        descExpt = descExpt + " " + descWords[i];
+    QString expt = "<b>Préparation : "+tpsPrep+".";
+    if(tpsRep !="")
+        expt = expt + " Repos : "+tpsRep+".";
+    if(tpsCuis !="")
+        expt = expt + "<br/> Cuisson : "+tpsCuis+".";
+    expt = expt + "</b> <br/> " + descExpt + "...";
+    return expt;
+}
+
+QString SendAutomatic::makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<int> tpsRep)
+{
+    int tPrep = tpsPrep[0] * 60 + tpsPrep[1];
+    int tCuis = tpsCuis[0] * 60 + tpsCuis[1];
+    int tRepos = tpsRep[0] * 24 * 60 + tpsRep[1] * 60 + tpsRep[2];
+    int tTotal = tPrep + tCuis + tRepos;
+    QString tags = "tpsPrep=" + QString::number(tPrep) + ",tpsCuis="
+            + QString::number(tCuis) + ",tpsRepos="
+            + QString::number(tRepos) + ",tpsTotal="
+            + QString::number(tTotal);
+    return tags;
+}
+
+void SendAutomatic::on_annuler_clicked()
+{
+    envoiEnCours->close();
+    this->close();
+}
+
+void SendAutomatic::on_valider_clicked()
+{
+    isSending = true;
+    this->close();
+    user = ui->user->text();
+    passwd = ui->password->text();
+    publier = ui->publier->isChecked();
+    QFile idFile (confDir + ".id");
+    if (ui->saveId->isChecked())
+    {
+        idFile.open(QFile::WriteOnly);
+        QTextStream idStream (&idFile);
+        idStream.setCodec("UTF-8"); //Not useful on linux system as it's a default, but Windows has its own defaults....
+        idStream << user << "\n" << passwd << "\n" << endl;
+        idFile.close();
+    }
+    else
+    {
+        ui->user->setText("");
+        ui->password->setText("");
+    }
+    //Save htmlCode to tmpFile:
+    QFile htmlFile(dirTmp + "/htmlCode.txt");
+    if (htmlFile.exists())
+        htmlFile.remove();
+    htmlFile.open(QIODevice::WriteOnly);
+    QTextStream stream (&htmlFile);
+    stream.setCodec("UTF-8"); //Not useful on linux system as it's a default, but Windows has its own defaults....
+    stream << user << "\n" << passwd << "\n" << titre << "\n" << excerpt << "\n<htmlCode>\n" << htmlCode << endl;
+    htmlFile.close();
+    QString cats = categories.join("|");
+    QString oPicts = "null";
+    if (otherPicts.size() > 0)
+        oPicts = otherPicts.join("|");
+    QString isPublier = "false";
+    if (publier)
+        isPublier = "true";
+    QString path = QCoreApplication::applicationDirPath();
+    //Starting java program to send recipe to the website. Don't worry, the java part
+    //is very small and will take only few seconds (depending on the internet connexion
+    //only) :
+    QString Program = "java -jar \"" + path + "/SendToWordpress/SendToWordpress.jar\" \""
+            + addrPub + "\" \"" + cats + "\" \"" + tags + "\" \"" + mainPicture + "\" \"" + htmlFile.fileName()
+            + "\" \"" + oPicts + "\" \"" + isPublier + "\"";
+    QProcess *myProcess = new QProcess();
+    myProcess->setProcessChannelMode(QProcess::MergedChannels);
+    myProcess->start(Program);
+    myProcess->waitForFinished(-1); //-1 to wait until program has not finished, without any limit of time
+    //Uuuh, it's finished, keeping if java program has send successfully or not the recipe:
+    resultSend = myProcess->readAll();
+    //Delete temp file:
+    htmlFile.remove();
+    //Take it in account and continue ;) :
+    envoiEnCours->close();
+    isSending = false;
+    QStringList lines = resultSend.split("\n");
+    if (lines[0].replace("\r", "") == "!!!Send recipe SUCCEEDED!!!")
+    {
+        int rep = QMessageBox::information(this, "Envoi terminé", "Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?", QMessageBox::Yes, QMessageBox::No);
+        if (rep == QMessageBox::Yes)
+        {
+            QString Program = "\"" + cmdNav + "\" " + addrSite + "/?p=" + lines[1].replace("\r", "");
+            QProcess *myProcess = new QProcess();
+            myProcess->setProcessChannelMode(QProcess::MergedChannels);
+            myProcess->start(Program);
+        }
+    }
+    else
+    {
+        errorShow = new QDialog((QWidget*)this->parent());
+        QVBoxLayout *vlay = new QVBoxLayout();
+        mainError = new QLabel();
+        verrorShowContent = new QVBoxLayout();
+        verrorShowContent->addWidget(mainError);
+        vlay->addLayout(verrorShowContent);
+        details = new QPushButton("Détails >>");
+        details->setFixedSize(100,30);
+        connect(details, SIGNAL(clicked()), this, SLOT(errorDetails_clicked()));
+        QPushButton *ok = new QPushButton("Ok");
+        ok->setFixedSize(100,30);
+        connect(ok, SIGNAL(clicked()), this, SLOT(errorOk_clicked()));
+        QSpacerItem *hspacer = new QSpacerItem(10, 30, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        QHBoxLayout *butLay = new QHBoxLayout();
+        butLay->addWidget(details);
+        butLay->addSpacerItem(hspacer);
+        butLay->addWidget(ok);
+        QSpacerItem *vspacer = new QSpacerItem(10,20, QSizePolicy::Expanding, QSizePolicy::Fixed);
+        vlay->addSpacerItem(vspacer);
+        vlay->addLayout(butLay);
+        errorShow->setLayout(vlay);
+        ok->setFocus();
+        if (lines[0].replace("\r", "") == "ERROR : send recipe failed.")
+        {
+            if (lines[3].replace("\r", "") == "redstone.xmlrpc.XmlRpcFault: Identifiant ou mot de passe incorrect.")
+            {
+                mainError->setText("L'envoi a échoué : identifiant ou mot de passe incorrect !");
+            }
+            else if (lines[3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: A network error occurred.")
+            {
+                mainError->setText("L'envoi a échoué : impossible de se connecter au site web. Vérifiez votre connexion internet.");
+            }
+            else if (lines[3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: The response could not be parsed.")
+            {
+                mainError->setText("L'envoi a échoué : l'adresse de publication est-elle correcte ?");
+            }
+            else
+            {
+                mainError->setText("L'envoi a échoué. Cliquez sur Détails pour en savoir plus.");
+            }
+            errorShow->setWindowTitle("L'envoi a échoué");
+            errorSize = errorShow->size();
+            errorShow->exec();
+        }
+        else
+        {
+            mainError->setText("L'envoi a échoué pour une raison inconnue. Cliquez sur Détails pour en savoir plus.");
+            errorShow->setWindowTitle("L'envoi a échoué");
+            errorSize = errorShow->size();
+            errorShow->exec();
+        }
+    }
+}
+
+void SendAutomatic::errorDetails_clicked()
+{
+    if (!isErrorDetailsOpened)
+    {
+        showError = new QPlainTextEdit(resultSend);
+        showError->setReadOnly(true);
+        showError->setMinimumSize(600,200);
+        verrorShowContent->addWidget(showError);
+        isErrorDetailsOpened = true;
+        details->setText("<< Détails");
+    }
+    else
+    {
+        delete showError;
+        errorShow->setMaximumSize(errorSize);
+        isErrorDetailsOpened = false;
+        details->setText("Détails >>");
+    }
+}
+
+void SendAutomatic::errorOk_clicked()
+{
+    errorShow->close();
+}
