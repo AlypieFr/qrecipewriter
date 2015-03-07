@@ -1,4 +1,5 @@
 #!/bin/bash
+#Install program on the system
 
 echo "Copying files..."
 
