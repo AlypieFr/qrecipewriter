@@ -70,6 +70,7 @@ public:
     static QString makeExcerpt(QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep);
     static bool copyRecursively(const QString &srcFilePath, const QString &tgtFilePath);
     static bool removeDir(const QString &dirName);
+    static QString setPrintTags(QString text);
 };
 
 #endif // FUNCTIONS_H

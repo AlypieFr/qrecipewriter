@@ -37,11 +37,13 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QFontDatabase>
+#include <QInputDialog>
 #include <QKeyEvent>
 #include <QHBoxLayout>
 #include <QList>
 #include <QListView>
 #include <QMap>
+#include <qmath.h>
 #include <QMessageBox>
 #include <QPainter>
 #include <QPixmap>
@@ -163,6 +165,16 @@ private slots:
 
     void on_actionRechercher_une_mise_jour_triggered();
 
+    void on_noPrint_clicked();
+
+    void on_printOnly_clicked();
+
+    void on_minPrep_editingFinished();
+
+    void on_minCuis_editingFinished();
+
+    void on_minRep_editingFinished();
+
 public slots:
     void init();
     void config();
@@ -195,6 +207,7 @@ private:
     QString balise; //Stores the tag that will be deleted
     QStringList balises; //Stores tags that will be deleted
     int resetPosCaret; //Stores position of the cursot at which we must set cursor after deleting tags
+    int roundValueToFive(double value);
 
 private:
     void closeEvent (QCloseEvent *event);

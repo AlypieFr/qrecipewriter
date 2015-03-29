@@ -357,6 +357,9 @@ left: 10px; padding: 0 3px;}</string>
                <property name="maximum">
                 <number>59</number>
                </property>
+               <property name="singleStep">
+                <number>5</number>
+               </property>
               </widget>
               <widget class="QSpinBox" name="minCuis">
                <property name="geometry">
@@ -369,6 +372,9 @@ left: 10px; padding: 0 3px;}</string>
                </property>
                <property name="maximum">
                 <number>59</number>
+               </property>
+               <property name="singleStep">
+                <number>5</number>
                </property>
               </widget>
               <widget class="QLabel" name="label_8">
@@ -431,6 +437,9 @@ left: 10px; padding: 0 3px;}</string>
                </property>
                <property name="maximum">
                 <number>59</number>
+               </property>
+               <property name="singleStep">
+                <number>5</number>
                </property>
               </widget>
               <widget class="QLabel" name="label_10">
@@ -749,13 +758,13 @@ left: 10px; padding: 0 3px;}s</string>
            <widget class="QGroupBox" name="groupBox_4">
             <property name="minimumSize">
              <size>
-              <width>471</width>
+              <width>651</width>
               <height>31</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>471</width>
+              <width>651</width>
               <height>31</height>
              </size>
             </property>
@@ -795,7 +804,7 @@ left: 10px; padding: 0 3px;}</string>
             <widget class="QPushButton" name="italicButton">
              <property name="geometry">
               <rect>
-               <x>60</x>
+               <x>50</x>
                <y>0</y>
                <width>41</width>
                <height>31</height>
@@ -817,7 +826,7 @@ left: 10px; padding: 0 3px;}</string>
             <widget class="QPushButton" name="soulignButton">
              <property name="geometry">
               <rect>
-               <x>110</x>
+               <x>90</x>
                <y>0</y>
                <width>41</width>
                <height>31</height>
@@ -840,7 +849,7 @@ left: 10px; padding: 0 3px;}</string>
             <widget class="QPushButton" name="commButton">
              <property name="geometry">
               <rect>
-               <x>160</x>
+               <x>140</x>
                <y>0</y>
                <width>41</width>
                <height>31</height>
@@ -872,7 +881,7 @@ left: 10px; padding: 0 3px;}</string>
             <widget class="QPushButton" name="lienButton">
              <property name="geometry">
               <rect>
-               <x>210</x>
+               <x>190</x>
                <y>0</y>
                <width>81</width>
                <height>31</height>
@@ -904,7 +913,7 @@ left: 10px; padding: 0 3px;}</string>
             <widget class="QPushButton" name="imgButton">
              <property name="geometry">
               <rect>
-               <x>300</x>
+               <x>280</x>
                <y>0</y>
                <width>81</width>
                <height>31</height>
@@ -936,7 +945,7 @@ left: 10px; padding: 0 3px;}</string>
             <widget class="QPushButton" name="abcButton">
              <property name="geometry">
               <rect>
-               <x>390</x>
+               <x>370</x>
                <y>0</y>
                <width>71</width>
                <height>31</height>
@@ -963,6 +972,40 @@ left: 10px; padding: 0 3px;}</string>
                <width>50</width>
                <height>20</height>
               </size>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="noPrint">
+             <property name="geometry">
+              <rect>
+               <x>450</x>
+               <y>0</y>
+               <width>88</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>NoPrint</string>
+             </property>
+             <property name="icon">
+              <iconset resource="Ressources.qrc">
+               <normaloff>:/images/noprint.png</normaloff>:/images/noprint.png</iconset>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="printOnly">
+             <property name="geometry">
+              <rect>
+               <x>540</x>
+               <y>0</y>
+               <width>101</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>PrintOnly</string>
+             </property>
+             <property name="icon">
+              <iconset resource="Ressources.qrc">
+               <normaloff>:/images/print.png</normaloff>:/images/print.png</iconset>
              </property>
             </widget>
            </widget>
@@ -1002,7 +1045,7 @@ left: 10px; padding: 0 3px;}</string>
              <x>0</x>
              <y>0</y>
              <width>673</width>
-             <height>641</height>
+             <height>638</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1235,7 +1278,7 @@ left: 10px; padding: 0 3px;}</string>
                           <property name="maximumSize">
                            <size>
                             <width>16777215</width>
-                            <height>23</height>
+                            <height>30</height>
                            </size>
                           </property>
                           <property name="styleSheet">
@@ -1334,7 +1377,7 @@ left: 10px; padding: 0 3px;}</string>
                           <property name="maximumSize">
                            <size>
                             <width>16777215</width>
-                            <height>23</height>
+                            <height>30</height>
                            </size>
                           </property>
                          </widget>
@@ -1788,7 +1831,7 @@ left: 10px; padding: 0 3px;}</string>
      <x>0</x>
      <y>0</y>
      <width>1149</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOutils">

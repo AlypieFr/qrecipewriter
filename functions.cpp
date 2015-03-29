@@ -632,13 +632,19 @@ QString Functions::insertLinks(QString data)
  */
 QString Functions::insertPictures(QString data)
 {
-    QRegExp exp ("\\[IMG:.+\\]");
+    QRegExp exp ("\\[IMG:(\\w+):([^\\]]+)\\]");
     while (data.contains(exp))
     {
-        QString img = exp.cap();
-        data.replace(img, "<img src=\"" + dirDistPict + img.mid(5, img.length() - 6).split("/").last() + "\" alt=\"Image d'illustration\" /><br/>");
-        if (!otherPicts.contains(img.mid(5, img.length() - 6)))
-            otherPicts.append(img.mid(5, img.length() - 6));
+        QString imgBal = exp.cap(0);
+        QString className = exp.cap(1);
+        QString img = exp.cap(2);
+        QString classDef = "";
+        if (className != "all") {
+            classDef = " class=\"" + className + "\"";
+        }
+        data.replace(imgBal, "<img src=\"" + dirDistPict + img.split("/").last() + "\" alt=\"Image d'illustration\"" + classDef + " /><br/>");
+        if (!otherPicts.contains(img))
+            otherPicts.append(img);
     }
     return data;
 }
@@ -680,6 +686,20 @@ QStringList Functions::makeTimes(int hPrep, int minPrep, int hCuis, int minCuis,
     QStringList res;
     res << tpsPrep << tpsCuis << tpsRep;
     return res;
+}
+
+/**
+ * @brief Replace user tags NP and OP with html span tags
+ * @param text with user tags
+ * @return text with html span tags
+ */
+QString Functions::setPrintTags(QString text)
+{
+    text = text.replace("<np>", "<span class=\"noprint\">");
+    text = text.replace("<po>", "<span class=\"printonly\">");
+    text = text.replace("</np>", "</span>");
+    text = text.replace("</po>", "</span>");
+    return text;
 }
 
 /**
@@ -764,6 +784,8 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
     }
     //Replace oe by "e dans l'o", because we speak French :
     htmlCode = htmlCode.replace("oe", "&oelig;");
+
+    htmlCode = setPrintTags(htmlCode);
 
     return htmlCode;
 }
