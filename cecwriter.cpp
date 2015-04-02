@@ -45,6 +45,7 @@ extern QString editPict;
 extern QString corrOrtho;
 extern QString correction;
 extern bool cancel;
+extern bool cecPrinter;
 
 extern QString VERSION;
 extern QString QTVERSION;
@@ -188,6 +189,7 @@ void CeCWriter::init()
     ui->commButton->setFocusPolicy(Qt::NoFocus);
     ui->lienButton->setFocusPolicy(Qt::NoFocus);
     ui->imgButton->setFocusPolicy(Qt::NoFocus);
+    ui->movie->setFocusPolicy(Qt::NoFocus);
     ui->abcButton->setFocusPolicy(Qt::NoFocus);
     ui->ingrListMoins->setFocusPolicy(Qt::NoFocus);
     ui->ingrListPlus->setFocusPolicy(Qt::NoFocus);
@@ -250,9 +252,9 @@ void CeCWriter::init()
     QColor colorBut = ui->abcButton->palette().color(QPalette::Background);
     if ((colorBut.red() + colorBut.green() + colorBut.blue()) / 3 < 127.5)
     {
-        ui->lienButton->setIcon(QPixmap(":/images/lien_button_blanc.png"));
-        ui->imgButton->setIcon(QPixmap(":/images/img_blanc.png"));
-        ui->abcButton->setIcon(QPixmap(":/images/abc_blanc.png"));
+        //ui->lienButton->setIcon(QPixmap(":/images/lien_button_blanc.png"));
+        //ui->imgButton->setIcon(QPixmap(":/images/img_blanc.png"));
+        //ui->abcButton->setIcon(QPixmap(":/images/abc_blanc.png"));
     }
     //Set categories:
     ui->scrollCats->setFrameShape(QFrame::NoFrame); //Remove border
@@ -338,6 +340,10 @@ void CeCWriter::init()
     ui->scrollCats->setWidget(wid);
     //Load config:
     Functions::loadConfig();
+    if (!cecPrinter) {
+        ui->noPrint->setToolTip("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+        ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+    }
     //Test if dictrionary path is given:
     if (corrOrtho == "")
     {
@@ -576,6 +582,14 @@ void CeCWriter::on_actionOptions_triggered()
     {
         ui->abcButton->setEnabled(true);
         ui->actionCorrection_orthographique->setEnabled(true);
+    }
+    if (!cecPrinter) {
+        ui->noPrint->setToolTip("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+        ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+    }
+    else {
+        ui->noPrint->setToolTip("Ne pas imprimer une partie de texte");
+        ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher");
     }
 }
 
@@ -1002,54 +1016,184 @@ void CeCWriter::on_lienButton_clicked()
 void CeCWriter::on_imgButton_clicked()
 {
     QString cible = "";
+    QString afficher = "all";
+    int largeur = -1;
+    int hauteur = -1;
+    QString fileName = "";
+    QRegExp exp ("^\\[IMG:(\\w+):(\\d+):(\\d+):([^\\]]+)\\]$");
     if (ui->editPrep->hasFocus())
     {
         cible = "editPrep";
+        QString selection = ui->editPrep->textCursor().selectedText();
+        if (selection.contains(exp))
+        {
+            afficher = exp.cap(1);
+            largeur = exp.cap(2).toInt();
+            hauteur = exp.cap(3).toInt();
+            fileName = exp.cap(4);
+        }
     }
     else if (ui->editCons->hasFocus())
     {
         cible = "editCons";
+        QString selection = ui->editCons->textCursor().selectedText();
+        if (selection.contains(exp))
+        {
+            afficher = exp.cap(1);
+            largeur = exp.cap(2).toInt();
+            hauteur = exp.cap(3).toInt();
+            fileName = exp.cap(4);
+        }
     }
     if (cible != "")
     {
-        QString fileName = QFileDialog::getOpenFileName(this, "Choisir une image",
-        dirPict,
-        "Images : *.jpg, *.JPG (*.jpg *.JPG)");
+        if (fileName == "") {
+            fileName = QFileDialog::getOpenFileName(this, "Choisir une image",
+            dirPict,
+            "Images : *.jpg, *.JPG (*.jpg *.JPG)");
+        }
         if (fileName != "")
         {
-            //QStringList printOpts;
-            //printOpts << "Afficher et imprimer" << "Afficher seulement" << "Imprimer seulement";
-            QHash<QString, QString> printOpts;
-            printOpts["Afficher et imprimer"] = "all";
-            printOpts["Afficher seulement"] = "noprint";
-            printOpts["Imprimer seulement"] = "printonly";
-            QStringList values = printOpts.keys();
-            values.sort();
-            bool ok;
-            QString print = QInputDialog::getItem(this, "Affichage de l'image", "Sélectionner:                                                 ", values, 0, false, &ok);
+            InsertPicture* insertPicture = new InsertPicture(this);
+            insertPicture->init(fileName, afficher, largeur, hauteur, fileName);
+            insertPicture->exec();
+            bool ok = insertPicture->ok;
+            QString largeur = insertPicture->largeur;
+            QString hauteur = insertPicture->hauteur;
+            QString print = insertPicture->print;
+            fileName = insertPicture->filename;
+            delete insertPicture;
+            insertPicture = NULL;
+            QString balise = "[IMG:" + print + ":" + largeur + ":" + hauteur + ":" + fileName + "]";
             if (ok) {
                 if (cible == "editPrep")
                 {
-                    QString initial = ui->editPrep->toPlainText();
                     int cursPos = ui->editPrep->textCursor().position();
-                    ui->editPrep->setPlainText(initial.left(cursPos) + "[IMG:" + printOpts[print] + ":" + fileName
-                                               + "]" + initial.right(initial.length() - cursPos));
+                    int selLen = ui->editPrep->textCursor().selectedText().length();
+                    if (selLen > 0) {
+                        cursPos = ui->editPrep->textCursor().selectionStart();
+                        ui->editPrep->textCursor().removeSelectedText();
+                    }
+                    QString initial = ui->editPrep->toPlainText();
+                    ui->editPrep->setPlainText(initial.left(cursPos) + balise + initial.right(initial.length() - cursPos));
                     QTextCursor cursor = ui->editPrep->textCursor();
-                    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + 5 + fileName.length() + print.length() + 1);
+                    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + balise.length());
                     ui->editPrep->setTextCursor(cursor);
                 }
                 else if (cible == "editCons")
                 {
-                    QString initial = ui->editCons->toPlainText();
                     int cursPos = ui->editCons->textCursor().position();
-                    ui->editCons->setPlainText(initial.left(cursPos) + "[IMG:" + printOpts[print] + ":" + fileName
-                                               + "]" + initial.right(initial.length() - cursPos));
+                    int selLen = ui->editCons->textCursor().selectedText().length();
+                    if (selLen > 0) {
+                        cursPos = ui->editCons->textCursor().selectionStart();
+                        ui->editCons->textCursor().removeSelectedText();
+                    }
+                    QString initial = ui->editCons->toPlainText();
+                    ui->editCons->setPlainText(initial.left(cursPos) + balise + initial.right(initial.length() - cursPos));
                     QTextCursor cursor = ui->editCons->textCursor();
-                    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + 5 + fileName.length() + print.length() + 1);
+                    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + balise.length());
                     ui->editCons->setTextCursor(cursor);
                 }
             }
         }
+    }
+}
+
+/**
+ * @brief CeCWriter::on_movie_clicked
+ */
+void CeCWriter::on_movie_clicked()
+{
+    QString cible = "";
+    //Default values :
+    int largeur = 640;
+    int hauteur = 480;
+    int startTime = 0;
+    int bordure = 0;
+    bool fullscreen = true;
+    bool suggestions = true;
+    bool commandes = true;
+    bool titreVideo = true;
+    bool confidentialite = false;
+    QString idVideo = "";
+    QRegExp exp ("^\\[VIDEO:(\\d+):(\\d+):(\\d+):(\\d+):([01]+):([01]+):([01]+):([01]+):([01]+):([\\w-]+)\\]$");
+    if (ui->editPrep->hasFocus())
+    {
+        QString selection = ui->editPrep->textCursor().selectedText();
+        if (selection.contains(exp))
+        {
+            largeur = exp.cap(1).toInt();
+            hauteur = exp.cap(2).toInt();
+            startTime = exp.cap(3).toInt();
+            bordure = exp.cap(4).toInt();
+            fullscreen = (exp.cap(5) == "1" ? true : false);
+            suggestions = (exp.cap(6) == "1" ? true : false);
+            commandes = (exp.cap(7) == "1" ? true : false);
+            titreVideo = (exp.cap(8) == "1" ? true : false);
+            confidentialite = (exp.cap(9) == "1" ? true : false);
+            idVideo = exp.cap(10);
+        }
+        cible = "editPrep";
+    }
+    else if (ui->editCons->hasFocus())
+    {
+        QString selection = ui->editCons->textCursor().selectedText();
+        if (selection.contains(exp))
+        {
+            largeur = exp.cap(1).toInt();
+            hauteur = exp.cap(2).toInt();
+            startTime = exp.cap(3).toInt();
+            bordure = exp.cap(4).toInt();
+            fullscreen = (exp.cap(5) == "1" ? true : false);
+            suggestions = (exp.cap(6) == "1" ? true : false);
+            commandes = (exp.cap(7) == "1" ? true : false);
+            titreVideo = (exp.cap(8) == "1" ? true : false);
+            confidentialite = (exp.cap(9) == "1" ? true : false);
+            idVideo = exp.cap(10);
+        }
+        cible = "editCons";
+    }
+    if (cible != "")
+    {
+        InsertVideo* insertVideo = new InsertVideo(this);
+        insertVideo->init(largeur, hauteur, startTime, bordure, fullscreen, suggestions, commandes, titreVideo, confidentialite, idVideo);
+        insertVideo->exec();
+        if (insertVideo->ok) {
+            QString balise = "[VIDEO:" + QString::number(insertVideo->largeur) + ':' + QString::number(insertVideo->hauteur) + ':' + QString::number(insertVideo->startTime) + ':' + QString::number(insertVideo->bordure) + ':'
+                    + QString::number(insertVideo->fullscreen) + ':' + QString::number(insertVideo->suggestions) + ':' + QString::number(insertVideo->commandes)
+                    + ':' + QString::number(insertVideo->titreVideo) + ':' + QString::number(insertVideo->confidentialite) + ':' + insertVideo->idVideo + ']';
+            if (cible == "editPrep")
+            {
+                int cursPos = ui->editPrep->textCursor().position();
+                int selLen = ui->editPrep->textCursor().selectedText().length();
+                if (selLen > 0) {
+                    cursPos = ui->editPrep->textCursor().selectionStart();
+                    ui->editPrep->textCursor().removeSelectedText();
+                }
+                ui->editPrep->textCursor().removeSelectedText();
+                QString initial = ui->editPrep->toPlainText();
+                ui->editPrep->setPlainText(initial.left(cursPos) + balise + initial.right(initial.length() - cursPos));
+                QTextCursor cursor = ui->editPrep->textCursor();
+                cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + balise.length());
+                ui->editPrep->setTextCursor(cursor);
+            }
+            else if (cible == "editCons")
+            {
+                int cursPos = ui->editCons->textCursor().position();
+                int selLen = ui->editCons->textCursor().selectedText().length();
+                if (selLen > 0) {
+                    cursPos = ui->editCons->textCursor().selectionStart();
+                    ui->editCons->textCursor().removeSelectedText();
+                }
+                QString initial = ui->editCons->toPlainText();
+                ui->editCons->setPlainText(initial.left(cursPos) + balise + initial.right(initial.length() - cursPos));
+                QTextCursor cursor = ui->editCons->textCursor();
+                cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + balise.length());
+                ui->editCons->setTextCursor(cursor);
+            }
+        }
+        delete insertVideo;
+        insertVideo = NULL;
     }
 }
 
@@ -1987,13 +2131,36 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
         }
     }
     //Focus comm:
-    if ((object == ui->editIngr || object == ui->editMat || object == ui->editPrep || object == ui->editCons) && event->type() == QEvent::FocusOut)
+    if ((object == ui->description || object == ui->editIngr || object == ui->editMat || object == ui->editPrep || object == ui->editCons) && event->type() == QEvent::FocusOut)
     {
-        ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+        ui->grasButton->setEnabled(false);
+        ui->italicButton->setEnabled(false);
+        ui->soulignButton->setEnabled(false);
+        ui->noPrint->setEnabled(false);
+        ui->printOnly->setEnabled(false);
+        if (object != ui->description) {
+            ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+            ui->commButton->setEnabled(false);
+        }
+        if (object == ui->editPrep || object == ui->editCons || object == ui->description) {
+            ui->lienButton->setDisabled(true);
+            if (object != ui->description) {
+                ui->imgButton->setEnabled(false);
+                ui->movie->setEnabled(false);
+            }
+        }
         return false;
     }
     else if (object == ui->editIngr && event->type() == QEvent::FocusIn)
     {
+        ui->commButton->setEnabled(true);
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
         if (ingrComm)
             ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
         else
@@ -2002,6 +2169,14 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
     }
     else if (object == ui->editMat && event->type() == QEvent::FocusIn)
     {
+        ui->commButton->setEnabled(true);
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
         if (matComm)
             ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
         else
@@ -2010,6 +2185,19 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
     }
     else if (object == ui->editPrep && event->type() == QEvent::FocusIn)
     {
+        ui->commButton->setEnabled(true);
+        ui->imgButton->setEnabled(true);
+        ui->movie->setEnabled(true);
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
+        if (ui->editPrep->textCursor().selectedText().length() > 0) {
+            ui->lienButton->setEnabled(true);
+        }
         if (prepComm)
             ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
         else
@@ -2018,10 +2206,36 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
     }
     else if (object == ui->editCons && event->type() == QEvent::FocusIn)
     {
+        ui->commButton->setEnabled(true);
+        ui->imgButton->setEnabled(true);
+        ui->movie->setEnabled(true);
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
+        if (ui->editCons->textCursor().selectedText().length() > 0) {
+            ui->lienButton->setEnabled(true);
+        }
         if (consComm)
             ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
         else
             ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+        return false;
+    }
+    else if (object == ui->description && event->type() == QEvent::FocusIn) {
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
+        if (ui->description->textCursor().selectedText().length() > 0) {
+            ui->lienButton->setEnabled(true);
+        }
         return false;
     }
     //Ingredients:
@@ -4143,4 +4357,58 @@ void CeCWriter::deleteBalsInPlainTextEdit(QPlainTextEdit* areaTxt)
     cursor.setPosition(resetPosCaret);
     areaTxt->setTextCursor(cursor);
     balises.clear();
+}
+
+/***
+ * On selection changed : (des)activating lien button
+ ***/
+
+void CeCWriter::on_editIngr_selectionChanged()
+{
+    if (ui->editIngr->selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
+}
+
+void CeCWriter::on_editMat_selectionChanged()
+{
+    if (ui->editMat->selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
+}
+
+void CeCWriter::on_editPrep_selectionChanged()
+{
+    if (ui->editPrep->textCursor().selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
+}
+
+void CeCWriter::on_editCons_selectionChanged()
+{
+    if (ui->editCons->textCursor().selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
+}
+
+void CeCWriter::on_description_selectionChanged()
+{
+    if (ui->description->textCursor().selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
 }

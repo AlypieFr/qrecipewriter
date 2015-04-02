@@ -23,6 +23,8 @@
 #include "sendautomatic.h"
 #include "spellcheckdialog.h"
 #include "spellchecker.h"
+#include "insertvideo.h"
+#include "insertpicture.h"
 #include "filedownloader.h"
 
 #include <QMainWindow>
@@ -174,6 +176,18 @@ private slots:
     void on_minCuis_editingFinished();
 
     void on_minRep_editingFinished();
+
+    void on_movie_clicked();
+
+    void on_editIngr_selectionChanged();
+
+    void on_editMat_selectionChanged();
+
+    void on_editPrep_selectionChanged();
+
+    void on_editCons_selectionChanged();
+
+    void on_description_selectionChanged();
 
 public slots:
     void init();

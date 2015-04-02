@@ -758,13 +758,13 @@ left: 10px; padding: 0 3px;}s</string>
            <widget class="QGroupBox" name="groupBox_4">
             <property name="minimumSize">
              <size>
-              <width>651</width>
+              <width>661</width>
               <height>31</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>651</width>
+              <width>661</width>
               <height>31</height>
              </size>
             </property>
@@ -778,9 +778,12 @@ left: 10px; padding: 0 3px;}</string>
              <string/>
             </property>
             <widget class="QPushButton" name="grasButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="geometry">
               <rect>
-               <x>10</x>
+               <x>11</x>
                <y>0</y>
                <width>41</width>
                <height>31</height>
@@ -794,6 +797,9 @@ left: 10px; padding: 0 3px;}</string>
                <kerning>true</kerning>
               </font>
              </property>
+             <property name="toolTip">
+              <string>Gras</string>
+             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -802,9 +808,12 @@ left: 10px; padding: 0 3px;}</string>
              </property>
             </widget>
             <widget class="QPushButton" name="italicButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="geometry">
               <rect>
-               <x>50</x>
+               <x>51</x>
                <y>0</y>
                <width>41</width>
                <height>31</height>
@@ -816,6 +825,9 @@ left: 10px; padding: 0 3px;}</string>
                <italic>true</italic>
               </font>
              </property>
+             <property name="toolTip">
+              <string>Italique</string>
+             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -824,9 +836,12 @@ left: 10px; padding: 0 3px;}</string>
              </property>
             </widget>
             <widget class="QPushButton" name="soulignButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="geometry">
               <rect>
-               <x>90</x>
+               <x>91</x>
                <y>0</y>
                <width>41</width>
                <height>31</height>
@@ -839,6 +854,9 @@ left: 10px; padding: 0 3px;}</string>
                <underline>true</underline>
               </font>
              </property>
+             <property name="toolTip">
+              <string>Souligné</string>
+             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -847,9 +865,12 @@ left: 10px; padding: 0 3px;}</string>
              </property>
             </widget>
             <widget class="QPushButton" name="commButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="geometry">
               <rect>
-               <x>140</x>
+               <x>141</x>
                <y>0</y>
                <width>41</width>
                <height>31</height>
@@ -860,6 +881,9 @@ left: 10px; padding: 0 3px;}</string>
                <italic>false</italic>
                <underline>true</underline>
               </font>
+             </property>
+             <property name="toolTip">
+              <string>Commentaire (ligne sans puce), dans une liste à pice</string>
              </property>
              <property name="styleSheet">
               <string notr="true"/>
@@ -879,11 +903,14 @@ left: 10px; padding: 0 3px;}</string>
              </property>
             </widget>
             <widget class="QPushButton" name="lienButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="geometry">
               <rect>
-               <x>190</x>
+               <x>191</x>
                <y>0</y>
-               <width>81</width>
+               <width>75</width>
                <height>31</height>
               </rect>
              </property>
@@ -893,11 +920,14 @@ left: 10px; padding: 0 3px;}</string>
                <underline>true</underline>
               </font>
              </property>
+             <property name="toolTip">
+              <string>Insérer un lien à partir de la sélection</string>
+             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
              <property name="text">
-              <string/>
+              <string>Lien</string>
              </property>
              <property name="icon">
               <iconset resource="Ressources.qrc">
@@ -911,11 +941,14 @@ left: 10px; padding: 0 3px;}</string>
              </property>
             </widget>
             <widget class="QPushButton" name="imgButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="geometry">
               <rect>
-               <x>280</x>
+               <x>266</x>
                <y>0</y>
-               <width>81</width>
+               <width>70</width>
                <height>31</height>
               </rect>
              </property>
@@ -925,11 +958,14 @@ left: 10px; padding: 0 3px;}</string>
                <underline>true</underline>
               </font>
              </property>
+             <property name="toolTip">
+              <string>Insérer une image</string>
+             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
              <property name="text">
-              <string/>
+              <string>IMG</string>
              </property>
              <property name="icon">
               <iconset resource="Ressources.qrc">
@@ -945,7 +981,7 @@ left: 10px; padding: 0 3px;}</string>
             <widget class="QPushButton" name="abcButton">
              <property name="geometry">
               <rect>
-               <x>370</x>
+               <x>380</x>
                <y>0</y>
                <width>71</width>
                <height>31</height>
@@ -957,11 +993,14 @@ left: 10px; padding: 0 3px;}</string>
                <underline>true</underline>
               </font>
              </property>
+             <property name="toolTip">
+              <string>Correction orthographique</string>
+             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
              <property name="text">
-              <string/>
+              <string extracomment="Correction orthographique">ABC</string>
              </property>
              <property name="icon">
               <iconset resource="Ressources.qrc">
@@ -975,13 +1014,19 @@ left: 10px; padding: 0 3px;}</string>
              </property>
             </widget>
             <widget class="QPushButton" name="noPrint">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="geometry">
               <rect>
-               <x>450</x>
+               <x>460</x>
                <y>0</y>
                <width>88</width>
                <height>31</height>
               </rect>
+             </property>
+             <property name="toolTip">
+              <string>Ne pas imprimer une partie de texte</string>
              </property>
              <property name="text">
               <string>NoPrint</string>
@@ -992,13 +1037,19 @@ left: 10px; padding: 0 3px;}</string>
              </property>
             </widget>
             <widget class="QPushButton" name="printOnly">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="geometry">
               <rect>
-               <x>540</x>
+               <x>548</x>
                <y>0</y>
                <width>101</width>
                <height>31</height>
               </rect>
+             </property>
+             <property name="toolTip">
+              <string>Imprimer une partie de texte mais ne pas l'afficher</string>
              </property>
              <property name="text">
               <string>PrintOnly</string>
@@ -1006,6 +1057,44 @@ left: 10px; padding: 0 3px;}</string>
              <property name="icon">
               <iconset resource="Ressources.qrc">
                <normaloff>:/images/print.png</normaloff>:/images/print.png</iconset>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="movie">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="geometry">
+              <rect>
+               <x>336</x>
+               <y>0</y>
+               <width>35</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <italic>false</italic>
+               <underline>true</underline>
+              </font>
+             </property>
+             <property name="toolTip">
+              <string>Insérer une vidéo</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="Ressources.qrc">
+               <normaloff>:/images/movie.png</normaloff>:/images/movie.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>60</width>
+               <height>20</height>
+              </size>
              </property>
             </widget>
            </widget>

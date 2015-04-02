@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     sendautomatic.cpp  \
     spellcheckdialog.cpp \
     spellchecker.cpp \
-    filedownloader.cpp
+    filedownloader.cpp \
+    insertvideo.cpp \
+    insertpicture.cpp
 
 HEADERS  += cecwriter.h \
     options.h \
@@ -41,7 +43,9 @@ HEADERS  += cecwriter.h \
     sendautomatic.h \
     spellcheckdialog.h \
     spellchecker.h \
-    filedownloader.h
+    filedownloader.h \
+    insertvideo.h \
+    insertpicture.h
 
 FORMS    += cecwriter.ui \
     options.ui \
@@ -49,7 +53,9 @@ FORMS    += cecwriter.ui \
     apropos.ui \
     sendmanual.ui \
     sendautomatic.ui \
-    spellcheckdialog.ui
+    spellcheckdialog.ui \
+    insertvideo.ui \
+    insertpicture.ui
 
 RESOURCES += \
     Ressources.qrc
