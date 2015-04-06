@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     spellchecker.cpp \
     filedownloader.cpp \
     insertvideo.cpp \
-    insertpicture.cpp
+    insertpicture.cpp \
+    qinputmultiline.cpp
 
 HEADERS  += cecwriter.h \
     options.h \
@@ -45,7 +46,8 @@ HEADERS  += cecwriter.h \
     spellchecker.h \
     filedownloader.h \
     insertvideo.h \
-    insertpicture.h
+    insertpicture.h \
+    qinputmultiline.h
 
 FORMS    += cecwriter.ui \
     options.ui \
@@ -55,7 +57,8 @@ FORMS    += cecwriter.ui \
     sendautomatic.ui \
     spellcheckdialog.ui \
     insertvideo.ui \
-    insertpicture.ui
+    insertpicture.ui \
+    qinputmultiline.ui
 
 RESOURCES += \
     Ressources.qrc

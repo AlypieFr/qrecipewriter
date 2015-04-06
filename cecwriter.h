@@ -26,6 +26,7 @@
 #include "insertvideo.h"
 #include "insertpicture.h"
 #include "filedownloader.h"
+#include "qinputmultiline.h"
 
 #include <QMainWindow>
 
@@ -189,6 +190,14 @@ private slots:
 
     void on_description_selectionChanged();
 
+    void on_editIngr_customContextMenuRequested(const QPoint &pos);
+
+    void on_editMat_customContextMenuRequested(const QPoint &pos);
+
+    void on_editPrep_customContextMenuRequested(const QPoint &pos);
+
+    void on_editCons_customContextMenuRequested(const QPoint &pos);
+
 public slots:
     void init();
     void config();
@@ -262,6 +271,10 @@ private:
     void deleteBalsInLineEdit(QLineEdit* areaTxt);
     void deleteBalsInPlainTextEdit(QPlainTextEdit* areaTxt);
     void updatePrepItems();
+    void insertIngredient(QString text);
+    void insertMateriel(QString text);
+    void insertPreparation(QString text);
+    void insertConseil(QString text);
 };
 
 #endif // CECWRITER_H
