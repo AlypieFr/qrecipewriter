@@ -229,7 +229,7 @@ left: 10px; padding: 0 3px;}</string>
                </rect>
               </property>
               <property name="styleSheet">
-               <string notr="true">QPushButton { text-align: left; }</string>
+               <string notr="true">QPushButton { text-align: left; padding-left:6px}</string>
               </property>
               <property name="text">
                <string>Sélectionner une image...</string>

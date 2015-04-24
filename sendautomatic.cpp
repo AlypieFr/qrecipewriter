@@ -64,15 +64,19 @@ void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList cate
         idFile.close();
         ui->saveId->setChecked(true);
     }
+    QString categ = categories_lu[0];
     isErrorDetailsOpened = false;
     ui->user->setFocus();
     htmlCode = htmlCode_lu;
     titre = titre_lu;
-    categories = categories_lu;
+    //categories = categories_lu;
+    foreach (QString cat, categories_lu) {
+        categories.append(cat.replace("&amp;&amp;", "&amp;"));
+    }
     mainPicture = mainPicture_lu;
     excerpt = excerpt_lu;
     tags = "null";
-    if (addrSite == "http://www.conseilsencuisine.fr" && (categories.size() > 1 || categories[0] != "Base"))
+    if (addrSite.endsWith(".conseilsencuisine.fr") && (categories.size() > 1 || categories[0] != "Base"))
         tags = makeTags(tpsPrep, tpsCuis, tpsRep);
     envoiEnCours = new QDialog((QWidget*)this->parent());
     envoiEnCours->setModal(true);

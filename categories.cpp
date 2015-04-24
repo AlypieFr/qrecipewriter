@@ -250,7 +250,7 @@ void Categories::on_valider_clicked()
 
     int id = 1;
     foreach (QLineEdit* catL, catList.values()) {
-        writer.writeTextElement("cat" + QString::number(id), catL->text().replace("&", "&&"));
+        writer.writeTextElement("cat" + QString::number(id), catL->text());
         id++;
     }
 

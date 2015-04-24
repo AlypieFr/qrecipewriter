@@ -319,7 +319,7 @@ void CeCWriter::init()
         QStringList theCats = Functions::loadCategories();
         int idC =0;
         foreach (QString cat, theCats) {
-            QCheckBox *catI = new QCheckBox(cat);
+            QCheckBox *catI = new QCheckBox(cat.replace("&", "&&"));
             catI->setMaximumHeight(21);
             if (idC < 4 || (theCats.size() > 8 && idC < (theCats.size()+1) / 2))
             {
@@ -470,7 +470,7 @@ void CeCWriter::resetCats()
     QStringList theCats = Functions::loadCategories();
     int idC =0;
     foreach (QString cat, theCats) {
-        QCheckBox *catI = new QCheckBox(cat);
+        QCheckBox *catI = new QCheckBox(cat.replace("&", "&&"));
         catI->setMaximumHeight(21);
         if (idC < 4 || (theCats.size() > 8 && idC < (theCats.size()+1) / 2))
         {
