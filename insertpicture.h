@@ -23,8 +23,8 @@ private:
 
 public:
     int w,h;
-    bool ok;
-    void init(QString imgFile, QString afficher, int width, int height, QString filename);
+    bool ok, centerImg;
+    void init(QString imgFile, QString afficher, int width, int height, QString filename, bool center);
     QString print, largeur, hauteur, filename;
 
 private slots:

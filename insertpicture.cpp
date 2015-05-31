@@ -11,7 +11,7 @@ InsertPicture::InsertPicture(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void InsertPicture::init(QString imgFile, QString afficher, int width, int height, QString filename) {
+void InsertPicture::init(QString imgFile, QString afficher, int width, int height, QString filename, bool center) {
     ok = false;
     //Icon of keepRation button:
     QColor colorBut = ui->keepRatio->palette().color(QPalette::Background);
@@ -46,6 +46,9 @@ void InsertPicture::init(QString imgFile, QString afficher, int width, int heigh
     else if (afficher == "printonly") {
         ui->printOnly->setChecked(true);
     }
+    if (center) {
+        ui->centerImg->setChecked(true);
+    }
     if (!cecPrinter) {
         ui->noPrint->setDisabled(true);
         ui->noPrint->setToolTip("Nécessite d'activer CeC printer");
@@ -73,6 +76,12 @@ void InsertPicture::on_buttonBox_accepted()
     }
     else {
         ok = false;
+    }
+    if (ui->centerImg->isChecked()) {
+        centerImg = true;
+    }
+    else {
+        centerImg = false;
     }
     filename = ui->filename->text();
     if (filename != "") {

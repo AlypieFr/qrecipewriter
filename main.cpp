@@ -71,7 +71,7 @@ QString correction = ""; //Path to the dictionnary (prefix of .dic and .aff file
 bool cancel = false; //Keep if user cancel orthographical correction
 bool cecPrinter = false; //CeC Printer status
 
-QString VERSION = "1.2.1";
+QString VERSION = "1.2.2";
 QString QTVERSION;
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe

@@ -646,11 +646,18 @@ QString Functions::insertPictures(QString data)
         QString largeur = exp.cap(2);
         QString hauteur = exp.cap(3);
         QString img = exp.cap(4);
+        bool center = false;
+        if (img.startsWith("center:")) {
+            img = img.right(img.length() - 7);
+            center = true;
+        }
         QString classDef = "";
         if (className != "all") {
             classDef = " class=\"" + className + "\"";
         }
-        data.replace(imgBal, "<img src=\"" + dirDistPict + img.split("/").last() + "\" alt=\"Image d'illustration\" width=\"" + largeur + "\" height=\"" + hauteur + "\"" + classDef + " /><br/>");
+        QString centerBegin = center ? "<center>" : "";
+        QString centerEnd = center ? "</center>" : "";
+        data.replace(imgBal, centerBegin + "<img src=\"" + dirDistPict + img.split("/").last() + "\" alt=\"Image d'illustration\" width=\"" + largeur + "\" height=\"" + hauteur + "\"" + classDef + " />" + centerEnd + "<br/>");
         if (!otherPicts.contains(img))
             otherPicts.append(img);
     }

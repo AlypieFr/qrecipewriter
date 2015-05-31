@@ -1020,6 +1020,7 @@ void CeCWriter::on_imgButton_clicked()
     int largeur = -1;
     int hauteur = -1;
     QString fileName = "";
+    bool center = false;
     QRegExp exp ("^\\[IMG:(\\w+):(\\d+):(\\d+):([^\\]]+)\\]$");
     if (ui->editPrep->hasFocus())
     {
@@ -1031,6 +1032,10 @@ void CeCWriter::on_imgButton_clicked()
             largeur = exp.cap(2).toInt();
             hauteur = exp.cap(3).toInt();
             fileName = exp.cap(4);
+            if (fileName.startsWith("center:")) {
+                fileName = fileName.right(fileName.length() - 7);
+                center = true;
+            }
         }
     }
     else if (ui->editCons->hasFocus())
@@ -1055,16 +1060,17 @@ void CeCWriter::on_imgButton_clicked()
         if (fileName != "")
         {
             InsertPicture* insertPicture = new InsertPicture(this);
-            insertPicture->init(fileName, afficher, largeur, hauteur, fileName);
+            insertPicture->init(fileName, afficher, largeur, hauteur, fileName, center);
             insertPicture->exec();
             bool ok = insertPicture->ok;
             QString largeur = insertPicture->largeur;
             QString hauteur = insertPicture->hauteur;
             QString print = insertPicture->print;
+            bool centerImg = insertPicture->centerImg;
             fileName = insertPicture->filename;
             delete insertPicture;
             insertPicture = NULL;
-            QString balise = "[IMG:" + print + ":" + largeur + ":" + hauteur + ":" + fileName + "]";
+            QString balise = "[IMG:" + print + ":" + largeur + ":" + hauteur + ":" + (centerImg ? "center:" : "") + fileName + "]";
             if (ok) {
                 if (cible == "editPrep")
                 {
