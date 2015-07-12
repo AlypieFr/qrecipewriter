@@ -181,12 +181,21 @@ void SendAutomatic::on_valider_clicked()
     envoiEnCours->close();
     isSending = false;
     QStringList lines = resultSend.split("\n");
-    if (lines[0].replace("\r", "") == "!!!Send recipe SUCCEEDED!!!")
+    int i = 0; bool messFound = false;
+    while (i < lines.size() && !messFound) {
+        if (lines[i].replace("\r", "") == "!!!Send recipe SUCCEEDED!!!" || lines[i].replace("\r", "") == "ERROR : send recipe failed.") {
+            messFound = true;
+        }
+        else {
+            i++;
+        }
+    }
+    if (i < lines.size() && lines[i].replace("\r", "") == "!!!Send recipe SUCCEEDED!!!")
     {
         int rep = QMessageBox::information(this, "Envoi terminé", "Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?", QMessageBox::Yes, QMessageBox::No);
         if (rep == QMessageBox::Yes)
         {
-            QString Program = "\"" + cmdNav + "\" " + addrSite + "/?p=" + lines[1].replace("\r", "");
+            QString Program = "\"" + cmdNav + "\" " + addrSite + "/?p=" + lines[i+1].replace("\r", "");
             QProcess *myProcess = new QProcess();
             myProcess->setProcessChannelMode(QProcess::MergedChannels);
             myProcess->start(Program);
@@ -216,17 +225,17 @@ void SendAutomatic::on_valider_clicked()
         vlay->addLayout(butLay);
         errorShow->setLayout(vlay);
         ok->setFocus();
-        if (lines[0].replace("\r", "") == "ERROR : send recipe failed.")
+        if (i < lines.size() &&lines[i].replace("\r", "") == "ERROR : send recipe failed.")
         {
-            if (lines[3].replace("\r", "") == "redstone.xmlrpc.XmlRpcFault: Identifiant ou mot de passe incorrect.")
+            if (lines[i+3].replace("\r", "") == "redstone.xmlrpc.XmlRpcFault: Identifiant ou mot de passe incorrect.")
             {
                 mainError->setText("L'envoi a échoué : identifiant ou mot de passe incorrect !");
             }
-            else if (lines[3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: A network error occurred.")
+            else if (lines[i+3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: A network error occurred.")
             {
                 mainError->setText("L'envoi a échoué : impossible de se connecter au site web. Vérifiez votre connexion internet.");
             }
-            else if (lines[3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: The response could not be parsed.")
+            else if (lines[i+3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: The response could not be parsed.")
             {
                 mainError->setText("L'envoi a échoué : l'adresse de publication est-elle correcte ?");
             }

@@ -41,6 +41,7 @@ extern QString systExp; //Operating system of the user
 extern QString editPict; //Program for advanced picture editor
 extern QString corrOrtho; //Use orthograph correction when typing
 extern bool cecPrinter; //CeC Printer status
+extern bool sendAuto;
 
 Options::Options(QWidget *parent) :
     QDialog(parent),
@@ -78,6 +79,8 @@ void Options::init()
     ui->lineEditAdressePublication->setText(addrPub);
     ui->lineEditPseudoWordpress->setText(pseudoWp);
     ui->cecPrinter->setChecked(cecPrinter);
+    ui->sendAuto->setChecked(sendAuto);
+    ui->sendManual->setChecked(!sendAuto);
     if(systExp=="linuxAutre")
     {
         ui->radioButtonLinuxAutre->setChecked(1);
@@ -187,6 +190,7 @@ void Options::on_buttonOptionsValider_clicked()
         dirDistPict=ui->lineEditDossierDistantImages->text();
         corrOrtho = ui->lineEditDictionnairePath->text();
         cecPrinter = ui->cecPrinter->isChecked();
+        sendAuto = ui->sendAuto->isChecked();
         if(ui->radioButtonLinuxAutre->isChecked())
         {
             systExp="linuxAutre";
@@ -252,6 +256,8 @@ void Options::saveXML()
     writer.writeTextElement("dirDistPict",ui->lineEditDossierDistantImages->text());
     QString activeCeCPrinter = ui->cecPrinter->isChecked() ? "1": "0";
     writer.writeTextElement("cecPrinter",activeCeCPrinter);
+    QString sendType = ui->sendAuto->isChecked() ? "1" : "0";
+    writer.writeTextElement("sendAuto", sendType);
 
     if(ui->radioButtonLinuxAutre->isChecked())
     {

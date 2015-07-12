@@ -37,7 +37,7 @@
    <item row="0" column="2" colspan="2">
     <widget class="QPushButton" name="btnAddToDict">
      <property name="text">
-      <string>Ajouter à la dictionnaire</string>
+      <string>Ajouter au dictionnaire</string>
      </property>
     </widget>
    </item>

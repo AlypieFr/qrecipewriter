@@ -31,6 +31,7 @@ extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
 extern bool cecPrinter;
+extern bool sendAuto;
 
 extern QMap<QString, QString> liens;
 
@@ -130,7 +131,11 @@ void Functions::loadConfig()
                 cecPrinter = xml.text().toString() == "1" ? true: false;
                 continue;
             }
-
+            if(xml.name() == "sendAuto") {
+                xml.readNext();
+                sendAuto = xml.text().toString() == "1" ? true: false;
+                continue;
+            }
         }
     }
 }

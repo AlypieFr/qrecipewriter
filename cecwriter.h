@@ -116,12 +116,6 @@ private slots:
 
     void handleChooseLnkAnnuler();
 
-    void handleChooseSendAnnuler();
-
-    void handleChooseSendManual();
-
-    void handleChooseSendAutomatic();
-
     void refreshState();
 
     void on_action_propos_triggered();
@@ -275,6 +269,8 @@ private:
     void insertMateriel(QString text);
     void insertPreparation(QString text);
     void insertConseil(QString text);
+    void sendManual();
+    void sendAutomatic();
 };
 
 #endif // CECWRITER_H

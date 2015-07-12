@@ -46,6 +46,7 @@ extern QString corrOrtho;
 extern QString correction;
 extern bool cancel;
 extern bool cecPrinter;
+extern bool sendAuto;
 
 extern QString VERSION;
 extern QString QTVERSION;
@@ -1415,31 +1416,36 @@ void CeCWriter::on_envoyer_clicked()
     if (isReadyTosend())
     {
         makeHtmlCode();
-        selectSendType = new QDialog(this);
-        selectSendType->setWindowTitle("Choisir un type  d'envoi");
-        QVBoxLayout *vlay = new QVBoxLayout();
-        QLabel *lab = new QLabel();
-        lab->setText("<b>Quelle méthode d'envoi ?</b>");
-        lab->setFixedHeight(30);
-        QPushButton *manual = new QPushButton("Méthode manuelle");
-        manual->setFixedHeight(60);
-        connect(manual, SIGNAL(released()), this, SLOT(handleChooseSendManual()));
-        QPushButton *automatic = new QPushButton("Méthode automatique\n(Nécessite Java)");
-        automatic->setMinimumHeight(60);
-        connect(automatic, SIGNAL(released()), this, SLOT(handleChooseSendAutomatic()));
-        QHBoxLayout *butLay = new QHBoxLayout();
-        butLay->addWidget(automatic);
-        butLay->addWidget(manual);
-        vlay->addWidget(lab);
-        vlay->addLayout(butLay);
-        QPushButton *annuler = new QPushButton("Annuler");
-        annuler->setFixedHeight(30);
-        connect(annuler, SIGNAL(released()), this, SLOT(handleChooseSendAnnuler()));
-        vlay->addWidget(annuler);
-        selectSendType->setLayout(vlay);
-        selectSendType->setFixedSize(400, 150);
-        selectSendType->exec();
+        if (sendAuto) {
+            sendAutomatic();
+        }
+        else {
+            sendManual();
+        }
     }
+}
+
+void CeCWriter::sendAutomatic()
+{
+    SendAutomatic *sendAutomatic = (SendAutomatic*) ptr2sendAutomatic;
+    QStringList cats = Functions::getSelectedCategories(categories);
+    QList<int> tpsPrep, tpsCuis, tpsRep;
+    tpsPrep << ui->hPrep->value() << ui->minPrep->value();
+    tpsCuis << ui->hCuis->value() << ui->minCuis->value();
+    tpsRep << ui->jRep->value() << ui->hRep->value() << ui->minRep->value();
+    sendAutomatic->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt);
+}
+
+void CeCWriter::sendManual()
+{
+    SendManual* sendManual = (SendManual*) ptr2sendManual;
+    QStringList imagesToAdd;
+    imagesToAdd.append(imgFile);
+    foreach (QString pict, otherPicts) {
+        imagesToAdd.append(pict);
+    }
+    QStringList cats = Functions::getSelectedCategories(categories);
+    sendManual->init(ui->titre->text(), htmlCode, excerpt, imagesToAdd, cats);
 }
 
 /**
@@ -3695,36 +3701,6 @@ void CeCWriter::handleChooseLnkValider()
 {
     addrLnk = chooseAddrLnk->text();
     chooseLink->close();
-}
-
-void CeCWriter::handleChooseSendAnnuler()
-{
-    selectSendType->close();
-}
-
-void CeCWriter::handleChooseSendAutomatic()
-{
-    selectSendType->close();
-    SendAutomatic *sendAutomatic = (SendAutomatic*) ptr2sendAutomatic;
-    QStringList cats = Functions::getSelectedCategories(categories);
-    QList<int> tpsPrep, tpsCuis, tpsRep;
-    tpsPrep << ui->hPrep->value() << ui->minPrep->value();
-    tpsCuis << ui->hCuis->value() << ui->minCuis->value();
-    tpsRep << ui->jRep->value() << ui->hRep->value() << ui->minRep->value();
-    sendAutomatic->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt);
-}
-
-void CeCWriter::handleChooseSendManual()
-{
-    selectSendType->close();
-    SendManual* sendManual = (SendManual*) ptr2sendManual;
-    QStringList imagesToAdd;
-    imagesToAdd.append(imgFile);
-    foreach (QString pict, otherPicts) {
-        imagesToAdd.append(pict);
-    }
-    QStringList cats = Functions::getSelectedCategories(categories);
-    sendManual->init(ui->titre->text(), htmlCode, excerpt, imagesToAdd, cats);
 }
 
 void CeCWriter::refreshState()

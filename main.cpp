@@ -70,8 +70,9 @@ QString corrOrtho = ""; //Main dictionnary path
 QString correction = ""; //Path to the dictionnary (prefix of .dic and .aff files)
 bool cancel = false; //Keep if user cancel orthographical correction
 bool cecPrinter = false; //CeC Printer status
+bool sendAuto = true; //Send in an automatic manner
 
-QString VERSION = "1.2.2";
+QString VERSION = "1.2.3";
 QString QTVERSION;
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe
