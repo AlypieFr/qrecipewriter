@@ -631,6 +631,23 @@ left: 10px; padding: 0 3px;}</string>
                <pixmap resource="Ressources.qrc">:/images/editPict.png</pixmap>
               </property>
              </widget>
+             <widget class="QPushButton" name="setCoupDeCoeur">
+              <property name="geometry">
+               <rect>
+                <x>217</x>
+                <y>407</y>
+                <width>131</width>
+                <height>28</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Coup de Coeur</string>
+              </property>
+              <property name="icon">
+               <iconset resource="Ressources.qrc">
+                <normaloff>:/images/coup_de_coeur.png</normaloff>:/images/coup_de_coeur.png</iconset>
+              </property>
+             </widget>
             </widget>
            </item>
            <item>

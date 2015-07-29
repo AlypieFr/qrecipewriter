@@ -47,6 +47,8 @@ extern QString correction;
 extern bool cancel;
 extern bool cecPrinter;
 extern bool sendAuto;
+extern bool cecSearch;
+extern bool cecCoupDeCoeur;
 
 extern QString VERSION;
 extern QString QTVERSION;
@@ -239,6 +241,7 @@ void CeCWriter::init()
     liens.clear();
     saveFileName = "";
     balise = "";
+    coupDeCoeur = "no_coup_de_coeur";
     ui->editPicture->setEnabled(false);
     QColor colorBck = ui->listIngr->palette().color(QPalette::Text);
     if ((colorBck.red() + colorBck.green() + colorBck.blue()) / 3 < 127.5)
@@ -351,6 +354,8 @@ void CeCWriter::init()
         ui->abcButton->setEnabled(false);
         ui->actionCorrection_orthographique->setEnabled(false);
     }
+    //CeC Coup de coeur ? :
+    ui->setCoupDeCoeur->setVisible(cecCoupDeCoeur);
     //Initialize ident variables:
     idIngr = 0;
     idPrep = "0.0";
@@ -442,6 +447,7 @@ void CeCWriter::resetFields()
     addrLnk = "";
     idLien = 1;
     saveFileName = "";
+    coupDeCoeur = "no_coup_de_coeur";
     idIngr = 0;
     idPrep = "0.0";
     ui->prepListShow->setText("0");
@@ -592,6 +598,7 @@ void CeCWriter::on_actionOptions_triggered()
         ui->noPrint->setToolTip("Ne pas imprimer une partie de texte");
         ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher");
     }
+    ui->setCoupDeCoeur->setVisible(cecCoupDeCoeur);
 }
 
 /**
@@ -1433,7 +1440,7 @@ void CeCWriter::sendAutomatic()
     tpsPrep << ui->hPrep->value() << ui->minPrep->value();
     tpsCuis << ui->hCuis->value() << ui->minCuis->value();
     tpsRep << ui->jRep->value() << ui->hRep->value() << ui->minRep->value();
-    sendAutomatic->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt);
+    sendAutomatic->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt, coupDeCoeur);
 }
 
 void CeCWriter::sendManual()
@@ -1758,7 +1765,7 @@ void CeCWriter::on_enregistrer_clicked()
         bool success = Functions::saveRecipe(ui->titre->text(), catsSelected, tpsPrep, tpsCuis,
                                              tpsRep, QString::number(ui->nbPersonnes->value()), ui->precision->text(),
                                              ui->description->toPlainText(), ingrList, matList, prepList, consList,
-                                             imgFile, liens, saveFileName);
+                                             imgFile, liens, saveFileName, coupDeCoeur);
         if (success)
         {
             saveVariables(ingrList.join("\n"), matList.join("\n"), prepList.join("\n"), consList.join("\n"));
@@ -1947,6 +1954,11 @@ void CeCWriter::on_actionOuvrir_une_recette_existante_triggered()
                     }
                 }
 
+                //Load coupDeCoeur:
+                if (rct.keys().contains("coupDeCoeur")) {
+                    coupDeCoeur = rct["coupDeCoeur"][0];
+                }
+
                 ui->state->setText("Recette chargée !");
                 QTimer::singleShot(4000, this, SLOT(refreshState()));
 
@@ -2104,6 +2116,18 @@ void CeCWriter::on_actionRechercher_une_mise_jour_triggered()
                               QMessageBox::Ok);
     }
 
+}
+
+/**
+ * Define Coup de coeur
+ * @brief CeCWriter::on_setCoupDeCoeur_clicked
+ */
+void CeCWriter::on_setCoupDeCoeur_clicked()
+{
+    CoupDeCoeur *cdc = new CoupDeCoeur();
+    cdc->init(coupDeCoeur);
+    cdc->exec();
+    coupDeCoeur = cdc->coupDeCoeur;
 }
 
 //Events config:

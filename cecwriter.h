@@ -27,6 +27,7 @@
 #include "insertpicture.h"
 #include "filedownloader.h"
 #include "qinputmultiline.h"
+#include "coupdecoeur.h"
 
 #include <QMainWindow>
 
@@ -192,6 +193,8 @@ private slots:
 
     void on_editCons_customContextMenuRequested(const QPoint &pos);
 
+    void on_setCoupDeCoeur_clicked();
+
 public slots:
     void init();
     void config();
@@ -209,6 +212,7 @@ private:
     QHBoxLayout *catLay; //Layout for categories
     QStandardItemModel *model1, *model2, *model3, *model4; //Four models for respectively ingredients, materiel, préparation and conseils listviews
     QString imgFile, imgFileName; //Main picte file (full path) and filename (name of the file only)
+    QString coupDeCoeur; //Coup de coeur of the recipe
     QString saveFileName; //filename (without extension) used for save the file
     QDialog *chooseSaveFileName, *chooseLink, *selectSendType; //Dialog for, respectively choose fileName of the saved recipe, set http adress of a link inserted, and choose the send type (manual or automatic)
     QString addrLnk; //The http adress link choosen (needed it to be stored just after user click ok button, then we store it in the QMap.

@@ -34,7 +34,7 @@ public:
     explicit SendAutomatic(QWidget *parent = 0);
     ~SendAutomatic();
     void init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
-              QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu);
+              QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu);
 
 private slots:
     void on_annuler_clicked();

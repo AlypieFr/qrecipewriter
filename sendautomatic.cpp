@@ -21,7 +21,9 @@ extern QString cmdNav; //Command to launch navigator
 extern QString addrSite; //Address of the website
 extern QString addrPub; //Address of publication (XML-RPC)
 extern QString dirTmp;
-
+extern bool cecSearch;
+extern bool cecCoupDeCoeur;
+extern int configActive;
 
 SendAutomatic::SendAutomatic(QWidget *parent) :
     QDialog(parent),
@@ -50,10 +52,11 @@ void SendAutomatic::keyPressEvent(QKeyEvent *e)
 }
 
 void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
-                         QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu)
+                         QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu)
 {
     isSending = false;
-    QFile idFile (confDir + ".id");
+    ui->configNb->setText("Config: " + QString::number(configActive));
+    QFile idFile (confDir + ".id." + QString::number(configActive));
     if (idFile.exists())
     {
         idFile.open(QFile::ReadOnly);
@@ -63,6 +66,11 @@ void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList cate
         ui->password->setText(idStream.readLine());
         idFile.close();
         ui->saveId->setChecked(true);
+    }
+    else {
+        ui->user->setText("");
+        ui->password->setText("");
+        ui->saveId->setChecked(false);
     }
     QString categ = categories_lu[0];
     isErrorDetailsOpened = false;
@@ -75,9 +83,19 @@ void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     }
     mainPicture = mainPicture_lu;
     excerpt = excerpt_lu;
-    tags = "null";
-    if (addrSite.endsWith(".conseilsencuisine.fr") && (categories.size() > 1 || categories[0] != "Base"))
+    tags = "";
+    if (cecSearch && (categories.size() > 1 || categories[0] != "Base")) {
         tags = makeTags(tpsPrep, tpsCuis, tpsRep);
+        if (cecCoupDeCoeur) {
+            tags += ",";
+        }
+        else {
+            tags = "null";
+        }
+    }
+    if (cecCoupDeCoeur) {
+        tags += coupDeCoeur_lu;
+    }
     envoiEnCours = new QDialog((QWidget*)this->parent());
     envoiEnCours->setModal(true);
     QLabel *lab = new QLabel("<b>Envoi en cours...</b>");
@@ -132,7 +150,7 @@ void SendAutomatic::on_valider_clicked()
     user = ui->user->text();
     passwd = ui->password->text();
     publier = ui->publier->isChecked();
-    QFile idFile (confDir + ".id");
+    QFile idFile (confDir + ".id." + QString::number(configActive));
     if (ui->saveId->isChecked())
     {
         idFile.open(QFile::WriteOnly);

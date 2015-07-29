@@ -31,7 +31,10 @@ extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
 extern bool cecPrinter;
+extern bool cecSearch;
+extern bool cecCoupDeCoeur;
 extern bool sendAuto;
+extern int configActive;
 
 extern QMap<QString, QString> liens;
 
@@ -101,7 +104,7 @@ void Functions::loadConfig()
                 corrOrtho = xml.text().toString();
                 continue;
             }
-            if(xml.name() == "addrSite") {
+            /*if(xml.name() == "addrSite") {
                 xml.readNext();
                 addrSite = xml.text().toString();
                 continue;
@@ -110,7 +113,7 @@ void Functions::loadConfig()
                 xml.readNext();
                 addrPub = xml.text().toString();
                 continue;
-            }
+            }*/
             if(xml.name() == "systExp") {
                 xml.readNext();
                 systExp = xml.text().toString();
@@ -121,7 +124,7 @@ void Functions::loadConfig()
                 editPict = xml.text().toString();
                 continue;
             }
-            if(xml.name() == "dirDistPict") {
+            /*if(xml.name() == "dirDistPict") {
                 xml.readNext();
                 dirDistPict = xml.text().toString();
                 continue;
@@ -130,11 +133,72 @@ void Functions::loadConfig()
                 xml.readNext();
                 cecPrinter = xml.text().toString() == "1" ? true: false;
                 continue;
-            }
+            }*/
             if(xml.name() == "sendAuto") {
                 xml.readNext();
                 sendAuto = xml.text().toString() == "1" ? true: false;
                 continue;
+            }
+            /*if(xml.name() == "cecSearch") {
+                xml.readNext();
+                cecSearch = xml.text().toString() == "1" ? true: false;
+                continue;
+            }
+            if(xml.name() == "cecCoupDeCoeur") {
+                xml.readNext();
+                cecCoupDeCoeur = xml.text().toString() == "1" ? true: false;
+                continue;
+            }*/
+            if (xml.name() == "activeServerConfig") {
+                xml.readNext();
+                configActive = xml.text().toString().toInt();
+                continue;
+            }
+        }
+    }
+
+    file = new QFile(confFile + ".serv" + QString::number(configActive));
+    if (file->exists()) {
+        file->open(QIODevice::ReadOnly);
+        QXmlStreamReader xmlS(file);
+        while(!xmlS.atEnd() &&
+                !xmlS.hasError()) {
+
+            QXmlStreamReader::TokenType token = xmlS.readNext();
+            if(token == QXmlStreamReader::StartDocument) {
+                continue;
+            }
+            if(token == QXmlStreamReader::StartElement) {
+                if(xmlS.name() == "addrSite") {
+                    xmlS.readNext();
+                    addrSite = xmlS.text().toString();
+                    continue;
+                }
+                if(xmlS.name() == "addrPub") {
+                    xmlS.readNext();
+                    addrPub = xmlS.text().toString();
+                    continue;
+                }
+                if(xmlS.name() == "dirDistPict") {
+                    xmlS.readNext();
+                    dirDistPict = xmlS.text().toString();
+                    continue;
+                }
+                if(xmlS.name() == "cecPrinter") {
+                    xmlS.readNext();
+                    cecPrinter = xmlS.text().toString() == "1" ? true: false;
+                    continue;
+                }
+                if(xmlS.name() == "cecSearch") {
+                    xmlS.readNext();
+                    cecSearch = xmlS.text().toString() == "1" ? true: false;
+                    continue;
+                }
+                if(xmlS.name() == "cecCoupDeCoeur") {
+                    xmlS.readNext();
+                    cecCoupDeCoeur = xmlS.text().toString() == "1" ? true: false;
+                    continue;
+                }
             }
         }
     }
@@ -163,7 +227,7 @@ void Functions::loadConfig()
 bool Functions::saveRecipe(QString title, QStringList categories, QString tpsPrep,
                            QString tpsCuis, QString tpsRep, QString nbPers, QString precision,
                            QString description, QStringList ingredients, QStringList materiel,
-                           QStringList preparation, QStringList conseils, QString picture, QMap<QString, QString> liens, QString filename)
+                           QStringList preparation, QStringList conseils, QString picture, QMap<QString, QString> liens, QString filename, QString coupDeCoeur)
 {
     QFile* file = new QFile(dirSav + "/" + filename + ".rct");
     file->remove(".");
@@ -217,7 +281,7 @@ bool Functions::saveRecipe(QString title, QStringList categories, QString tpsPre
         }
         writer.writeEndElement();
     }
-    if (preparation.size() > 0)
+    if (conseils.size() > 0)
     {
         writer.writeStartElement("conseils");
         id = 1;
@@ -227,6 +291,7 @@ bool Functions::saveRecipe(QString title, QStringList categories, QString tpsPre
         }
         writer.writeEndElement();
     }
+    writer.writeTextElement("coupDeCoeur", coupDeCoeur);
     if (liens.size() > 0)
     {
         writer.writeStartElement("liens");
@@ -384,6 +449,14 @@ QMap<QString, QStringList> Functions::loadRecipe(QString fileName)
             elemsList.append(ele->ToElement()->GetText());
         }
         result.insert("conseils", elemsList);
+    }
+
+    //Coup de coeur:
+    elemsList.clear();
+    elem = doc.FirstChildElement("coupDeCoeur");
+    if (elem)
+    {
+        result.insert("coupDeCoeur", QStringList(elem->GetText()));
     }
 
     //Liens:

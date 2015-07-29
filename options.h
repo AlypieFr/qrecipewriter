@@ -35,7 +35,7 @@ private:
     Ui::Options *ui;
 public slots :
     void init();
-    void saveXML();
+    void saveXML(int activeServerConfig);
 
 private slots:
 
@@ -52,8 +52,20 @@ private slots:
     void on_buttonOptionsValider_clicked();
     void on_buttonOptionsSupprimerDonneesPerso_clicked();
 
+    void on_configActive_released();
+
+    void on_configActive_2_released();
+
+    void on_configActive_3_released();
+
+    void on_configActive_4_released();
+
+    void on_configActive_5_released();
+
 private:
     void keyPressEvent(QKeyEvent *e);
+    void loadConfigsServer();
+    int configActiveOpts;
 };
 
 #endif // OPTIONS_H

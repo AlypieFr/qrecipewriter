@@ -29,5 +29,8 @@
         <file>images/movie.png</file>
         <file>images/media_aspect_ratio.png</file>
         <file>images/media_aspect_ratio_blanc.png</file>
+        <file>images/coup_de_coeur.png</file>
+        <file>images/coup_de_coeur_2.png</file>
+        <file>images/coup_de_coeur_3.png</file>
     </qresource>
 </RCC>

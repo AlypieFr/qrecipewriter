@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CoupDeCoeur</class>
+ <widget class="QDialog" name="CoupDeCoeur">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>470</width>
+    <height>185</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>470</width>
+    <height>185</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>470</width>
+    <height>185</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Cette recette...</string>
+  </property>
+  <widget class="QRadioButton" name="niv0">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>411</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>N'est pas un coup de coeur</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="niv1">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>50</y>
+     <width>411</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Est un coup de coeur de niveau 1 (Très Bon)</string>
+   </property>
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/images/coup_de_coeur.png</normaloff>:/images/coup_de_coeur.png</iconset>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="niv2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>80</y>
+     <width>411</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Est un coup de coeur de niveau 2 (Super Bon)</string>
+   </property>
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/images/coup_de_coeur_2.png</normaloff>:/images/coup_de_coeur_2.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>16</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="niv3">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>110</y>
+     <width>411</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Est un coup de coeur de niveau 3 (Une Tuerie !)</string>
+   </property>
+   <property name="icon">
+    <iconset resource="Ressources.qrc">
+     <normaloff>:/images/coup_de_coeur_3.png</normaloff>:/images/coup_de_coeur_3.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>48</width>
+     <height>16</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>150</y>
+     <width>176</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="Ressources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

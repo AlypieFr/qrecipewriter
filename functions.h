@@ -52,7 +52,7 @@ public:
                            QString tpsCuis, QString tpsRep, QString nbPers, QString precision,
                            QString description, QStringList ingredients, QStringList materiel,
                            QStringList preparation, QStringList conseils, QString picture, QMap<QString, QString> liens,
-                           QString filename);
+                           QString filename, QString coupDeCoeur);
     static QMap<QString, QStringList> loadRecipe(QString fileName);
     static QStringList loadCategories();
     static QString generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
