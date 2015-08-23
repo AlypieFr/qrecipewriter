@@ -32,5 +32,8 @@
         <file>images/coup_de_coeur.png</file>
         <file>images/coup_de_coeur_2.png</file>
         <file>images/coup_de_coeur_3.png</file>
+        <file>images/coup_de_coeur_01.png</file>
+        <file>images/coup_de_coeur_02.png</file>
+        <file>images/coup_de_coeur_03.png</file>
     </qresource>
 </RCC>

@@ -647,6 +647,12 @@ left: 10px; padding: 0 3px;}</string>
                <iconset resource="Ressources.qrc">
                 <normaloff>:/images/coup_de_coeur.png</normaloff>:/images/coup_de_coeur.png</iconset>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
              </widget>
             </widget>
            </item>

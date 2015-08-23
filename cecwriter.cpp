@@ -17,11 +17,8 @@
 /**
  * POINTERS TO QDIALOGS USED BY THE PROGRAM
  */
-extern void *ptr2opt;
-extern void *ptr2cat;
+//extern void *ptr2opt;
 extern void *ptr2apropos;
-extern void *ptr2sendManual;
-extern void *ptr2sendAutomatic;
 
 /**
  * GLOBAL VARIABLES
@@ -166,6 +163,7 @@ void CeCWriter::config()
     opt->init();
     opt->exec();
     delete opt;
+    opt = NULL;
     QFile configFile(confFile);
     if (configFile.exists())
     {
@@ -448,6 +446,7 @@ void CeCWriter::resetFields()
     idLien = 1;
     saveFileName = "";
     coupDeCoeur = "no_coup_de_coeur";
+    ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur.png"));
     idIngr = 0;
     idPrep = "0.0";
     ui->prepListShow->setText("0");
@@ -577,9 +576,11 @@ bool CeCWriter::checkHasBeenModified()
 void CeCWriter::on_actionOptions_triggered()
 {
 
-    Options* opt = (Options*) ptr2opt;
+    Options* opt = new Options();
     opt->init();
     opt->exec();
+    delete opt;
+    opt = NULL;
     if (corrOrtho == "")
     {
         ui->abcButton->setEnabled(false);
@@ -618,9 +619,11 @@ void CeCWriter::on_action_propos_triggered()
  */
 void CeCWriter::on_actionGerer_les_categories_triggered()
 {
-    Categories* cat = (Categories*) ptr2cat;
+    Categories *cat = new Categories(this);
     cat->init(namesCats);
     cat->exec();
+    delete cat;
+    cat = NULL;
     if (confCatFile->exists())
         resetCats();
 }
@@ -1434,25 +1437,29 @@ void CeCWriter::on_envoyer_clicked()
 
 void CeCWriter::sendAutomatic()
 {
-    SendAutomatic *sendAutomatic = (SendAutomatic*) ptr2sendAutomatic;
+    SendAutomatic *sendAuto = new SendAutomatic(this);
     QStringList cats = Functions::getSelectedCategories(categories);
     QList<int> tpsPrep, tpsCuis, tpsRep;
     tpsPrep << ui->hPrep->value() << ui->minPrep->value();
     tpsCuis << ui->hCuis->value() << ui->minCuis->value();
     tpsRep << ui->jRep->value() << ui->hRep->value() << ui->minRep->value();
-    sendAutomatic->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt, coupDeCoeur);
+    sendAuto->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt, coupDeCoeur);
+    delete sendAuto;
+    sendAuto = NULL;
 }
 
 void CeCWriter::sendManual()
 {
-    SendManual* sendManual = (SendManual*) ptr2sendManual;
+    SendManual *sendMa = new SendManual(this);
     QStringList imagesToAdd;
     imagesToAdd.append(imgFile);
     foreach (QString pict, otherPicts) {
         imagesToAdd.append(pict);
     }
     QStringList cats = Functions::getSelectedCategories(categories);
-    sendManual->init(ui->titre->text(), htmlCode, excerpt, imagesToAdd, cats);
+    sendMa->init(ui->titre->text(), htmlCode, excerpt, imagesToAdd, cats);
+    delete sendMa;
+    sendMa = NULL;
 }
 
 /**
@@ -1957,6 +1964,17 @@ void CeCWriter::on_actionOuvrir_une_recette_existante_triggered()
                 //Load coupDeCoeur:
                 if (rct.keys().contains("coupDeCoeur")) {
                     coupDeCoeur = rct["coupDeCoeur"][0];
+                    if (coupDeCoeur == "coup_de_coeur_1")
+                        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_01.png"));
+                    else if(coupDeCoeur == "coup_de_coeur_2")
+                        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_02.png"));
+                    else if(coupDeCoeur == "coup_de_coeur_3")
+                        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_03.png"));
+                    else
+                        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur.png"));
+                }
+                else {
+                    ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur.png"));
                 }
 
                 ui->state->setText("Recette chargée !");
@@ -2128,6 +2146,14 @@ void CeCWriter::on_setCoupDeCoeur_clicked()
     cdc->init(coupDeCoeur);
     cdc->exec();
     coupDeCoeur = cdc->coupDeCoeur;
+    if (coupDeCoeur == "coup_de_coeur_1")
+        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_01.png"));
+    else if(coupDeCoeur == "coup_de_coeur_2")
+        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_02.png"));
+    else if(coupDeCoeur == "coup_de_coeur_3")
+        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_03.png"));
+    else
+        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur.png"));
 }
 
 //Events config:

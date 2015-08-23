@@ -930,6 +930,9 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
 
     htmlCode = insertMovies(htmlCode);
 
+    //breaking spaces:
+    htmlCode = htmlCode.replace(" :", "&#8239;:").replace(" !", "&#8239;!").replace(" ;", "&#8239;;").replace(" /", "&#8239;/").replace(" =", "&#8239;=");
+
     return htmlCode;
 }
 

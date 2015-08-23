@@ -75,7 +75,7 @@ bool cecSearch = false; //Activate or not search module
 bool cecCoupDeCoeur = false; //Activate or not "coups de coeur"
 int configActive = 1;
 
-QString VERSION = "2.0.0";
+QString VERSION = "2.1.0";
 QString QTVERSION;
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe
@@ -145,16 +145,8 @@ int main(int argc, char *argv[])
     CeCWriter w;
 
     //Define Dialogs:
-    Options *opt = new Options(&w);
-    ptr2opt = opt;
     Apropos *apropos = new Apropos(&w);
     ptr2apropos = apropos;
-    Categories *cat = new Categories(&w);
-    ptr2cat = cat;
-    SendManual *sendManual = new SendManual(&w);
-    ptr2sendManual = sendManual;
-    SendAutomatic *sendAUtomatic = new SendAutomatic(&w);
-    ptr2sendAutomatic = sendAUtomatic;
     QFile configFile(confFile);
     QDir tmpD (dirTmp);
     QTimer::singleShot(2000,splash,SLOT(close())); //Start splash screen and keep it 2 seconds
