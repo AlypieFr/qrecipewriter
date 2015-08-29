@@ -1,0 +1,3 @@
+#!/bin/sh
+
+java -jar /usr/share/CeC_Writer/CeCWriter.jar

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Nouvelle recette
+GenericName[fr]=CeC Writer
+Comment=Ecrire une recette pour conseilsencuisine.fr
+Exec=CeC_Writer
+Icon=CeC_Writer
+Terminal=false
+Categories=Network
+StartupNotify=true

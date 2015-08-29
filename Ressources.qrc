@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/logo.png</file>
+        <file>images/logo-grand.png</file>
+        <file>images/image.png</file>
+        <file>images/splash.jpg</file>
+        <file>images/abc.png</file>
+        <file>images/apropos.png</file>
+        <file>images/comment.png</file>
+        <file>images/lien_button.png</file>
+        <file>images/img.png</file>
+        <file>images/format-indent-less.png</file>
+        <file>images/format-indent-more.png</file>
+        <file>images/puce.png</file>
+        <file>checkGimp.bash</file>
+        <file>images/apropos1.png</file>
+        <file>images/apropos2.png</file>
+        <file>images/editPict_click.png</file>
+        <file>images/editPict_over.png</file>
+        <file>images/editPict.png</file>
+        <file>images/abc_blanc.png</file>
+        <file>images/img_blanc.png</file>
+        <file>images/lien_button_blanc.png</file>
+        <file>images/logo_blanc.png</file>
+        <file>images/logo-grand_blanc.png</file>
+        <file>images/QCeCWriter.png</file>
+        <file>images/print.png</file>
+        <file>images/noprint.png</file>
+        <file>images/movie.png</file>
+        <file>images/media_aspect_ratio.png</file>
+        <file>images/media_aspect_ratio_blanc.png</file>
+        <file>images/coup_de_coeur.png</file>
+        <file>images/coup_de_coeur_2.png</file>
+        <file>images/coup_de_coeur_3.png</file>
+        <file>images/coup_de_coeur_01.png</file>
+        <file>images/coup_de_coeur_02.png</file>
+        <file>images/coup_de_coeur_03.png</file>
+    </qresource>
+</RCC>
