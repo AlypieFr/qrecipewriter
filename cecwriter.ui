@@ -355,7 +355,7 @@ left: 10px; padding: 0 3px;}</string>
                 </rect>
                </property>
                <property name="maximum">
-                <number>59</number>
+                <number>55</number>
                </property>
                <property name="singleStep">
                 <number>5</number>
@@ -371,7 +371,7 @@ left: 10px; padding: 0 3px;}</string>
                 </rect>
                </property>
                <property name="maximum">
-                <number>59</number>
+                <number>55</number>
                </property>
                <property name="singleStep">
                 <number>5</number>
@@ -436,7 +436,7 @@ left: 10px; padding: 0 3px;}</string>
                 </rect>
                </property>
                <property name="maximum">
-                <number>59</number>
+                <number>55</number>
                </property>
                <property name="singleStep">
                 <number>5</number>

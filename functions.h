@@ -15,6 +15,7 @@
 #define FUNCTIONS_H
 
 #include <QCheckBox>
+#include <QDateTime>
 #include <QDialog>
 #include <QDir>
 #include <QFile>
@@ -72,6 +73,8 @@ public:
     static bool copyRecursively(const QString &srcFilePath, const QString &tgtFilePath);
     static bool removeDir(const QString &dirName);
     static QString setPrintTags(QString text);
+    static QString makeRichSnippets(QString title, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep, int hRep, int minRep,
+                             int nbPersonnes, QString precision, QString description, QStringList ingredients, QStringList preparation);
 };
 
 #endif // FUNCTIONS_H

@@ -42,6 +42,7 @@ extern QString editPict;
 extern QString corrOrtho;
 extern QString correction;
 extern bool cancel;
+extern bool richSnippets;
 extern bool cecPrinter;
 extern bool sendAuto;
 extern bool cecSearch;
@@ -1500,7 +1501,7 @@ void CeCWriter::makeHtmlCode()
         conseils = Functions::getSimpleList(allCons);
     QString description = Functions::insertLinks(ui->description->toPlainText());
     QString descTmp = description;
-    QRegExp exp ("<a href=\".+\" target=\".+\">");
+    QRegExp exp ("<a href=\"[^\"]+\" target=\"[^\"]+\">");
     descTmp.replace(exp, "");
     descTmp.replace("</a>", "");
     QStringList descWords;
@@ -1516,6 +1517,12 @@ void CeCWriter::makeHtmlCode()
                                                    ui->hCuis->value(), ui->minCuis->value(), ui->jRep->value(), ui->hRep->value(),
                                                    ui->minRep->value(), ui->nbPersonnes->value(), ui->precision->text(),
                                                    description, ingredients, materiel, preparation, conseils);
+    if (richSnippets) {
+        htmlCode = Functions::makeRichSnippets(ui->titre->text(), imgFileName, ui->hPrep->value(), ui->minPrep->value(),
+                                               ui->hCuis->value(), ui->minCuis->value(), ui->jRep->value(), ui->hRep->value(),
+                                               ui->minRep->value(), ui->nbPersonnes->value(), ui->precision->text(), description,
+                                               allIngr, allPrep) + htmlCode;
+    }
 }
 
 /**

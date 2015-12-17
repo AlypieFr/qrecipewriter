@@ -40,6 +40,7 @@ extern QString addrPub; //Address of publication (XML-RPC)
 extern QString systExp; //Operating system of the user
 extern QString editPict; //Program for advanced picture editor
 extern QString corrOrtho; //Use orthograph correction when typing
+extern bool richSnippets;
 extern bool cecPrinter; //CeC Printer status
 extern bool cecSearch;
 extern bool cecCoupDeCoeur;
@@ -301,6 +302,7 @@ void Options::on_buttonOptionsValider_clicked()
                 addrSite=ui->lineEditAdresseSite->text();
                 addrPub=ui->lineEditAdressePublication->text();
                 dirDistPict=ui->lineEditDossierDistantImages->text();
+                richSnippets = ui->richSnippets->isChecked();
                 cecPrinter = ui->cecPrinter->isChecked();
                 cecSearch = ui->cecSearch->isChecked();
                 cecCoupDeCoeur = ui->cecCoupDeCoeur->isChecked();
@@ -310,6 +312,7 @@ void Options::on_buttonOptionsValider_clicked()
                 addrSite=ui->lineEditAdresseSite_2->text();
                 addrPub=ui->lineEditAdressePublication_2->text();
                 dirDistPict=ui->lineEditDossierDistantImages_2->text();
+                richSnippets = ui->richSnippets_2->isChecked();
                 cecPrinter = ui->cecPrinter_2->isChecked();
                 cecSearch = ui->cecSearch_2->isChecked();
                 cecCoupDeCoeur = ui->cecCoupDeCoeur_2->isChecked();
@@ -319,6 +322,7 @@ void Options::on_buttonOptionsValider_clicked()
                 addrSite=ui->lineEditAdresseSite_3->text();
                 addrPub=ui->lineEditAdressePublication_3->text();
                 dirDistPict=ui->lineEditDossierDistantImages_3->text();
+                richSnippets = ui->richSnippets_3->isChecked();
                 cecPrinter = ui->cecPrinter_3->isChecked();
                 cecSearch = ui->cecSearch_3->isChecked();
                 cecCoupDeCoeur = ui->cecCoupDeCoeur_3->isChecked();
@@ -328,6 +332,7 @@ void Options::on_buttonOptionsValider_clicked()
                 addrSite=ui->lineEditAdresseSite_4->text();
                 addrPub=ui->lineEditAdressePublication_4->text();
                 dirDistPict=ui->lineEditDossierDistantImages_4->text();
+                richSnippets = ui->richSnippets_4->isChecked();
                 cecPrinter = ui->cecPrinter_4->isChecked();
                 cecSearch = ui->cecSearch_4->isChecked();
                 cecCoupDeCoeur = ui->cecCoupDeCoeur_4->isChecked();
@@ -337,6 +342,7 @@ void Options::on_buttonOptionsValider_clicked()
                 addrSite=ui->lineEditAdresseSite_5->text();
                 addrPub=ui->lineEditAdressePublication_5->text();
                 dirDistPict=ui->lineEditDossierDistantImages_5->text();
+                richSnippets = ui->richSnippets_5->isChecked();
                 cecPrinter = ui->cecPrinter_5->isChecked();
                 cecSearch = ui->cecSearch_5->isChecked();
                 cecCoupDeCoeur = ui->cecCoupDeCoeur_5->isChecked();
@@ -402,6 +408,11 @@ void Options::loadConfigsServer() {
                         configServer[i]["dirDistPict"] = xml.text().toString();
                         continue;
                     }
+                    if(xml.name() == "richSnippets") {
+                        xml.readNext();
+                        configServer[i]["richSnippets"] = xml.text().toString();
+                        continue;
+                    }
                     if(xml.name() == "cecPrinter") {
                         xml.readNext();
                         configServer[i]["cecPrinter"] = xml.text().toString();
@@ -425,6 +436,7 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite->setText(configServer[1]["addrSite"]);
         ui->lineEditAdressePublication->setText(configServer[1]["addrPub"]);
         ui->lineEditDossierDistantImages->setText(configServer[1]["dirDistPict"]);
+        ui->richSnippets->setChecked(configServer[1]["richSnippets"] == "1");
         ui->cecPrinter->setChecked(configServer[1]["cecPrinter"] == "1");
         ui->cecSearch->setChecked(configServer[1]["cecSearch"] == "1");
         ui->cecCoupDeCoeur->setChecked(configServer[1]["cecCoupDeCoeur"] == "1");
@@ -433,6 +445,7 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite_2->setText(configServer[2]["addrSite"]);
         ui->lineEditAdressePublication_2->setText(configServer[2]["addrPub"]);
         ui->lineEditDossierDistantImages_2->setText(configServer[2]["dirDistPict"]);
+        ui->richSnippets_2->setChecked(configServer[2]["richSnippets"] == "1");
         ui->cecPrinter_2->setChecked(configServer[2]["cecPrinter"] == "1");
         ui->cecSearch_2->setChecked(configServer[2]["cecSearch"] == "1");
         ui->cecCoupDeCoeur_2->setChecked(configServer[2]["cecCoupDeCoeur"] == "1");
@@ -441,6 +454,7 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite_3->setText(configServer[3]["addrSite"]);
         ui->lineEditAdressePublication_3->setText(configServer[3]["addrPub"]);
         ui->lineEditDossierDistantImages_3->setText(configServer[3]["dirDistPict"]);
+        ui->richSnippets_3->setChecked(configServer[3]["richSnippets"] == "1");
         ui->cecPrinter_3->setChecked(configServer[3]["cecPrinter"] == "1");
         ui->cecSearch_3->setChecked(configServer[3]["cecSearch"] == "1");
         ui->cecCoupDeCoeur_3->setChecked(configServer[3]["cecCoupDeCoeur"] == "1");
@@ -449,6 +463,7 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite_4->setText(configServer[4]["addrSite"]);
         ui->lineEditAdressePublication_4->setText(configServer[4]["addrPub"]);
         ui->lineEditDossierDistantImages_4->setText(configServer[4]["dirDistPict"]);
+        ui->richSnippets_4->setChecked(configServer[4]["richSnippets"] == "1");
         ui->cecPrinter_4->setChecked(configServer[4]["cecPrinter"] == "1");
         ui->cecSearch_4->setChecked(configServer[4]["cecSearch"] == "1");
         ui->cecCoupDeCoeur_4->setChecked(configServer[4]["cecCoupDeCoeur"] == "1");
@@ -457,6 +472,7 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite_5->setText(configServer[5]["addrSite"]);
         ui->lineEditAdressePublication_5->setText(configServer[5]["addrPub"]);
         ui->lineEditDossierDistantImages_5->setText(configServer[5]["dirDistPict"]);
+        ui->richSnippets_5->setChecked(configServer[5]["richSnippets"] == "1");
         ui->cecPrinter_5->setChecked(configServer[5]["cecPrinter"] == "1");
         ui->cecSearch_5->setChecked(configServer[5]["cecSearch"] == "1");
         ui->cecCoupDeCoeur_5->setChecked(configServer[5]["cecCoupDeCoeur"] == "1");
@@ -524,6 +540,8 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages->text());
+    QString activeRichSnippets = ui->richSnippets->isChecked() ? "1" : "0";
+    writerS->writeTextElement("richSnippets", activeRichSnippets);
     QString activeCeCPrinter = ui->cecPrinter->isChecked() ? "1": "0";
     writerS->writeTextElement("cecPrinter",activeCeCPrinter);
     QString cSearch = ui->cecSearch->isChecked() ? "1" : "0";
@@ -542,6 +560,8 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_2->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_2->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_2->text());
+    activeRichSnippets = ui->richSnippets_2->isChecked() ? "1" : "0";
+    writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->cecPrinter_2->isChecked() ? "1": "0";
     writerS->writeTextElement("cecPrinter",activeCeCPrinter);
     cSearch = ui->cecSearch_2->isChecked() ? "1" : "0";
@@ -560,6 +580,8 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_3->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_3->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_3->text());
+    activeRichSnippets = ui->richSnippets_3->isChecked() ? "1" : "0";
+    writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->cecPrinter_3->isChecked() ? "1": "0";
     writerS->writeTextElement("cecPrinter",activeCeCPrinter);
     cSearch = ui->cecSearch_3->isChecked() ? "1" : "0";
@@ -578,6 +600,8 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_4->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_4->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_4->text());
+    activeRichSnippets = ui->richSnippets_4->isChecked() ? "1" : "0";
+    writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->cecPrinter_4->isChecked() ? "1": "0";
     writerS->writeTextElement("cecPrinter",activeCeCPrinter);
     cSearch = ui->cecSearch_4->isChecked() ? "1" : "0";
@@ -596,6 +620,8 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_5->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_5->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_5->text());
+    activeRichSnippets = ui->richSnippets_5->isChecked() ? "1" : "0";
+    writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->cecPrinter_5->isChecked() ? "1": "0";
     writerS->writeTextElement("cecPrinter",activeCeCPrinter);
     cSearch = ui->cecSearch_5->isChecked() ? "1" : "0";

@@ -83,7 +83,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -515,7 +515,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>180</y>
+          <y>190</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -564,7 +564,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>150</y>
+          <y>160</y>
           <width>161</width>
           <height>23</height>
          </rect>
@@ -580,7 +580,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>210</y>
+          <y>220</y>
           <width>231</width>
           <height>23</height>
          </rect>
@@ -596,7 +596,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>280</y>
+          <y>290</y>
           <width>351</width>
           <height>25</height>
          </rect>
@@ -608,8 +608,8 @@
        <widget class="QCheckBox" name="configActive">
         <property name="geometry">
          <rect>
-          <x>350</x>
-          <y>180</y>
+          <x>460</x>
+          <y>120</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -629,43 +629,27 @@
          <bool>false</bool>
         </property>
        </widget>
+       <widget class="QCheckBox" name="richSnippets">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>130</y>
+          <width>381</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer les extraits enrichis dans les recherches Google</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="config2">
        <attribute name="title">
         <string>Config 2</string>
        </attribute>
-       <widget class="QCheckBox" name="cecCoupDeCoeur_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>210</y>
-          <width>231</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Coup de Coeur *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="cecSearch_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>180</y>
-          <width>171</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Search *</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="labelAdresseSite_2">
         <property name="geometry">
          <rect>
@@ -735,22 +719,6 @@
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecPrinter_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>150</y>
-          <width>161</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Printer</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_3">
         <property name="geometry">
          <rect>
@@ -764,11 +732,59 @@
          <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Conseils En Cuisine !&lt;/i&gt;</string>
         </property>
        </widget>
+       <widget class="QCheckBox" name="cecSearch_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>190</y>
+          <width>171</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer CeC Search *</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="cecCoupDeCoeur_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>220</y>
+          <width>231</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer CeC Coup de Coeur *</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="richSnippets_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>130</y>
+          <width>381</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer les extraits enrichis dans les recherches Google</string>
+        </property>
+       </widget>
        <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_2">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>280</y>
+          <y>290</y>
           <width>351</width>
           <height>25</height>
          </rect>
@@ -780,8 +796,8 @@
        <widget class="QCheckBox" name="configActive_2">
         <property name="geometry">
          <rect>
-          <x>350</x>
-          <y>180</y>
+          <x>460</x>
+          <y>120</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -801,43 +817,46 @@
          <bool>false</bool>
         </property>
        </widget>
+       <widget class="QCheckBox" name="cecPrinter_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>160</y>
+          <width>161</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer CeC Printer</string>
+        </property>
+       </widget>
+       <zorder>labelAdresseSite_2</zorder>
+       <zorder>labelAddressePublication_2</zorder>
+       <zorder>lineEditDossierDistantImages_2</zorder>
+       <zorder>lineEditAdresseSite_2</zorder>
+       <zorder>lineEditAdressePublication_2</zorder>
+       <zorder>labelDossierDistantImages_2</zorder>
+       <zorder>label_3</zorder>
+       <zorder>cecPrinter_2</zorder>
+       <zorder>cecCoupDeCoeur_2</zorder>
+       <zorder>buttonOptionsSupprimerDonneesPerso_2</zorder>
+       <zorder>configActive_2</zorder>
+       <zorder>richSnippets_2</zorder>
+       <zorder>cecSearch_2</zorder>
+       <zorder>cecSearch_2</zorder>
+       <zorder>cecCoupDeCoeur_2</zorder>
+       <zorder>richSnippets_2</zorder>
+       <zorder>buttonOptionsSupprimerDonneesPerso_2</zorder>
+       <zorder>configActive_2</zorder>
+       <zorder>cecPrinter_2</zorder>
       </widget>
       <widget class="QWidget" name="config3">
        <attribute name="title">
         <string>Config 3</string>
        </attribute>
-       <widget class="QCheckBox" name="cecCoupDeCoeur_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>210</y>
-          <width>231</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Coup de Coeur *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="cecSearch_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>180</y>
-          <width>171</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Search *</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="labelAdresseSite_3">
         <property name="geometry">
          <rect>
@@ -907,22 +926,6 @@
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecPrinter_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>150</y>
-          <width>161</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Printer</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_4">
         <property name="geometry">
          <rect>
@@ -936,11 +939,59 @@
          <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Conseils En Cuisine !&lt;/i&gt;</string>
         </property>
        </widget>
+       <widget class="QCheckBox" name="cecSearch_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>190</y>
+          <width>171</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer CeC Search *</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="cecCoupDeCoeur_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>220</y>
+          <width>231</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer CeC Coup de Coeur *</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="richSnippets_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>130</y>
+          <width>381</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer les extraits enrichis dans les recherches Google</string>
+        </property>
+       </widget>
        <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_3">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>280</y>
+          <y>290</y>
           <width>351</width>
           <height>25</height>
          </rect>
@@ -952,8 +1003,8 @@
        <widget class="QCheckBox" name="configActive_3">
         <property name="geometry">
          <rect>
-          <x>350</x>
-          <y>180</y>
+          <x>460</x>
+          <y>120</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -973,43 +1024,27 @@
          <bool>false</bool>
         </property>
        </widget>
+       <widget class="QCheckBox" name="cecPrinter_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>160</y>
+          <width>161</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer CeC Printer</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="config4">
        <attribute name="title">
         <string>Config 4</string>
        </attribute>
-       <widget class="QCheckBox" name="cecCoupDeCoeur_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>210</y>
-          <width>231</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Coup de Coeur *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="cecSearch_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>180</y>
-          <width>171</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Search *</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="labelAdresseSite_4">
         <property name="geometry">
          <rect>
@@ -1079,22 +1114,6 @@
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecPrinter_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>150</y>
-          <width>161</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Printer</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
@@ -1108,24 +1127,27 @@
          <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Conseils En Cuisine !&lt;/i&gt;</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_4">
+       <widget class="QCheckBox" name="cecPrinter_4">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>280</y>
-          <width>351</width>
-          <height>25</height>
+          <y>160</y>
+          <width>161</width>
+          <height>23</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
         <property name="text">
-         <string>Supprimer les données personnelles (identifiants)</string>
+         <string>Activer CeC Printer</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="configActive_4">
         <property name="geometry">
          <rect>
-          <x>350</x>
-          <y>180</y>
+          <x>460</x>
+          <y>120</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -1145,16 +1167,27 @@
          <bool>false</bool>
         </property>
        </widget>
-      </widget>
-      <widget class="QWidget" name="config5">
-       <attribute name="title">
-        <string>Config 5</string>
-       </attribute>
-       <widget class="QCheckBox" name="cecCoupDeCoeur_5">
+       <widget class="QCheckBox" name="richSnippets_4">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>210</y>
+          <y>130</y>
+          <width>381</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer les extraits enrichis dans les recherches Google</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="cecCoupDeCoeur_4">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>220</y>
           <width>231</width>
           <height>23</height>
          </rect>
@@ -1166,11 +1199,11 @@
          <string>Activer CeC Coup de Coeur *</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecSearch_5">
+       <widget class="QCheckBox" name="cecSearch_4">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>180</y>
+          <y>190</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -1182,6 +1215,24 @@
          <string>Activer CeC Search *</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_4">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>290</y>
+          <width>351</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Supprimer les données personnelles (identifiants)</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="config5">
+       <attribute name="title">
+        <string>Config 5</string>
+       </attribute>
        <widget class="QLabel" name="labelAdresseSite_5">
         <property name="geometry">
          <rect>
@@ -1251,22 +1302,6 @@
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecPrinter_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>150</y>
-          <width>161</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer CeC Printer</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_6">
         <property name="geometry">
          <rect>
@@ -1280,24 +1315,75 @@
          <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Conseils En Cuisine !&lt;/i&gt;</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_5">
+       <widget class="QCheckBox" name="cecPrinter_5">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>280</y>
-          <width>351</width>
-          <height>25</height>
+          <y>160</y>
+          <width>161</width>
+          <height>23</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
         <property name="text">
-         <string>Supprimer les données personnelles (identifiants)</string>
+         <string>Activer CeC Printer</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="richSnippets_5">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>130</y>
+          <width>381</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer les extraits enrichis dans les recherches Google</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="cecSearch_5">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>190</y>
+          <width>171</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer CeC Search *</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="cecCoupDeCoeur_5">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>220</y>
+          <width>231</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Activer CeC Coup de Coeur *</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="configActive_5">
         <property name="geometry">
          <rect>
-          <x>350</x>
-          <y>180</y>
+          <x>460</x>
+          <y>120</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -1315,6 +1401,19 @@
         </property>
         <property name="checked">
          <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_5">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>290</y>
+          <width>351</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Supprimer les données personnelles (identifiants)</string>
         </property>
        </widget>
       </widget>

@@ -30,6 +30,7 @@ extern QString addrPub;
 extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
+extern bool richSnippets;
 extern bool cecPrinter;
 extern bool cecSearch;
 extern bool cecCoupDeCoeur;
@@ -182,6 +183,11 @@ void Functions::loadConfig()
                 if(xmlS.name() == "dirDistPict") {
                     xmlS.readNext();
                     dirDistPict = xmlS.text().toString();
+                    continue;
+                }
+                if(xmlS.name() == "richSnippets") {
+                    xmlS.readNext();
+                    richSnippets = xmlS.text().toString() == "1" ? true: false;
                     continue;
                 }
                 if(xmlS.name() == "cecPrinter") {
@@ -843,6 +849,81 @@ QString Functions::setPrintTags(QString text)
     return text;
 }
 
+QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep, int hRep, int minRep,
+                                    int nbPersonnes, QString precision, QString description, QStringList ingredients, QStringList preparation)
+{
+    QString photo = addrSite;
+    if (!photo.endsWith("/")) {
+        photo += "/";
+    }
+    photo += dirDistPict;
+
+    QRegExp exp ("<a href=\"[^\"]+\" target=\"[^\"]+\">");
+    description.replace(exp, "");
+    description.replace("</a>", "");
+
+    QString prepTime = hPrep == 0 ? "PT" : "PT" + QString::number(hPrep) + "H";
+    prepTime += QString::number(minPrep) + "M";
+    QString cookTime = hCuis == 0 ? "PT" : "PT" + QString::number(hCuis) + "H";
+    cookTime += QString::number(minCuis) + "M";
+
+    int minTotal = hPrep * 60 + minPrep + hCuis * 60 + minCuis + jRep * 24 * 60 + hRep * 60 + minRep;
+    int hTotal = minTotal / 60;
+    minTotal = minTotal - (60 * hTotal);
+    QString totalTime = hTotal == 0 ? "PT" : "PT" + QString::number(hTotal) + "H";
+    totalTime += QString::number(minTotal) + "M";
+
+    QRegExp baliseB ("<[A-Za-z0-9]{1,3}>");
+    QRegExp baliseE ("</[A-Za-z0-9]{1,3}>");
+
+    description.replace(baliseB, "").replace(baliseE, "");
+
+    QStringList ingrs;
+    int i = 1;
+    foreach (QString ingr, ingredients) {
+        bool addItem = true;
+        if (i < ingredients.size()) {
+            int index = ingr.split("|")[0].toInt();
+            if (ingredients[i].split("|")[0].toInt() > index) {
+                addItem = false;
+            }
+        }
+        if (addItem) {
+            ingrs.append(ingr.split("|")[1].replace(baliseB, "").replace(baliseE, ""));
+        }
+        i++;
+    }
+
+    QStringList preps;
+    foreach (QString prep, preparation) {
+        preps.append(prep.replace("0|", " ").replace(baliseB, "").replace(baliseE, ""));
+    }
+
+    QString snippet = "<script type=\"application/ld+json\">\n\
+        {\n\
+              \"@context\": \"http://schema.org/\",\n\
+              \"@type\": \"Recipe\",\n\
+              \"name\": \"" + title.replace("\"", "\\\"") + "\",\n\
+              \"image\": \"" + photo + mainPicture + "\",\n\
+              \"author\": {\n\
+                \"@type\":\"Person\",\n\
+                \"name\":\"" + pseudoWp + "\"\n\
+              },\n\
+              \"datePublished\": \"" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + "\",\n\
+              \"description\": \"" + description + "\",\n\
+              \"prepTime\": \"" + prepTime + "\",\n\
+              \"cookTime\": \"" + cookTime + "\",\n\
+              \"totalTime\": \"" + totalTime + "\",\n\
+              \"recipeYield\": \"pour " + QString::number(nbPersonnes) + " personnes";
+    if (precision != "") {
+        snippet += " (" + precision + ")";
+    }
+    snippet += "\",\n";
+    snippet += "              \"ingredients\": \n              [  \"" + ingrs.join("\",\n                \"") + "\"\n              ],\n";
+    snippet += "              \"recipeInstructions\": \"" + preps.join("\\n") + "\"\n        }\n</script>\n\n";
+    return snippet;
+}
+
 /**
  * @brief Functions::generateHtmlCode
  * @param titre
@@ -931,7 +1012,7 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
     htmlCode = insertMovies(htmlCode);
 
     //breaking spaces:
-    htmlCode = htmlCode.replace(" :", "&#8239;:").replace(" !", "&#8239;!").replace(" ;", "&#8239;;").replace(" /", "&#8239;/").replace(" =", "&#8239;=");
+    htmlCode = htmlCode.replace(" :", "&#8239;:").replace(" !", "&#8239;!").replace(" ;", "&#8239;;").replace(" =", "&#8239;=");
 
     return htmlCode;
 }
