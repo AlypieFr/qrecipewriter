@@ -861,6 +861,13 @@ QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPre
     QRegExp exp ("<a href=\"[^\"]+\" target=\"[^\"]+\">");
     description.replace(exp, "");
     description.replace("</a>", "");
+    description.replace("\"", "\\\"");
+    description.replace(";-)", "");
+    description.replace(":-)", "");
+    description.replace(":-(", "");
+    description.replace(";-(", "");
+    description.replace(";-D", "");
+    description.replace(":-D", "");
 
     QString prepTime = hPrep == 0 ? "PT" : "PT" + QString::number(hPrep) + "H";
     prepTime += QString::number(minPrep) + "M";
