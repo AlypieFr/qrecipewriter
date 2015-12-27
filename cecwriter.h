@@ -28,8 +28,11 @@
 #include "filedownloader.h"
 #include "qinputmultiline.h"
 #include "coupdecoeur.h"
+#include "opendistant.h"
 
 #include <QMainWindow>
+
+#include <QDebug>
 
 //Graphic components
 #include <QApplication>
@@ -37,6 +40,7 @@
 #include <QCheckBox>
 #include <QColor>
 #include <QDate>
+#include <QDateTime>
 #include <QDesktopWidget>
 #include <QDir>
 #include <QFileDialog>
@@ -195,6 +199,8 @@ private slots:
 
     void on_setCoupDeCoeur_clicked();
 
+    void on_actionOuvrir_une_recette_en_ligne_triggered();
+
 public slots:
     void init();
     void config();
@@ -207,7 +213,6 @@ private:
     int idIngr; //Keeps identation level for ingredients (0 is basic level, 1 level 1, etc...)
     QString idPrep; //Keeps identation level and puce number : idPrep.split('.').size() - 2 indicates indentation level, idPrep.split('.') store puce number in the penultimate item list
     QMap<QCheckBox*, QString> categories; //Keeps categories QCheckbox shown in application associated to their name
-    QStringList namesCats; //Contains names of categories
     int idLien; //Indicates the number to the next link in link balises shown (<L1> texte </L1> for example)
     QHBoxLayout *catLay; //Layout for categories
     QStandardItemModel *model1, *model2, *model3, *model4; //Four models for respectively ingredients, materiel, préparation and conseils listviews
@@ -238,7 +243,7 @@ private:
     void resetFields();
     void saveVariables(QString ingr, QString mat, QString prep, QString cons);
     bool checkHasBeenModified();
-    bool isReadyTosend();
+    bool isReadyTosend(bool alert);
     void modifierIngr(const QModelIndex &index);
     void modifierMat(const QModelIndex &index);
     void modifierPrep(const QModelIndex &index);
@@ -275,6 +280,7 @@ private:
     void insertConseil(QString text);
     void sendManual();
     void sendAutomatic();
+    void loadRecipe(QString fileName, bool testReadyToSend);
 };
 
 #endif // CECWRITER_H

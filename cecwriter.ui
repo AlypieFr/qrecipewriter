@@ -1157,7 +1157,7 @@ left: 10px; padding: 0 3px;}</string>
              <x>0</x>
              <y>0</y>
              <width>673</width>
-             <height>638</height>
+             <height>639</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1955,7 +1955,7 @@ left: 10px; padding: 0 3px;}</string>
      <x>0</x>
      <y>0</y>
      <width>1149</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOutils">
@@ -1977,6 +1977,7 @@ left: 10px; padding: 0 3px;}</string>
     </property>
     <addaction name="actionNouvelle_Recette"/>
     <addaction name="actionOuvrir_une_recette_existante"/>
+    <addaction name="actionOuvrir_une_recette_en_ligne"/>
    </widget>
    <widget class="QMenu" name="menuRecette_2">
     <property name="title">
@@ -2090,6 +2091,14 @@ left: 10px; padding: 0 3px;}</string>
   <action name="actionRechercher_une_mise_jour">
    <property name="text">
     <string>Rechercher une mise à jour</string>
+   </property>
+  </action>
+  <action name="actionOuvrir_une_recette_en_ligne">
+   <property name="text">
+    <string>Ouvrir une recette en ligne</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+O</string>
    </property>
   </action>
  </widget>

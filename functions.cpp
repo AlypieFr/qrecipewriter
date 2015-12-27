@@ -210,33 +210,10 @@ void Functions::loadConfig()
     }
 }
 
-/**
- * @brief Functions::saveRecipe
- * @param title : titre
- * @param categories : list of categories
- * @param tpsPrep : temps de préparation
- * @param tpsCuis : temps de cuisson
- * @param tpsRep : temps de repos
- * @param nbPers : nombres de personnes
- * @param precision : précision
- * @param description
- * @param ingredients
- * @param materiel
- * @param preparation
- * @param conseils
- * @param picture
- * @param liens
- * @param filename : file into the recipe will be saved
- * @return true if save success
- * Do save of recipe on the file
- */
-bool Functions::saveRecipe(QString title, QStringList categories, QString tpsPrep,
-                           QString tpsCuis, QString tpsRep, QString nbPers, QString precision,
-                           QString description, QStringList ingredients, QStringList materiel,
-                           QStringList preparation, QStringList conseils, QString picture, QMap<QString, QString> liens, QString filename, QString coupDeCoeur)
-{
-    QFile* file = new QFile(dirSav + "/" + filename + ".rct");
-    file->remove(".");
+bool Functions::saveRecipeToFile(QString title, QStringList categories, QString tpsPrep, QString tpsCuis, QString tpsRep,
+                                 QString nbPers, QString precision, QString description, QStringList ingredients,
+                                 QStringList materiel, QStringList preparation, QStringList conseils, QString picture,
+                                 QMap<QString, QString> liens, QFile *file, QString coupDeCoeur, int idRecipe) {
     file->open(QIODevice::WriteOnly);
     QXmlStreamWriter writer(file);
 
@@ -257,6 +234,7 @@ bool Functions::saveRecipe(QString title, QStringList categories, QString tpsPre
     writer.writeTextElement("nbPers", nbPers);
     writer.writeTextElement("precision", precision);
     writer.writeTextElement("description", description);
+    writer.writeTextElement("idRecipe", QString::number(idRecipe));
     if (ingredients.size() > 0)
     {
         writer.writeStartElement("ingredients");
@@ -308,6 +286,381 @@ bool Functions::saveRecipe(QString title, QStringList categories, QString tpsPre
     }
     file->close();
     return true;
+}
+
+/**
+ * @brief Functions::saveRecipe
+ * @param title : titre
+ * @param categories : list of categories
+ * @param tpsPrep : temps de préparation
+ * @param tpsCuis : temps de cuisson
+ * @param tpsRep : temps de repos
+ * @param nbPers : nombres de personnes
+ * @param precision : précision
+ * @param description
+ * @param ingredients
+ * @param materiel
+ * @param preparation
+ * @param conseils
+ * @param picture
+ * @param liens
+ * @param filename : file into the recipe will be saved
+ * @return true if save success
+ * Do save of recipe on the file
+ */
+bool Functions::saveRecipe(QString title, QStringList categories, QString tpsPrep,
+                           QString tpsCuis, QString tpsRep, QString nbPers, QString precision,
+                           QString description, QStringList ingredients, QStringList materiel,
+                           QStringList preparation, QStringList conseils, QString picture, QMap<QString, QString> liens, QString filename, QString coupDeCoeur, int idRecipe)
+{
+    QFile* file = new QFile(filename + ".rct");
+    file->remove(".");
+    return saveRecipeToFile(title, categories, tpsPrep, tpsCuis, tpsRep, nbPers, precision, description, ingredients, materiel, preparation, conseils, picture, liens, file, coupDeCoeur, idRecipe);
+}
+
+QString Functions::removeSpecialChars(QString str) {
+    return str.replace("&#8239;", " ").replace(QRegExp("<span[^>]*>"), "").replace("</span>", "");
+}
+
+QStringList Functions::addCommentLines(QString txt) {
+    QStringList res = txt.split(QRegExp("<br\\s?/?>"));
+    QRegExp notEmpty = QRegExp("\\S+");
+    QRegExp notOnlyTags = QRegExp(">[^<]+<");
+    bool finished = false;
+    int i = 0;
+    while (!finished) {
+        bool removeLine = false;
+        if (res[i].contains(notEmpty)) {
+            QString test = res[i];
+            while(test.startsWith(" ")) {
+                test = test.mid(1);
+            }
+            while(test.endsWith(" ")) {
+                test = test.left(test.length() - 1);
+            }
+            if (test.startsWith("<") && test.endsWith(">") && !test.contains(notOnlyTags)) {
+                removeLine = true;
+            }
+            else {
+                res[i] = "comm|" + res[i];
+                i++;
+            }
+        }
+        else {
+            removeLine = true;
+        }
+        if (removeLine){
+            res.removeAt(i);
+        }
+        if (i >= res.count()) {
+            finished = true;
+        }
+    }
+    return res;
+}
+
+QStringList Functions::makeSimpleList(QString text) {
+    QStringList list;
+    QString next = text.mid(4);
+    int nextFUl = -1, nextLi = -1;
+    while (next != "") {
+        nextFUl = next.indexOf("</ul>");
+        nextLi = next.indexOf("<li>");
+        if (nextFUl == -1) {
+            nextFUl = 1000000;
+        }
+        if (nextLi == -1) {
+            nextLi = 1000000;
+        }
+        int min = qMin(nextLi, nextFUl);
+        if (min < 1000000) {
+            if (min == nextLi) {
+                next = next.mid(nextLi + 4);
+                int endLi = next.indexOf("</li>");
+                list.append("0|" + next.left(endLi));
+                next = next.mid(endLi + 5);
+            }
+            else if(min == nextFUl) {
+                next = next.mid(nextFUl + 5);
+            }
+        }
+        else {
+            list.append(addCommentLines(next));
+            next = "";
+        }
+    }
+    return list;
+}
+
+QStringList Functions::makeSimpleListWithSubLists(QString text) {
+    QStringList list;
+    int niv = 0;
+    QString next = text.mid(4);
+    int nextUl = -1, nextFUl = -1, nextLi = -1;
+    while (next != "") {
+        nextUl = next.indexOf("<ul>");
+        nextFUl = next.indexOf("</ul>");
+        nextLi = next.indexOf("<li>");
+        if (nextUl == -1) {
+            nextUl = 1000000;
+        }
+        if (nextFUl == -1) {
+            nextFUl = 1000000;
+        }
+        if (nextLi == -1) {
+            nextLi = 1000000;
+        }
+        int min1 = qMin(nextUl, nextFUl);
+        int min = qMin(min1,nextLi);
+        if (min < 1000000) {
+            if (min == nextUl) {
+                if (nextUl > 0) {
+                    list.append(addCommentLines(next.left(nextUl)));
+                }
+                niv++;
+                next = next.mid(nextUl + 4);
+            }
+            else if(min == nextFUl) {
+                niv--;
+                next = next.mid(nextFUl + 5);
+            }
+            else if(min == nextLi) {
+                next = next.mid(nextLi + 4);
+                int endLi = next.indexOf("</li>");
+                list.append(QString::number(niv) + "|" + removeSpecialChars(next.left(endLi)));
+                next = next.mid(endLi + 5);
+            }
+        }
+        else {
+            list.append(addCommentLines(next));
+            next = "";
+        }
+    }
+    return list;
+}
+
+QStringList Functions::makeNumberedList(QString text) {
+    QStringList list;
+    QString bal = "0.0";
+    QString next = text.mid(4);
+    int nextOl = -1, nextFOl = -1, nextLi = -1;
+    while (next != "") {
+        nextOl = next.indexOf("<ol>");
+        nextFOl = next.indexOf("</ol>");
+        nextLi = next.indexOf("<li>");
+        if (nextOl == -1) {
+            nextOl = 1000000;
+        }
+        if (nextFOl == -1) {
+            nextFOl = 1000000;
+        }
+        if (nextLi == -1) {
+            nextLi = 1000000;
+        }
+        int min1 = qMin(nextOl, nextFOl);
+        int min = qMin(min1,nextLi);
+        if (min < 1000000) {
+            if (nextOl == min) {
+                if (nextOl > 0) {
+                    list.append(addCommentLines(next.left(nextOl)));
+                    bal = "0";
+                }
+                bal += ".0";
+                next = next.mid(nextOl + 4);
+            }
+            else if(nextFOl == min) {
+                QStringList balParts = bal.split(".");
+                balParts.removeAt(balParts.length() - 2);
+                bal = balParts.join(".");
+                next = next.mid(nextFOl + 5);
+            }
+            else if(nextLi == min) {
+                QStringList balParts = bal.split(".");
+                balParts[balParts.length() - 2] = QString::number(balParts[balParts.length() - 2].toInt() + 1);
+                bal = balParts.join(".");
+                next = next.mid(nextLi + 4);
+                int endLi = next.indexOf("</li>");
+                list.append(bal + "|" + next.left(endLi));
+                next = next.mid(endLi + 5);
+            }
+        }
+        else {
+            list.append(addCommentLines(next));
+            next = "";
+        }
+    }
+    return list;
+}
+
+bool Functions::saveRecipeFromDist(QString title, QStringList categories, QString content, QString picture,
+                                   QString coupDeCoeur, QFile *file, int idRecipe) {
+    for (int i = 0; i < categories.count(); ++i) {
+        categories[i] = categories[i].replace("&amp;", "&&");
+    }
+    content = content.replace("\n", "").replace("\r", "");
+    QString description = "", tpsPrep = "0h0", tpsCuis = "0h0", tpsRep = "0j0h0", nbPers, precision;
+    QStringList  ingredients, materiel, preparation, conseils;
+    QMap<QString, QString> liens;
+    int nbLien = 1;
+
+    //Get description:
+    QRegExp lienExp = QRegExp("<a [^>]*href=[\"']([^\"']+)[\"'][^>]*>([^<]+)</a>");
+    QRegExp descExp = QRegExp("<description>(.+)</description>");
+    if (content.contains(descExp)) {
+        description = descExp.cap(1);
+        description = description.replace("<p>", "").replace("</p>", "\n");
+        description = description.replace(QRegExp("<br\\s?/?>"), "\n");
+        while (description.contains(lienExp)) {
+            QString balise = "L" + QString::number(nbLien);
+            liens[balise] = lienExp.cap(1);
+            description = description.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
+            nbLien++;
+        }
+        while(description.right(1) == "\n") {
+            description = description.left(description.length() - 1);
+        }
+    }
+
+    //Get ingredients and materiel:
+    QRegExp ingrExp = QRegExp("<ingredients>(.+)</ingredients>");
+    if (content.contains(ingrExp)) {
+        QString txt = removeSpecialChars(ingrExp.cap(1));
+        while (txt.contains(lienExp)) {
+            QString balise = "L" + QString::number(nbLien);
+            liens[balise] = lienExp.cap(1);
+            txt = txt.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
+            nbLien++;
+        }
+        QRegExp header = QRegExp("Ingrédients \\(pour (\\d+) personnes?([^:]+):");
+        if (txt.contains(header)) {
+            qDebug() << "IS HEADER";
+            nbPers = header.cap(1);
+            QString txtPrecision = header.cap(2);
+            QRegExp precis = QRegExp("\\(([^\\)]+)\\)");
+            if (txtPrecision.contains(precis)) {
+                precision = precis.cap(1);
+            }
+        }
+        int begin = txt.indexOf("<ul>");
+        if (begin > -1) {
+            int isMat = txt.indexOf("<p><b>Matériel nécessaire");
+            if (isMat == -1) {
+                isMat = txt.indexOf("Matériel nécessaire");
+            }
+            if (isMat > -1) {
+                ingredients = makeSimpleListWithSubLists(txt.mid(begin, isMat - begin));
+            }
+            else {
+                ingredients = makeSimpleListWithSubLists(txt.mid(begin));
+            }
+        }
+        //Get materiel:
+        QRegExp matExp = QRegExp("Matériel nécessaire(.+)");
+        if (txt.contains(matExp)) {
+            QString mat = matExp.cap(1);
+            int begin = mat.indexOf("<ul>");
+            if (begin > -1) {
+                materiel = makeSimpleList(mat.mid(begin));
+            }
+        }
+    }
+
+    //Get preparation :
+    QRegExp prepExp = QRegExp("<preparation>(.+)</preparation>");
+    if (content.contains(prepExp)) {
+        QString txt = removeSpecialChars(prepExp.cap(1));
+        while (txt.contains(lienExp)) {
+            QString balise = "L" + QString::number(nbLien);
+            liens[balise] = lienExp.cap(1);
+            txt = txt.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
+            nbLien++;
+        }
+        txt.replace("<ul>", "<ol>").replace("</ul>", "</ol>").replace("<ol class=\"lbold\">", "<ol>").replace("<ol class=lbold>", "<ol>");
+        int begin = txt.indexOf("<ol>");
+        if (begin > -1) {
+            preparation = makeNumberedList(txt.mid(begin));
+        }
+    }
+
+    //Get conseils:
+    QRegExp consExp = QRegExp("<conseils>(.+)</conseils>");
+    if (content.contains(consExp)) {
+        QString txt = removeSpecialChars(consExp.cap(1));
+        while (txt.contains(lienExp)) {
+            QString balise = "L" + QString::number(nbLien);
+            liens[balise] = lienExp.cap(1);
+            txt = txt.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
+            nbLien++;
+        }
+        int begin = txt.indexOf("<ul>");
+        if (begin > -1) {
+            conseils = makeSimpleList(txt.mid(begin));
+        }
+    }
+
+    //Get times:
+    QRegExp  timesExp = QRegExp("<temps>(.+)</temps>");
+    QRegExp minExp = QRegExp("(\\d+)\\s?min");
+    QRegExp hExp = QRegExp("(\\d+)\\s?h");
+    QRegExp jExp = QRegExp("(\\d+)\\s?j");
+    if (content.contains(timesExp)) {
+        QString txt = timesExp.cap(1);
+        QRegExp  prepTime = QRegExp("Temps de Préparation[^:]*:\\s?([^<]+)", Qt::CaseInsensitive);
+        if (txt.contains(prepTime)) {
+            QString pTime = prepTime.cap(1);
+            QString h = "0", min = "0";
+            if (pTime.contains(minExp)) {
+                min = minExp.cap(1);
+            }
+            if (pTime.contains(hExp)) {
+                h = hExp.cap(1);
+            }
+            tpsPrep = h + "h" + min;
+        }
+        else {
+            tpsPrep = "0h0";
+        }
+        QRegExp cuisTime = QRegExp("Temps de Cuisson[^:]*:\\s?([^<]+)", Qt::CaseInsensitive);
+        if (txt.contains(cuisTime)) {
+            QString cTime = cuisTime.cap(1);
+            QString h = "0", min = "0";
+            if (cTime.contains(minExp)) {
+                min = minExp.cap(1);
+            }
+            if (cTime.contains(hExp)) {
+                h = hExp.cap(1);
+            }
+            tpsCuis = h + "h" + min;
+        }
+        else {
+            tpsCuis = "0h0";
+        }
+        QRegExp repTime = QRegExp("Temps de Repos[^:]*:\\s?([^<]+)", Qt::CaseInsensitive);
+        if (txt.contains(repTime)) {
+            QString rTime = repTime.cap(1);
+            QString j = "0", h = "0", min = "0";
+            if (rTime.contains(minExp)) {
+                min = minExp.cap(1);
+            }
+            if (rTime.contains(hExp)) {
+                h = hExp.cap(1);
+            }
+            if (rTime.contains(jExp)) {
+                j = jExp.cap(1);
+            }
+            tpsRep = j + "j" + h + "h" + min;
+        }
+        else {
+            tpsRep = "0j0h0";
+        }
+    }
+    else {
+        tpsPrep = "0h0";
+        tpsCuis = "0h0";
+        tpsRep = "0j0h0";
+    }
+
+    return saveRecipeToFile(title, categories, tpsPrep, tpsCuis, tpsRep, nbPers, precision, description, ingredients, materiel, preparation, conseils, picture, liens, file, coupDeCoeur, idRecipe);
 }
 
 /**
@@ -399,6 +752,13 @@ QMap<QString, QStringList> Functions::loadRecipe(QString fileName)
     if (elem)
     {
         result.insert("description", QStringList(elem->GetText()));
+    }
+
+    //IdRecipe:
+    elem = doc.FirstChildElement("idRecipe");
+    if (elem)
+    {
+        result.insert("idRecipe", QStringList(elem->GetText()));
     }
 
     //Ingredients:
@@ -1125,4 +1485,16 @@ bool Functions::removeDir(const QString &dirName)
     }
 
     return result;
+}
+
+bool Functions::downloadPicture(QString url, QString fileName, QWidget *parent) {
+    FileDownloader *fdower = new FileDownloader(url, "Récupération de l'a recette'image d'illustration...", parent);
+             QByteArray resData = fdower->downloadedData();
+    resData = fdower->downloadedData();
+    QString imgFileSave = fileName;
+    QFile file(imgFileSave);
+    file.open(QFile::WriteOnly);
+    file.write(resData);
+    file.close();
+    return true;
 }

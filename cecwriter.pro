@@ -30,7 +30,9 @@ SOURCES += main.cpp\
     insertvideo.cpp \
     insertpicture.cpp \
     qinputmultiline.cpp \
-    coupdecoeur.cpp
+    coupdecoeur.cpp \
+    opendistant.cpp \
+    Json.cpp
 
 HEADERS  += cecwriter.h \
     options.h \
@@ -49,7 +51,9 @@ HEADERS  += cecwriter.h \
     insertvideo.h \
     insertpicture.h \
     qinputmultiline.h \
-    coupdecoeur.h
+    coupdecoeur.h \
+    opendistant.h \
+    Json.h
 
 FORMS    += cecwriter.ui \
     options.ui \
@@ -61,7 +65,8 @@ FORMS    += cecwriter.ui \
     insertvideo.ui \
     insertpicture.ui \
     qinputmultiline.ui \
-    coupdecoeur.ui
+    coupdecoeur.ui \
+    opendistant.ui
 
 RESOURCES += \
     Ressources.qrc
@@ -72,14 +77,17 @@ unix {
     INCLUDEPATH += /usr/include/hunspell
     contains(QMAKE_HOST.arch, x86_64) {
         LIBS += /usr/lib/x86_64-linux-gnu/libhunspell-1.3.a
+        LIBS += /usr/lib/x86_64-linux-gnu/libqjson.so
     }
     else {
         LIBS += /usr/lib/i386-linux-gnu/libhunspell-1.3.a
+        LIBS += /usr/lib/i386-linux-gnu/libqjson.so
     }
 }
 
 win32 {
     INCLUDEPATH += C:/hunspell/include
     LIBS += C:/hunspell/lib/libhunspell-1.3.a
+    LIBS += C:/Qjson/lib/libqjson-qt5.dll.a
     RC_FILE = myapp.rc
 }

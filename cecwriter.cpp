@@ -41,12 +41,14 @@ extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
 extern QString correction;
+extern QStringList namesCats;
 extern bool cancel;
 extern bool richSnippets;
 extern bool cecPrinter;
 extern bool sendAuto;
 extern bool cecSearch;
 extern bool cecCoupDeCoeur;
+extern int idRecipe;
 
 extern QString VERSION;
 extern QString QTVERSION;
@@ -130,7 +132,11 @@ void CeCWriter::changeEvent(QEvent *event)
         {
             if (imgFile != "")
             {
-                ui->mainPicture->setIcon(QIcon(imgFile));
+                QString imgFileShow = imgFile;
+                if (imgFile.startsWith("http")) {
+                    imgFileShow = dirTmp + "/" + imgFileName;
+                }
+                ui->mainPicture->setIcon(QIcon(imgFileShow));
             }
         }
     }
@@ -453,6 +459,7 @@ void CeCWriter::resetFields()
     ui->prepListShow->setText("0");
     ui->ingrListShow->setText("0");
     ui->editPicture->setEnabled(false);
+    idRecipe = -1;
 }
 
 /**
@@ -1385,7 +1392,7 @@ void CeCWriter::on_minRep_editingFinished()
  * @return true or false
  * Check if enough information is given for the recipe. If yes, say true, else say false
  */
-bool CeCWriter::isReadyTosend()
+bool CeCWriter::isReadyTosend(bool alert)
 {
     int id1 = 0;
     bool oneCat = false;
@@ -1397,13 +1404,15 @@ bool CeCWriter::isReadyTosend()
         }
         id1++;
     }
-    if (ui->titre->text() != "" && oneCat && imgFile != "" && (ui->hPrep->value() != 0 || ui->minPrep->value() != 0) && ui->description->toPlainText() != "" && model1->rowCount() > 0 && model3->rowCount() > 0)
+    if (ui->titre->text() != "" && oneCat && imgFile != "" && (ui->hPrep->value() != 0 || ui->minPrep->value() != 0) && ui->nbPersonnes->value() > 0 && ui->description->toPlainText() != "" && model1->rowCount() > 0 && model3->rowCount() > 0)
     {
         return true;
     }
     else
     {
-        QMessageBox::critical(this, "Tout n'est pas prêt !", "L'ensemble des paramètres requis de la recette ne sont pas renseignés. Veullez les renseigner.\nParamètres requis :\n      - Titre\n      - Catégorie(s)\n      - Image principale\n      - Temps de préparation\n      - Nombre de personnes\n      - Description\n      - Ingrédients\n      - Instructions de préparation", QMessageBox::Ok);
+        if (alert) {
+            QMessageBox::critical(this, "Tout n'est pas prêt !", "L'ensemble des paramètres requis de la recette ne sont pas renseignés. Veullez les renseigner.\nParamètres requis :\n      - Titre\n      - Catégorie(s)\n      - Image principale\n      - Temps de préparation\n      - Nombre de personnes\n      - Description\n      - Ingrédients\n      - Instructions de préparation", QMessageBox::Ok);
+        }
         return false;
     }
 }
@@ -1424,7 +1433,7 @@ void CeCWriter::on_actionEnvoyer_triggered()
 void CeCWriter::on_envoyer_clicked()
 {
     //Send only if all required fields ar filled:
-    if (isReadyTosend())
+    if (isReadyTosend(true))
     {
         makeHtmlCode();
         if (sendAuto) {
@@ -1540,7 +1549,7 @@ void CeCWriter::on_actionApercu_triggered()
  */
 void CeCWriter::on_apercu_clicked()
 {
-    if (isReadyTosend())
+    if (isReadyTosend(true))
     {
         makeHtmlCode();
         QDate today = QDate::currentDate();
@@ -1779,7 +1788,7 @@ void CeCWriter::on_enregistrer_clicked()
         bool success = Functions::saveRecipe(ui->titre->text(), catsSelected, tpsPrep, tpsCuis,
                                              tpsRep, QString::number(ui->nbPersonnes->value()), ui->precision->text(),
                                              ui->description->toPlainText(), ingrList, matList, prepList, consList,
-                                             imgFile, liens, saveFileName, coupDeCoeur);
+                                             imgFile, liens, saveFileName, coupDeCoeur, idRecipe);
         if (success)
         {
             saveVariables(ingrList.join("\n"), matList.join("\n"), prepList.join("\n"), consList.join("\n"));
@@ -1823,6 +1832,191 @@ void CeCWriter::saveVariables(QString ingr, QString mat, QString prep, QString c
     saveConseils = cons;
 }
 
+void CeCWriter::loadRecipe(QString fileName, bool testReadyToSend) {
+    QStringList ingrdt, matl, prept, consl;
+    QMap<QString, QStringList> rct = Functions::loadRecipe(fileName);
+    if (rct.size() > 0)
+    {
+        //Load titre:
+        if (rct.keys().contains("titre"))
+            ui->titre->setText(rct["titre"].at(0));
+
+        //Load categories:
+        if (rct.keys().contains("categories"))
+        {
+            foreach (QString cat, rct["categories"]) {
+                foreach (QCheckBox* itemC, categories.keys()) {
+                    if (categories[itemC] == cat) {
+                        itemC->setChecked(true);
+                    }
+                }
+            }
+        }
+
+        //Load tpsPrep:
+        if (rct.keys().contains("tpsPrep"))
+        {
+            ui->hPrep->setValue(rct["tpsPrep"].at(0).toInt());
+            ui->minPrep->setValue(rct["tpsPrep"].at(1).toInt());
+        }
+
+        //Load tpsCuis:
+        if (rct.keys().contains("tpsCuis"))
+        {
+            ui->hCuis->setValue(rct["tpsCuis"].at(0).toInt());
+            ui->minCuis->setValue(rct["tpsCuis"].at(1).toInt());
+        }
+
+        //Load tpsRep:
+        if (rct.keys().contains("tpsRep"))
+        {
+            ui->jRep->setValue(rct["tpsRep"].at(0).toInt());
+            ui->hRep->setValue(rct["tpsRep"].at(1).toInt());
+            ui->minRep->setValue(rct["tpsRep"].at(2).toInt());
+        }
+
+        //Load nb personnes:
+        if (rct.keys().contains("nbPers"))
+        {
+            ui->nbPersonnes->setValue(rct["nbPers"].at(0).toInt());
+        }
+
+        //Load precision:
+        if (rct.keys().contains("precision"))
+        {
+            ui->precision->setText(rct["precision"].at(0));
+        }
+
+        //Load description:
+        if (rct.keys().contains("description"))
+        {
+            ui->description->setPlainText(rct["description"].at(0));
+        }
+
+        //Load idRecipe:
+        if (rct.keys().contains("idRecipe")) {
+            idRecipe = rct["idRecipe"].at(0).toInt();
+        }
+
+        //Load ingredients:
+        if (rct.keys().contains("ingredients"))
+        {
+            ingrdt = rct["ingredients"];
+            foreach (QString ingr, ingrdt) {
+                model1->appendRow(new QStandardItem(ingr));
+            }
+        }
+
+        ui->state->setText("Recette chargée !");
+        QTimer::singleShot(4000, this, SLOT(refreshState()));
+
+        //Load materiel:
+        if (rct.keys().contains("materiel"))
+        {
+            matl = rct["materiel"];
+            foreach (QString mat, matl) {
+                model2->appendRow(new QStandardItem(mat));
+            }
+        }
+
+        //Load preparation:
+        if (rct.keys().contains("preparation"))
+        {
+            prept = rct["preparation"];
+            foreach (QString prep, prept) {
+                model3->appendRow(new QStandardItem(prep));
+            }
+            idPrep = prept.last().split("|")[0].split(".")[0] + ".0";
+        }
+
+        //Load conseils:
+        if (rct.keys().contains("conseils"))
+        {
+            consl = rct["conseils"];
+            foreach (QString cons, consl) {
+                model4->appendRow(new QStandardItem(cons));
+            }
+        }
+
+        //Load image:
+        if (rct.keys().contains("image"))
+        {
+            if(rct["image"].at(0) != "")
+            {
+                imgFile = rct["image"].at(0);
+                if (imgFile.startsWith("/") && QFile(imgFile).exists())
+                {
+                    imgFileName = imgFile.split("/").last();
+                    ui->mainPicture->setText(imgFileName);
+                    ui->mainPicture->setIcon(QPixmap(imgFile));
+                }
+                else if(imgFile.startsWith("http")) {
+                    imgFileName = imgFile.split("/").last();
+                    QString imgTmp = dirTmp + "/" + imgFileName;
+                    bool success = Functions::downloadPicture(imgFile, imgTmp, this);
+                    if (success) {
+                        ui->mainPicture->setText("[SERVEUR] " + imgFileName);
+                        ui->mainPicture->setIcon(QPixmap(imgTmp));
+                    }
+                    else {
+                        imgFile = imgFileName = "";
+                    }
+                }
+                else
+                {
+                    imgFile = "";
+                }
+            }
+        }
+
+        //Load coupDeCoeur:
+        if (rct.keys().contains("coupDeCoeur")) {
+            coupDeCoeur = rct["coupDeCoeur"][0];
+            if (coupDeCoeur == "coup_de_coeur_1")
+                ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_01.png"));
+            else if(coupDeCoeur == "coup_de_coeur_2")
+                ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_02.png"));
+            else if(coupDeCoeur == "coup_de_coeur_3")
+                ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_03.png"));
+            else
+                ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur.png"));
+        }
+        else {
+            ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur.png"));
+        }
+        //Load liens:
+        if(rct.keys().contains("liens"))
+        {
+            foreach (QString lien, rct["liens"]) {
+                liens.insert("L" + QString::number(idLien), lien);
+                idLien++;
+            }
+        }
+
+        ui->state->setText("Recette chargée !");
+        QTimer::singleShot(4000, this, SLOT(refreshState()));
+
+        ui->state->setText("Recette chargée !");
+        QTimer::singleShot(4000, this, SLOT(refreshState()));
+
+        ui->state->setText("Recette chargée !");
+        QTimer::singleShot(4000, this, SLOT(refreshState()));
+
+        fileName = fileName;
+        saveFileName = fileName.left(fileName.length() - 4);
+        saveVariables(ingrdt.join("\n"), matl.join("\n"), prept.join("\n"), consl.join("\n"));
+        if (imgFile != "")
+        {
+            ui->editPicture->setEnabled(true);
+        }
+        if (testReadyToSend) {
+            if (!isReadyTosend(false)) {
+                QMessageBox::warning(this, "Import partiel", "Certains champs n'ont pas pu être récupérés car le formatage de la recette était incorrecte. Vous avez probablement modifié le code source manuellement, ou publié la recette avec une version ancienne du logiciel.\n Veuillez vous assurer de remplir les champs manquants avant de renvoyer la recette en ligne.");
+            }
+        }
+    }
+}
+
 /**
  * @brief CeCWriter::on_actionOuvrir_une_recette_existante_triggered
  * Open a previously saved recipe
@@ -1848,167 +2042,65 @@ void CeCWriter::on_actionOuvrir_une_recette_existante_triggered()
         QString fileName = QFileDialog::getOpenFileName(this, "Ouvrir une recette",
         dirSav,
         "Recettes : *.rct (*.rct)");
-        QStringList ingrdt, matl, prept, consl;
         if ( !fileName.isEmpty() )
         {
-            QMap<QString, QStringList> rct = Functions::loadRecipe(fileName);
-            if (rct.size() > 0)
-            {
-                //Load titre:
-                if (rct.keys().contains("titre"))
-                    ui->titre->setText(rct["titre"].at(0));
+            loadRecipe(fileName, false);
+        }
+    }
+}
 
-                //Load categories:
-                if (rct.keys().contains("categories"))
-                {
-                    foreach (QString cat, rct["categories"]) {
-                        foreach (QCheckBox* itemC, categories.keys()) {
-                            if (categories[itemC] == cat) {
-                                itemC->setChecked(true);
-                            }
-                        }
-                    }
-                }
+void CeCWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
+{
+    bool doOpen = true;
+    if (checkHasBeenModified())
+    {
+        int rep = QMessageBox::warning(this, "Enregistrer avant de quitter ?", "La recette a été modifiée. Voulez-vous enregistrer la recette avant de continuer ?", QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
+        if (rep == QMessageBox::Yes)
+        {
+            on_enregistrer_clicked();
+        }
+        else if (rep == QMessageBox::Cancel)
+        {
+            doOpen = false;
+        }
+    }
+    if (doOpen)
+    {
+        resetFields();
+        OpenDistant *openDistant = new OpenDistant(this);
+        openDistant->init();
 
-                //Load image:
-                if (rct.keys().contains("image"))
-                {
-                    if(rct["image"].at(0) != "")
-                    {
-                        imgFile = rct["image"].at(0);
-                        if (QFile(imgFile).exists())
-                        {
-                            imgFileName = imgFile.split("/").last();
-                            ui->mainPicture->setText(imgFileName);
-                            ui->mainPicture->setIcon(QPixmap(imgFile));
-                        }
-                        else
-                        {
-                            imgFile = "";
-                        }
-                    }
-                }
+        int idRecipeToOpen = openDistant->idRecipeToOpen;
+        //Delete pointer after close event:
+        delete openDistant;
+        openDistant = NULL;
 
-                //Load tpsPrep:
-                if (rct.keys().contains("tpsPrep"))
-                {
-                    ui->hPrep->setValue(rct["tpsPrep"].at(0).toInt());
-                    ui->minPrep->setValue(rct["tpsPrep"].at(1).toInt());
-                }
-
-                //Load tpsCuis:
-                if (rct.keys().contains("tpsCuis"))
-                {
-                    ui->hCuis->setValue(rct["tpsCuis"].at(0).toInt());
-                    ui->minCuis->setValue(rct["tpsCuis"].at(1).toInt());
-                }
-
-                //Load tpsRep:
-                if (rct.keys().contains("tpsRep"))
-                {
-                    ui->jRep->setValue(rct["tpsRep"].at(0).toInt());
-                    ui->hRep->setValue(rct["tpsRep"].at(1).toInt());
-                    ui->minRep->setValue(rct["tpsRep"].at(2).toInt());
-                }
-
-                //Load nb personnes:
-                if (rct.keys().contains("nbPers"))
-                {
-                    ui->nbPersonnes->setValue(rct["nbPers"].at(0).toInt());
-                }
-
-                //Load precision:
-                if (rct.keys().contains("precision"))
-                {
-                    ui->precision->setText(rct["precision"].at(0));
-                }
-
-                if (rct.keys().contains("description"))
-                {
-                    ui->description->setPlainText(rct["description"].at(0));
-                }
-
-                //Load ingredients:
-                if (rct.keys().contains("ingredients"))
-                {
-                    ingrdt = rct["ingredients"];
-                    foreach (QString ingr, ingrdt) {
-                        model1->appendRow(new QStandardItem(ingr));
-                    }
-                }
-
-                ui->state->setText("Recette chargée !");
-                QTimer::singleShot(4000, this, SLOT(refreshState()));
-
-                //Load materiel:
-                if (rct.keys().contains("materiel"))
-                {
-                    matl = rct["materiel"];
-                    foreach (QString mat, matl) {
-                        model2->appendRow(new QStandardItem(mat));
-                    }
-                }
-
-                //Load preparation:
-                if (rct.keys().contains("preparation"))
-                {
-                    prept = rct["preparation"];
-                    foreach (QString prep, prept) {
-                        model3->appendRow(new QStandardItem(prep));
-                    }
-                    idPrep = prept.last().split("|")[0].split(".")[0] + ".0";
-                }
-
-                //Load conseils:
-                if (rct.keys().contains("conseils"))
-                {
-                    consl = rct["conseils"];
-                    foreach (QString cons, consl) {
-                        model4->appendRow(new QStandardItem(cons));
-                    }
-                }
-
-                //Load coupDeCoeur:
-                if (rct.keys().contains("coupDeCoeur")) {
-                    coupDeCoeur = rct["coupDeCoeur"][0];
-                    if (coupDeCoeur == "coup_de_coeur_1")
-                        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_01.png"));
-                    else if(coupDeCoeur == "coup_de_coeur_2")
-                        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_02.png"));
-                    else if(coupDeCoeur == "coup_de_coeur_3")
-                        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur_03.png"));
-                    else
-                        ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur.png"));
-                }
-                else {
-                    ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur.png"));
-                }
-
-                ui->state->setText("Recette chargée !");
-                QTimer::singleShot(4000, this, SLOT(refreshState()));
-
-                ui->state->setText("Recette chargée !");
-                QTimer::singleShot(4000, this, SLOT(refreshState()));
-
-                ui->state->setText("Recette chargée !");
-                QTimer::singleShot(4000, this, SLOT(refreshState()));
-
-                //Load liens:
-                if(rct.keys().contains("liens"))
-                {
-                    foreach (QString lien, rct["liens"]) {
-                        liens.insert("L" + QString::number(idLien), lien);
-                        idLien++;
-                    }
-                }
-                fileName = fileName.split("/").last();
-                saveFileName = fileName.left(fileName.length() - 4);
-                saveVariables(ingrdt.join("\n"), matl.join("\n"), prept.join("\n"), consl.join("\n"));
-                if (imgFile != "")
-                {
-                    ui->editPicture->setEnabled(true);
-                }
-            }
+        if (idRecipeToOpen > -1) {
+             FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPost.php?p=" + QString::number(idRecipeToOpen), "Récupération de la recette...", this);
+             QByteArray resData = fdower->downloadedData();
+             bool ok;
+             QVariantMap result = QJsonWrapper::parseJson(resData, &ok).toMap();
+             if (!ok) {
+                 QMessageBox::critical(this, "Erreur !", "Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support.",
+                                               QMessageBox::Ok);
+             }
+             else if (result["success"].toString() == "true") {
+                 QString imgFileDist = result["thumbnailFile"].toString();
+                 QFile *tmpFile = new QFile(dirTmp + "/recipe" + QString::number(QDateTime::currentMSecsSinceEpoch()) + ".rct");
+                 tmpFile->remove(".");
+                 bool success = Functions::saveRecipeFromDist(result["title"].toString(), result["cats"].toStringList(), result["content"].toString(), imgFileDist, result["coupDeCoeur"].toString(), tmpFile, idRecipeToOpen);
+                 if (success) {
+                     loadRecipe(tmpFile->fileName(), true);
+                 }
+                 else {
+                     QMessageBox::critical(this, "Erreur !", "Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support.",
+                                                   QMessageBox::Ok);
+                 }
+             }
+             else {
+                 QMessageBox::critical(this, "Erreur !", "Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support.",
+                                               QMessageBox::Ok);
+             }
         }
     }
 }
@@ -2176,7 +2268,11 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
 {
     if (object == this && event->type() == QEvent::FocusIn)
     {
-        ui->mainPicture->setIcon(QPixmap(imgFile));
+        QString imgFileShow = imgFile;
+        if (imgFile.startsWith("http")) {
+            imgFileShow = dirTmp + "/" + imgFileName;
+        }
+        ui->mainPicture->setIcon(QIcon(imgFileShow));
     }
     //editPicture:
     if (object == ui->editPicture && ui->editPicture->isEnabled())
@@ -3744,7 +3840,7 @@ void CeCWriter::handleSaveAnnuler()
 
 void CeCWriter::handleSaveValider()
 {
-    saveFileName = chooseSaveFN->text();
+    saveFileName = dirSav + "/" + chooseSaveFN->text();
     chooseSaveFileName->close();
     doSave = true;
 }

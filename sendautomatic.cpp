@@ -24,6 +24,7 @@ extern QString dirTmp;
 extern bool cecSearch;
 extern bool cecCoupDeCoeur;
 extern int configActive;
+extern int idRecipe;
 
 SendAutomatic::SendAutomatic(QWidget *parent) :
     QDialog(parent),
@@ -184,9 +185,9 @@ void SendAutomatic::on_valider_clicked()
     //Starting java program to send recipe to the website. Don't worry, the java part
     //is very small and will take only few seconds (depending on the internet connexion
     //only) :
-    QString Program = "java -jar \"" + path + "/SendToWordpress/SendToWordpress.jar\" \""
+    QString Program = "java -jar \"" + path + "/wordpress/SendToWordpress.jar\" \""
             + addrPub + "\" \"" + cats + "\" \"" + tags + "\" \"" + mainPicture + "\" \"" + htmlFile.fileName()
-            + "\" \"" + oPicts + "\" \"" + isPublier + "\"";
+            + "\" \"" + oPicts + "\" \"" + isPublier + "\" " + QString::number(idRecipe);
     QProcess *myProcess = new QProcess();
     myProcess->setProcessChannelMode(QProcess::MergedChannels);
     myProcess->start(Program);
@@ -257,6 +258,10 @@ void SendAutomatic::on_valider_clicked()
             {
                 mainError->setText("L'envoi a échoué : l'adresse de publication est-elle correcte ?");
             }
+            else if(lines[i+3].replace("\r", "").contains(QRegExp("redstone.xmlrpc.XmlRpcFault: D.+sol.+, vous n.+avez pas l.+autorisation de modifier cet article."))) {
+                mainError->setText("L'envoi a échoué : vous n'avez pas l'autorisation de modifier cette recette !");
+            }
+
             else
             {
                 mainError->setText("L'envoi a échoué. Cliquez sur Détails pour en savoir plus.");

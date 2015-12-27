@@ -14,6 +14,10 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+#include "filedownloader.h"
+
+#include <QDebug>
+
 #include <QCheckBox>
 #include <QDateTime>
 #include <QDialog>
@@ -49,11 +53,17 @@ public:
 
 public:
     static void loadConfig();
+    static bool saveRecipeToFile(QString title, QStringList categories, QString tpsPrep,
+                                 QString tpsCuis, QString tpsRep, QString nbPers, QString precision,
+                                 QString description, QStringList ingredients, QStringList materiel,
+                                 QStringList preparation, QStringList conseils, QString picture, QMap<QString, QString> liens,
+                                 QFile *file, QString coupDeCoeur, int idRecipe);
     static bool saveRecipe(QString title, QStringList categories, QString tpsPrep,
                            QString tpsCuis, QString tpsRep, QString nbPers, QString precision,
                            QString description, QStringList ingredients, QStringList materiel,
                            QStringList preparation, QStringList conseils, QString picture, QMap<QString, QString> liens,
-                           QString filename, QString coupDeCoeur);
+                           QString filename, QString coupDeCoeur, int idRecipe);
+    static bool saveRecipeFromDist(QString title, QStringList categories, QString content, QString picture, QString coupDeCoeur, QFile *file, int idRecipe);
     static QMap<QString, QStringList> loadRecipe(QString fileName);
     static QStringList loadCategories();
     static QString generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
@@ -61,8 +71,11 @@ public:
                                     QString description, QString ingredients, QString materiel, QString preparation,
                                     QString conseils);
     static QString getSimpleListWithSubLists(QStringList items);
+    static QStringList makeSimpleList(QString text);
+    static QStringList makeSimpleListWithSubLists(QString text);
     static QString getSimpleList(QStringList items);
     static QString getNumberedList(QStringList items);
+    static QStringList makeNumberedList(QString text);
     static QString insertLinks(QString data);
     static QString insertPictures(QString data);
     static QString insertMovies(QString data);
@@ -75,6 +88,9 @@ public:
     static QString setPrintTags(QString text);
     static QString makeRichSnippets(QString title, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep, int hRep, int minRep,
                              int nbPersonnes, QString precision, QString description, QStringList ingredients, QStringList preparation);
+    static QString removeSpecialChars(QString str);
+    static bool downloadPicture(QString url, QString fileName, QWidget *parent);
+    static QStringList addCommentLines(QString txt);
 };
 
 #endif // FUNCTIONS_H
