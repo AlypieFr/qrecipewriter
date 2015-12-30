@@ -29,6 +29,7 @@
 #include "qinputmultiline.h"
 #include "coupdecoeur.h"
 #include "opendistant.h"
+#include "searchupdates.h"
 
 #include <QMainWindow>
 
@@ -80,6 +81,7 @@ public:
     void resizeEvent(QResizeEvent* event);
     bool isMax;
     void setLogoWindow();
+    QString openStartupFile;
 
 private slots:
 
@@ -201,9 +203,12 @@ private slots:
 
     void on_actionOuvrir_une_recette_en_ligne_triggered();
 
+    void on_switchNbPers_clicked();
+
 public slots:
     void init();
     void config();
+    void launch();
 
 private:
     Ui::CeCWriter *ui;
@@ -227,13 +232,15 @@ private:
     bool ingrComm, matComm, prepComm, consComm; //Stores if we are writting comments on, respectively,
     QString htmlCode, excerpt; //Stores generated html code and excerpt (an excerpt is an abstract of the recipe that is shown in the home page of wordpress, if the theme used is compatible
     //To keep saved variables:
-    QString saveTitre, saveMainImage, savePrecision, saveDescription, saveIngredients, saveMateriel, savePreparation, saveConseils;
+    QString saveTitre, saveMainImage, savePrecision, saveDescription, saveIngredients, saveMateriel, savePreparation, saveConseils, saveNbPersonnes;
     QStringList saveCategories;
-    int saveHPrep, saveMinPrep, saveHCuis, saveMinCuis, saveJRep, saveHRep, saveMinRep, saveNbPersonnes;
+    int saveHPrep, saveMinPrep, saveHCuis, saveMinCuis, saveJRep, saveHRep, saveMinRep;
     QString balise; //Stores the tag that will be deleted
     QStringList balises; //Stores tags that will be deleted
     int resetPosCaret; //Stores position of the cursot at which we must set cursor after deleting tags
     int roundValueToFive(double value);
+    bool askSaveFile();
+    void toggleEditPict();
 
 private:
     void closeEvent (QCloseEvent *event);
@@ -281,6 +288,8 @@ private:
     void sendManual();
     void sendAutomatic();
     void loadRecipe(QString fileName, bool testReadyToSend);
+    void searchUpdate();
+    void startAbcCheck(bool silent);
 };
 
 #endif // CECWRITER_H

@@ -21,6 +21,7 @@
 
 #include <QDir>
 #include <QFile>
+#include <QLocale>
 #include <QMessageBox>
 #include <QProcess>
 #include <QString>
@@ -77,14 +78,21 @@ bool cecSearch = false; //Activate or not search module
 bool cecCoupDeCoeur = false; //Activate or not "coups de coeur"
 int configActive = 1;
 int idRecipe = -1;
+bool openLastDir_sauvegarde = false;
+bool openLastDir_Img = false;
+bool checkF7beforeSend = false;
+bool autoCheckUpdt = true;
+QString updtUrl = "";
 
-QString VERSION = "2.2.0";
+QString VERSION = "3.0.0";
 QString QTVERSION;
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe
 
 int main(int argc, char *argv[])
 {
+    //QCoreApplication app(argc, argv);
+    //QStringList args = app.arguments();
 #if QT_VERSION < 0x050000
     QTVERSION = "4";
     // UTF-8 Encoding (useless in Qt5, as UTF-8 is now the default encoding)
@@ -95,8 +103,15 @@ int main(int argc, char *argv[])
     QTVERSION = "5";
 #endif
     QApplication a(argc, argv);
+    QString openFilename = NULL;
+    if (a.arguments().count() > 1) {
+        QFile *oFile = new QFile(a.arguments()[1]);
+        if (oFile->exists()) {
+            openFilename = oFile->fileName();
+        }
+    }
     QSplashScreen *splash = new QSplashScreen;
-    splash -> setPixmap(QPixmap(":/images/splash.jpg"));
+    splash -> setPixmap(QPixmap(":/images/splash.png"));
     splash->show();
 #ifdef Q_OS_LINUX
     systExp = "linuxAutre"; //Operating system of the user
@@ -146,6 +161,7 @@ int main(int argc, char *argv[])
     #endif
 
     CeCWriter w;
+    w.openStartupFile = openFilename;
 
     //Define Dialogs:
     Apropos *apropos = new Apropos(&w);
@@ -160,12 +176,7 @@ int main(int argc, char *argv[])
         {
             tmpD.mkpath(".");
         }
-        if (w.isMax)
-            QTimer::singleShot(2000,&w,SLOT(showMaximized())); //Start the application maximized
-        else
-        {
-            QTimer::singleShot(2000,&w,SLOT(show())); //Start the application
-        }
+        QTimer::singleShot(2000,&w,SLOT(launch())); //Start the application
     }
     else
     {

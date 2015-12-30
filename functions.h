@@ -23,6 +23,7 @@
 #include <QDialog>
 #include <QDir>
 #include <QFile>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -35,6 +36,7 @@
 #include <QSpacerItem>
 #include <QString>
 #include <QStringList>
+#include <QTextStream>
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QXmlStreamReader>
@@ -67,7 +69,7 @@ public:
     static QMap<QString, QStringList> loadRecipe(QString fileName);
     static QStringList loadCategories();
     static QString generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
-                                    int hRep, int minRep, int nbPersonnes, QString precision,
+                                    int hRep, int minRep, int nbPersonnes, int nbPersonnes2, QString precision,
                                     QString description, QString ingredients, QString materiel, QString preparation,
                                     QString conseils);
     static QString getSimpleListWithSubLists(QStringList items);
@@ -91,6 +93,9 @@ public:
     static QString removeSpecialChars(QString str);
     static bool downloadPicture(QString url, QString fileName, QWidget *parent);
     static QStringList addCommentLines(QString txt);
+    static bool saveLastDir(QString action, QString dir);
+    static QString getLastDir(QString action);
+    static void downloadUpdate(QString adresse, QWidget *parent);
 };
 
 #endif // FUNCTIONS_H

@@ -16,7 +16,10 @@
 
 #include "cecwriter.h"
 
+#include <QDebug>
+
 #include <QDialog>
+#include <QDialogButtonBox>
 #include <QKeyEvent>
 
 namespace Ui {
@@ -49,7 +52,6 @@ private slots:
 
     void on_buttonModifEditeurImages_clicked();
 
-    void on_buttonOptionsValider_clicked();
     void on_buttonOptionsSupprimerDonneesPerso_clicked();
 
     void on_configActive_released();
@@ -61,6 +63,14 @@ private slots:
     void on_configActive_4_released();
 
     void on_configActive_5_released();
+
+    void on_backup_useLastOne_clicked();
+
+    void on_img_useLastOne_clicked();
+
+    void on_buttonBox_accepted();
+
+    void on_buttonBox_rejected();
 
 private:
     void keyPressEvent(QKeyEvent *e);

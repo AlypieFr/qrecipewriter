@@ -36,6 +36,10 @@ extern bool cecSearch;
 extern bool cecCoupDeCoeur;
 extern bool sendAuto;
 extern int configActive;
+extern bool openLastDir_sauvegarde;
+extern bool openLastDir_Img;
+extern bool checkF7beforeSend;
+extern bool autoCheckUpdt;
 
 extern QMap<QString, QString> liens;
 
@@ -105,16 +109,6 @@ void Functions::loadConfig()
                 corrOrtho = xml.text().toString();
                 continue;
             }
-            /*if(xml.name() == "addrSite") {
-                xml.readNext();
-                addrSite = xml.text().toString();
-                continue;
-            }
-            if(xml.name() == "addrPub") {
-                xml.readNext();
-                addrPub = xml.text().toString();
-                continue;
-            }*/
             if(xml.name() == "systExp") {
                 xml.readNext();
                 systExp = xml.text().toString();
@@ -125,34 +119,34 @@ void Functions::loadConfig()
                 editPict = xml.text().toString();
                 continue;
             }
-            /*if(xml.name() == "dirDistPict") {
-                xml.readNext();
-                dirDistPict = xml.text().toString();
-                continue;
-            }
-            if(xml.name() == "cecPrinter") {
-                xml.readNext();
-                cecPrinter = xml.text().toString() == "1" ? true: false;
-                continue;
-            }*/
             if(xml.name() == "sendAuto") {
                 xml.readNext();
-                sendAuto = xml.text().toString() == "1" ? true: false;
+                sendAuto = xml.text().toString() == "1";
                 continue;
             }
-            /*if(xml.name() == "cecSearch") {
-                xml.readNext();
-                cecSearch = xml.text().toString() == "1" ? true: false;
-                continue;
-            }
-            if(xml.name() == "cecCoupDeCoeur") {
-                xml.readNext();
-                cecCoupDeCoeur = xml.text().toString() == "1" ? true: false;
-                continue;
-            }*/
             if (xml.name() == "activeServerConfig") {
                 xml.readNext();
                 configActive = xml.text().toString().toInt();
+                continue;
+            }
+            if (xml.name() == "openLastDir_Sauvegarde") {
+                xml.readNext();
+                openLastDir_sauvegarde = xml.text().toString() == "1";
+                continue;
+            }
+            if (xml.name() == "openLastDir_img") {
+                xml.readNext();
+                openLastDir_Img = xml.text().toString() == "1";
+                continue;
+            }
+            if (xml.name() == "autoCheckUpdt") {
+                xml.readNext();
+                autoCheckUpdt = xml.text().toString() == "1";
+                continue;
+            }
+            if (xml.name() == "checkF7beforeSend") {
+                xml.readNext();
+                checkF7beforeSend = xml.text().toString() == "1";
                 continue;
             }
         }
@@ -361,24 +355,35 @@ QStringList Functions::addCommentLines(QString txt) {
 
 QStringList Functions::makeSimpleList(QString text) {
     QStringList list;
-    QString next = text.mid(4);
-    int nextFUl = -1, nextLi = -1;
+    QString next = text;
+    int nextUl = -1, nextFUl = -1, nextLi = -1;
     while (next != "") {
+        nextUl = next.indexOf("<ul>");
         nextFUl = next.indexOf("</ul>");
         nextLi = next.indexOf("<li>");
+        if (nextUl == -1) {
+            nextUl = 1000000;
+        }
         if (nextFUl == -1) {
             nextFUl = 1000000;
         }
         if (nextLi == -1) {
             nextLi = 1000000;
         }
-        int min = qMin(nextLi, nextFUl);
+        int min1 = qMin(nextUl, nextFUl);
+        int min = qMin(min1,nextLi);
         if (min < 1000000) {
             if (min == nextLi) {
                 next = next.mid(nextLi + 4);
                 int endLi = next.indexOf("</li>");
                 list.append("0|" + next.left(endLi));
                 next = next.mid(endLi + 5);
+            }
+            else if (min == nextUl) {
+                if (nextUl > 0) {
+                    list.append(addCommentLines(next.left(nextUl)));
+                }
+                next = next.mid(nextUl + 4);
             }
             else if(min == nextFUl) {
                 next = next.mid(nextFUl + 5);
@@ -395,7 +400,7 @@ QStringList Functions::makeSimpleList(QString text) {
 QStringList Functions::makeSimpleListWithSubLists(QString text) {
     QStringList list;
     int niv = 0;
-    QString next = text.mid(4);
+    QString next = text;
     int nextUl = -1, nextFUl = -1, nextLi = -1;
     while (next != "") {
         nextUl = next.indexOf("<ul>");
@@ -442,7 +447,7 @@ QStringList Functions::makeSimpleListWithSubLists(QString text) {
 QStringList Functions::makeNumberedList(QString text) {
     QStringList list;
     QString bal = "0.0";
-    QString next = text.mid(4);
+    QString next = text;
     int nextOl = -1, nextFOl = -1, nextLi = -1;
     while (next != "") {
         nextOl = next.indexOf("<ol>");
@@ -532,16 +537,36 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
             nbLien++;
         }
         QRegExp header = QRegExp("Ingrédients \\(pour (\\d+) personnes?([^:]+):");
+        QRegExp header2 = QRegExp("Ingrédients \\(pour (\\d+ à \\d+) personnes?([^:]+):");
+        QRegExp header3 = QRegExp("Ingrédients \\(pour (\\d+-\\d+) personnes?([^:]+):");
+        QString txtPrecision;
+        bool isHeader = false;
+        int endHeader = -1;
         if (txt.contains(header)) {
-            qDebug() << "IS HEADER";
             nbPers = header.cap(1);
-            QString txtPrecision = header.cap(2);
+            endHeader = txt.indexOf(header.cap(0)) + header.cap(0).length();
+            txtPrecision = header.cap(2);
+            isHeader = true;
+        }
+        else if (txt.contains(header2)) {
+            nbPers = header2.cap(1);
+            endHeader = txt.indexOf(header2.cap(0)) + header2.cap(0).length();
+            txtPrecision = header2.cap(2);
+            isHeader = true;
+        }
+        if (txt.contains(header3)) {
+            nbPers = header3.cap(1).replace("-", " à ");
+            endHeader = txt.indexOf(header3.cap(0)) + header3.cap(0).length();
+            txtPrecision = header3.cap(2);
+            isHeader = true;
+        }
+        if (isHeader) {
             QRegExp precis = QRegExp("\\(([^\\)]+)\\)");
             if (txtPrecision.contains(precis)) {
                 precision = precis.cap(1);
             }
         }
-        int begin = txt.indexOf("<ul>");
+        int begin = endHeader;
         if (begin > -1) {
             int isMat = txt.indexOf("<p><b>Matériel nécessaire");
             if (isMat == -1) {
@@ -576,7 +601,11 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
             nbLien++;
         }
         txt.replace("<ul>", "<ol>").replace("</ul>", "</ol>").replace("<ol class=\"lbold\">", "<ol>").replace("<ol class=lbold>", "<ol>");
-        int begin = txt.indexOf("<ol>");
+        int begin = -1;
+        QRegExp header = QRegExp("Pr[ée]paration[^:]*:", Qt::CaseInsensitive);
+        if (txt.contains(header)) {
+            begin = txt.indexOf(header.cap(0)) + header.cap(0).length();
+        }
         if (begin > -1) {
             preparation = makeNumberedList(txt.mid(begin));
         }
@@ -592,7 +621,12 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
             txt = txt.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
             nbLien++;
         }
-        int begin = txt.indexOf("<ul>");
+        int begin = -1;
+        QRegExp header = QRegExp("Conseils[^:]*:", Qt::CaseInsensitive);
+        if (txt.contains(header)) {
+            begin = txt.indexOf(header.cap(0)) + header.cap(0).length();
+        }
+        qDebug() << begin;
         if (begin > -1) {
             conseils = makeSimpleList(txt.mid(begin));
         }
@@ -1313,7 +1347,7 @@ QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPre
  * Make htmlCode with given parameters of the recipe
  */
 QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
-                                    int hRep, int minRep, int nbPersonnes, QString precision,
+                                    int hRep, int minRep, int nbPersonnes, int nbPersonnes2, QString precision,
                                     QString description, QString ingredients, QString materiel, QString preparation,
                                     QString conseils)
 {
@@ -1344,7 +1378,10 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
     //Adding next code:
     htmlCode = htmlCode + "</b></temps></div><!--more--><br/><ingredients><p><b>Ingrédients (pour " + QString::number(nbPersonnes);
     //Adding word "personne(s)":
-    if (nbPersonnes > 1)
+    if (nbPersonnes2 > 0  && nbPersonnes2 > nbPersonnes) {
+        htmlCode = htmlCode + " à " + QString::number(nbPersonnes2) + " personnes";
+    }
+    else if (nbPersonnes > 1)
         htmlCode = htmlCode + " personnes";
     else
         htmlCode = htmlCode + " personne";
@@ -1497,4 +1534,71 @@ bool Functions::downloadPicture(QString url, QString fileName, QWidget *parent) 
     file.write(resData);
     file.close();
     return true;
+}
+
+bool Functions::saveLastDir(QString action, QString dir) {
+    QString filename = confDir;
+    if (action == "backup") {
+        filename += "/.dirBckp";
+    }
+    else if(action == "img") {
+        filename += "/.dirImg";
+    }
+    else {
+        filename = "";
+    }
+    if (filename != "") {
+        QFile file(filename);
+        file.remove(".");
+        file.open(QFile::WriteOnly);
+        QTextStream stream (&file);
+        stream.setCodec("UTF-8"); //Not useful on linux system as it's a default, but Windows has its own defaults....
+        stream << dir << endl;
+        file.close();
+        return true;
+    }
+    return false;
+}
+
+QString Functions::getLastDir(QString action) {
+    QString filename = confDir;
+    if (action == "backup") {
+        filename += "/.dirBckp";
+    }
+    else if(action == "img") {
+        filename += "/.dirImg";
+    }
+    else {
+        filename = "";
+    }
+    if (filename != "") {
+        QFile file(filename);
+        if (file.exists()) {
+            file.open(QFile::ReadOnly);
+            QTextStream stream(&file);
+            stream.setCodec("UTF-8");
+            QString dir = stream.readLine();
+            file.close();
+            return dir;
+        }
+        return NULL;
+    }
+    return NULL;
+}
+
+void Functions::downloadUpdate(QString adresse, QWidget *parent) {
+    QString fileToSave = adresse.split("/").last();
+    QString extOfFile = fileToSave.split(".").last();
+    QString fileToSaveUser = QFileDialog::getSaveFileName(parent, "Enregistrer l'archive sous...", userDir + "/" + fileToSave, "Package d'installation  : *."+extOfFile+" (*."+extOfFile+")");
+    if (fileToSaveUser != "")
+    {
+        FileDownloader *fdower = new FileDownloader(adresse, "Téléchargement de la mise à jour..." ,parent);
+        QByteArray package = fdower->downloadedData();
+        QFile saveFile(fileToSaveUser);
+        saveFile.open(QIODevice::WriteOnly);
+        saveFile.write(package);
+        saveFile.close();
+        QMessageBox::information(parent, "Téléchargement terminé !", "Vous pouvez maintenant installer\nle package d'installation téléchargé !", QMessageBox::Ok);
+    }
+
 }

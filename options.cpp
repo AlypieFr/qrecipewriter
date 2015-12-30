@@ -46,13 +46,18 @@ extern bool cecSearch;
 extern bool cecCoupDeCoeur;
 extern bool sendAuto;
 extern int configActive;
+extern bool openLastDir_sauvegarde;
+extern bool openLastDir_Img;
+extern bool checkF7beforeSend;
+extern bool autoCheckUpdt;
 
 Options::Options(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Options)
 {
     ui->setupUi(this);
-
+    QPushButton* applyButton = ui->buttonBox->button(QDialogButtonBox::Apply);
+    connect(applyButton, SIGNAL(clicked()), this, SLOT(on_buttonBox_accepted()));
 }
 
 Options::~Options()
@@ -72,8 +77,12 @@ void Options::init()
     QString idfile  = confDir + ".id";
 
     ui->lineEditDossierDefautImages->setText(dirPict);
+    ui->lineEditDossierDefautImages->setDisabled(openLastDir_Img);
+    ui->img_useLastOne->setChecked(openLastDir_Img);
     ui->lineEditDossierDistantImages->setText(dirDistPict);
     ui->lineEditDossierSauvegardes->setText(dirSav);
+    ui->lineEditDossierSauvegardes->setDisabled(openLastDir_sauvegarde);
+    ui->backup_useLastOne->setChecked(openLastDir_sauvegarde);
     ui->lineEditDossierTemp->setText(dirTmp);
     ui->lineEditCommandeNavigateur->setText(cmdNav);
     ui->lineEditEditeurImages->setText(editPict);
@@ -86,6 +95,8 @@ void Options::init()
     ui->cecCoupDeCoeur->setChecked(cecCoupDeCoeur);
     ui->sendAuto->setChecked(sendAuto);
     ui->sendManual->setChecked(!sendAuto);
+    ui->autoSearchUpdt->setChecked(autoCheckUpdt);
+    ui->checkF7Send->setChecked(checkF7beforeSend);
     if(systExp=="linuxAutre")
     {
         ui->radioButtonLinuxAutre->setChecked(1);
@@ -176,7 +187,9 @@ void Options::on_buttonModifDefautImages_clicked()
     QString fichier = QFileDialog::getExistingDirectory(this,"Choisir un dossier", userDir);
     if(fichier != "")
     {
+       ui->lineEditDossierDefautImages->setEnabled(true);
        ui->lineEditDossierDefautImages->setText(fichier);
+       ui->img_useLastOne->setChecked(false);
     }
 
 }
@@ -209,7 +222,9 @@ void Options::on_buttonModifDossierSauvegardes_clicked()
     QString fichier = QFileDialog::getExistingDirectory(this,"Choisir un dossier", userDir);
     if(fichier != "")
     {
+        ui->lineEditDossierSauvegardes->setEnabled(true);
         ui->lineEditDossierSauvegardes->setText(fichier);
+        ui->backup_useLastOne->setChecked(false);
     }
 
 }
@@ -224,28 +239,59 @@ void Options::on_buttonModifEditeurImages_clicked()
     }
 }
 
-void Options::on_buttonOptionsValider_clicked()
+void Options::on_buttonBox_rejected() {
+    this->close();
+}
+
+void Options::on_buttonBox_accepted()
 {
-    if(ui->lineEditCommandeNavigateur->text()==""||ui->lineEditDossierDefautImages->text()==""\
-            ||ui->lineEditDossierSauvegardes->text()==""||ui->lineEditDossierTemp->text()==""||ui->lineEditEditeurImages->text()==""\
+    if (ui->lineEditDossierDefautImages->text() == "") {
+        ui->img_useLastOne->setChecked(true);
+        ui->lineEditDossierDefautImages->setEnabled(false);
+    }
+    if (ui->lineEditDossierSauvegardes->text() == "") {
+        ui->backup_useLastOne->setChecked(true);
+        ui->lineEditDossierSauvegardes->setEnabled(false);
+    }
+    if(ui->lineEditCommandeNavigateur->text()==""||ui->lineEditDossierTemp->text()==""\
             ||ui->lineEditPseudoWordpress->text()==""||(!ui->radioButtonLinuxAutre->isChecked()&&!ui->radioButtonLinuxSlack->isChecked()&&!ui->radioButtonLinuxUbuntu->isChecked()\
             &&!ui->radioButtonWindows->isChecked()))
     {
-        QMessageBox::critical(this,"Options","Veuillez remplir tous les champs des paramètres client",QMessageBox::Ok);
+        QMessageBox::critical(this,"Options","Veuillez remplir tous les champs obligatoires des paramètres client",QMessageBox::Ok);
     }
     else
     {
-        if ((ui->configActive->isChecked() && (ui->lineEditAdressePublication->text()==""||ui->lineEditAdresseSite->text()==""||ui->lineEditDossierDistantImages->text()==""))\
+        bool proceed = true;
+        if (!QDir(ui->lineEditDossierSauvegardes->text()).exists() && !ui->backup_useLastOne->isChecked()) {
+            QMessageBox::critical(this, "Options", "Le dossier de sauvegardes indiqué n'existe pas", QMessageBox::Ok);
+            proceed = false;
+        }
+        else if (!QDir(ui->lineEditDossierDefautImages->text()).exists() && !ui->img_useLastOne->isChecked()) {
+            QMessageBox::critical(this, "Options", "Le dossier par défaut des images indiqué n'existe pas", QMessageBox::Ok);
+            proceed = false;
+        }
+        else if(!QDir(ui->lineEditDossierTemp->text()).exists()) {
+            QDir().mkpath(ui->lineEditDossierTemp->text());
+            if(!QDir(ui->lineEditDossierTemp->text()).exists()) {
+                QMessageBox::critical(this, "Options", "Le dossier temporaire indiqué n'existe pas et ne peut être créé", QMessageBox::Ok);
+                proceed = false;
+            }
+        }
+        else if (!QFile(ui->lineEditDictionnairePath->text() + ".dic").exists() || !QFile(ui->lineEditDictionnairePath->text() + ".aff").exists()) {
+            QMessageBox::critical(this, "Options", "Le dictionnaire path indiqué est incorrect : les fichiers (avec extension .dic et/ou .aff) n'existe(nt) pas", QMessageBox::Ok);
+            proceed = false;
+        }
+        if (proceed && ((ui->configActive->isChecked() && (ui->lineEditAdressePublication->text()==""||ui->lineEditAdresseSite->text()==""||ui->lineEditDossierDistantImages->text()==""))\
             || (ui->configActive_2->isChecked() && (ui->lineEditAdressePublication_2->text()==""||ui->lineEditAdresseSite_2->text()==""||ui->lineEditDossierDistantImages_2->text()==""))\
             || (ui->configActive_3->isChecked() && (ui->lineEditAdressePublication_3->text()==""||ui->lineEditAdresseSite_3->text()==""||ui->lineEditDossierDistantImages_3->text()==""))\
             || (ui->configActive_4->isChecked() && (ui->lineEditAdressePublication_4->text()==""||ui->lineEditAdresseSite_4->text()==""||ui->lineEditDossierDistantImages_4->text()==""))\
-            || (ui->configActive_5->isChecked() && (ui->lineEditAdressePublication_5->text()==""||ui->lineEditAdresseSite_5->text()==""||ui->lineEditDossierDistantImages_5->text()==""))) {
+            || (ui->configActive_5->isChecked() && (ui->lineEditAdressePublication_5->text()==""||ui->lineEditAdresseSite_5->text()==""||ui->lineEditDossierDistantImages_5->text()=="")))) {
             QMessageBox::critical(this,"Options","Veuillez remplir tous les champs des paramètres serveur de la configuration active",QMessageBox::Ok);
         }
-        else if (!ui->configActive->isChecked() && !ui->configActive_2->isChecked() && !ui->configActive_3->isChecked() && !ui->configActive_4->isChecked() && !ui->configActive_5->isChecked()) {
+        else if (proceed && !ui->configActive->isChecked() && !ui->configActive_2->isChecked() && !ui->configActive_3->isChecked() && !ui->configActive_4->isChecked() && !ui->configActive_5->isChecked()) {
             QMessageBox::critical(this,"Options","Vous devez avoir une configuration serveur active",QMessageBox::Ok);
         }
-        else {
+        else if(proceed) {
             if (ui->lineEditDossierDistantImages->text() != "" && ui->lineEditDossierDistantImages->text().right(1) != "/")
             {
                 ui->lineEditDossierDistantImages->setText(ui->lineEditDossierDistantImages->text().append("/"));
@@ -272,15 +318,11 @@ void Options::on_buttonOptionsValider_clicked()
             dirTmp=ui->lineEditDossierTemp->text();
             cmdNav=ui->lineEditCommandeNavigateur->text();
             pseudoWp=ui->lineEditPseudoWordpress->text();
-            //addrSite=ui->lineEditAdresseSite->text();
-            //addrPub=ui->lineEditAdressePublication->text();
             editPict=ui->lineEditEditeurImages->text();
-            //dirDistPict=ui->lineEditDossierDistantImages->text();
             corrOrtho = ui->lineEditDictionnairePath->text();
-            //cecPrinter = ui->cecPrinter->isChecked();
             sendAuto = ui->sendAuto->isChecked();
-            //cecSearch = ui->cecSearch->isChecked();
-            //cecCoupDeCoeur = ui->cecCoupDeCoeur->isChecked();
+            autoCheckUpdt = ui->autoSearchUpdt->isChecked();
+            checkF7beforeSend = ui->checkF7Send->isChecked();
             if(ui->radioButtonLinuxAutre->isChecked())
             {
                 systExp="linuxAutre";
@@ -348,24 +390,13 @@ void Options::on_buttonOptionsValider_clicked()
                 cecCoupDeCoeur = ui->cecCoupDeCoeur_5->isChecked();
                 activeServerConfig = 5;
             }
+            openLastDir_sauvegarde = ui->backup_useLastOne->isChecked();
+            openLastDir_Img = ui->img_useLastOne->isChecked();
             //Il n'y a pas de champs sans valeur donc on peut passer à la sauvegarde du fichier
             saveXML(activeServerConfig);
             configActive = activeServerConfig;
             close();
         }
-    }
-    QDir *dir = new QDir();
-    if (!QDir(dirPict).exists())
-    {
-        dir->mkpath(dirPict);
-    }
-    if (!QDir(dirSav).exists())
-    {
-        dir->mkpath(dirSav);
-    }
-    if (!QDir(dirTmp).exists())
-    {
-        dir->mkpath(dirTmp);
     }
 }
 
@@ -495,19 +526,9 @@ void Options::saveXML(int activeServerConfig)
     writer.writeTextElement("cmdNav",ui->lineEditCommandeNavigateur->text());
     writer.writeTextElement("pseudoWp",ui->lineEditPseudoWordpress->text());
     writer.writeTextElement("corrOrtho", ui->lineEditDictionnairePath->text());
-    //writer.writeTextElement("addrSite",ui->lineEditAdresseSite->text());
-    //writer.writeTextElement("addrPub",ui->lineEditAdressePublication->text());
     writer.writeTextElement("editPict",ui->lineEditEditeurImages->text());
-    //writer.writeTextElement("dirDistPict",ui->lineEditDossierDistantImages->text());
-    //QString activeCeCPrinter = ui->cecPrinter->isChecked() ? "1": "0";
-    //writer.writeTextElement("cecPrinter",activeCeCPrinter);
     QString sendType = ui->sendAuto->isChecked() ? "1" : "0";
     writer.writeTextElement("sendAuto", sendType);
-    //QString cSearch = ui->cecSearch->isChecked() ? "1" : "0";
-    //writer.writeTextElement("cecSearch", cSearch);
-    //QString cCoupDeCoeur = ui->cecCoupDeCoeur->isChecked() ? "1" : "0";
-    //writer.writeTextElement("cecCoupDeCoeur", cCoupDeCoeur);
-
     if(ui->radioButtonLinuxAutre->isChecked())
     {
         writer.writeTextElement("systExp","linuxAutre");
@@ -525,6 +546,14 @@ void Options::saveXML(int activeServerConfig)
         writer.writeTextElement("systExp","windows");
     }
     writer.writeTextElement("activeServerConfig", QString::number(activeServerConfig));
+    QString openlast_s = ui->backup_useLastOne->isChecked() ? "1" : "0";
+    writer.writeTextElement("openLastDir_Sauvegarde", openlast_s);
+    QString openlast_i = ui->img_useLastOne->isChecked() ? "1" : "0";
+    writer.writeTextElement("openLastDir_img", openlast_i);
+    QString autoUpdt = ui->autoSearchUpdt->isChecked() ? "1" : "0";
+    writer.writeTextElement("autoCheckUpdt",autoUpdt);
+    QString chkF7 = ui->checkF7Send->isChecked() ? "1" : "0";
+    writer.writeTextElement("checkF7beforeSend", chkF7);
     writer.writeEndElement();
 
     file.close();
@@ -684,5 +713,25 @@ void Options::on_configActive_5_released()
         ui->configActive_4->setChecked(false);
         ui->configActive->setChecked(false);
         configActiveOpts = 5;
+    }
+}
+
+void Options::on_backup_useLastOne_clicked()
+{
+    if (ui->backup_useLastOne->isChecked()) {
+        ui->lineEditDossierSauvegardes->setEnabled(false);
+    }
+    else {
+        ui->lineEditDossierSauvegardes->setEnabled(true);
+    }
+}
+
+void Options::on_img_useLastOne_clicked()
+{
+    if (ui->img_useLastOne->isChecked()) {
+        ui->lineEditDossierDefautImages->setEnabled(false);
+    }
+    else {
+        ui->lineEditDossierDefautImages->setEnabled(true);
     }
 }

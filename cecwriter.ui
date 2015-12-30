@@ -541,52 +541,6 @@ left: 10px; padding: 0 3px;}</string>
                </property>
               </widget>
              </widget>
-             <widget class="QLabel" name="label_14">
-              <property name="geometry">
-               <rect>
-                <x>10</x>
-                <y>410</y>
-                <width>57</width>
-                <height>21</height>
-               </rect>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>POUR :</string>
-              </property>
-             </widget>
-             <widget class="QSpinBox" name="nbPersonnes">
-              <property name="geometry">
-               <rect>
-                <x>70</x>
-                <y>410</y>
-                <width>47</width>
-                <height>24</height>
-               </rect>
-              </property>
-             </widget>
-             <widget class="QLabel" name="label_15">
-              <property name="geometry">
-               <rect>
-                <x>130</x>
-                <y>410</y>
-                <width>131</width>
-                <height>21</height>
-               </rect>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Personnes</string>
-              </property>
-             </widget>
              <widget class="QLabel" name="label_16">
               <property name="geometry">
                <rect>
@@ -634,14 +588,14 @@ left: 10px; padding: 0 3px;}</string>
              <widget class="QPushButton" name="setCoupDeCoeur">
               <property name="geometry">
                <rect>
-                <x>217</x>
+                <x>310</x>
                 <y>407</y>
-                <width>131</width>
+                <width>41</width>
                 <height>28</height>
                </rect>
               </property>
               <property name="text">
-               <string>Coup de Coeur</string>
+               <string/>
               </property>
               <property name="icon">
                <iconset resource="Ressources.qrc">
@@ -653,6 +607,172 @@ left: 10px; padding: 0 3px;}</string>
                 <height>20</height>
                </size>
               </property>
+             </widget>
+             <widget class="QWidget" name="nbPersonnesWidget" native="true">
+              <property name="geometry">
+               <rect>
+                <x>14</x>
+                <y>406</y>
+                <width>291</width>
+                <height>31</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_12">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_14">
+                 <item>
+                  <widget class="QLabel" name="label_14">
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>POUR :</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="nbPersonnes">
+                   <property name="minimumSize">
+                    <size>
+                     <width>44</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>44</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="nbPersonnes_a">
+                   <property name="minimumSize">
+                    <size>
+                     <width>10</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>10</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>à</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="nbPersonnes_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>44</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>44</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_15">
+                   <property name="minimumSize">
+                    <size>
+                     <width>78</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>78</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>personne(s)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="switchNbPers">
+                   <property name="minimumSize">
+                    <size>
+                     <width>34</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>34</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="Ressources.qrc">
+                     <normaloff>:/images/fourchettes.png</normaloff>:/images/fourchettes.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>30</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
+                   </property>
+                   <property name="flat">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_6">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>17</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
             </widget>
            </item>
@@ -2126,7 +2246,6 @@ left: 10px; padding: 0 3px;}</string>
   <tabstop>jRep</tabstop>
   <tabstop>hRep</tabstop>
   <tabstop>minRep</tabstop>
-  <tabstop>nbPersonnes</tabstop>
   <tabstop>precision</tabstop>
   <tabstop>description</tabstop>
   <tabstop>editIngr</tabstop>

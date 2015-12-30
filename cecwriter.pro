@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     qinputmultiline.cpp \
     coupdecoeur.cpp \
     opendistant.cpp \
-    Json.cpp
+    Json.cpp \
+    searchupdates.cpp
 
 HEADERS  += cecwriter.h \
     options.h \
@@ -53,7 +54,8 @@ HEADERS  += cecwriter.h \
     qinputmultiline.h \
     coupdecoeur.h \
     opendistant.h \
-    Json.h
+    Json.h \
+    searchupdates.h
 
 FORMS    += cecwriter.ui \
     options.ui \
@@ -91,3 +93,5 @@ win32 {
     LIBS += C:/Qjson/lib/libqjson-qt5.dll.a
     RC_FILE = myapp.rc
 }
+
+DISTFILES +=

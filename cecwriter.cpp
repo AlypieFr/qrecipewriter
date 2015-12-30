@@ -49,6 +49,11 @@ extern bool sendAuto;
 extern bool cecSearch;
 extern bool cecCoupDeCoeur;
 extern int idRecipe;
+extern bool openLastDir_sauvegarde;
+extern bool openLastDir_Img;
+extern bool checkF7beforeSend;
+extern bool autoCheckUpdt;
+extern QString updtUrl;
 
 extern QString VERSION;
 extern QString QTVERSION;
@@ -175,7 +180,7 @@ void CeCWriter::config()
     if (configFile.exists())
     {
         init();
-        show();
+        launch();
     }
     else
     {
@@ -249,22 +254,24 @@ void CeCWriter::init()
     coupDeCoeur = "no_coup_de_coeur";
     ui->editPicture->setEnabled(false);
     QColor colorBck = ui->listIngr->palette().color(QPalette::Text);
-    if ((colorBck.red() + colorBck.green() + colorBck.blue()) / 3 < 127.5)
+    if ((colorBck.red() + colorBck.green() + colorBck.blue()) / 3 < 127.5) {
         colorEdit = QColor(117, 245, 149);
-    else
+    }
+    else {
         colorEdit = QColor(5, 122, 19);
+    }
     QColor colorWin = this->palette().color(QPalette::Background);
     if ((colorWin.red() + colorWin.green() + colorWin.blue()) / 3 < 127.5)
     {
         ui->logo->setPixmap(QPixmap(":/images/logo_blanc.png"));
     }
-    QColor colorBut = ui->abcButton->palette().color(QPalette::Background);
+    QColor colorBut = ui->switchNbPers->palette().color(QPalette::Background);
     if ((colorBut.red() + colorBut.green() + colorBut.blue()) / 3 < 127.5)
     {
-        //ui->lienButton->setIcon(QPixmap(":/images/lien_button_blanc.png"));
-        //ui->imgButton->setIcon(QPixmap(":/images/img_blanc.png"));
-        //ui->abcButton->setIcon(QPixmap(":/images/abc_blanc.png"));
+        ui->switchNbPers->setIcon(QPixmap(":/images/fourchettes-blanc.png"));
     }
+    ui->nbPersonnes_2->setVisible(false);
+    ui->nbPersonnes_a->setVisible(false);
     //Set categories:
     ui->scrollCats->setFrameShape(QFrame::NoFrame); //Remove border
     QWidget *wid = new QWidget();
@@ -406,6 +413,30 @@ void CeCWriter::init()
     this->installEventFilter(this);
     //Install events on description field:
     ui->description->installEventFilter(this);
+
+    updtUrl = "http://qcecwriter.conseilsencuisine.fr/files/LATEST-" + systExp + "-QT-" + QTVERSION;
+}
+
+void CeCWriter::launch() {
+    if (!isMax) {
+        show();
+    }
+    else {
+        showMaximized();
+    }
+    if (openStartupFile != NULL) {
+        QString extension = openStartupFile.mid(openStartupFile.lastIndexOf("."));
+        if(extension == ".rct") {
+            loadRecipe(openStartupFile, false);
+        }
+        else {
+            QMessageBox::critical(this, "Fichier non reconnu", "Le fichier n'est pas un fichier de recette (extension .rct)");
+        }
+    }
+    if (autoCheckUpdt) {
+        SearchUpdates *supdt = new SearchUpdates(this);
+        supdt->start();
+    }
 }
 
 /**
@@ -430,6 +461,8 @@ void CeCWriter::resetFields()
     ui->hRep->setValue(0);
     ui->minRep->setValue(0);
     ui->nbPersonnes->setValue(0);
+    ui->switchNbPers->setChecked(false);
+    on_switchNbPers_clicked();
     ui->precision->clear();
     ui->description->clear();
     ui->editIngr->clear();
@@ -459,6 +492,7 @@ void CeCWriter::resetFields()
     ui->prepListShow->setText("0");
     ui->ingrListShow->setText("0");
     ui->editPicture->setEnabled(false);
+    ui->editPicture->setToolTip("");
     idRecipe = -1;
 }
 
@@ -518,7 +552,7 @@ bool CeCWriter::checkHasBeenModified()
     }
     if(saveFileName == "" && ui->titre->text() == "" && actualCats.size() == 0 && imgFile == "" && ui->hPrep->value() == 0 && ui->minPrep->value() == 0
             && ui->hCuis->value() == 0 && ui->jRep->value() == 0 && ui->hRep->value() == 0 && ui->minRep->value() == 0
-            && ui->nbPersonnes->value() == 0 && ui->precision->text() == "" && ui->description->toPlainText() == ""
+            && ui->nbPersonnes->value() == 0 && ui->nbPersonnes_2->value() == 0 && ui->precision->text() == "" && ui->description->toPlainText() == ""
             && model1->rowCount() == 0 && model2->rowCount() == 0 && model3->rowCount() == 0 && model4->rowCount() == 0)
     {
         return false;
@@ -557,9 +591,14 @@ bool CeCWriter::checkHasBeenModified()
                 }
             }
         }
+        QString nbPersonnes = QString::number(ui->nbPersonnes->value());
+        if (ui->nbPersonnes_2->isVisible() && ui->nbPersonnes_2->value() > 0) {
+            nbPersonnes += " à " + QString::number(ui->nbPersonnes_2->value());
+        }
+
         if (ui->titre->text() != saveTitre || !catsIdentical || imgFile != saveMainImage || ui->hPrep->value() != saveHPrep
                 || ui->minPrep->value() != saveMinPrep || ui->hCuis->value() != saveHCuis || ui->minCuis->value() != saveMinCuis
-                || ui->jRep->value() != saveJRep || ui->hRep->value() != saveHRep || ui->minRep->value() != saveMinRep || ui->nbPersonnes->value() != saveNbPersonnes
+                || ui->jRep->value() != saveJRep || ui->hRep->value() != saveHRep || ui->minRep->value() != saveMinRep || nbPersonnes != saveNbPersonnes
                 || ui->description->toPlainText() != saveDescription || ingrList.join("\n") != saveIngredients
                 || matList.join("\n") != saveMateriel || prepList.join("\n") != savePreparation
                 || consList.join("\n") != saveConseils)
@@ -608,6 +647,7 @@ void CeCWriter::on_actionOptions_triggered()
         ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher");
     }
     ui->setCoupDeCoeur->setVisible(cecCoupDeCoeur);
+    toggleEditPict();
 }
 
 /**
@@ -642,8 +682,18 @@ void CeCWriter::on_actionGerer_les_categories_triggered()
  */
 void CeCWriter::on_mainPicture_clicked()
 {
+    QString dir = userDir;
+    if (!openLastDir_Img && dirPict != "" && QDir(dirPict).exists()) {
+        dir = dirPict;
+    }
+    else if (openLastDir_Img) {
+        QString dirLoad = Functions::getLastDir("img");
+        if (dirLoad != NULL) {
+            dir = dirLoad;
+        }
+    }
     QString fileName = QFileDialog::getOpenFileName(this, "Choisir une image",
-    dirPict,
+    dir,
     "Images : *.jpg, *.JPG (*.jpg *.JPG);;");
     if ( !fileName.isEmpty() )
     {
@@ -651,7 +701,8 @@ void CeCWriter::on_mainPicture_clicked()
         imgFileName = imgFile.split("/").last();
         ui->mainPicture->setText(imgFileName);
         ui->mainPicture->setIcon(QPixmap(imgFile));
-        ui->editPicture->setEnabled(true);
+        toggleEditPict();
+        Functions::saveLastDir("img", imgFile.left(imgFile.lastIndexOf("/")));
     }
 }
 
@@ -1222,12 +1273,7 @@ void CeCWriter::on_movie_clicked()
     }
 }
 
-/**
- * @brief CeCWriter::on_abcButton_clicked
- * On ABC button clicked, launch spell checking
- */
-void CeCWriter::on_abcButton_clicked()
-{
+void CeCWriter::startAbcCheck(bool silent) {
     QString dictPath = corrOrtho;
     QString userDict= confDir + "/.userDict.txt";
     QFile fileUserDict (userDict);
@@ -1334,13 +1380,22 @@ void CeCWriter::on_abcButton_clicked()
 
     }
 
-    if (!cancel)
+    if (!cancel && !silent)
     {
         QMessageBox::information(
                 this,
                 tr("Terminé"),
                 tr("La correction est terminé."));
     }
+}
+
+/**
+ * @brief CeCWriter::on_abcButton_clicked
+ * On ABC button clicked, launch spell checking
+ */
+void CeCWriter::on_abcButton_clicked()
+{
+    startAbcCheck(false);
 }
 
 /**
@@ -1435,12 +1490,29 @@ void CeCWriter::on_envoyer_clicked()
     //Send only if all required fields ar filled:
     if (isReadyTosend(true))
     {
-        makeHtmlCode();
-        if (sendAuto) {
-            sendAutomatic();
+        if (ui->nbPersonnes_2->isVisible() && ui->nbPersonnes_2->value() < ui->nbPersonnes->value()) {
+            QMessageBox::critical(this, "Erreur dans le nombre de personnes", "Erreur: la borne inférieure du nombre de personnes indiqué est supérieure à la borne supérieure.");
         }
         else {
-            sendManual();
+            if (checkF7beforeSend) {
+                QDialog *wait = new QDialog(this);
+                QHBoxLayout *lay = new QHBoxLayout();
+                QLabel *lab = new QLabel("Vérification orthogaphique en cours...");
+                lab->setAlignment(Qt::AlignHCenter);
+                lay->addWidget(lab);
+                wait->setLayout(lay);
+                wait->setModal(true);
+                wait->show();
+                startAbcCheck(true);
+                wait->close();
+            }
+            makeHtmlCode();
+            if (sendAuto) {
+                sendAutomatic();
+            }
+            else {
+                sendManual();
+            }
         }
     }
 }
@@ -1524,7 +1596,7 @@ void CeCWriter::makeHtmlCode()
     description = "<p>" + description + "</p>";
     htmlCode = Functions::generateHtmlCode(ui->titre->text(), imgFileName, ui->hPrep->value(), ui->minPrep->value(),
                                                    ui->hCuis->value(), ui->minCuis->value(), ui->jRep->value(), ui->hRep->value(),
-                                                   ui->minRep->value(), ui->nbPersonnes->value(), ui->precision->text(),
+                                                   ui->minRep->value(), ui->nbPersonnes->value(), ui->nbPersonnes_2->value(), ui->precision->text(),
                                                    description, ingredients, materiel, preparation, conseils);
     if (richSnippets) {
         htmlCode = Functions::makeRichSnippets(ui->titre->text(), imgFileName, ui->hPrep->value(), ui->minPrep->value(),
@@ -1673,38 +1745,37 @@ void CeCWriter::on_apercu_clicked()
  */
 void CeCWriter::on_actionEnregistrer_sous_triggered()
 {
-    doSave = false;
-    chooseSaveFileName = new QDialog(this);
-    chooseSaveFileName->setWindowTitle("SAUVEGARDER");
-    QVBoxLayout *vlay = new QVBoxLayout();
-    QLabel *txt = new QLabel("Nom de votre sauvegarde :");
-    txt->setMinimumHeight(30);
-    chooseSaveFN = new QLineEdit(ui->titre->text());
-    chooseSaveFN->setMinimumHeight(30);
-    vlay->addWidget(txt);
-    vlay->addWidget(chooseSaveFN);
-    QWidget *buttons = new QWidget();
-    QPushButton *valider = new QPushButton("Valider");
-    connect(valider, SIGNAL(released()), this, SLOT(handleSaveValider()));
-    valider->setMinimumSize(100, 30);
-    valider->setMaximumSize(100,30);
-    QPushButton *annuler = new QPushButton("Annuler");
-    connect(annuler, SIGNAL(released()), this, SLOT(handleSaveAnnuler()));
-    annuler->setMinimumSize(100, 30);
-    annuler->setMaximumSize(100,30);
-    QHBoxLayout *butLay = new QHBoxLayout(buttons);
-    butLay->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
-    butLay->addWidget(valider);
-    butLay->addWidget(annuler);
-    vlay->addWidget(buttons);
-    chooseSaveFileName->setLayout(vlay);
-    chooseSaveFileName->setFixedHeight(chooseSaveFileName->sizeHint().height());
-    chooseSaveFileName->setMinimumWidth(450);
-    chooseSaveFileName->exec();
+    doSave = askSaveFile();
     if (doSave)
     {
         on_enregistrer_clicked();
     }
+}
+
+bool CeCWriter::askSaveFile() {
+    QString dir = userDir;
+    if (!openLastDir_sauvegarde && dirSav != "" && QDir(dirSav).exists()) {
+        dir = dirSav;
+    }
+    else if (openLastDir_sauvegarde) {
+        QString dirLoad = Functions::getLastDir("backup");
+        if (dirLoad != NULL) {
+            dir = dirLoad;
+        }
+    }
+    QString fileName = QFileDialog::getSaveFileName(this, "Enregistrer la recette sous...",
+    dir + "/" + ui->titre->text(),
+    "Recettes : *.rct (*.rct)");
+    if ( !fileName.isEmpty() )
+    {
+        Functions::saveLastDir("backup", fileName.left(fileName.lastIndexOf("/")));
+        if (fileName.endsWith(".rct")) {
+            fileName = fileName.left(fileName.length() - 4);
+        }
+        saveFileName = fileName;
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -1725,34 +1796,7 @@ void CeCWriter::on_enregistrer_clicked()
     doSave = true;
     if (saveFileName == "")
     {
-        doSave = false;
-        chooseSaveFileName = new QDialog(this);
-        chooseSaveFileName->setWindowTitle("SAUVEGARDER");
-        QVBoxLayout *vlay = new QVBoxLayout();
-        QLabel *txt = new QLabel("Nom de votre sauvegarde :");
-        txt->setMinimumHeight(30);
-        chooseSaveFN = new QLineEdit(ui->titre->text());
-        chooseSaveFN->setMinimumHeight(30);
-        vlay->addWidget(txt);
-        vlay->addWidget(chooseSaveFN);
-        QWidget *buttons = new QWidget();
-        QPushButton *valider = new QPushButton("Valider");
-        connect(valider, SIGNAL(released()), this, SLOT(handleSaveValider()));
-        valider->setMinimumSize(100, 30);
-        valider->setMaximumSize(100,30);
-        QPushButton *annuler = new QPushButton("Annuler");
-        connect(annuler, SIGNAL(released()), this, SLOT(handleSaveAnnuler()));
-        annuler->setMinimumSize(100, 30);
-        annuler->setMaximumSize(100,30);
-        QHBoxLayout *butLay = new QHBoxLayout(buttons);
-        butLay->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
-        butLay->addWidget(valider);
-        butLay->addWidget(annuler);
-        vlay->addWidget(buttons);
-        chooseSaveFileName->setLayout(vlay);
-        chooseSaveFileName->setFixedHeight(chooseSaveFileName->sizeHint().height());
-        chooseSaveFileName->setMinimumWidth(450);
-        chooseSaveFileName->exec();
+        doSave = askSaveFile();
     }
     if (doSave)
     {
@@ -1785,8 +1829,13 @@ void CeCWriter::on_enregistrer_clicked()
             consList.append(model4->item(i1)->text());
         }
 
+        QString nbPersonnes = QString::number(ui->nbPersonnes->value());
+        if (ui->nbPersonnes_2->isVisible() && ui->nbPersonnes_2->value() > 0) {
+            nbPersonnes += " à " + QString::number(ui->nbPersonnes_2->value());
+        }
+
         bool success = Functions::saveRecipe(ui->titre->text(), catsSelected, tpsPrep, tpsCuis,
-                                             tpsRep, QString::number(ui->nbPersonnes->value()), ui->precision->text(),
+                                             tpsRep, nbPersonnes, ui->precision->text(),
                                              ui->description->toPlainText(), ingrList, matList, prepList, consList,
                                              imgFile, liens, saveFileName, coupDeCoeur, idRecipe);
         if (success)
@@ -1823,7 +1872,10 @@ void CeCWriter::saveVariables(QString ingr, QString mat, QString prep, QString c
     saveJRep = ui->jRep->value();
     saveHRep = ui->hRep->value();
     saveMinRep = ui->minRep->value();
-    saveNbPersonnes = ui->nbPersonnes->value();
+    saveNbPersonnes = QString::number(ui->nbPersonnes->value());
+    if (ui->nbPersonnes_2->isVisible() && ui->nbPersonnes_2->value() > 0) {
+        saveNbPersonnes += " à " + QString::number(ui->nbPersonnes_2->value());
+    }
     savePrecision = ui->precision->text();
     saveDescription = ui->description->toPlainText();
     saveIngredients = ingr;
@@ -1878,7 +1930,17 @@ void CeCWriter::loadRecipe(QString fileName, bool testReadyToSend) {
         //Load nb personnes:
         if (rct.keys().contains("nbPers"))
         {
-            ui->nbPersonnes->setValue(rct["nbPers"].at(0).toInt());
+            QString nbPersonnes = rct["nbPers"].at(0);
+            if (nbPersonnes.indexOf(" à ") > -1) {
+                QStringList bornes = nbPersonnes.split(" à ");
+                ui->nbPersonnes->setValue(bornes[0].toInt());
+                ui->nbPersonnes_2->setValue(bornes[1].toInt());
+                ui->switchNbPers->setChecked(true);
+                on_switchNbPers_clicked();
+            }
+            else {
+                ui->nbPersonnes->setValue(nbPersonnes.toInt());
+            }
         }
 
         //Load precision:
@@ -1944,13 +2006,7 @@ void CeCWriter::loadRecipe(QString fileName, bool testReadyToSend) {
             if(rct["image"].at(0) != "")
             {
                 imgFile = rct["image"].at(0);
-                if (imgFile.startsWith("/") && QFile(imgFile).exists())
-                {
-                    imgFileName = imgFile.split("/").last();
-                    ui->mainPicture->setText(imgFileName);
-                    ui->mainPicture->setIcon(QPixmap(imgFile));
-                }
-                else if(imgFile.startsWith("http")) {
+                if(imgFile.startsWith("http")) {
                     imgFileName = imgFile.split("/").last();
                     QString imgTmp = dirTmp + "/" + imgFileName;
                     bool success = Functions::downloadPicture(imgFile, imgTmp, this);
@@ -1961,6 +2017,12 @@ void CeCWriter::loadRecipe(QString fileName, bool testReadyToSend) {
                     else {
                         imgFile = imgFileName = "";
                     }
+                }
+                else if (imgFile.startsWith("/") && QFile(imgFile).exists())
+                {
+                    imgFileName = imgFile.split("/").last();
+                    ui->mainPicture->setText(imgFileName);
+                    ui->mainPicture->setIcon(QPixmap(imgFile));
                 }
                 else
                 {
@@ -2002,18 +2064,30 @@ void CeCWriter::loadRecipe(QString fileName, bool testReadyToSend) {
         ui->state->setText("Recette chargée !");
         QTimer::singleShot(4000, this, SLOT(refreshState()));
 
-        fileName = fileName;
+        //fileName = fileName;
         saveFileName = fileName.left(fileName.length() - 4);
         saveVariables(ingrdt.join("\n"), matl.join("\n"), prept.join("\n"), consl.join("\n"));
-        if (imgFile != "")
-        {
-            ui->editPicture->setEnabled(true);
-        }
+        toggleEditPict();
         if (testReadyToSend) {
             if (!isReadyTosend(false)) {
                 QMessageBox::warning(this, "Import partiel", "Certains champs n'ont pas pu être récupérés car le formatage de la recette était incorrecte. Vous avez probablement modifié le code source manuellement, ou publié la recette avec une version ancienne du logiciel.\n Veuillez vous assurer de remplir les champs manquants avant de renvoyer la recette en ligne.");
             }
         }
+    }
+}
+
+void CeCWriter::toggleEditPict() {
+    if (imgFile != "" && !imgFile.startsWith("http") && editPict != "")
+    {
+        ui->editPicture->setEnabled(true);
+    }
+    else if(editPict == "") {
+        ui->editPicture->setEnabled(false);
+        ui->editPicture->setToolTip("Vous devez indiquer un éditeur d'images dans\nles préférences pour pouvoir éditer l'image");
+    }
+    else if(imgFile.startsWith("http")) {
+        ui->editPicture->setEnabled(false);
+        ui->editPicture->setToolTip("Vous ne pouvez pas éditer une image en ligne");
     }
 }
 
@@ -2039,11 +2113,22 @@ void CeCWriter::on_actionOuvrir_une_recette_existante_triggered()
     if (doOpen)
     {
         resetFields();
+        QString dir = userDir;
+        if (!openLastDir_sauvegarde && dirSav != "" && QDir(dirSav).exists()) {
+            dir = dirSav;
+        }
+        else if (openLastDir_sauvegarde) {
+            QString dirLoad = Functions::getLastDir("backup");
+            if (dirLoad != NULL) {
+                dir = dirLoad;
+            }
+        }
         QString fileName = QFileDialog::getOpenFileName(this, "Ouvrir une recette",
-        dirSav,
+        dir,
         "Recettes : *.rct (*.rct)");
         if ( !fileName.isEmpty() )
         {
+            Functions::saveLastDir("backup", fileName.left(fileName.lastIndexOf("/")));
             loadRecipe(fileName, false);
         }
     }
@@ -2164,14 +2249,9 @@ void CeCWriter::openEditor()
     myProcess->start(Program);
 }
 
-/**
- * @brief CeCWriter::on_actionRechercher_une_mise_jour_triggered
- * Search for an update of the program, when it is triggered from the menu
- */
-void CeCWriter::on_actionRechercher_une_mise_jour_triggered()
-{
-    FileDownloader *fdower = new FileDownloader("http://qcecwriter.conseilsencuisine.fr/files/LATEST-" + systExp
-                                                + "-QT-" + QTVERSION, "Checking for update..." ,this);
+void CeCWriter::searchUpdate() {
+    FileDownloader *fdower = new FileDownloader(updtUrl, "Checking for update..." ,this);
+    qDebug() << "http://qcecwriter.conseilsencuisine.fr/files/LATEST-" + systExp + "-QT-" + QTVERSION;
     QByteArray resFile = fdower->downloadedData();
     if (!resFile.isEmpty())
     {
@@ -2188,6 +2268,8 @@ void CeCWriter::on_actionRechercher_une_mise_jour_triggered()
             {
                 if (lVerNb[niv] > tVerNb[niv])
                     hasUpdate = true;
+                else if(lVerNb[niv] < tVerNb[niv])
+                    niv = qMin(lVerNb.size(), tVerNb.size()); //We stop the loop
                 niv++;
             }
             if (!hasUpdate && lVerNb.size() > niv)
@@ -2200,20 +2282,7 @@ void CeCWriter::on_actionRechercher_une_mise_jour_triggered()
                 if (rep == QMessageBox::Yes)
                 {
                     QString adresse = lines[1].left(lines[1].length() - 1);
-                    QString fileToSave = adresse.split("/").last();
-                    QString extOfFile = fileToSave.split(".").last();
-                    QString fileToSaveUser = QFileDialog::getSaveFileName(this, "Enregistrer l'archive sous...", userDir + "/" + fileToSave, "Package d'installation  : *."+extOfFile+" (*."+extOfFile+")");
-                    if (fileToSaveUser != "")
-                    {
-                        fdower = new FileDownloader(adresse, "Téléchargement de la mise à jour..." ,this);
-                        QByteArray package = fdower->downloadedData();
-                        QFile saveFile(fileToSaveUser);
-                        saveFile.open(QIODevice::WriteOnly);
-                        saveFile.write(package);
-                        saveFile.close();
-                        QMessageBox::information(this, "Téléchargement terminé !", "Vous pouvez maintenant installer\nle package d'installation téléchargé !", QMessageBox::Ok);
-                    }
-
+                    Functions::downloadUpdate(adresse, this);
                 }
             }
             else
@@ -2232,7 +2301,15 @@ void CeCWriter::on_actionRechercher_une_mise_jour_triggered()
         QMessageBox::critical(this, "Erreur !", "Impossible de déterminer la dernière version du logiciel.\nVeuillez vérifier votre connexion internet.",
                               QMessageBox::Ok);
     }
+}
 
+/**
+ * @brief CeCWriter::on_actionRechercher_une_mise_jour_triggered
+ * Search for an update of the program, when it is triggered from the menu
+ */
+void CeCWriter::on_actionRechercher_une_mise_jour_triggered()
+{
+    searchUpdate();
 }
 
 /**
@@ -4737,5 +4814,35 @@ void CeCWriter::on_description_selectionChanged()
     }
     else {
         ui->lienButton->setEnabled(false);
+    }
+}
+
+void CeCWriter::on_switchNbPers_clicked()
+{
+    bool fourchettes = false;
+    if (ui->switchNbPers->isChecked()) {
+        fourchettes = true;
+    }
+    ui->nbPersonnes_2->setVisible(fourchettes);
+    ui->nbPersonnes_a->setVisible(fourchettes);
+    QColor colorBut = ui->switchNbPers->palette().color(QPalette::Background);
+    if ((colorBut.red() + colorBut.green() + colorBut.blue()) / 3 < 127.5)
+    {
+        if (fourchettes) {
+            ui->switchNbPers->setIcon(QPixmap(":/images/fourchette-blanc.png"));
+        }
+        else {
+            ui->switchNbPers->setIcon(QPixmap(":/images/fourchettes-blanc.png"));
+            ui->nbPersonnes_2->setValue(0);
+        }
+    }
+    else {
+        if (fourchettes) {
+            ui->switchNbPers->setIcon(QPixmap(":/images/fourchette.png"));
+        }
+        else {
+            ui->switchNbPers->setIcon(QPixmap(":/images/fourchettes.png"));
+            ui->nbPersonnes_2->setValue(0);
+        }
     }
 }
