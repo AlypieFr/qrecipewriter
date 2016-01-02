@@ -1,7 +1,5 @@
 #include "filedownloader.h"
 
-#include <QDebug>
-
 FileDownloader::FileDownloader(QUrl url, QString message, QWidget *parent) :
     QWidget(parent)
 {

@@ -23,6 +23,7 @@ extern void *ptr2apropos;
 /**
  * GLOBAL VARIABLES
  */
+extern QString shareDir;
 extern QString userDir;
 extern QString confDir;
 extern QString confFile;
@@ -120,6 +121,10 @@ void CeCWriter::saveSizeAndQuit()
     in << QString::number(this->isMaximized()) << "\n" << QString::number(this->width()) << "\t" << QString::number(this->height());
     in.flush();
     saveSize.close();
+    //Remove tmp dir (to save disk place :D):
+    if (QDir(dirTmp).exists()) {
+        Functions::removeDir(dirTmp);
+    }
     this->close();
 }
 
@@ -160,11 +165,16 @@ void CeCWriter::config()
     if (!dirConf.exists())
         dirConf.mkpath(".");
     #ifdef Q_OS_LINUX
-    QString path = QCoreApplication::applicationDirPath();
-    QString Program = "sh "+path+"/checkGimp.bash";
+    QFile prog(":/checkGimp.bash");
+    prog.open(QFile::ReadOnly);
+    QString prg = "/bin/bash";
+    QStringList arg;
+    arg << "-c";
+    arg << prog.readAll();
+    prog.close();
     QProcess *myProcess = new QProcess();
     myProcess->setProcessChannelMode(QProcess::MergedChannels);
-    myProcess->start(Program);
+    myProcess->start(prg, arg);
     myProcess->waitForFinished();
     QString test(myProcess->readAllStandardOutput());
     if(test == "yes\n")
@@ -1677,7 +1687,14 @@ void CeCWriter::on_apercu_clicked()
             success = Functions::removeDir(dirTmp + "/apercu");
         if (success)
         {
-            success = Functions::copyRecursively(path + "/modeleHtml", dirTmp + "/apercu");
+            QString modeleHtml = "";
+            if (QDir(path + "/modeleHtml").exists()) {
+                modeleHtml = path + "/modeleHtml";
+            }
+            else {
+                modeleHtml = shareDir + "/modeleHtml";
+            }
+            success = Functions::copyRecursively(modeleHtml, dirTmp + "/apercu");
             if (success)
             {
                 tmp.mkdir("./Photos");
@@ -2251,7 +2268,6 @@ void CeCWriter::openEditor()
 
 void CeCWriter::searchUpdate() {
     FileDownloader *fdower = new FileDownloader(updtUrl, "Checking for update..." ,this);
-    qDebug() << "http://qcecwriter.conseilsencuisine.fr/files/LATEST-" + systExp + "-QT-" + QTVERSION;
     QByteArray resFile = fdower->downloadedData();
     if (!resFile.isEmpty())
     {
@@ -3343,6 +3359,11 @@ void CeCWriter::resizeEvent(QResizeEvent* event)
 
     //Set logo fitting size:
     this->setLogoWindow();
+    int height = qMin((this->height() * 480)/700, 480);
+    if (height + 190 > this->height()) {
+        height = this->height() - 190;
+    }
+    ui->parametres->setMinimumHeight(height);
 }
 
 //Set logo window depending on size of window:

@@ -8,7 +8,7 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = CeCWriter
+TARGET = qcecwriter
 TEMPLATE = app
 
 
@@ -78,13 +78,93 @@ CONFIG += wwwidgets
 unix {
     INCLUDEPATH += /usr/include/hunspell
     contains(QMAKE_HOST.arch, x86_64) {
-        LIBS += /usr/lib/x86_64-linux-gnu/libhunspell-1.3.a
-        LIBS += /usr/lib/x86_64-linux-gnu/libqjson.so
+        exists("/usr/lib/x86_64-linux-gnu/libhunspell-1.3.a") {
+            LIBS += /usr/lib/x86_64-linux-gnu/libhunspell-1.3.a
+        }
+        !exists("/usr/lib/x86_64-linux-gnu/libhunspell-1.3.a") {
+            exists("/usr/lib64/libhunspell-1.3.so") {
+                LIBS += /usr/lib64/libhunspell-1.3.so
+            }
+            !exists("/usr/lib64/libhunspell-1.3.so") {
+                exists("/usr/lib/libhunspell-1.3.so") {
+                    LIBS += /usr/lib/libhunspell-1.3.so
+                }
+                !exists("/usr/lib/libhunspell-1.3.so") {
+                    message("ERROR: libhunspell-1.3.so not found. Please edit cecwriter.pro file and set the correct location")
+                }
+            }
+        }
+        exists("/usr/lib/x86_64-linux-gnu/libqjson.so") {
+            LIBS += /usr/lib/x86_64-linux-gnu/libqjson.so
+        }
+        !exists("/usr/lib/x86_64-linux-gnu/libqjson.so") {
+            exists("/usr/lib64/libqjson.so") {
+                LIBS += /usr/lib64/libqjson.so
+            }
+            !exists("/usr/lib64/libqjson.so") {
+                exists("/usr/lib/libqjson.so") {
+                    LIBS += /usr/lib/libqjson.so
+                }
+                !exists("/usr/lib/libqjson.so") {
+                    message("ERROR: libqjson.so not found. Please edit cecwriter.pro file and set the correct location")
+                }
+            }
+        }
     }
     else {
-        LIBS += /usr/lib/i386-linux-gnu/libhunspell-1.3.a
-        LIBS += /usr/lib/i386-linux-gnu/libqjson.so
+        exists("/usr/lib/i386-linux-gnu/libhunspell-1.3.a") {
+            LIBS += /usr/lib/i386-linux-gnu/libhunspell-1.3.a
+        }
+        !exists("/usr/lib/i386-linux-gnu/libhunspell-1.3.a") {
+            exists("/usr/lib32/libhunspell-1.3.so") {
+                LIBS += /usr/lib32/libhunspell-1.3.so
+            }
+            !exists("/usr/lib32/libhunspell-1.3.so") {
+                exists("/usr/lib/libhunspell-1.3.so") {
+                    LIBS += /usr/lib/libhunspell-1.3.so
+                }
+                !exists("/usr/lib/libhunspell-1.3.so") {
+                    message("ERROR: libhunspell-1.3.so not found. Please edit cecwriter.pro file and set the correct location")
+                }
+            }
+        }
+        exists("/usr/lib/i386-linux-gnu/libqjson.so") {
+            LIBS += /usr/lib/i386-linux-gnu/libqjson.so
+        }
+        !exists("/usr/lib/i386-linux-gnu/libqjson.so") {
+            exists("/usr/lib32/libqjson.so") {
+                LIBS += /usr/lib32/libqjson.so
+            }
+            !exists("/usr/lib32/libqjson.so") {
+                exists("/usr/lib/libqjson.so") {
+                    LIBS += /usr/lib/libqjson.so
+                }
+                !exists("/usr/lib/libqjson.so") {
+                    message("ERROR: libqjson.so not found. Please edit cecwriter.pro file and set the correct location")
+                }
+            }
+        }
     }
+
+    ICONS = icons/128x128 icons/48x48 icons/96x96
+    INSTICONS.path = /usr/share/icons/hicolor
+    INSTICONS.files = $$ICONS
+    INSTALLS += INSTICONS
+
+    DESK = applications/QCeCWriter.desktop
+    INSTDESK.path = /usr/share/applications
+    INSTDESK.files = $$DESK
+    INSTALLS += INSTDESK
+
+    SHARE = CeCWriter LICENCE.txt modeleHtml wordpress
+    INSTSHARE.path = /usr/share/qcecwriter
+    INSTSHARE.files = $$SHARE
+    INSTALLS += INSTSHARE
+
+    BIN = qcecwriter
+    INSTBIN.path = /usr/bin
+    INSTBIN.files = $$BIN
+    INSTALLS += INSTBIN
 }
 
 win32 {
@@ -92,6 +172,7 @@ win32 {
     LIBS += C:/hunspell/lib/libhunspell-1.3.a
     LIBS += C:/Qjson/lib/libqjson-qt5.dll.a
     RC_FILE = myapp.rc
+    TARGET = QCeCWriter
 }
 
 DISTFILES +=

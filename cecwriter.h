@@ -33,8 +33,6 @@
 
 #include <QMainWindow>
 
-#include <QDebug>
-
 //Graphic components
 #include <QApplication>
 #include <QChar>

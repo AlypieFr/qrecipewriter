@@ -40,14 +40,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  
 #include "spellchecker.h"
  
-#include <QFile>
-#include <QTextStream>
-#include <QTextCodec>
-#include <QStringList>
-#include <QDebug>
- 
-#include "hunspell/hunspell.hxx"
- 
 SpellChecker::SpellChecker(const QString &dictionaryPath, const QString &userDictionary)
 {
     _userDictionary = userDictionary;

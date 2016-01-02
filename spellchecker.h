@@ -40,8 +40,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  
 #ifndef SPELLCHECKER_H
 #define SPELLCHECKER_H
- 
+
+#include "hunspell/hunspell.hxx"
+
+#include <QDebug>
+#include <QFile>
 #include <QString>
+#include <QStringList>
+#include <QTextCodec>
+#include <QTextStream>
  
 class Hunspell;
  

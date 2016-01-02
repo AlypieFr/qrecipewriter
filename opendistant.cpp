@@ -1,6 +1,5 @@
 #include "opendistant.h"
 #include "ui_opendistant.h"
-#include <QDebug>
 
 extern QString addrSite;
 extern QStringList namesCats;
@@ -33,7 +32,7 @@ void OpenDistant::init() {
         catI->setMaximumHeight(21);
         catI->setMinimumHeight(21);
         catLay->addWidget(catI);
-        connect(catI, SIGNAL(stateChanged(int)), this, SLOT(on_catCheckBox_stateChanged()));;
+        connect(catI, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));;
     }
     FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPostsJson.php?user=" + pseudoWp, "Récupération de la liste des recettes...", parentWidget);
     QByteArray resData = fdower->downloadedData();
@@ -66,7 +65,7 @@ void OpenDistant::init() {
     this->exec();
 }
 
-void OpenDistant::on_catCheckBox_stateChanged() {
+void OpenDistant::stateChanged() {
     QStringList catsSelected;
     foreach(QObject *box, ui->scrollCatsContent->children()) {
         QCheckBox *cbox = qobject_cast<QCheckBox*>(box);

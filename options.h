@@ -16,8 +16,6 @@
 
 #include "cecwriter.h"
 
-#include <QDebug>
-
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QKeyEvent>

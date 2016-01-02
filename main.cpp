@@ -47,6 +47,7 @@ void *ptr2insertVideo = NULL;
 /**
  * GLOBAL VARIABLES
  */
+QString shareDir = "/usr/share/qcecwriter";
 QString userDir = QDir::homePath(); //User directory
 QString confDir = userDir + "/.CeCWriter/"; //Directory where all config is stored
 QString confFile; //Configuration file, where options choosen by user is saved
@@ -143,7 +144,6 @@ int main(int argc, char *argv[])
     confFile  = confDir +".config";
     QString tmp = confDir + ".cats";
     confCatFile = new QFile(tmp);
-    dirSav = confDir + "sauvegardes/recettes";
     #ifdef Q_OS_LINUX
     QFile fileDictTest1 ("/usr/share/myspell/dicts/fr_FR.dic");
     QFile fileDictTest2 ("/usr/share/myspell/dicts/fr_FR.aff");

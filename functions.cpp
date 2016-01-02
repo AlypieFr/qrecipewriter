@@ -626,7 +626,6 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
         if (txt.contains(header)) {
             begin = txt.indexOf(header.cap(0)) + header.cap(0).length();
         }
-        qDebug() << begin;
         if (begin > -1) {
             conseils = makeSimpleList(txt.mid(begin));
         }

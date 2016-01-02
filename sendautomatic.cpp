@@ -15,6 +15,7 @@
 #include "ui_sendautomatic.h"
 #include <QTextStream>
 
+extern QString shareDir;
 extern QString confDir;
 extern QStringList otherPicts;
 extern QString cmdNav; //Command to launch navigator
@@ -185,7 +186,14 @@ void SendAutomatic::on_valider_clicked()
     //Starting java program to send recipe to the website. Don't worry, the java part
     //is very small and will take only few seconds (depending on the internet connexion
     //only) :
-    QString Program = "java -jar \"" + path + "/wordpress/SendToWordpress.jar\" \""
+    QString stwPath = "";
+    if (QDir(path + "/wordpress").exists()) {
+        stwPath = path + "/wordpress";
+    }
+    else {
+        stwPath = shareDir + "/wordpress";
+    }
+    QString Program = "java -jar \"" + stwPath + "/SendToWordpress.jar\" \""
             + addrPub + "\" \"" + cats + "\" \"" + tags + "\" \"" + mainPicture + "\" \"" + htmlFile.fileName()
             + "\" \"" + oPicts + "\" \"" + isPublier + "\" " + QString::number(idRecipe);
     QProcess *myProcess = new QProcess();

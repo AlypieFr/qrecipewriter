@@ -28,7 +28,7 @@ public:
 
 private slots:
     void on_search_textChanged(const QString &arg1);
-    void on_catCheckBox_stateChanged();
+    void stateChanged();
 
     void on_buttonBox_rejected();
 

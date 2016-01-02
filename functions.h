@@ -16,8 +16,6 @@
 
 #include "filedownloader.h"
 
-#include <QDebug>
-
 #include <QCheckBox>
 #include <QDateTime>
 #include <QDialog>
