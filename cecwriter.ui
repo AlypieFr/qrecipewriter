@@ -82,6 +82,9 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <property name="spacing">
+          <number>6</number>
+         </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -96,6 +99,9 @@
          </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_10">
+           <property name="spacing">
+            <number>6</number>
+           </property>
            <item>
             <widget class="QGroupBox" name="parametres">
              <property name="sizePolicy">
@@ -162,7 +168,7 @@ left: 10px; padding: 0 3px;}</string>
                  <property name="geometry">
                   <rect>
                    <x>0</x>
-                   <y>0</y>
+                   <y>-135</y>
                    <width>345</width>
                    <height>462</height>
                   </rect>
@@ -532,6 +538,9 @@ left: 10px; padding: 0 3px;}</string>
                      <width>47</width>
                      <height>24</height>
                     </rect>
+                   </property>
+                   <property name="buttonSymbols">
+                    <enum>QAbstractSpinBox::UpDownArrows</enum>
                    </property>
                    <property name="maximum">
                     <number>24</number>

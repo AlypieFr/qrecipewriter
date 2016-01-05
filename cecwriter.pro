@@ -94,19 +94,21 @@ unix {
                 }
             }
         }
-        exists("/usr/lib/x86_64-linux-gnu/libqjson.so") {
-            LIBS += /usr/lib/x86_64-linux-gnu/libqjson.so
-        }
-        !exists("/usr/lib/x86_64-linux-gnu/libqjson.so") {
-            exists("/usr/lib64/libqjson.so") {
-                LIBS += /usr/lib64/libqjson.so
+        !greaterThan(QT_MAJOR_VERSION, 5) {
+            exists("/usr/lib/x86_64-linux-gnu/libqjson.so") {
+                LIBS += /usr/lib/x86_64-linux-gnu/libqjson.so
             }
-            !exists("/usr/lib64/libqjson.so") {
-                exists("/usr/lib/libqjson.so") {
-                    LIBS += /usr/lib/libqjson.so
+            !exists("/usr/lib/x86_64-linux-gnu/libqjson.so") {
+                exists("/usr/lib64/libqjson.so") {
+                    LIBS += /usr/lib64/libqjson.so
                 }
-                !exists("/usr/lib/libqjson.so") {
-                    message("ERROR: libqjson.so not found. Please edit cecwriter.pro file and set the correct location")
+                !exists("/usr/lib64/libqjson.so") {
+                    exists("/usr/lib/libqjson.so") {
+                        LIBS += /usr/lib/libqjson.so
+                    }
+                    !exists("/usr/lib/libqjson.so") {
+                        message("ERROR: libqjson.so not found. Please edit cecwriter.pro file and set the correct location")
+                    }
                 }
             }
         }
@@ -128,19 +130,21 @@ unix {
                 }
             }
         }
-        exists("/usr/lib/i386-linux-gnu/libqjson.so") {
-            LIBS += /usr/lib/i386-linux-gnu/libqjson.so
-        }
-        !exists("/usr/lib/i386-linux-gnu/libqjson.so") {
-            exists("/usr/lib32/libqjson.so") {
-                LIBS += /usr/lib32/libqjson.so
+        !greaterThan(QT_MAJOR_VERSION, 5) {
+            exists("/usr/lib/i386-linux-gnu/libqjson.so") {
+                LIBS += /usr/lib/i386-linux-gnu/libqjson.so
             }
-            !exists("/usr/lib32/libqjson.so") {
-                exists("/usr/lib/libqjson.so") {
-                    LIBS += /usr/lib/libqjson.so
+            !exists("/usr/lib/i386-linux-gnu/libqjson.so") {
+                exists("/usr/lib32/libqjson.so") {
+                    LIBS += /usr/lib32/libqjson.so
                 }
-                !exists("/usr/lib/libqjson.so") {
-                    message("ERROR: libqjson.so not found. Please edit cecwriter.pro file and set the correct location")
+                !exists("/usr/lib32/libqjson.so") {
+                    exists("/usr/lib/libqjson.so") {
+                        LIBS += /usr/lib/libqjson.so
+                    }
+                    !exists("/usr/lib/libqjson.so") {
+                        message("ERROR: libqjson.so not found. Please edit cecwriter.pro file and set the correct location")
+                    }
                 }
             }
         }
@@ -170,7 +174,7 @@ unix {
 win32 {
     INCLUDEPATH += C:/hunspell/include
     LIBS += C:/hunspell/lib/libhunspell-1.3.a
-    LIBS += C:/Qjson/lib/libqjson-qt5.dll.a
+    #LIBS += C:/Qjson/lib/libqjson-qt5.dll.a
     RC_FILE = myapp.rc
     TARGET = QCeCWriter
 }

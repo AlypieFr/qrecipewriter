@@ -475,7 +475,7 @@ QStringList Functions::makeNumberedList(QString text) {
             }
             else if(nextFOl == min) {
                 QStringList balParts = bal.split(".");
-                balParts.removeAt(balParts.length() - 2);
+                balParts.removeAt(qMax(balParts.length() - 2, 0)); //balParts.length()-2 always > 0, but qMax suppress the warning in compilation
                 bal = balParts.join(".");
                 next = next.mid(nextFOl + 5);
             }
