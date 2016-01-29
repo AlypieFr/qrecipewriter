@@ -23,6 +23,7 @@ $options = get_option( 'gopress_theme_settings' );
 <link rel="icon" type="image/png" href="<?php echo $options['favicon']; ?>" />
 <?php } ?>
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style-cec.css" />
 
 <!-- WP Head -->
 <?php if ( is_single() || is_page() ) wp_enqueue_script( 'comment-reply' ); ?>

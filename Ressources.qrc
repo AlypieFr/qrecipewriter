@@ -24,5 +24,10 @@
         <file>images/logo_blanc.png</file>
         <file>images/logo-grand_blanc.png</file>
         <file>images/QCeCWriter.png</file>
+        <file>images/print.png</file>
+        <file>images/noprint.png</file>
+        <file>images/movie.png</file>
+        <file>images/media_aspect_ratio.png</file>
+        <file>images/media_aspect_ratio_blanc.png</file>
     </qresource>
 </RCC>

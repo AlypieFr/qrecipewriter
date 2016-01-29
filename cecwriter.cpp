@@ -45,6 +45,7 @@ extern QString editPict;
 extern QString corrOrtho;
 extern QString correction;
 extern bool cancel;
+extern bool cecPrinter;
 
 extern QString VERSION;
 extern QString QTVERSION;
@@ -188,6 +189,7 @@ void CeCWriter::init()
     ui->commButton->setFocusPolicy(Qt::NoFocus);
     ui->lienButton->setFocusPolicy(Qt::NoFocus);
     ui->imgButton->setFocusPolicy(Qt::NoFocus);
+    ui->movie->setFocusPolicy(Qt::NoFocus);
     ui->abcButton->setFocusPolicy(Qt::NoFocus);
     ui->ingrListMoins->setFocusPolicy(Qt::NoFocus);
     ui->ingrListPlus->setFocusPolicy(Qt::NoFocus);
@@ -195,6 +197,8 @@ void CeCWriter::init()
     ui->prepListMoins->setFocusPolicy(Qt::NoFocus);
     ui->prepListPlus->setFocusPolicy(Qt::NoFocus);
     ui->prepListShow->setFocusPolicy(Qt::NoFocus);
+    ui->noPrint->setFocusPolicy(Qt::NoFocus);
+    ui->printOnly->setFocusPolicy(Qt::NoFocus);
     //Center window in the screen
     isMax = false;
     int w = this->width(), h = this->height();
@@ -248,9 +252,9 @@ void CeCWriter::init()
     QColor colorBut = ui->abcButton->palette().color(QPalette::Background);
     if ((colorBut.red() + colorBut.green() + colorBut.blue()) / 3 < 127.5)
     {
-        ui->lienButton->setIcon(QPixmap(":/images/lien_button_blanc.png"));
-        ui->imgButton->setIcon(QPixmap(":/images/img_blanc.png"));
-        ui->abcButton->setIcon(QPixmap(":/images/abc_blanc.png"));
+        //ui->lienButton->setIcon(QPixmap(":/images/lien_button_blanc.png"));
+        //ui->imgButton->setIcon(QPixmap(":/images/img_blanc.png"));
+        //ui->abcButton->setIcon(QPixmap(":/images/abc_blanc.png"));
     }
     //Set categories:
     ui->scrollCats->setFrameShape(QFrame::NoFrame); //Remove border
@@ -336,6 +340,10 @@ void CeCWriter::init()
     ui->scrollCats->setWidget(wid);
     //Load config:
     Functions::loadConfig();
+    if (!cecPrinter) {
+        ui->noPrint->setToolTip("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+        ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+    }
     //Test if dictrionary path is given:
     if (corrOrtho == "")
     {
@@ -575,6 +583,14 @@ void CeCWriter::on_actionOptions_triggered()
         ui->abcButton->setEnabled(true);
         ui->actionCorrection_orthographique->setEnabled(true);
     }
+    if (!cecPrinter) {
+        ui->noPrint->setToolTip("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+        ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+    }
+    else {
+        ui->noPrint->setToolTip("Ne pas imprimer une partie de texte");
+        ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher");
+    }
 }
 
 /**
@@ -634,14 +650,14 @@ void CeCWriter::format_clicked(QString typeF)
             QString text = ui->editIngr->text();
             text.insert(pos, "<"+ typeF +"></"+ typeF +">");
             ui->editIngr->setText(text);
-            ui->editIngr->setCursorPosition(pos+3);
+            ui->editIngr->setCursorPosition(pos+2+typeF.length());
         }
         else {
             QString sel = ui->editIngr->selectedText();
             QString initial = ui->editIngr->text();
             ui->editIngr->setText(initial.left(selStart) + "<"+ typeF +">" + sel
                   + "</"+ typeF +">" + initial.right(initial.length() - (selStart + sel.length())));
-            ui->editIngr->setCursorPosition(selStart + sel.length() + 7);
+            ui->editIngr->setCursorPosition(selStart + sel.length() + 5 + (typeF.length() * 2));
         }
     }
     else if (ui->editMat->hasFocus()) {
@@ -651,14 +667,14 @@ void CeCWriter::format_clicked(QString typeF)
             QString text = ui->editMat->text();
             text.insert(pos, "<"+ typeF +"></"+ typeF +">");
             ui->editMat->setText(text);
-            ui->editMat->setCursorPosition(pos+3);
+            ui->editMat->setCursorPosition(pos+2+typeF.length());
         }
         else {
             QString sel = ui->editMat->selectedText();
             QString initial = ui->editMat->text();
             ui->editMat->setText(initial.left(selStart) + "<"+ typeF +">" + sel
                   + "</"+ typeF +">" + initial.right(initial.length() - (selStart + sel.length())));
-            ui->editMat->setCursorPosition(selStart + sel.length() + 7);
+            ui->editMat->setCursorPosition(selStart + sel.length() + 5 + (typeF.length() * 2));
         }
     }
     else if (ui->editPrep->hasFocus()) {
@@ -670,7 +686,7 @@ void CeCWriter::format_clicked(QString typeF)
             text.insert(pos, "<"+ typeF +"></"+ typeF +">");
             ui->editPrep->setPlainText(text);
             QTextCursor cursor = ui->editPrep->textCursor();
-            cursor.setPosition(pos+3);
+            cursor.setPosition(pos+2+typeF.length());
             ui->editPrep->setTextCursor(cursor);
         }
         else {
@@ -679,7 +695,7 @@ void CeCWriter::format_clicked(QString typeF)
             ui->editPrep->setPlainText(initial.left(selStart) + "<"+ typeF +">" + sel
                   + "</"+ typeF +">" + initial.right(initial.length() - (selStart + sel.length())));
             QTextCursor cursor = ui->editPrep->textCursor();
-            cursor.setPosition(selEnd + 7);
+            cursor.setPosition(selEnd + 5 + (typeF.length() * 2));
             ui->editPrep->setTextCursor(cursor);
         }
     }
@@ -692,7 +708,7 @@ void CeCWriter::format_clicked(QString typeF)
             text.insert(pos, "<"+ typeF +"></"+ typeF +">");
             ui->editCons->setPlainText(text);
             QTextCursor cursor = ui->editCons->textCursor();
-            cursor.setPosition(pos+3);
+            cursor.setPosition(pos+2+typeF.length());
             ui->editCons->setTextCursor(cursor);
         }
         else {
@@ -701,7 +717,7 @@ void CeCWriter::format_clicked(QString typeF)
             ui->editCons->setPlainText(initial.left(selStart) + "<"+ typeF +">" + sel
                   + "</"+ typeF +">" + initial.right(initial.length() - (selStart + sel.length())));
             QTextCursor cursor = ui->editCons->textCursor();
-            cursor.setPosition(selEnd + 7);
+            cursor.setPosition(selEnd + 5 + (typeF.length() * 2));
             ui->editCons->setTextCursor(cursor);
         }
     }
@@ -715,7 +731,7 @@ void CeCWriter::format_clicked(QString typeF)
             text.insert(pos, "<"+ typeF +"></"+ typeF +">");
             ui->description->setPlainText(text);
             QTextCursor cursor = ui->description->textCursor();
-            cursor.setPosition(pos+3);
+            cursor.setPosition(pos+2+typeF.length());
             ui->description->setTextCursor(cursor);
         }
         else {
@@ -724,7 +740,7 @@ void CeCWriter::format_clicked(QString typeF)
             ui->description->setPlainText(initial.left(selStart) + "<"+ typeF +">" + sel
                   + "</"+ typeF +">" + initial.right(initial.length() - (selStart + sel.length())));
             QTextCursor cursor = ui->description->textCursor();
-            cursor.setPosition(selEnd + 7);
+            cursor.setPosition(selEnd + 5 + (typeF.length() * 2));
             ui->description->setTextCursor(cursor);
         }
     }
@@ -740,7 +756,7 @@ void CeCWriter::on_grasButton_clicked()
 }
 
 /**
- * @brief CeCWriter::on_grasButton_clicked
+ * @brief CeCWriter::on_italicButton_clicked
  * On italique button clicked
  */
 void CeCWriter::on_italicButton_clicked()
@@ -749,7 +765,7 @@ void CeCWriter::on_italicButton_clicked()
 }
 
 /**
- * @brief CeCWriter::on_grasButton_clicked
+ * @brief CeCWriter::on_soulignButton_clicked
  * On souligné button clicked
  */
 void CeCWriter::on_soulignButton_clicked()
@@ -758,7 +774,25 @@ void CeCWriter::on_soulignButton_clicked()
 }
 
 /**
- * @brief CeCWriter::on_grasButton_clicked
+ * @brief CeCWriter::on_noPrint_clicked
+ * On no print button clicked
+ */
+void CeCWriter::on_noPrint_clicked()
+{
+    format_clicked("np");
+}
+
+/**
+ * @brief CeCWriter::on_printOnly_clicked
+ * On print only button clicked
+ */
+void CeCWriter::on_printOnly_clicked()
+{
+    format_clicked("po");
+}
+
+/**
+ * @brief CeCWriter::on_commButton_clicked
  * On comment button clicked : button to write comments inside the lists
  */
 void CeCWriter::on_commButton_clicked()
@@ -982,42 +1016,184 @@ void CeCWriter::on_lienButton_clicked()
 void CeCWriter::on_imgButton_clicked()
 {
     QString cible = "";
+    QString afficher = "all";
+    int largeur = -1;
+    int hauteur = -1;
+    QString fileName = "";
+    QRegExp exp ("^\\[IMG:(\\w+):(\\d+):(\\d+):([^\\]]+)\\]$");
     if (ui->editPrep->hasFocus())
     {
         cible = "editPrep";
+        QString selection = ui->editPrep->textCursor().selectedText();
+        if (selection.contains(exp))
+        {
+            afficher = exp.cap(1);
+            largeur = exp.cap(2).toInt();
+            hauteur = exp.cap(3).toInt();
+            fileName = exp.cap(4);
+        }
     }
     else if (ui->editCons->hasFocus())
     {
         cible = "editCons";
+        QString selection = ui->editCons->textCursor().selectedText();
+        if (selection.contains(exp))
+        {
+            afficher = exp.cap(1);
+            largeur = exp.cap(2).toInt();
+            hauteur = exp.cap(3).toInt();
+            fileName = exp.cap(4);
+        }
     }
     if (cible != "")
     {
-        QString fileName = QFileDialog::getOpenFileName(this, "Choisir une image",
-        dirPict,
-        "Images : *.jpg, *.JPG (*.jpg *.JPG)");
+        if (fileName == "") {
+            fileName = QFileDialog::getOpenFileName(this, "Choisir une image",
+            dirPict,
+            "Images : *.jpg, *.JPG (*.jpg *.JPG)");
+        }
         if (fileName != "")
         {
+            InsertPicture* insertPicture = new InsertPicture(this);
+            insertPicture->init(fileName, afficher, largeur, hauteur, fileName);
+            insertPicture->exec();
+            bool ok = insertPicture->ok;
+            QString largeur = insertPicture->largeur;
+            QString hauteur = insertPicture->hauteur;
+            QString print = insertPicture->print;
+            fileName = insertPicture->filename;
+            delete insertPicture;
+            insertPicture = NULL;
+            QString balise = "[IMG:" + print + ":" + largeur + ":" + hauteur + ":" + fileName + "]";
+            if (ok) {
+                if (cible == "editPrep")
+                {
+                    int cursPos = ui->editPrep->textCursor().position();
+                    int selLen = ui->editPrep->textCursor().selectedText().length();
+                    if (selLen > 0) {
+                        cursPos = ui->editPrep->textCursor().selectionStart();
+                        ui->editPrep->textCursor().removeSelectedText();
+                    }
+                    QString initial = ui->editPrep->toPlainText();
+                    ui->editPrep->setPlainText(initial.left(cursPos) + balise + initial.right(initial.length() - cursPos));
+                    QTextCursor cursor = ui->editPrep->textCursor();
+                    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + balise.length());
+                    ui->editPrep->setTextCursor(cursor);
+                }
+                else if (cible == "editCons")
+                {
+                    int cursPos = ui->editCons->textCursor().position();
+                    int selLen = ui->editCons->textCursor().selectedText().length();
+                    if (selLen > 0) {
+                        cursPos = ui->editCons->textCursor().selectionStart();
+                        ui->editCons->textCursor().removeSelectedText();
+                    }
+                    QString initial = ui->editCons->toPlainText();
+                    ui->editCons->setPlainText(initial.left(cursPos) + balise + initial.right(initial.length() - cursPos));
+                    QTextCursor cursor = ui->editCons->textCursor();
+                    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + balise.length());
+                    ui->editCons->setTextCursor(cursor);
+                }
+            }
+        }
+    }
+}
+
+/**
+ * @brief CeCWriter::on_movie_clicked
+ */
+void CeCWriter::on_movie_clicked()
+{
+    QString cible = "";
+    //Default values :
+    int largeur = 640;
+    int hauteur = 480;
+    int startTime = 0;
+    int bordure = 0;
+    bool fullscreen = true;
+    bool suggestions = true;
+    bool commandes = true;
+    bool titreVideo = true;
+    bool confidentialite = false;
+    QString idVideo = "";
+    QRegExp exp ("^\\[VIDEO:(\\d+):(\\d+):(\\d+):(\\d+):([01]+):([01]+):([01]+):([01]+):([01]+):([\\w-]+)\\]$");
+    if (ui->editPrep->hasFocus())
+    {
+        QString selection = ui->editPrep->textCursor().selectedText();
+        if (selection.contains(exp))
+        {
+            largeur = exp.cap(1).toInt();
+            hauteur = exp.cap(2).toInt();
+            startTime = exp.cap(3).toInt();
+            bordure = exp.cap(4).toInt();
+            fullscreen = (exp.cap(5) == "1" ? true : false);
+            suggestions = (exp.cap(6) == "1" ? true : false);
+            commandes = (exp.cap(7) == "1" ? true : false);
+            titreVideo = (exp.cap(8) == "1" ? true : false);
+            confidentialite = (exp.cap(9) == "1" ? true : false);
+            idVideo = exp.cap(10);
+        }
+        cible = "editPrep";
+    }
+    else if (ui->editCons->hasFocus())
+    {
+        QString selection = ui->editCons->textCursor().selectedText();
+        if (selection.contains(exp))
+        {
+            largeur = exp.cap(1).toInt();
+            hauteur = exp.cap(2).toInt();
+            startTime = exp.cap(3).toInt();
+            bordure = exp.cap(4).toInt();
+            fullscreen = (exp.cap(5) == "1" ? true : false);
+            suggestions = (exp.cap(6) == "1" ? true : false);
+            commandes = (exp.cap(7) == "1" ? true : false);
+            titreVideo = (exp.cap(8) == "1" ? true : false);
+            confidentialite = (exp.cap(9) == "1" ? true : false);
+            idVideo = exp.cap(10);
+        }
+        cible = "editCons";
+    }
+    if (cible != "")
+    {
+        InsertVideo* insertVideo = new InsertVideo(this);
+        insertVideo->init(largeur, hauteur, startTime, bordure, fullscreen, suggestions, commandes, titreVideo, confidentialite, idVideo);
+        insertVideo->exec();
+        if (insertVideo->ok) {
+            QString balise = "[VIDEO:" + QString::number(insertVideo->largeur) + ':' + QString::number(insertVideo->hauteur) + ':' + QString::number(insertVideo->startTime) + ':' + QString::number(insertVideo->bordure) + ':'
+                    + QString::number(insertVideo->fullscreen) + ':' + QString::number(insertVideo->suggestions) + ':' + QString::number(insertVideo->commandes)
+                    + ':' + QString::number(insertVideo->titreVideo) + ':' + QString::number(insertVideo->confidentialite) + ':' + insertVideo->idVideo + ']';
             if (cible == "editPrep")
             {
-                QString initial = ui->editPrep->toPlainText();
                 int cursPos = ui->editPrep->textCursor().position();
-                ui->editPrep->setPlainText(initial.left(cursPos) + "[IMG:" + fileName
-                                           + "]" + initial.right(initial.length() - cursPos));
+                int selLen = ui->editPrep->textCursor().selectedText().length();
+                if (selLen > 0) {
+                    cursPos = ui->editPrep->textCursor().selectionStart();
+                    ui->editPrep->textCursor().removeSelectedText();
+                }
+                ui->editPrep->textCursor().removeSelectedText();
+                QString initial = ui->editPrep->toPlainText();
+                ui->editPrep->setPlainText(initial.left(cursPos) + balise + initial.right(initial.length() - cursPos));
                 QTextCursor cursor = ui->editPrep->textCursor();
-                cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + 5 + fileName.length() + 1);
+                cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + balise.length());
                 ui->editPrep->setTextCursor(cursor);
             }
             else if (cible == "editCons")
             {
-                QString initial = ui->editCons->toPlainText();
                 int cursPos = ui->editCons->textCursor().position();
-                ui->editCons->setPlainText(initial.left(cursPos) + "[IMG:" + fileName
-                                           + "]" + initial.right(initial.length() - cursPos));
+                int selLen = ui->editCons->textCursor().selectedText().length();
+                if (selLen > 0) {
+                    cursPos = ui->editCons->textCursor().selectionStart();
+                    ui->editCons->textCursor().removeSelectedText();
+                }
+                QString initial = ui->editCons->toPlainText();
+                ui->editCons->setPlainText(initial.left(cursPos) + balise + initial.right(initial.length() - cursPos));
                 QTextCursor cursor = ui->editCons->textCursor();
-                cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + 5 + fileName.length() + 1);
+                cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, cursPos + balise.length());
                 ui->editCons->setTextCursor(cursor);
             }
         }
+        delete insertVideo;
+        insertVideo = NULL;
     }
 }
 
@@ -1149,6 +1325,41 @@ void CeCWriter::on_abcButton_clicked()
 void CeCWriter::on_actionCorrection_orthographique_triggered()
 {
     on_abcButton_clicked();
+}
+
+/**
+ * @brief CeCWriter::roundValueToFive
+ * Round given value to the nearest number 5-divisibled
+ * @param value value to be rounded
+ * @return
+ */
+int CeCWriter::roundValueToFive(double value)
+{
+    return qRound(value / 5.0) * 5;
+}
+
+/**
+ * @brief CeCWriter::on_minPrep_editingFinished
+ */
+void CeCWriter::on_minPrep_editingFinished()
+{
+    ui->minPrep->setValue(roundValueToFive(ui->minPrep->value()));
+}
+
+/**
+ * @brief CeCWriter::on_minCuis_editingFinished
+ */
+void CeCWriter::on_minCuis_editingFinished()
+{
+    ui->minCuis->setValue(roundValueToFive(ui->minCuis->value()));
+}
+
+/**
+ * @brief CeCWriter::on_minRep_editingFinished
+ */
+void CeCWriter::on_minRep_editingFinished()
+{
+    ui->minRep->setValue(roundValueToFive(ui->minRep->value()));
 }
 
 /**
@@ -1920,13 +2131,36 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
         }
     }
     //Focus comm:
-    if ((object == ui->editIngr || object == ui->editMat || object == ui->editPrep || object == ui->editCons) && event->type() == QEvent::FocusOut)
+    if ((object == ui->description || object == ui->editIngr || object == ui->editMat || object == ui->editPrep || object == ui->editCons) && event->type() == QEvent::FocusOut)
     {
-        ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+        ui->grasButton->setEnabled(false);
+        ui->italicButton->setEnabled(false);
+        ui->soulignButton->setEnabled(false);
+        ui->noPrint->setEnabled(false);
+        ui->printOnly->setEnabled(false);
+        if (object != ui->description) {
+            ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+            ui->commButton->setEnabled(false);
+        }
+        if (object == ui->editPrep || object == ui->editCons || object == ui->description) {
+            ui->lienButton->setDisabled(true);
+            if (object != ui->description) {
+                ui->imgButton->setEnabled(false);
+                ui->movie->setEnabled(false);
+            }
+        }
         return false;
     }
     else if (object == ui->editIngr && event->type() == QEvent::FocusIn)
     {
+        ui->commButton->setEnabled(true);
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
         if (ingrComm)
             ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
         else
@@ -1935,6 +2169,14 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
     }
     else if (object == ui->editMat && event->type() == QEvent::FocusIn)
     {
+        ui->commButton->setEnabled(true);
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
         if (matComm)
             ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
         else
@@ -1943,6 +2185,19 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
     }
     else if (object == ui->editPrep && event->type() == QEvent::FocusIn)
     {
+        ui->commButton->setEnabled(true);
+        ui->imgButton->setEnabled(true);
+        ui->movie->setEnabled(true);
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
+        if (ui->editPrep->textCursor().selectedText().length() > 0) {
+            ui->lienButton->setEnabled(true);
+        }
         if (prepComm)
             ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
         else
@@ -1951,10 +2206,36 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
     }
     else if (object == ui->editCons && event->type() == QEvent::FocusIn)
     {
+        ui->commButton->setEnabled(true);
+        ui->imgButton->setEnabled(true);
+        ui->movie->setEnabled(true);
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
+        if (ui->editCons->textCursor().selectedText().length() > 0) {
+            ui->lienButton->setEnabled(true);
+        }
         if (consComm)
             ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
         else
             ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+        return false;
+    }
+    else if (object == ui->description && event->type() == QEvent::FocusIn) {
+        ui->grasButton->setEnabled(true);
+        ui->italicButton->setEnabled(true);
+        ui->soulignButton->setEnabled(true);
+        if (cecPrinter) {
+            ui->noPrint->setEnabled(true);
+            ui->printOnly->setEnabled(true);
+        }
+        if (ui->description->textCursor().selectedText().length() > 0) {
+            ui->lienButton->setEnabled(true);
+        }
         return false;
     }
     //Ingredients:
@@ -3565,9 +3846,8 @@ void CeCWriter::checkRemoveLnkSlct(QString text, QList<int> slct)
 
 QString CeCWriter::checkRemoveBalBckp(QString text, int caretPos)
 {
-    //IMPORTANT NOTE: bal len must be equals to 1.
     QStringList bals;
-    bals << "b" << "u" << "i";
+    bals << "b" << "u" << "i" << "np" << "po";
     int ind = 0;
     while (ind < bals.length() && balise == "")
     {
@@ -3577,25 +3857,31 @@ QString CeCWriter::checkRemoveBalBckp(QString text, int caretPos)
         balFsearch << 0 << 0;
         if (willRmv == ">") {
             balDsearch[1] = caretPos;
-            balDsearch[0] = caretPos - 3;
+            balDsearch[0] = caretPos - (2 + bals[ind].length());
             balFsearch[1] = caretPos;
-            balFsearch[0] = caretPos - 4;
-        }
-        else if (willRmv == bals[ind]) {
-            balDsearch[1] = caretPos + 1;
-            balDsearch[0] = caretPos - 2;
-            balFsearch[1] = caretPos + 1;
-            balFsearch[0] = caretPos - 3;
+            balFsearch[0] = caretPos - (3 + bals[ind].length());
         }
         else if (willRmv == "/") {
-            balFsearch[1] = caretPos + 2;
+            balFsearch[1] = caretPos + (1 + bals[ind].length());
             balFsearch[0] = caretPos - 2;
         }
         else if (willRmv == "<") {
-            balDsearch[1] = caretPos + 2;
+            balDsearch[1] = caretPos + (1 + bals[ind].length());
             balDsearch[0] = caretPos - 1;
-            balFsearch[1] = caretPos + 3;
+            balFsearch[1] = caretPos + (2 + bals[ind].length());
             balFsearch[0] = caretPos - 1;
+        }
+        else {
+            int it = 1;
+            foreach (QChar letter, bals[ind]) {
+                if (willRmv == letter) {
+                    balDsearch[1] = caretPos + 1 + (bals[ind].length() - it);
+                    balDsearch[0] = caretPos - (1 + it);
+                    balFsearch[1] = caretPos + 1 + (bals[ind].length() - it);
+                    balFsearch[0] = caretPos - (2 + it);
+                }
+                it++;
+            }
         }
         QRegExp pattD, pattF;
         pattD.setPattern("<" + bals[ind] + ">");
@@ -3604,7 +3890,7 @@ QString CeCWriter::checkRemoveBalBckp(QString text, int caretPos)
         if (balFsearch[1] > 0 && balFsearch[0] >= 0 && balFsearch[1] <= text.length()) {
             QString search = text.mid(balFsearch[0], balFsearch[1] - balFsearch[0]);
             if (search.contains(pattF)) {
-                resetPosCaret = balFsearch[0] - 3;
+                resetPosCaret = balFsearch[0] - (2 + bals[ind].length());
                 //Format tags are not always unique... So we must indentify the ones that will be deleted:
                 //To do that, we UPPER the tags in question:
                 int j = 3;
@@ -3631,7 +3917,7 @@ QString CeCWriter::checkRemoveBalBckp(QString text, int caretPos)
                         {
                             foundSister = true;
                             sisterId = balFsearch[0] - j;
-                            text = text.left(sisterId) + "<" + bals[ind].toUpper() + ">" + text.left(balFsearch[0]).right(text.left(balFsearch[0]).length() - (sisterId + 3)) + "</" + bals[ind].toUpper() + ">" + text.right(text.length() - balFsearch[1]);
+                            text = text.left(sisterId) + "<" + bals[ind].toUpper() + ">" + text.left(balFsearch[0]).right(text.left(balFsearch[0]).length() - (sisterId + 2 + bals[ind].length())) + "</" + bals[ind].toUpper() + ">" + text.right(text.length() - balFsearch[1]);
                             balise = bals[ind].toUpper();
                         }
                         else
@@ -3677,7 +3963,7 @@ QString CeCWriter::checkRemoveBalBckp(QString text, int caretPos)
                 if (sisterId > -1)
                 {
                     balise = bals[ind].toUpper();
-                    text = text.left(balDsearch[0]) + "<" + balise + ">" + text.left(sisterId).right(text.left(sisterId).length() - balDsearch[1]) + "</" + balise + ">" + text.right(text.length() - (sisterId + 4));
+                    text = text.left(balDsearch[0]) + "<" + balise + ">" + text.left(sisterId).right(text.left(sisterId).length() - balDsearch[1]) + "</" + balise + ">" + text.right(text.length() - (sisterId + 3 + bals[ind].length()));
                 }
             }
         }
@@ -3688,9 +3974,8 @@ QString CeCWriter::checkRemoveBalBckp(QString text, int caretPos)
 
 QString CeCWriter::checkRemoveBalSuppr(QString text, int caretPos)
 {
-    //IMPORTANT NOTE: bal len must be equals to 1.
     QStringList bals;
-    bals << "b" << "u" << "i";
+    bals << "b" << "u" << "i" << "np" << "po";
     int ind = 0;
     while (ind < bals.length() && balise == "")
     {
@@ -3700,25 +3985,31 @@ QString CeCWriter::checkRemoveBalSuppr(QString text, int caretPos)
         balFsearch << 0 << 0;
         if (willRmv == ">") {
             balDsearch[1] = caretPos + 1;
-            balDsearch[0] = caretPos - 2;
+            balDsearch[0] = caretPos - (1 + bals[ind].length());
             balFsearch[1] = caretPos + 1;
-            balFsearch[0] = caretPos - 3;
-        }
-        else if (willRmv ==bals[ind]) {
-            balDsearch[1] = caretPos + 2;
-            balDsearch[0] = caretPos - 1;
-            balFsearch[1] = caretPos + 2;
-            balFsearch[0] = caretPos - 2;
+            balFsearch[0] = caretPos - (2 + bals[ind].length());
         }
         else if (willRmv == "/") {
-            balFsearch[1] = caretPos + 3;
+            balFsearch[1] = caretPos + 2 + bals[ind].length();
             balFsearch[0] = caretPos - 1;
         }
         else if (willRmv == "<") {
-            balDsearch[1] = caretPos + 3;
+            balDsearch[1] = caretPos + 2 + bals[ind].length();
             balDsearch[0] = caretPos;
-            balFsearch[1] = caretPos + 4;
+            balFsearch[1] = caretPos + 3 + bals[ind].length();
             balFsearch[0] = caretPos;
+        }
+        else {
+            int it = 0;
+            foreach (QChar letter, bals[ind]) {
+                if (willRmv == letter) {
+                    balDsearch[1] = caretPos + 1 + (bals[ind].length() - it);
+                    balDsearch[0] = caretPos - (1 + it);
+                    balFsearch[1] = caretPos + 1 + (bals[ind].length() - it);
+                    balFsearch[0] = caretPos - (2 + it);
+                }
+                it++;
+            }
         }
         QRegExp pattD, pattF;
         pattD.setPattern("<" + bals[ind] + ">");
@@ -3727,7 +4018,7 @@ QString CeCWriter::checkRemoveBalSuppr(QString text, int caretPos)
         if (balFsearch[1] > 0 && balFsearch[1] <= text.length() && balFsearch[0] >= 0 && balFsearch[0] < text.length()) {
             QString search = text.mid(balFsearch[0], balFsearch[1] - balFsearch[0]);
             if (search.contains(pattF)) {
-                resetPosCaret = balFsearch[0] - 3;
+                resetPosCaret = balFsearch[0] - (2 + bals[ind].length());
                 int j = 3;
                 bool foundSister = false;
                 int goodSister = 0;
@@ -3745,7 +4036,7 @@ QString CeCWriter::checkRemoveBalSuppr(QString text, int caretPos)
                         {
                             foundSister = true;
                             sisterId = balFsearch[0] - j;
-                            text = text.left(sisterId) + "<" + bals[ind].toUpper() + ">" + text.left(balFsearch[0]).right(text.left(balFsearch[0]).length() - (sisterId + 3)) + "</" + bals[ind].toUpper() + ">" + text.right(text.length() - balFsearch[1]);
+                            text = text.left(sisterId) + "<" + bals[ind].toUpper() + ">" + text.left(balFsearch[0]).right(text.left(balFsearch[0]).length() - (sisterId + 2 + bals[ind].length())) + "</" + bals[ind].toUpper() + ">" + text.right(text.length() - balFsearch[1]);
                             balise = bals[ind].toUpper();
                         }
                         else
@@ -3791,7 +4082,7 @@ QString CeCWriter::checkRemoveBalSuppr(QString text, int caretPos)
                 if (sisterId > -1)
                 {
                     balise = bals[ind].toUpper();
-                    text = text.left(balDsearch[0]) + "<" + balise + ">" + text.left(sisterId).right(text.left(sisterId).length() - balDsearch[1]) + "</" + balise + ">" + text.right(text.length() - (sisterId + 4));
+                    text = text.left(balDsearch[0]) + "<" + balise + ">" + text.left(sisterId).right(text.left(sisterId).length() - balDsearch[1]) + "</" + balise + ">" + text.right(text.length() - (sisterId + 3 + bals[ind].length()));
                 }
             }
         }
@@ -3802,24 +4093,23 @@ QString CeCWriter::checkRemoveBalSuppr(QString text, int caretPos)
 
 QString CeCWriter::checkRemoveBalSlct(QString text, QList<int> slct)
 {
-    //IMPORTANT NOTE: bal len must be equals to 1.
     QStringList bals;
-    bals << "b" << "u" << "i";
+    bals << "b" << "u" << "i" << "np" << "po";
     foreach (QString bal1, bals) {
 
         //Search <b> type balise:
-        QString search = text.mid(qMax(0, slct[0] - 3), qMin(text.length(), slct[1] + 3));
+        QString search = text.mid(qMax(0, slct[0] - (2 + bal1.length())), qMin(text.length(), slct[1] + (2 + bal1.length())));
         QRegExp exp;
         exp.setPattern("<" + bal1 + ">");
         int i = 0;
         while (search.right(search.length() - i).contains(exp)) {
             QString bal = exp.cap();
             if (search.right(search.length() - i).indexOf(bal) + i < slct[0]) {
-                resetPosCaret -= qMax(0, slct[0] - (qMax(0, slct[0] - 3) + (search.right(search.length() - i).indexOf(bal) + i)));
+                resetPosCaret -= qMax(0, slct[0] - (qMax(0, slct[0] - (2 + bal1.length())) + (search.right(search.length() - i).indexOf(bal) + i)));
             }
             QList<int> balDsearch;
-            balDsearch << qMax(0, slct[0] - 3) + search.indexOf(exp);
-            balDsearch << qMax(0, slct[0] - 3) + search.indexOf(exp) + 3;
+            balDsearch << qMax(0, slct[0] - (2 + bal1.length())) + search.indexOf(exp);
+            balDsearch << qMax(0, slct[0] - (2 + bal1.length())) + search.indexOf(exp) + (2 + bal1.length());
             int sisterId = text.right(text.length() - balDsearch[1]).indexOf("</" + bal1 + ">") + balDsearch[1];
             int cosinId = text.right(text.length() - balDsearch[1]).indexOf("<" + bal1 + ">") + balDsearch[1];
             if (cosinId != -1 + balDsearch[1])
@@ -3850,7 +4140,7 @@ QString CeCWriter::checkRemoveBalSlct(QString text, QList<int> slct)
             {
                 if (!balises.contains(bal1.toUpper()))
                     balises.append(bal1.toUpper());
-                text = text.left(balDsearch[0]) + "<" + bal1.toUpper() + ">" + text.left(sisterId).right(text.left(sisterId).length() - balDsearch[1]) + "</" + bal1.toUpper() + ">" + text.right(text.length() - (sisterId + 4));
+                text = text.left(balDsearch[0]) + "<" + bal1.toUpper() + ">" + text.left(sisterId).right(text.left(sisterId).length() - balDsearch[1]) + "</" + bal1.toUpper() + ">" + text.right(text.length() - (sisterId + (3 + bal1.length())));
             }
             i += search.right(search.length() - i).indexOf(bal) + 1;
         }
@@ -3861,11 +4151,11 @@ QString CeCWriter::checkRemoveBalSlct(QString text, QList<int> slct)
         while (search.right(search.length() - i).contains(exp)) {
             QString bal = exp.cap();
             if (search.right(search.length() - i).indexOf(bal) + i < slct[0]) {
-                resetPosCaret -= qMax(0, slct[0] - (qMax(0, slct[0] - 3) + (search.right(search.length() - i).indexOf(bal) + i)));
+                resetPosCaret -= qMax(0, slct[0] - (qMax(0, slct[0] - (2 + bal1.length())) + (search.right(search.length() - i).indexOf(bal) + i)));
             }
             QList<int> balFsearch;
-            balFsearch << qMax(0, slct[0] - 3) + search.indexOf(exp);
-            balFsearch << qMax(0, slct[0] - 3) + search.indexOf(exp) + 4;
+            balFsearch << qMax(0, slct[0] - (2 + bal1.length())) + search.indexOf(exp);
+            balFsearch << qMax(0, slct[0] - (2 + bal1.length())) + search.indexOf(exp) + (3 + bal1.length());
             int j = 3;
             bool foundSister = false;
             int goodSister = 0;
@@ -3883,11 +4173,11 @@ QString CeCWriter::checkRemoveBalSlct(QString text, QList<int> slct)
                     {
                         foundSister = true;
                         sisterId = balFsearch[0] - j;
-                        text = text.left(sisterId) + "<" + bal1.toUpper() + ">" + text.left(balFsearch[0]).right(text.left(balFsearch[0]).length() - (sisterId + 3)) + "</" + bal1.toUpper() + ">" + text.right(text.length() - balFsearch[1]);
+                        text = text.left(sisterId) + "<" + bal1.toUpper() + ">" + text.left(balFsearch[0]).right(text.left(balFsearch[0]).length() - (sisterId + (2 + bal1.length()))) + "</" + bal1.toUpper() + ">" + text.right(text.length() - balFsearch[1]);
                         if (!balises.contains(bal1.toUpper()))
                             balises.append(bal1.toUpper());
-                        if (sisterId < slct[0] -3)
-                            resetPosCaret -= 3;
+                        if (sisterId < slct[0] - (2 + bal1.length()))
+                            resetPosCaret -= (2 + bal1.length());
                         else
                             resetPosCaret -= slct[0] - sisterId;
                     }
@@ -4020,15 +4310,15 @@ void CeCWriter::deleteBalsInLineEdit(QLineEdit* areaTxt)
         initialTxt = initialTxt.replace("<" + balLink + ">", "");
         initialTxt = initialTxt.replace("<仝" + balLink + ">", "仝");
         initialTxt = initialTxt.replace("<" + balLink + "仝>", "仝");
-        for (int i = 1; i < balLink.length() - 1; ++i) {
-            initialTxt = initialTxt.replace("<" + balLink.mid(0, i) + "仝>" + balLink.mid(i + 1, balLink.length() - (i + 1)), "仝");
+        for (int i = 1; i < balLink.length(); ++i) {
+            initialTxt = initialTxt.replace("<" + balLink.mid(0, i) + "仝" + balLink.mid(i, balLink.length())+ ">", "仝");
         }
         initialTxt = initialTxt.replace("</" + balLink + ">", "");
         initialTxt = initialTxt.replace("</仝" + balLink + ">", "仝");
         initialTxt = initialTxt.replace("<仝/" + balLink + ">", "仝");
         initialTxt = initialTxt.replace("</" + balLink + "仝>", "仝");
-        for (int i = 1; i < balLink.length() - 1; ++i) {
-            initialTxt = initialTxt.replace("</" + balLink.mid(0, i) + "仝>" + balLink.mid(i + 1, balLink.length() - (i + 1)), "仝");
+        for (int i = 1; i < balLink.length(); ++i) {
+            initialTxt = initialTxt.replace("</" + balLink.mid(0, i) + "仝" + balLink.mid(i , balLink.length())+ ">", "仝");
         }
     }
     int dbt = initialTxt.indexOf("仝");
@@ -4067,4 +4357,58 @@ void CeCWriter::deleteBalsInPlainTextEdit(QPlainTextEdit* areaTxt)
     cursor.setPosition(resetPosCaret);
     areaTxt->setTextCursor(cursor);
     balises.clear();
+}
+
+/***
+ * On selection changed : (des)activating lien button
+ ***/
+
+void CeCWriter::on_editIngr_selectionChanged()
+{
+    if (ui->editIngr->selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
+}
+
+void CeCWriter::on_editMat_selectionChanged()
+{
+    if (ui->editMat->selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
+}
+
+void CeCWriter::on_editPrep_selectionChanged()
+{
+    if (ui->editPrep->textCursor().selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
+}
+
+void CeCWriter::on_editCons_selectionChanged()
+{
+    if (ui->editCons->textCursor().selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
+}
+
+void CeCWriter::on_description_selectionChanged()
+{
+    if (ui->description->textCursor().selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
 }

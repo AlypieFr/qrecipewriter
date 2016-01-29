@@ -64,12 +64,14 @@ public:
     static QString getNumberedList(QStringList items);
     static QString insertLinks(QString data);
     static QString insertPictures(QString data);
+    static QString insertMovies(QString data);
     static QStringList getSelectedCategories(QMap<QCheckBox*, QString> categories);
     static QStringList makeTimes (int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
                                   int hRep, int minRep);
     static QString makeExcerpt(QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep);
     static bool copyRecursively(const QString &srcFilePath, const QString &tgtFilePath);
     static bool removeDir(const QString &dirName);
+    static QString setPrintTags(QString text);
 };
 
 #endif // FUNCTIONS_H

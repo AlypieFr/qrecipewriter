@@ -41,6 +41,7 @@ void *ptr2cat = NULL;
 void *ptr2apropos = NULL;
 void *ptr2sendManual = NULL;
 void *ptr2sendAutomatic = NULL;
+void *ptr2insertVideo = NULL;
 
 /**
  * GLOBAL VARIABLES
@@ -68,8 +69,9 @@ QString editPict = ""; //Program for advanced picture editor
 QString corrOrtho = ""; //Main dictionnary path
 QString correction = ""; //Path to the dictionnary (prefix of .dic and .aff files)
 bool cancel = false; //Keep if user cancel orthographical correction
+bool cecPrinter = false; //CeC Printer status
 
-QString VERSION = "1.0.0";
+QString VERSION = "1.1.0";
 QString QTVERSION;
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe

@@ -1,7 +1,7 @@
 /*
 Theme Name: GoPress
 Theme URI: http://www.wpexplorer.com
-Description: GoPress, WordPress theme by <a href="http://www.wpexplorer.com">WPExplorer.com</a>
+Description: A simple blogging WordPress Theme.
 Author: WPExplorer
 Version: 1.0
 License: Free GPL
@@ -9,7 +9,6 @@ License: Free GPL
 
 /*google font*/
 @import url(http://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic);
-
 
 /*-----------------------------------------------------------------------------------*
 /* = Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
@@ -38,29 +37,13 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	outline: 0;
 }
 body {
-	background-color: #fff;
+	background: #fff;
 	line-height: 1;
-	text-align: justify;
 }
 ol, ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-}
-
-
-.lbold {
-    font-weight: bold;
-    color: #6B6B6B;
-}
-
-li span {
-	font-weight: normal;
-	color: black;
-}
-
-ol.lbold li {
-	margin: 10px 0px;
 }
 
 /* tables still need 'cellspacing="0"' in the markup */
@@ -94,10 +77,6 @@ header, hgroup, footer, section, article, aside {
 
 body {
 	background: #f9f9f9;
-	background-image: url(images/fond-site.jpg);
-	background-position: center top;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
     font-size: 14px;
     line-height: 1.6em;
     color: #333;
@@ -156,10 +135,10 @@ blockquote{
 /*-----------------------------------------------------------------------------------*/
 
 #wrap{
-	margin: 30px auto;
+	margin: 30px auto 0 auto;
 	width: 980px;
 	padding: 30px 30px 15px;
-	background:#fff;
+	background: #F7F8E0;
 	border: 1px solid #ccc;
 	-moz-box-shadow: 0 0 20px rgba(192,192,192, 0.4);
 	-webkit-box-shadow: 0 0 20px rgba(192,192,192, 0.4);
@@ -631,7 +610,7 @@ ul.sf-menu li li.sfHover ul {
 	color: #666;
 	background: #eee;
 	font-family: 'Helvetica Nue', Arial;
-	font-size: 13px;
+	font-size: 12px;
 	margin-right: 5px;
 	transition: background 0.3s ease-in-out;
     -webkit-transition: background 0.3s ease-in-out;
@@ -768,7 +747,7 @@ ul.sf-menu li li.sfHover ul {
 	font-size: 11px;
     line-height: 30px;
     height: 30px;
-    width: 30px;
+    width: 35px;
     text-align: center;
     margin-right: 5px;
     display: block;
@@ -784,6 +763,12 @@ ul.sf-menu li li.sfHover ul {
     text-decoration: none;
 	color: #fff;
 	background: #1f82cb;
+}
+
+.longPagination a,
+.longPagination span
+{
+  width: 50px;
 }
 
 /*-----------------------------------------------------------------------------------*
@@ -972,12 +957,7 @@ textarea:focus {
 	margin-top: 40px;
 }
 .wpcf7 input[type="text"] {
-	width: 308px;
-	height: 20px;
-	color: black;
-	font-size: 12pt;
-	padding: 2px;
-	box-shadow: 2px 2px 0 #828181 inset;
+	width: 250px;
 }
 .wpcf7 textarea {
     width: 95%;
@@ -1119,7 +1099,6 @@ input[type="clean-button"].full-width {
 #sidebar {
 	width: 260px;
 	float: right;
-	text-align: left;
 }
 .sidebar-box {
 	padding-bottom: 20px;
@@ -1185,7 +1164,7 @@ input[type="clean-button"].full-width {
 #searchbar {
     display: block;
     position: relative;
-	width: 260px;
+	width: 100%;
 	margin-bottom: 4px;
 }
 #search {
@@ -1209,27 +1188,6 @@ input[type="clean-button"].full-width {
     height: 15px;
 	cursor: pointer;
 }
-
-.search-portfolio-thumb{
-	float: left;
-	margin-right: 20px;
-}
-.search-portfolio-thumb img{
-	margin: 0px;
-	padding: 0px;
-	display: block;
-	-webkit-transition: opacity 0.2s ease-in-out;
-    -moz-transition: opacity 0.2s ease-in-out;
-    -o-transition: opacity 0.2s ease-in-out;
-    -ms-transition: opacity 0.2s ease-in-out;
-    transition: opacity 0.2s ease-in-out;
-}
-.search-portfolio-thumb:hover img{
-	-moz-opacity: 0.8;
-    -khtml-opacity: 0.8;
-    opacity: 0.8;
-}
-
 
 /*-----------------------------------------------------------------------------------*/
 /* = Footer
@@ -1560,103 +1518,3 @@ input[type="clean-button"].full-width {
 .button.gold {
 	background-color: #D4A017;
 }
-
-/*
- * Styles customises
- */
-
-.shadow {
-  -moz-box-shadow: 2px 2px 5px #888;  
-  -webkit-box-shadow: 2px 2px 5px #888;  
-  box-shadow:2px 2px 3px #888;
-}
-
-#detail {
-	clear: both;
-	overflow: hidden; /* Précaution pour IE 7 */
-	}
-
-/* Espace réservé au menu */
-.superMenu {
-width:980px;
-overflow:hidden;
-background:#000 url(images/menu/fond.png) repeat-x;
-margin-bottom: 30px;
-}
-
-.superMenu ul {
-float:left;
-list-style:none;
-margin:16px 16px 0 0;
-padding:0
-}
-
-.superMenu ul li {
-float:left;
-margin-left:3px
-}
-
-
-.superMenu ul li a {
-float:left;
-text-decoration:none;
-letter-spacing:1px;
-padding-left:10px;
-background-image:url(images/menu/coin_gauche.png);
-background-position:0 -30px;
-background-repeat:no-repeat
-}
-
-.superMenu ul li a span {
-float:left;
-background-image:url(images/menu/coin_droit.png);
-background-position:100% -30px;
-background-repeat:no-repeat;
-color:#fff;
-padding:6px 10px 3px 0
-}
-
-
-.superMenu ul li#actif {
-float:left;
-text-decoration:none;
-letter-spacing:1px;
-padding-left:10px;
-background-image:url(images/menu/coin_gauche.png);
-background-position:0 0;
-background-repeat:no-repeat
-}
-
-.superMenu ul li#actif span {
-float:left;
-background-image:url(images/menu/coin_droit.png);
-background-position:100% 0;
-background-repeat:no-repeat;
-color:#333;
-padding:6px 10px 3px 0
-}
-
-
-.superMenu ul li a:hover,#en-tete ul li a:focus {
-background-position:0 -60px
-}
-
-.superMenu ul li a:hover span,#en-tete ul li a:focus span {
-background-position:100% -60px
-}
-
-/*Page contact : */
-.entryform {
-	width: 310px;
-	height: 20px;
-	font-size: 12pt;	
-	background-color: white;
-	}
-
-.menuform {
-	width: 400px;
-	height: 25px;
-	font-size: 12pt;
-	color: black;
-	background-color: white;
-	}

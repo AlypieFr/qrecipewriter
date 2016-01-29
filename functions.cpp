@@ -30,6 +30,7 @@ extern QString addrPub;
 extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
+extern bool cecPrinter;
 
 extern QMap<QString, QString> liens;
 
@@ -122,6 +123,11 @@ void Functions::loadConfig()
             if(xml.name() == "dirDistPict") {
                 xml.readNext();
                 dirDistPict = xml.text().toString();
+                continue;
+            }
+            if(xml.name() == "cecPrinter") {
+                xml.readNext();
+                cecPrinter = xml.text().toString() == "1" ? true: false;
                 continue;
             }
 
@@ -632,13 +638,69 @@ QString Functions::insertLinks(QString data)
  */
 QString Functions::insertPictures(QString data)
 {
-    QRegExp exp ("\\[IMG:.+\\]");
+    QRegExp exp ("\\[IMG:(\\w+):(\\d+):(\\d+):([^\\]]+)\\]");
     while (data.contains(exp))
     {
-        QString img = exp.cap();
-        data.replace(img, "<img src=\"" + dirDistPict + img.mid(5, img.length() - 6).split("/").last() + "\" alt=\"Image d'illustration\" /><br/>");
-        if (!otherPicts.contains(img.mid(5, img.length() - 6)))
-            otherPicts.append(img.mid(5, img.length() - 6));
+        QString imgBal = exp.cap(0);
+        QString className = exp.cap(1);
+        QString largeur = exp.cap(2);
+        QString hauteur = exp.cap(3);
+        QString img = exp.cap(4);
+        QString classDef = "";
+        if (className != "all") {
+            classDef = " class=\"" + className + "\"";
+        }
+        data.replace(imgBal, "<img src=\"" + dirDistPict + img.split("/").last() + "\" alt=\"Image d'illustration\" width=\"" + largeur + "\" height=\"" + hauteur + "\"" + classDef + " /><br/>");
+        if (!otherPicts.contains(img))
+            otherPicts.append(img);
+    }
+    return data;
+}
+
+QString Functions::insertMovies(QString data)
+{
+    QRegExp exp ("\\[VIDEO:(\\d+):(\\d+):(\\d+):(\\d+):([01]+):([01]+):([01]+):([01]+):([01]+):([\\w-]+)\\]");
+    while (data.contains(exp)) {
+        QString balise = exp.cap(0);
+        QString largeur = exp.cap(1);
+        QString hauteur = exp.cap(2);
+        QString startTime = exp.cap(3);
+        QString bordure = exp.cap(4);
+        bool fullscreen = (exp.cap(5) == "1" ? true : false);
+        bool suggestions = (exp.cap(6) == "1" ? true : false);
+        bool commandes = (exp.cap(7) == "1" ? true : false);
+        bool titreVideo = (exp.cap(8) == "1" ? true : false);
+        bool confidentialite = (exp.cap(9) == "1" ? true : false);
+        QString idVideo = exp.cap(10);
+
+        QStringList params;
+        if (!suggestions) {
+            params.append("rel=0");
+        }
+        if (!commandes) {
+            params.append("controls=0");
+        }
+        if (!titreVideo) {
+            params.append("showinfo=0");
+        }
+        QString url = "https://www.youtube";
+        if (confidentialite) {
+            url += "-nocookie";
+        }
+        url += ".com/embed/" + idVideo;
+        params.append("start=" + startTime);
+        if (params.size() > 0) {
+            QString stringParams = params.join("&amp;");
+            url += "?";
+            url += stringParams;
+        }
+
+        QString html = "<iframe class=\"noprint\" width=\"" + largeur + "\" height=\"" + hauteur + "\" src=\"" + url + "\" frameborder=\"" + bordure + "\"";
+        if (fullscreen) {
+            html += " allowfullscreen";
+        }
+        html +="></iframe>";
+        data.replace(balise, html);
     }
     return data;
 }
@@ -680,6 +742,20 @@ QStringList Functions::makeTimes(int hPrep, int minPrep, int hCuis, int minCuis,
     QStringList res;
     res << tpsPrep << tpsCuis << tpsRep;
     return res;
+}
+
+/**
+ * @brief Replace user tags NP and OP with html span tags
+ * @param text with user tags
+ * @return text with html span tags
+ */
+QString Functions::setPrintTags(QString text)
+{
+    text = text.replace("<np>", "<span class=\"noprint\">");
+    text = text.replace("<po>", "<span class=\"printonly\">");
+    text = text.replace("</np>", "</span>");
+    text = text.replace("</po>", "</span>");
+    return text;
 }
 
 /**
@@ -759,11 +835,15 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
         htmlCode = htmlCode + "<conseils><p><b>Conseils :</b></p>"+conseils+"</conseils>";
     }
     //Adding "Version imprimable" balise, only if the website is Conseils En Cuisine !, because others might not use it:
-    if (addrSite == "http://www.conseilsencuisine.fr") {
+    if (cecPrinter) {
         htmlCode = htmlCode + "<br/>[VERSION_IMPRIMABLE]";
     }
     //Replace oe by "e dans l'o", because we speak French :
     htmlCode = htmlCode.replace("oe", "&oelig;");
+
+    htmlCode = setPrintTags(htmlCode);
+
+    htmlCode = insertMovies(htmlCode);
 
     return htmlCode;
 }
