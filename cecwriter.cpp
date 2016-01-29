@@ -2243,29 +2243,7 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
         QKeyEvent *ke = static_cast<QKeyEvent *>(event);
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {
-            QStandardItem* itemNew;
-            if (!ingrComm)
-                itemNew = new QStandardItem(QString::number(idIngr) + "|" + ui->editIngr->text());
-            else
-                itemNew = new QStandardItem("comm|" + ui->editIngr->text());
-            if (ingrEdit == -1)
-            {
-                model1->appendRow(itemNew);
-                ui->listIngr->scrollToBottom();
-            }
-            else
-            {
-                model1->setItem(ingrEdit, itemNew);
-                if (ingrEdit != model1->rowCount() - 1)
-                {
-                    idIngr = model1->item(model1->rowCount() - 1)->text().split("|").at(0).toInt();
-                    ui->ingrListShow->setText(QString::number(idIngr));
-                }
-                ingrEdit = -1;
-                ui->listIngr->setSelectionMode(QAbstractItemView::ExtendedSelection);
-                ingrComm = false;
-                ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
-            }
+            this->insertIngredient(ui->editIngr->text());
             ui->editIngr->setText("");
             return true;
         }
@@ -2341,25 +2319,7 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
         QKeyEvent *ke = static_cast<QKeyEvent *>(event);
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {
-            QStandardItem* itemNew;
-            if (!matComm)
-                itemNew = new QStandardItem("0|" + ui->editMat->text());
-            else
-                itemNew = new QStandardItem("comm|" + ui->editMat->text());
-
-            if (matEdit == -1)
-            {
-                model2->appendRow(itemNew);
-                ui->listMat->scrollToBottom();
-            }
-            else
-            {
-                model2->setItem(matEdit, itemNew);
-                matEdit = -1;
-                ui->listMat->setSelectionMode(QAbstractItemView::ExtendedSelection);
-                matComm = false;
-                ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
-            }
+            this->insertMateriel(ui->editMat->text());
             ui->editMat->setText("");
             return true;
         }
@@ -2433,40 +2393,7 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
         QKeyEvent *ke = static_cast<QKeyEvent *>(event);
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {
-            QStandardItem* itemNew;
-            if (!prepComm)
-            {
-                QStringList nb = idPrep.split('.');
-                nb[nb.size() - 2] = QString::number(nb[nb.size() - 2].toInt() + 1);
-                idPrep = nb.join(".");
-                itemNew = new QStandardItem(idPrep + "|" + ui->editPrep->toPlainText());
-            }
-            else
-            {
-                itemNew = new QStandardItem("comm|" + ui->editPrep->toPlainText());
-                idPrep = "0.0";
-                ui->prepListShow->setText("0");
-            }
-            if (prepEdit == -1)
-            {
-                model3->appendRow(itemNew);
-                ui->listPrep->scrollToBottom();
-            }
-            else
-            {
-                model3->setItem(prepEdit, itemNew);
-                //Update all puces:
-                updatePrepItems();
-                //End:
-                idPrep = model3->item(model3->rowCount() - 1)->text().split("|").at(0);
-                if (idPrep == "comm")
-                    idPrep = "0.0";
-                ui->prepListShow->setText(QString::number(idPrep.split(".").size() - 2));
-                prepEdit = -1;
-                ui->listPrep->setSelectionMode(QAbstractItemView::ExtendedSelection);
-                prepComm = false;
-                ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
-            }
+            this->insertPreparation(ui->editPrep->toPlainText());
             ui->editPrep->setPlainText("");
             return true;
         }
@@ -2562,24 +2489,7 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
         QKeyEvent *ke = static_cast<QKeyEvent *>(event);
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {
-            QStandardItem* itemNew;
-            if (!consComm)
-                itemNew = new QStandardItem("0|" + ui->editCons->toPlainText());
-            else
-                itemNew = new QStandardItem("comm|" + ui->editCons->toPlainText());
-            if (consEdit == -1)
-            {
-                model4->appendRow(itemNew);
-                ui->listCons->scrollToBottom();
-            }
-            else
-            {
-                model4->setItem(consEdit, itemNew);
-                consEdit = -1;
-                ui->listCons->setSelectionMode(QAbstractItemView::ExtendedSelection);
-                consComm = false;
-                ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
-            }
+            this->insertConseil(ui->editCons->toPlainText());
             ui->editCons->setPlainText("");
             return true;
         }
@@ -2685,6 +2595,118 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
     }
     else
         return false;
+}
+
+/*
+ * Insert items in listview
+ *
+ */
+
+void CeCWriter::insertIngredient(QString text) {
+    QStandardItem* itemNew;
+    if (!ingrComm)
+        itemNew = new QStandardItem(QString::number(idIngr) + "|" + text);
+    else
+        itemNew = new QStandardItem("comm|" + text);
+    if (ingrEdit == -1)
+    {
+        model1->appendRow(itemNew);
+        ui->listIngr->scrollToBottom();
+    }
+    else
+    {
+        model1->setItem(ingrEdit, itemNew);
+        if (ingrEdit != model1->rowCount() - 1)
+        {
+            idIngr = model1->item(model1->rowCount() - 1)->text().split("|").at(0).toInt();
+            ui->ingrListShow->setText(QString::number(idIngr));
+        }
+        ingrEdit = -1;
+        ui->listIngr->setSelectionMode(QAbstractItemView::ExtendedSelection);
+        ingrComm = false;
+        ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+    }
+}
+
+void CeCWriter::insertMateriel(QString text) {
+    QStandardItem* itemNew;
+    if (!matComm)
+        itemNew = new QStandardItem("0|" + text);
+    else
+        itemNew = new QStandardItem("comm|" + text);
+
+    if (matEdit == -1)
+    {
+        model2->appendRow(itemNew);
+        ui->listMat->scrollToBottom();
+    }
+    else
+    {
+        model2->setItem(matEdit, itemNew);
+        matEdit = -1;
+        ui->listMat->setSelectionMode(QAbstractItemView::ExtendedSelection);
+        matComm = false;
+        ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+    }
+}
+
+void CeCWriter::insertPreparation(QString text) {
+    QStandardItem* itemNew;
+    if (!prepComm)
+    {
+        QStringList nb = idPrep.split('.');
+        nb[nb.size() - 2] = QString::number(nb[nb.size() - 2].toInt() + 1);
+        idPrep = nb.join(".");
+        itemNew = new QStandardItem(idPrep + "|" + text);
+    }
+    else
+    {
+        itemNew = new QStandardItem("comm|" + text);
+        idPrep = "0.0";
+        ui->prepListShow->setText("0");
+    }
+    if (prepEdit == -1)
+    {
+        model3->appendRow(itemNew);
+        updatePrepItems();
+        ui->listPrep->scrollToBottom();
+    }
+    else
+    {
+        model3->setItem(prepEdit, itemNew);
+        //Update all puces:
+        updatePrepItems();
+        //End:
+        idPrep = model3->item(model3->rowCount() - 1)->text().split("|").at(0);
+        if (idPrep == "comm")
+            idPrep = "0.0";
+        ui->prepListShow->setText(QString::number(idPrep.split(".").size() - 2));
+        prepEdit = -1;
+        ui->listPrep->setSelectionMode(QAbstractItemView::ExtendedSelection);
+        prepComm = false;
+        ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+    }
+}
+
+void CeCWriter::insertConseil(QString text) {
+    QStandardItem* itemNew;
+    if (!consComm)
+        itemNew = new QStandardItem("0|" + text);
+    else
+        itemNew = new QStandardItem("comm|" + text);
+    if (consEdit == -1)
+    {
+        model4->appendRow(itemNew);
+        ui->listCons->scrollToBottom();
+    }
+    else
+    {
+        model4->setItem(consEdit, itemNew);
+        consEdit = -1;
+        ui->listCons->setSelectionMode(QAbstractItemView::ExtendedSelection);
+        consComm = false;
+        ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+    }
 }
 
 /**
@@ -2890,15 +2912,9 @@ void CeCWriter::modifierCons(const QModelIndex &index)
  */
 void CeCWriter::supprimerIngr()
 {
-    QModelIndexList items = ui->listIngr->selectionModel()->selectedIndexes();
-    qSort(items);
-    int len = items.size();
-    if (len > 0)
-    {
-        for (int i = len - 1; i >= 0; --i) {
-            ui->listIngr->model()->removeRow(items.value(i).row());
-        }
-        ui->listIngr->clearSelection();
+    QModelIndexList indexes;
+    while((indexes = ui->listIngr->selectionModel()->selectedIndexes()).size()) {
+        ui->listIngr->model()->removeRow(indexes.first().row());
     }
 }
 
@@ -2908,14 +2924,9 @@ void CeCWriter::supprimerIngr()
  */
 void CeCWriter::supprimerMat()
 {
-    QModelIndexList items = ui->listMat->selectionModel()->selectedIndexes();
-    int len = items.size();
-    if (len > 0)
-    {
-        for (int i = len - 1; i >= 0; --i) {
-            ui->listMat->model()->removeRow(items.value(i).row());
-        }
-        ui->listMat->clearSelection();
+    QModelIndexList indexes;
+    while((indexes = ui->listMat->selectionModel()->selectedIndexes()).size()) {
+        ui->listMat->model()->removeRow(indexes.first().row());
     }
 }
 
@@ -2973,15 +2984,9 @@ void CeCWriter::supprimerPrep()
  */
 void CeCWriter::supprimerCons()
 {
-    QModelIndexList items = ui->listCons->selectionModel()->selectedIndexes();
-    qSort(items);
-    int len = items.size();
-    if (len > 0)
-    {
-        for (int i = len - 1; i >= 0; --i) {
-            ui->listCons->model()->removeRow(items.value(i).row());
-        }
-        ui->listCons->clearSelection();
+    QModelIndexList indexes;
+    while((indexes = ui->listCons->selectionModel()->selectedIndexes()).size()) {
+        ui->listCons->model()->removeRow(indexes.first().row());
     }
 }
 
@@ -3468,6 +3473,193 @@ void CeCWriter::on_listCons_customContextMenuRequested(const QPoint &pos)
                     //Supprimer les éléments is handled:
                     supprimerCons();
                 }
+            }
+        }
+    }
+}
+
+void CeCWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
+{
+    QStringList cont_menu;
+    cont_menu << "Importer des ingrédients";
+    QMenu my_menu;
+    for (int i = 0; i < cont_menu.size(); ++i)
+        my_menu.addAction(cont_menu.at(i));
+    QPoint pt = ui->editIngr->mapToGlobal(pos);
+    QAction* sel_item = my_menu.exec(pt);
+    if (sel_item)
+    {
+        QString s = sel_item->text();
+        if (s == cont_menu.at(0))
+        {
+            QInputMultiline* dialg = new QInputMultiline(this, "Importer une liste d'ingrédients", "Entrez les ingrédients (1 par ligne)", "", false);
+            dialg->exec();
+            QString txtImp = dialg->text;
+            if (txtImp != "") {
+                QStringList items = txtImp.split("\n");
+                ingrEdit = -1;
+                int idIngrOrig = idIngr;
+                bool ingrCommOrig = ingrComm;
+                foreach (QString item, items) {
+                    int indent = 0;
+                    QString txt = item;
+                    QRegExp exp ("^(\t+)(.*)$");
+                    ingrComm = false;
+                    if (exp.exactMatch(item)) {
+                        indent = exp.cap(1).length();
+                        txt = exp.cap(2);
+                    }
+                    else {
+                        exp.setPattern("^#(.*)$");
+                        if (exp.exactMatch(item)) {
+                            txt = exp.cap(1);
+                            ingrComm = true;
+                        }
+                    }
+                    idIngr = idIngrOrig + indent;
+                    if (txt != "")
+                        this->insertIngredient(txt);
+                }
+                idIngr = idIngrOrig;
+                ingrComm = ingrCommOrig;
+            }
+        }
+    }
+}
+
+void CeCWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
+{
+    QStringList cont_menu;
+    cont_menu << "Importer du matériel";
+    QMenu my_menu;
+    for (int i = 0; i < cont_menu.size(); ++i)
+        my_menu.addAction(cont_menu.at(i));
+    QPoint pt = ui->editMat->mapToGlobal(pos);
+    QAction* sel_item = my_menu.exec(pt);
+    if (sel_item)
+    {
+        QString s = sel_item->text();
+        if (s == cont_menu.at(0))
+        {
+            QInputMultiline* dialg = new QInputMultiline(this, "Importer une liste de matériel", "Entrez le matériel (1 par ligne)", "", false);
+            dialg->exec();
+            QString txtImp = dialg->text;
+            if (txtImp != "") {
+                QStringList items = txtImp.split("\n");
+                matEdit = -1;
+                bool matCommOrig = matComm;
+                foreach (QString item, items) {
+                    QString txt = item;
+                    QRegExp exp ("^#(.*)$");
+                    matComm = false;
+                    if (exp.exactMatch(item)) {
+                        txt = exp.cap(1);
+                        matComm = true;
+                    }
+                    if (txt != "")
+                        this->insertMateriel(txt);
+                }
+                matComm = matCommOrig;
+            }
+        }
+    }
+}
+
+void CeCWriter::on_editPrep_customContextMenuRequested(const QPoint &pos)
+{
+    QStringList cont_menu;
+    cont_menu << "Importer des instructions de préparation";
+    QMenu my_menu;
+    for (int i = 0; i < cont_menu.size(); ++i)
+        my_menu.addAction(cont_menu.at(i));
+    QPoint pt = ui->editPrep->mapToGlobal(pos);
+    QAction* sel_item = my_menu.exec(pt);
+    if (sel_item)
+    {
+        QString s = sel_item->text();
+        if (s == cont_menu.at(0))
+        {
+            QInputMultiline* dialg = new QInputMultiline(this, "Importer des instructions de préparation", "Entrez les instructions de préparation (1 par ligne)", "", false);
+            dialg->exec();
+            QString txtImp = dialg->text;
+            if (txtImp != "") {
+                QStringList items = txtImp.split("\n");
+                prepEdit = -1;
+                bool prepCommOrig = prepComm;
+                int indent = 0;
+                foreach (QString item, items) {
+                    QString txt = item;
+                    QRegExp exp ("^(\t+)(.*)$");
+                    prepComm = false;
+                    int newIndent = 0;
+                    if (exp.exactMatch(item)) {
+                        newIndent = exp.cap(1).length();
+                        txt = exp.cap(2);
+                        if (newIndent > indent) {
+                            for (int it = 0; it < newIndent - indent; ++it) {
+                                idPrep += ".0";
+                            }
+                        }
+                    }
+                    else {
+                        exp.setPattern("^#(.*)$");
+                        if (exp.exactMatch(item)) {
+                            txt = exp.cap(1);
+                            prepComm = true;
+                        }
+                        else if (newIndent < indent) {
+                            for (int it = 0; it < indent - newIndent; ++it) {
+                                QStringList idPrepList = idPrep.split(".");
+                                    idPrepList.removeAt(qMax(0,idPrepList.length() - 2)); //In reality, idPrepList length will be always >= 2, but doing this avoid a warning.
+                                idPrep = idPrepList.join(".");
+                            }
+                        }
+                    }
+                    indent = newIndent;
+                    //idPrep = idPrepOrig + indent;
+                    if (txt != "")
+                        this->insertPreparation(txt);
+                }
+                ui->prepListShow->setText(QString::number(idPrep.split(".").length() - 2));
+                prepComm = prepCommOrig;
+            }
+        }
+    }
+}
+
+void CeCWriter::on_editCons_customContextMenuRequested(const QPoint &pos)
+{
+    QStringList cont_menu;
+    cont_menu << "Importer des conseils";
+    QMenu my_menu;
+    for (int i = 0; i < cont_menu.size(); ++i)
+        my_menu.addAction(cont_menu.at(i));
+    QPoint pt = ui->editCons->mapToGlobal(pos);
+    QAction* sel_item = my_menu.exec(pt);
+    if (sel_item)
+    {
+        QString s = sel_item->text();
+        if (s == cont_menu.at(0))
+        {
+            QInputMultiline* dialg = new QInputMultiline(this, "Importer une liste de conseils", "Entrez les conseils (1 par ligne)", "", false);
+            dialg->exec();
+            QString txtImp = dialg->text;
+            if (txtImp != "") {
+                QStringList items = txtImp.split("\n");
+                consEdit = -1;
+                bool matCommOrig = consComm;
+                foreach (QString item, items) {
+                    QString txt = item;
+                    QRegExp exp ("^#(.*)$");
+                    consComm = false;
+                    if (exp.exactMatch(item)) {
+                        txt = exp.cap(1);
+                        consComm = true;
+                    }
+                    if (txt != "")
+                        this->insertConseil(txt);
+                }
+                consComm = matCommOrig;
             }
         }
     }
