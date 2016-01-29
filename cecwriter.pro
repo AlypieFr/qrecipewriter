@@ -160,7 +160,7 @@ unix {
     INSTDESK.files = $$DESK
     INSTALLS += INSTDESK
 
-    SHARE = CeCWriter LICENCE.txt modeleHtml wordpress
+    SHARE = LICENCE.txt modeleHtml wordpress
     INSTSHARE.path = /usr/share/qcecwriter
     INSTSHARE.files = $$SHARE
     INSTALLS += INSTSHARE
@@ -173,8 +173,18 @@ unix {
 
 win32 {
     INCLUDEPATH += C:/hunspell/include
-    LIBS += C:/hunspell/lib/libhunspell-1.3.a
-    #LIBS += C:/Qjson/lib/libqjson-qt5.dll.a
+    contains(QMAKE_HOST.arch, x86_64) {
+        !exists("C:/hunspellX64/lib/libhunspell-1.3.a") {
+            message("Error: hunspell lib not found: C:/hunspellX64/lib/libhunspell-1.3.a");
+        }
+        LIBS += C:/hunspellX64/lib/libhunspell-1.3.a
+    }
+    else {
+        !exists("C:/hunspellI686/lib/libhunspell-1.3.a") {
+            message("Error: hunspell lib not found: C:/hunspellI686/lib/libhunspell-1.3.a");
+        }
+     	LIBS += C:/hunspellI686/lib/libhunspell-1.3.a   
+    }
     RC_FILE = myapp.rc
     TARGET = QCeCWriter
 }
