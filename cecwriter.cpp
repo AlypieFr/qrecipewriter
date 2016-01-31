@@ -1504,7 +1504,7 @@ void CeCWriter::on_envoyer_clicked()
             QMessageBox::critical(this, "Erreur dans le nombre de personnes", "Erreur: la borne inférieure du nombre de personnes indiqué est supérieure à la borne supérieure.");
         }
         else {
-            if (checkF7beforeSend) {
+            if (checkF7beforeSend && corrOrtho != "") {
                 QDialog *wait = new QDialog(this);
                 QHBoxLayout *lay = new QHBoxLayout();
                 QLabel *lab = new QLabel("Vérification orthogaphique en cours...");

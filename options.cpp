@@ -277,7 +277,7 @@ void Options::on_buttonBox_accepted()
                 proceed = false;
             }
         }
-        else if (!QFile(ui->lineEditDictionnairePath->text() + ".dic").exists() || !QFile(ui->lineEditDictionnairePath->text() + ".aff").exists()) {
+        else if (ui->lineEditDictionnairePath->text() != "" && (!QFile(ui->lineEditDictionnairePath->text() + ".dic").exists() || !QFile(ui->lineEditDictionnairePath->text() + ".aff").exists())) {
             QMessageBox::critical(this, "Options", "Le dictionnaire path indiqué est incorrect : les fichiers (avec extension .dic et/ou .aff) n'existe(nt) pas", QMessageBox::Ok);
             proceed = false;
         }

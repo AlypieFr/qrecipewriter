@@ -498,7 +498,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="config1">
        <attribute name="title">
@@ -676,7 +676,7 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>381</width>
+          <width>400</width>
           <height>23</height>
          </rect>
         </property>
@@ -811,7 +811,7 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>381</width>
+          <width>400</width>
           <height>23</height>
          </rect>
         </property>
@@ -999,7 +999,7 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>381</width>
+          <width>400</width>
           <height>23</height>
          </rect>
         </property>
@@ -1195,7 +1195,7 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>381</width>
+          <width>400</width>
           <height>23</height>
          </rect>
         </property>
@@ -1359,9 +1359,15 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>381</width>
+          <width>400</width>
           <height>23</height>
          </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
         <property name="styleSheet">
          <string notr="true">font-weight: bold;</string>
