@@ -2,11 +2,11 @@
 
 echo "Removing files..."
 
-rm -rf /usr/share/qcecwriter
-rm /usr/share/icons/hicolor/128x128/apps/QCeCWriter.png
-rm /usr/share/applications/QCeCWriter.desktop
-rm /usr/bin/CeCWriter
-rm /usr/bin/QCeCWriter
-rm /usr/bin/qcecwriter
+rm -rf /usr/share/qrecipewriter
+rm /usr/share/icons/hicolor/128x128/apps/QRecipeWriter.png
+rm /usr/share/applications/QRecipeWriter.desktop
+rm /usr/bin/QRecipeWriter
+rm /usr/bin/QRecipeWriter
+rm /usr/bin/qrecipewriter
 
 echo "DONE !"

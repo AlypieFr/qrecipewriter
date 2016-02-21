@@ -1,13 +1,13 @@
 /*
- * © 2013-2014 Conseils en Cuisine !
+ * © 2013-2016 Flo-Art.fr
  *
- * CeCWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
+ * QRecipeWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
  * Toutes les modifications et la redistribution sont autorisés pour une utilisation NON COMMERCIALE.
  * Par ailleurs, les modifications et la reproduction doivent respecter les règles ci-dessous :
  *    - Cette en-tête doit être maintenue.
  *    - Vous devez redistribuer la version modifiée ou non sous licence Creative Common au moins autant
  *      restrictive.
- *    - ConseilsEnCuisine! ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
+ *    - Flo-Art.fr ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
  *    - Toute utilisation commerciale partielle ou complète est interdite.
  */
 
@@ -1403,7 +1403,7 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
     {
         htmlCode = htmlCode + "<conseils><p><b>Conseils :</b></p>"+conseils+"</conseils>";
     }
-    //Adding "Version imprimable" balise, only if the website is Conseils En Cuisine !, because others might not use it:
+    //Adding "Version imprimable" balise, only if the website is Cool Cooking, because others might not use it:
     if (cecPrinter) {
         htmlCode = htmlCode + "<br/>[VERSION_IMPRIMABLE]";
     }

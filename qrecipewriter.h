@@ -1,13 +1,13 @@
 /*
- * © 2013-2014 Conseils en Cuisine !
+ * © 2013-2016 Flo-Art.fr
  *
- * CeCWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
+ * QRecipeWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
  * Toutes les modifications et la redistribution sont autorisés pour une utilisation NON COMMERCIALE.
  * Par ailleurs, les modifications et la reproduction doivent respecter les règles ci-dessous :
  *    - Cette en-tête doit être maintenue.
  *    - Vous devez redistribuer la version modifiée ou non sous licence Creative Common au moins autant
  *      restrictive.
- *    - ConseilsEnCuisine! ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
+ *    - Flo-Art.fr ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
  *    - Toute utilisation commerciale partielle ou complète est interdite.
  */
 
@@ -66,16 +66,16 @@
 namespace Ui {
 
 
-class CeCWriter;
+class QRecipeWriter;
 }
 
-class CeCWriter : public QMainWindow
+class QRecipeWriter : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit CeCWriter(QWidget *parent = 0);
-    ~CeCWriter();
+    explicit QRecipeWriter(QWidget *parent = 0);
+    ~QRecipeWriter();
     void resizeEvent(QResizeEvent* event);
     bool isMax;
     void setLogoWindow();
@@ -209,7 +209,7 @@ public slots:
     void launch();
 
 private:
-    Ui::CeCWriter *ui;
+    Ui::QRecipeWriter *ui;
 
 private:
     int ingrEdit, matEdit, prepEdit, consEdit; //Keeps if item in ingr, mat, prep or cons is in edition (>=0) or is a new item (==-1)

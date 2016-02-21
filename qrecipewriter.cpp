@@ -1,18 +1,18 @@
 /*
- * © 2013-2014 Conseils en Cuisine !
+ * © 2013-2016 Flo-Art.fr
  *
- * CeCWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
+ * QRecipeWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
  * Toutes les modifications et la redistribution sont autorisés pour une utilisation NON COMMERCIALE.
  * Par ailleurs, les modifications et la reproduction doivent respecter les règles ci-dessous :
  *    - Cette en-tête doit être maintenue.
  *    - Vous devez redistribuer la version modifiée ou non sous licence Creative Common au moins autant
  *      restrictive.
- *    - ConseilsEnCuisine! ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
+ *    - Flo-Art.fr ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
  *    - Toute utilisation commerciale partielle ou complète est interdite.
  */
 
-#include "cecwriter.h"
-#include "ui_cecwriter.h"
+#include "qrecipewriter.h"
+#include "ui_qrecipewriter.h"
 
 /**
  * POINTERS TO QDIALOGS USED BY THE PROGRAM
@@ -64,25 +64,25 @@ extern QMap<QString, QString> liens;
 /**
  * Constructor of the class
  */
-CeCWriter::CeCWriter(QWidget *parent) :
+QRecipeWriter::QRecipeWriter(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::CeCWriter)
+    ui(new Ui::QRecipeWriter)
 {
 
     ui->setupUi(this);
 }
 
-CeCWriter::~CeCWriter()
+QRecipeWriter::~QRecipeWriter()
 {
     delete ui;
 }
 
 /**
- * @brief CeCWriter::closeEvent
+ * @brief QRecipeWriter::closeEvent
  * @param event
  * When user close window, we check if he has modified the recipe until the last saving.
  */
-void CeCWriter::closeEvent(QCloseEvent *event)
+void QRecipeWriter::closeEvent(QCloseEvent *event)
 {
     if (!checkHasBeenModified())
         saveSizeAndQuit();
@@ -108,7 +108,7 @@ void CeCWriter::closeEvent(QCloseEvent *event)
     }
 }
 
-void CeCWriter::saveSizeAndQuit()
+void QRecipeWriter::saveSizeAndQuit()
 {
     QFile saveSize (confDir + ".size");
     if (saveSize.exists())
@@ -129,12 +129,12 @@ void CeCWriter::saveSizeAndQuit()
 }
 
 /**
- * @brief CeCWriter::changeEvent
+ * @brief QRecipeWriter::changeEvent
  * @param event
  * User can edit the main picture in another software. This image is shown as icon in the corresponding button.
  * So, when the Main Window get active, we update the icon.
  */
-void CeCWriter::changeEvent(QEvent *event)
+void QRecipeWriter::changeEvent(QEvent *event)
 {
     if(event->type() == QEvent::ActivationChange)
     {
@@ -153,10 +153,10 @@ void CeCWriter::changeEvent(QEvent *event)
 }
 
 /**
- * @brief CeCWriter::config
+ * @brief QRecipeWriter::config
  * Function launched if confFile does not exists (usually if it is the first time the user launch the program)
  */
-void CeCWriter::config()
+void QRecipeWriter::config()
 {
     Options* opt = new Options();
     opt->init();
@@ -182,6 +182,29 @@ void CeCWriter::config()
         editPict ="gimp";
     }
     #endif
+    QFile cecwriterconfig(userDir + "/.CeCWriter/.config");
+    if (cecwriterconfig.exists()) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(0, "Configuration de QCeCWriter trouvée", "Voulez-vous importer la configuration depuis QCeCWriter ?", QMessageBox::No|QMessageBox::Yes);
+        if (reply == QMessageBox::Yes) {
+            QDir cecwriterconfigdir = QDir(userDir + "/.CeCWriter");
+            bool allGood = true;
+            foreach (QString cfile, cecwriterconfigdir.entryList(QDir::AllEntries | QDir::Hidden)) {
+                if (cfile != "." && cfile != "..") {
+                    bool success = Functions::copyRecursively(cecwriterconfigdir.absolutePath() + "/" + cfile, confDir + cfile);
+                    if (!success) {
+                        allGood = false;
+                    }
+                }
+            }
+            if (allGood) {
+                Functions::loadConfig();
+            }
+            else {
+                QMessageBox::information(0, "Erreur", "Erreur lors de l'importation de la configuration.", QMessageBox::Ok);
+            }
+        }
+    }
     opt->init();
     opt->exec();
     delete opt;
@@ -199,11 +222,11 @@ void CeCWriter::config()
 }
 
 /**
- * @brief CeCWriter::init
+ * @brief QRecipeWriter::init
  * Function launched at the startup of the program, after config if config must be launched.
  * It initialise variables and components of the program
  */
-void CeCWriter::init()
+void QRecipeWriter::init()
 {
     QFile saveFile (confDir + ".size");
     ui->grasButton->setFocusPolicy(Qt::NoFocus);
@@ -424,10 +447,10 @@ void CeCWriter::init()
     //Install events on description field:
     ui->description->installEventFilter(this);
 
-    updtUrl = "http://qcecwriter.conseilsencuisine.fr/files/LATEST-" + systExp + "-QT-" + QTVERSION;
+    updtUrl = "http://qrecipewriter.coolcooking.fr/files/LATEST-" + systExp + "-QT-" + QTVERSION;
 }
 
-void CeCWriter::launch() {
+void QRecipeWriter::launch() {
     if (!isMax) {
         show();
     }
@@ -450,10 +473,10 @@ void CeCWriter::launch() {
 }
 
 /**
- * @brief CeCWriter::resetFields
+ * @brief QRecipeWriter::resetFields
  * reset fields when nouvelle recette or ouvrir une recette existante is triggered
  */
-void CeCWriter::resetFields()
+void QRecipeWriter::resetFields()
 {
     ui->titre->clear();
     foreach (QCheckBox* cat, categories.keys()) {
@@ -507,10 +530,10 @@ void CeCWriter::resetFields()
 }
 
 /**
- * @brief CeCWriter::resetCats
+ * @brief QRecipeWriter::resetCats
  * reset categories if they have been changed in the dedicaded interface
  */
-void CeCWriter::resetCats()
+void QRecipeWriter::resetCats()
 {
     categories.clear();
     namesCats.clear();
@@ -549,10 +572,10 @@ void CeCWriter::resetCats()
 }
 
 /**
- * @brief CeCWriter::checkHasBeenModified
+ * @brief QRecipeWriter::checkHasBeenModified
  * @return bool : true if the recipe has been modified, else false
  */
-bool CeCWriter::checkHasBeenModified()
+bool QRecipeWriter::checkHasBeenModified()
 {
     QStringList actualCats;
     foreach (QCheckBox *catCheckBox, categories.keys()) {
@@ -627,10 +650,10 @@ bool CeCWriter::checkHasBeenModified()
 }
 
 /**
- * @brief CeCWriter::on_actionOptions_triggered
+ * @brief QRecipeWriter::on_actionOptions_triggered
  * Start options dialog when Options (Préférences) is triggered in menu
  */
-void CeCWriter::on_actionOptions_triggered()
+void QRecipeWriter::on_actionOptions_triggered()
 {
 
     Options* opt = new Options();
@@ -661,10 +684,10 @@ void CeCWriter::on_actionOptions_triggered()
 }
 
 /**
- * @brief CeCWriter::on_action_propos_triggered
+ * @brief QRecipeWriter::on_action_propos_triggered
  * Start a propos dialog when A propos is triggered in menu
  */
-void CeCWriter::on_action_propos_triggered()
+void QRecipeWriter::on_action_propos_triggered()
 {
     Apropos* apropos = (Apropos*) ptr2apropos;
     apropos->init();
@@ -672,10 +695,10 @@ void CeCWriter::on_action_propos_triggered()
 }
 
 /**
- * @brief CeCWriter::on_actionGerer_les_categories_triggered
+ * @brief QRecipeWriter::on_actionGerer_les_categories_triggered
  * Start to choose categories used by the program
  */
-void CeCWriter::on_actionGerer_les_categories_triggered()
+void QRecipeWriter::on_actionGerer_les_categories_triggered()
 {
     Categories *cat = new Categories(this);
     cat->init(namesCats);
@@ -687,10 +710,10 @@ void CeCWriter::on_actionGerer_les_categories_triggered()
 }
 
 /**
- * @brief CeCWriter::on_mainPicture_clicked
+ * @brief QRecipeWriter::on_mainPicture_clicked
  * Change main picture of the recipe
  */
-void CeCWriter::on_mainPicture_clicked()
+void QRecipeWriter::on_mainPicture_clicked()
 {
     QString dir = userDir;
     if (!openLastDir_Img && dirPict != "" && QDir(dirPict).exists()) {
@@ -717,11 +740,11 @@ void CeCWriter::on_mainPicture_clicked()
 }
 
 /**
- * @brief CeCWriter::format_clicked
+ * @brief QRecipeWriter::format_clicked
  * @param typeF : the type of the tag format (b, u or i)
  * When a tag format button is released (gras, italique, souligné)
  */
-void CeCWriter::format_clicked(QString typeF)
+void QRecipeWriter::format_clicked(QString typeF)
 {
     if (ui->editIngr->hasFocus()) {
         int selStart = ui->editIngr->selectionStart();
@@ -827,55 +850,55 @@ void CeCWriter::format_clicked(QString typeF)
 }
 
 /**
- * @brief CeCWriter::on_grasButton_clicked
+ * @brief QRecipeWriter::on_grasButton_clicked
  * On gras button clicked
  */
-void CeCWriter::on_grasButton_clicked()
+void QRecipeWriter::on_grasButton_clicked()
 {
     format_clicked("b");
 }
 
 /**
- * @brief CeCWriter::on_italicButton_clicked
+ * @brief QRecipeWriter::on_italicButton_clicked
  * On italique button clicked
  */
-void CeCWriter::on_italicButton_clicked()
+void QRecipeWriter::on_italicButton_clicked()
 {
     format_clicked("i");
 }
 
 /**
- * @brief CeCWriter::on_soulignButton_clicked
+ * @brief QRecipeWriter::on_soulignButton_clicked
  * On souligné button clicked
  */
-void CeCWriter::on_soulignButton_clicked()
+void QRecipeWriter::on_soulignButton_clicked()
 {
     format_clicked("u");
 }
 
 /**
- * @brief CeCWriter::on_noPrint_clicked
+ * @brief QRecipeWriter::on_noPrint_clicked
  * On no print button clicked
  */
-void CeCWriter::on_noPrint_clicked()
+void QRecipeWriter::on_noPrint_clicked()
 {
     format_clicked("np");
 }
 
 /**
- * @brief CeCWriter::on_printOnly_clicked
+ * @brief QRecipeWriter::on_printOnly_clicked
  * On print only button clicked
  */
-void CeCWriter::on_printOnly_clicked()
+void QRecipeWriter::on_printOnly_clicked()
 {
     format_clicked("po");
 }
 
 /**
- * @brief CeCWriter::on_commButton_clicked
+ * @brief QRecipeWriter::on_commButton_clicked
  * On comment button clicked : button to write comments inside the lists
  */
-void CeCWriter::on_commButton_clicked()
+void QRecipeWriter::on_commButton_clicked()
 {
     if (ui->editIngr->hasFocus()) {
         if (!ingrComm)
@@ -928,11 +951,11 @@ void CeCWriter::on_commButton_clicked()
 }
 
 /**
- * @brief CeCWriter::on_lienButton_clicked
+ * @brief QRecipeWriter::on_lienButton_clicked
  * On lien clicked, if a compatible QLineEdit or QPlainTextEdit has focus and contains selected text,
  * display the dialog for selecting target link, and add then link
  */
-void CeCWriter::on_lienButton_clicked()
+void QRecipeWriter::on_lienButton_clicked()
 {
     QString cible = "";
     QString searchLink = "";
@@ -1089,11 +1112,11 @@ void CeCWriter::on_lienButton_clicked()
 }
 
 /**
- * @brief CeCWriter::on_imgButton_clicked
+ * @brief QRecipeWriter::on_imgButton_clicked
  * On image button clicked, open file choose dialog to choose secondary picture, if a compatible QPlainTextEdit
  * has focus
  */
-void CeCWriter::on_imgButton_clicked()
+void QRecipeWriter::on_imgButton_clicked()
 {
     QString cible = "";
     QString afficher = "all";
@@ -1186,9 +1209,9 @@ void CeCWriter::on_imgButton_clicked()
 }
 
 /**
- * @brief CeCWriter::on_movie_clicked
+ * @brief QRecipeWriter::on_movie_clicked
  */
-void CeCWriter::on_movie_clicked()
+void QRecipeWriter::on_movie_clicked()
 {
     QString cible = "";
     //Default values :
@@ -1283,7 +1306,7 @@ void CeCWriter::on_movie_clicked()
     }
 }
 
-void CeCWriter::startAbcCheck(bool silent) {
+void QRecipeWriter::startAbcCheck(bool silent) {
     QString dictPath = corrOrtho;
     QString userDict= confDir + "/.userDict.txt";
     QFile fileUserDict (userDict);
@@ -1400,64 +1423,64 @@ void CeCWriter::startAbcCheck(bool silent) {
 }
 
 /**
- * @brief CeCWriter::on_abcButton_clicked
+ * @brief QRecipeWriter::on_abcButton_clicked
  * On ABC button clicked, launch spell checking
  */
-void CeCWriter::on_abcButton_clicked()
+void QRecipeWriter::on_abcButton_clicked()
 {
     startAbcCheck(false);
 }
 
 /**
- * @brief CeCWriter::on_actionCorrection_orthographique_triggered
+ * @brief QRecipeWriter::on_actionCorrection_orthographique_triggered
  * When "Correction orthographique" is triggered in the menu, we do the same as when ABC button was released
  */
-void CeCWriter::on_actionCorrection_orthographique_triggered()
+void QRecipeWriter::on_actionCorrection_orthographique_triggered()
 {
     on_abcButton_clicked();
 }
 
 /**
- * @brief CeCWriter::roundValueToFive
+ * @brief QRecipeWriter::roundValueToFive
  * Round given value to the nearest number 5-divisibled
  * @param value value to be rounded
  * @return
  */
-int CeCWriter::roundValueToFive(double value)
+int QRecipeWriter::roundValueToFive(double value)
 {
     return qRound(value / 5.0) * 5;
 }
 
 /**
- * @brief CeCWriter::on_minPrep_editingFinished
+ * @brief QRecipeWriter::on_minPrep_editingFinished
  */
-void CeCWriter::on_minPrep_editingFinished()
+void QRecipeWriter::on_minPrep_editingFinished()
 {
     ui->minPrep->setValue(roundValueToFive(ui->minPrep->value()));
 }
 
 /**
- * @brief CeCWriter::on_minCuis_editingFinished
+ * @brief QRecipeWriter::on_minCuis_editingFinished
  */
-void CeCWriter::on_minCuis_editingFinished()
+void QRecipeWriter::on_minCuis_editingFinished()
 {
     ui->minCuis->setValue(roundValueToFive(ui->minCuis->value()));
 }
 
 /**
- * @brief CeCWriter::on_minRep_editingFinished
+ * @brief QRecipeWriter::on_minRep_editingFinished
  */
-void CeCWriter::on_minRep_editingFinished()
+void QRecipeWriter::on_minRep_editingFinished()
 {
     ui->minRep->setValue(roundValueToFive(ui->minRep->value()));
 }
 
 /**
- * @brief CeCWriter::isReadyTosend
+ * @brief QRecipeWriter::isReadyTosend
  * @return true or false
  * Check if enough information is given for the recipe. If yes, say true, else say false
  */
-bool CeCWriter::isReadyTosend(bool alert)
+bool QRecipeWriter::isReadyTosend(bool alert)
 {
     int id1 = 0;
     bool oneCat = false;
@@ -1483,19 +1506,19 @@ bool CeCWriter::isReadyTosend(bool alert)
 }
 
 /**
- * @brief CeCWriter::on_actionEnvoyer_triggered
+ * @brief QRecipeWriter::on_actionEnvoyer_triggered
  * When "Envoyer" is triggered in the menu, we do the same as the Envoyer button
  */
-void CeCWriter::on_actionEnvoyer_triggered()
+void QRecipeWriter::on_actionEnvoyer_triggered()
 {
     on_envoyer_clicked();
 }
 
 /**
- * @brief CeCWriter::on_envoyer_clicked
+ * @brief QRecipeWriter::on_envoyer_clicked
  * Open dialog to choose automatic or manual send, if isReadyTosend returns true
  */
-void CeCWriter::on_envoyer_clicked()
+void QRecipeWriter::on_envoyer_clicked()
 {
     //Send only if all required fields ar filled:
     if (isReadyTosend(true))
@@ -1527,7 +1550,7 @@ void CeCWriter::on_envoyer_clicked()
     }
 }
 
-void CeCWriter::sendAutomatic()
+void QRecipeWriter::sendAutomatic()
 {
     SendAutomatic *sendAuto = new SendAutomatic(this);
     QStringList cats = Functions::getSelectedCategories(categories);
@@ -1540,7 +1563,7 @@ void CeCWriter::sendAutomatic()
     sendAuto = NULL;
 }
 
-void CeCWriter::sendManual()
+void QRecipeWriter::sendManual()
 {
     SendManual *sendMa = new SendManual(this);
     QStringList imagesToAdd;
@@ -1555,11 +1578,11 @@ void CeCWriter::sendManual()
 }
 
 /**
- * @brief CeCWriter::makeHtmlCode
+ * @brief QRecipeWriter::makeHtmlCode
  * Gets all data from the recipe and sends it to Function::generateHtmlCode.
  * Store result in htmlCode
  */
-void CeCWriter::makeHtmlCode()
+void QRecipeWriter::makeHtmlCode()
 {
     otherPicts.clear();
     QStringList allIngr;
@@ -1617,19 +1640,19 @@ void CeCWriter::makeHtmlCode()
 }
 
 /**
- * @brief CeCWriter::on_actionApercu_triggered
+ * @brief QRecipeWriter::on_actionApercu_triggered
  * When "Aperçu" is triggered in the menu, we do the same as the Apercu button
  */
-void CeCWriter::on_actionApercu_triggered()
+void QRecipeWriter::on_actionApercu_triggered()
 {
     on_apercu_clicked();
 }
 
 /**
- * @brief CeCWriter::on_apercu_clicked
+ * @brief QRecipeWriter::on_apercu_clicked
  * If isReadyTosend returns true, open an "Aperçu" of the recipe, locally in the browser
  */
-void CeCWriter::on_apercu_clicked()
+void QRecipeWriter::on_apercu_clicked()
 {
     if (isReadyTosend(true))
     {
@@ -1757,10 +1780,10 @@ void CeCWriter::on_apercu_clicked()
 }
 
 /**
- * @brief CeCWriter::on_actionEnregistrer_sous_triggered
+ * @brief QRecipeWriter::on_actionEnregistrer_sous_triggered
  * When "Enregistrer sous" menu is triggered, open dialog for choosing FileName and save recipe with it
  */
-void CeCWriter::on_actionEnregistrer_sous_triggered()
+void QRecipeWriter::on_actionEnregistrer_sous_triggered()
 {
     doSave = askSaveFile();
     if (doSave)
@@ -1769,7 +1792,7 @@ void CeCWriter::on_actionEnregistrer_sous_triggered()
     }
 }
 
-bool CeCWriter::askSaveFile() {
+bool QRecipeWriter::askSaveFile() {
     QString dir = userDir;
     if (!openLastDir_sauvegarde && dirSav != "" && QDir(dirSav).exists()) {
         dir = dirSav;
@@ -1796,19 +1819,19 @@ bool CeCWriter::askSaveFile() {
 }
 
 /**
- * @brief CeCWriter::on_actionEnregistrer_triggered
+ * @brief QRecipeWriter::on_actionEnregistrer_triggered
  * When "Enregistrer" is triggered on the menu, we do the same as the Enregistrer button
  */
-void CeCWriter::on_actionEnregistrer_triggered()
+void QRecipeWriter::on_actionEnregistrer_triggered()
 {
     on_enregistrer_clicked();
 }
 
 /**
- * @brief CeCWriter::on_enregistrer_clicked
+ * @brief QRecipeWriter::on_enregistrer_clicked
  * Do Enregistrer : show dialog for choose fileName only if saveFileName is empty
  */
-void CeCWriter::on_enregistrer_clicked()
+void QRecipeWriter::on_enregistrer_clicked()
 {
     doSave = true;
     if (saveFileName == "")
@@ -1865,14 +1888,14 @@ void CeCWriter::on_enregistrer_clicked()
 }
 
 /**
- * @brief CeCWriter::saveVariables
+ * @brief QRecipeWriter::saveVariables
  * @param ingr : ingrédients
  * @param mat : matériel
  * @param prep : préparation
  * @param cons : conseils
  * Stock saved values. Thay are compared to current values when user want to exit the recipe
  */
-void CeCWriter::saveVariables(QString ingr, QString mat, QString prep, QString cons)
+void QRecipeWriter::saveVariables(QString ingr, QString mat, QString prep, QString cons)
 {
     saveTitre = ui->titre->text();
     saveCategories.clear();
@@ -1901,7 +1924,7 @@ void CeCWriter::saveVariables(QString ingr, QString mat, QString prep, QString c
     saveConseils = cons;
 }
 
-void CeCWriter::loadRecipe(QString fileName, bool testReadyToSend) {
+void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
     QStringList ingrdt, matl, prept, consl;
     QMap<QString, QStringList> rct = Functions::loadRecipe(fileName);
     if (rct.size() > 0)
@@ -2093,7 +2116,7 @@ void CeCWriter::loadRecipe(QString fileName, bool testReadyToSend) {
     }
 }
 
-void CeCWriter::toggleEditPict() {
+void QRecipeWriter::toggleEditPict() {
     if (imgFile != "" && !imgFile.startsWith("http") && editPict != "")
     {
         ui->editPicture->setEnabled(true);
@@ -2109,10 +2132,10 @@ void CeCWriter::toggleEditPict() {
 }
 
 /**
- * @brief CeCWriter::on_actionOuvrir_une_recette_existante_triggered
+ * @brief QRecipeWriter::on_actionOuvrir_une_recette_existante_triggered
  * Open a previously saved recipe
  */
-void CeCWriter::on_actionOuvrir_une_recette_existante_triggered()
+void QRecipeWriter::on_actionOuvrir_une_recette_existante_triggered()
 {
     bool doOpen = true;
     if (checkHasBeenModified())
@@ -2151,7 +2174,7 @@ void CeCWriter::on_actionOuvrir_une_recette_existante_triggered()
     }
 }
 
-void CeCWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
+void QRecipeWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
 {
     bool doOpen = true;
     if (checkHasBeenModified())
@@ -2208,10 +2231,10 @@ void CeCWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
 }
 
 /**
- * @brief CeCWriter::on_actionNouvelle_Recette_triggered
+ * @brief QRecipeWriter::on_actionNouvelle_Recette_triggered
  * Open a new recipe
  */
-void CeCWriter::on_actionNouvelle_Recette_triggered()
+void QRecipeWriter::on_actionNouvelle_Recette_triggered()
 {
     if (checkHasBeenModified())
     {
@@ -2240,22 +2263,22 @@ void CeCWriter::on_actionNouvelle_Recette_triggered()
 }
 
 /**
- * @brief CeCWriter::on_actionAide_triggered
+ * @brief QRecipeWriter::on_actionAide_triggered
  * When Aide is triggered on menu, we open help in browser
  */
-void CeCWriter::on_actionAide_triggered()
+void QRecipeWriter::on_actionAide_triggered()
 {
-    QString Program = "\"" + cmdNav + "\" http://QCeCWriter.conseilsencuisine.fr/help.php";
+    QString Program = "\"" + cmdNav + "\" http://QRecipeWriter.coolcooking.fr/help.php";
     QProcess *myProcess = new QProcess();
     myProcess->setProcessChannelMode(QProcess::MergedChannels);
     myProcess->start(Program);
 }
 
 /**
- * @brief CeCWriter::openEditor
+ * @brief QRecipeWriter::openEditor
  * Open saved image in advanced editor, as defined in options
  */
-void CeCWriter::openEditor()
+void QRecipeWriter::openEditor()
 {
     QString Program = editPict + " " + imgFile;
     #ifndef  Q_OS_LINUX
@@ -2266,7 +2289,7 @@ void CeCWriter::openEditor()
     myProcess->start(Program);
 }
 
-void CeCWriter::searchUpdate() {
+void QRecipeWriter::searchUpdate() {
     FileDownloader *fdower = new FileDownloader(updtUrl, "Checking for update..." ,this);
     QByteArray resFile = fdower->downloadedData();
     if (!resFile.isEmpty())
@@ -2320,19 +2343,19 @@ void CeCWriter::searchUpdate() {
 }
 
 /**
- * @brief CeCWriter::on_actionRechercher_une_mise_jour_triggered
+ * @brief QRecipeWriter::on_actionRechercher_une_mise_jour_triggered
  * Search for an update of the program, when it is triggered from the menu
  */
-void CeCWriter::on_actionRechercher_une_mise_jour_triggered()
+void QRecipeWriter::on_actionRechercher_une_mise_jour_triggered()
 {
     searchUpdate();
 }
 
 /**
  * Define Coup de coeur
- * @brief CeCWriter::on_setCoupDeCoeur_clicked
+ * @brief QRecipeWriter::on_setCoupDeCoeur_clicked
  */
-void CeCWriter::on_setCoupDeCoeur_clicked()
+void QRecipeWriter::on_setCoupDeCoeur_clicked()
 {
     CoupDeCoeur *cdc = new CoupDeCoeur();
     cdc->init(coupDeCoeur);
@@ -2351,13 +2374,13 @@ void CeCWriter::on_setCoupDeCoeur_clicked()
 //Events config:
 
 /**
- * @brief CeCWriter::eventFilter
+ * @brief QRecipeWriter::eventFilter
  * @param object : the object that send the event
  * @param event : the event
  * @return bool : true or false
  * Main event processing function
  */
-bool CeCWriter::eventFilter(QObject *object, QEvent *event)
+bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
 {
     if (object == this && event->type() == QEvent::FocusIn)
     {
@@ -2860,7 +2883,7 @@ bool CeCWriter::eventFilter(QObject *object, QEvent *event)
  *
  */
 
-void CeCWriter::insertIngredient(QString text) {
+void QRecipeWriter::insertIngredient(QString text) {
     QStandardItem* itemNew;
     if (!ingrComm)
         itemNew = new QStandardItem(QString::number(idIngr) + "|" + text);
@@ -2886,7 +2909,7 @@ void CeCWriter::insertIngredient(QString text) {
     }
 }
 
-void CeCWriter::insertMateriel(QString text) {
+void QRecipeWriter::insertMateriel(QString text) {
     QStandardItem* itemNew;
     if (!matComm)
         itemNew = new QStandardItem("0|" + text);
@@ -2908,7 +2931,7 @@ void CeCWriter::insertMateriel(QString text) {
     }
 }
 
-void CeCWriter::insertPreparation(QString text) {
+void QRecipeWriter::insertPreparation(QString text) {
     QStandardItem* itemNew;
     if (!prepComm)
     {
@@ -2946,7 +2969,7 @@ void CeCWriter::insertPreparation(QString text) {
     }
 }
 
-void CeCWriter::insertConseil(QString text) {
+void QRecipeWriter::insertConseil(QString text) {
     QStandardItem* itemNew;
     if (!consComm)
         itemNew = new QStandardItem("0|" + text);
@@ -2968,10 +2991,10 @@ void CeCWriter::insertConseil(QString text) {
 }
 
 /**
- * @brief CeCWriter::updatePrepItems
+ * @brief QRecipeWriter::updatePrepItems
  * Update prep items when one item is edited
  */
-void CeCWriter::updatePrepItems()
+void QRecipeWriter::updatePrepItems()
 {
     QList<int> idLi;
     for (int i = 0; i <= 4; ++i) {
@@ -3010,36 +3033,36 @@ void CeCWriter::updatePrepItems()
  * Process events when user double-click on an item of a list
  *
 */
-void CeCWriter::on_listIngr_doubleClicked(const QModelIndex &index)
+void QRecipeWriter::on_listIngr_doubleClicked(const QModelIndex &index)
 {
     if (ingrEdit == -1)
         modifierIngr(index);
 }
 
-void CeCWriter::on_listMat_doubleClicked(const QModelIndex &index)
+void QRecipeWriter::on_listMat_doubleClicked(const QModelIndex &index)
 {
     if (matEdit == -1)
         modifierMat(index);
 }
 
-void CeCWriter::on_listPrep_doubleClicked(const QModelIndex &index)
+void QRecipeWriter::on_listPrep_doubleClicked(const QModelIndex &index)
 {
     if (prepEdit == -1)
         modifierPrep(index);
 }
 
-void CeCWriter::on_listCons_doubleClicked(const QModelIndex &index)
+void QRecipeWriter::on_listCons_doubleClicked(const QModelIndex &index)
 {
     if (consEdit == -1)
         modifierCons(index);
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * @param index : index of the item to be modified on the QListView
  * Things to do when user want to change an Ingredient
  */
-void CeCWriter::modifierIngr(const QModelIndex &index)
+void QRecipeWriter::modifierIngr(const QModelIndex &index)
 {
     ingrEdit = index.row();
     QString item = model1->item(ingrEdit)->text();
@@ -3066,11 +3089,11 @@ void CeCWriter::modifierIngr(const QModelIndex &index)
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * @param index : index of the item to be modified on the QListView
  * Things to do when user want to change an Materiel
  */
-void CeCWriter::modifierMat(const QModelIndex &index)
+void QRecipeWriter::modifierMat(const QModelIndex &index)
 {
     matEdit = index.row();
     QString text = model2->item(matEdit)->text();
@@ -3093,11 +3116,11 @@ void CeCWriter::modifierMat(const QModelIndex &index)
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * @param index : index of the item to be modified on the QListView
  * Things to do when user want to change an Preparation
  */
-void CeCWriter::modifierPrep(const QModelIndex &index)
+void QRecipeWriter::modifierPrep(const QModelIndex &index)
 {
     prepEdit = index.row();
     QString text = model3->item(prepEdit)->text();
@@ -3133,11 +3156,11 @@ void CeCWriter::modifierPrep(const QModelIndex &index)
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * @param index : index of the item to be modified on the QListView
  * Things to do when user want to change an Conseils
  */
-void CeCWriter::modifierCons(const QModelIndex &index)
+void QRecipeWriter::modifierCons(const QModelIndex &index)
 {
     consEdit = index.row();
     QString text = model4->item(consEdit)->text();
@@ -3165,10 +3188,10 @@ void CeCWriter::modifierCons(const QModelIndex &index)
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * Things to do when user want to delete an Ingredient
  */
-void CeCWriter::supprimerIngr()
+void QRecipeWriter::supprimerIngr()
 {
     QModelIndexList indexes;
     while((indexes = ui->listIngr->selectionModel()->selectedIndexes()).size()) {
@@ -3177,10 +3200,10 @@ void CeCWriter::supprimerIngr()
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * Things to do when user want to delete a Materiel
  */
-void CeCWriter::supprimerMat()
+void QRecipeWriter::supprimerMat()
 {
     QModelIndexList indexes;
     while((indexes = ui->listMat->selectionModel()->selectedIndexes()).size()) {
@@ -3189,10 +3212,10 @@ void CeCWriter::supprimerMat()
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * Things to do when user want to delete a Preparation
  */
-void CeCWriter::supprimerPrep()
+void QRecipeWriter::supprimerPrep()
 {
     QModelIndexList items = ui->listPrep->selectionModel()->selectedIndexes();
     qSort(items);
@@ -3237,10 +3260,10 @@ void CeCWriter::supprimerPrep()
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * Things to do when user want to delete a Conseils
  */
-void CeCWriter::supprimerCons()
+void QRecipeWriter::supprimerCons()
 {
     QModelIndexList indexes;
     while((indexes = ui->listCons->selectionModel()->selectedIndexes()).size()) {
@@ -3249,10 +3272,10 @@ void CeCWriter::supprimerCons()
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * When user want to increase increment of Ingredient list
  */
-void CeCWriter::on_ingrListPlus_clicked()
+void QRecipeWriter::on_ingrListPlus_clicked()
 {
     if (ui->ingrListShow->text().toInt() <= 3)
     {
@@ -3263,10 +3286,10 @@ void CeCWriter::on_ingrListPlus_clicked()
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * When user want to decrease increment of Ingredient list
  */
-void CeCWriter::on_ingrListMoins_clicked()
+void QRecipeWriter::on_ingrListMoins_clicked()
 {
     if (idIngr > 0)
     {
@@ -3277,10 +3300,10 @@ void CeCWriter::on_ingrListMoins_clicked()
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * When user want to increase increment of Preparation list
  */
-void CeCWriter::on_prepListPlus_clicked()
+void QRecipeWriter::on_prepListPlus_clicked()
 {
     if (ui->prepListShow->text().toInt() <= 3)
     {
@@ -3291,10 +3314,10 @@ void CeCWriter::on_prepListPlus_clicked()
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * When user want to decrease increment of Preparation list
  */
-void CeCWriter::on_prepListMoins_clicked()
+void QRecipeWriter::on_prepListMoins_clicked()
 {
     if (ui->prepListShow->text().toInt() > 0)
     {
@@ -3305,10 +3328,10 @@ void CeCWriter::on_prepListMoins_clicked()
 }
 
 /**
- * @brief CeCWriter::modifierIngr
+ * @brief QRecipeWriter::modifierIngr
  * Function launched when the Main Window is resized
  */
-void CeCWriter::resizeEvent(QResizeEvent* event)
+void QRecipeWriter::resizeEvent(QResizeEvent* event)
 {
     event->accept();
     //Repaint listViews:
@@ -3367,7 +3390,7 @@ void CeCWriter::resizeEvent(QResizeEvent* event)
 }
 
 //Set logo window depending on size of window:
-void CeCWriter::setLogoWindow()
+void QRecipeWriter::setLogoWindow()
 {
     QColor colorWin = this->palette().color(QPalette::Background);
     if (ui->centralWidget->height() >= 890) {
@@ -3393,7 +3416,7 @@ void CeCWriter::setLogoWindow()
 }
 
 //Context menus:
-void CeCWriter::on_listIngr_customContextMenuRequested(const QPoint &pos)
+void QRecipeWriter::on_listIngr_customContextMenuRequested(const QPoint &pos)
 {
     if (ui->listIngr->selectionModel()->selectedIndexes().size() > 0)
     {
@@ -3470,7 +3493,7 @@ void CeCWriter::on_listIngr_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void CeCWriter::on_listMat_customContextMenuRequested(const QPoint &pos)
+void QRecipeWriter::on_listMat_customContextMenuRequested(const QPoint &pos)
 {
     if (ui->listMat->selectionModel()->selectedIndexes().size() > 0)
     {
@@ -3544,7 +3567,7 @@ void CeCWriter::on_listMat_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void CeCWriter::on_listPrep_customContextMenuRequested(const QPoint &pos)
+void QRecipeWriter::on_listPrep_customContextMenuRequested(const QPoint &pos)
 {
     if (ui->listPrep->selectionModel()->selectedIndexes().size() > 0)
     {
@@ -3667,7 +3690,7 @@ void CeCWriter::on_listPrep_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void CeCWriter::on_listCons_customContextMenuRequested(const QPoint &pos)
+void QRecipeWriter::on_listCons_customContextMenuRequested(const QPoint &pos)
 {
     if (ui->listCons->selectionModel()->selectedIndexes().size() > 0)
     {
@@ -3741,7 +3764,7 @@ void CeCWriter::on_listCons_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void CeCWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
+void QRecipeWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
 {
     QStringList cont_menu;
     cont_menu << "Importer des ingrédients";
@@ -3790,7 +3813,7 @@ void CeCWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void CeCWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
+void QRecipeWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
 {
     QStringList cont_menu;
     cont_menu << "Importer du matériel";
@@ -3828,7 +3851,7 @@ void CeCWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void CeCWriter::on_editPrep_customContextMenuRequested(const QPoint &pos)
+void QRecipeWriter::on_editPrep_customContextMenuRequested(const QPoint &pos)
 {
     QStringList cont_menu;
     cont_menu << "Importer des instructions de préparation";
@@ -3890,7 +3913,7 @@ void CeCWriter::on_editPrep_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void CeCWriter::on_editCons_customContextMenuRequested(const QPoint &pos)
+void QRecipeWriter::on_editCons_customContextMenuRequested(const QPoint &pos)
 {
     QStringList cont_menu;
     cont_menu << "Importer des conseils";
@@ -3930,31 +3953,31 @@ void CeCWriter::on_editCons_customContextMenuRequested(const QPoint &pos)
 
 //Dialogs events:
 
-void CeCWriter::handleSaveAnnuler()
+void QRecipeWriter::handleSaveAnnuler()
 {
     chooseSaveFileName->close();
     doSave = false;
 }
 
-void CeCWriter::handleSaveValider()
+void QRecipeWriter::handleSaveValider()
 {
     saveFileName = dirSav + "/" + chooseSaveFN->text();
     chooseSaveFileName->close();
     doSave = true;
 }
 
-void CeCWriter::handleChooseLnkAnnuler()
+void QRecipeWriter::handleChooseLnkAnnuler()
 {
     chooseLink->close();
 }
 
-void CeCWriter::handleChooseLnkValider()
+void QRecipeWriter::handleChooseLnkValider()
 {
     addrLnk = chooseAddrLnk->text();
     chooseLink->close();
 }
 
-void CeCWriter::refreshState()
+void QRecipeWriter::refreshState()
 {
     ui->state->setText("Prêt.");
 }
@@ -3965,7 +3988,7 @@ void CeCWriter::refreshState()
 
 //1. ON LINK BALISES:
 
-void CeCWriter::checkRemoveLnkSuppr(QString text, int caretPos)
+void QRecipeWriter::checkRemoveLnkSuppr(QString text, int caretPos)
 {
     //Get character that will be deleted:
     QStringList number;
@@ -4080,7 +4103,7 @@ void CeCWriter::checkRemoveLnkSuppr(QString text, int caretPos)
     }
 }
 
-void CeCWriter::checkRemoveLnkBckp(QString text, int caretPos)
+void QRecipeWriter::checkRemoveLnkBckp(QString text, int caretPos)
 {
     QStringList number;
     for (int i = 0; i <= 9; i++) {
@@ -4194,7 +4217,7 @@ void CeCWriter::checkRemoveLnkBckp(QString text, int caretPos)
     }
 }
 
-void CeCWriter::checkRemoveLnkSlct(QString text, QList<int> slct)
+void QRecipeWriter::checkRemoveLnkSlct(QString text, QList<int> slct)
 {
     resetPosCaret = slct[0];
 
@@ -4269,7 +4292,7 @@ void CeCWriter::checkRemoveLnkSlct(QString text, QList<int> slct)
 
 //2. ON FORMAT BALISES:
 
-QString CeCWriter::checkRemoveBalBckp(QString text, int caretPos)
+QString QRecipeWriter::checkRemoveBalBckp(QString text, int caretPos)
 {
     QStringList bals;
     bals << "b" << "u" << "i" << "np" << "po";
@@ -4397,7 +4420,7 @@ QString CeCWriter::checkRemoveBalBckp(QString text, int caretPos)
     return text;
 }
 
-QString CeCWriter::checkRemoveBalSuppr(QString text, int caretPos)
+QString QRecipeWriter::checkRemoveBalSuppr(QString text, int caretPos)
 {
     QStringList bals;
     bals << "b" << "u" << "i" << "np" << "po";
@@ -4516,7 +4539,7 @@ QString CeCWriter::checkRemoveBalSuppr(QString text, int caretPos)
     return text;
 }
 
-QString CeCWriter::checkRemoveBalSlct(QString text, QList<int> slct)
+QString QRecipeWriter::checkRemoveBalSlct(QString text, QList<int> slct)
 {
     QStringList bals;
     bals << "b" << "u" << "i" << "np" << "po";
@@ -4621,7 +4644,7 @@ QString CeCWriter::checkRemoveBalSlct(QString text, QList<int> slct)
 
 //3. CHECK DELETE ON FIELDS:
 
-void CeCWriter::checkRemoveBalSupprInLineEdit(QLineEdit *areaTxt)
+void QRecipeWriter::checkRemoveBalSupprInLineEdit(QLineEdit *areaTxt)
 {
     //Get character that will be deleted:
     int caretPos = areaTxt->cursorPosition();
@@ -4634,7 +4657,7 @@ void CeCWriter::checkRemoveBalSupprInLineEdit(QLineEdit *areaTxt)
     }
 }
 
-void CeCWriter::checkRemoveBalSupprInPlainTextEdit(QPlainTextEdit *areaTxt)
+void QRecipeWriter::checkRemoveBalSupprInPlainTextEdit(QPlainTextEdit *areaTxt)
 {
     //Get character that will be deleted:
     int caretPos = areaTxt->textCursor().position();
@@ -4647,7 +4670,7 @@ void CeCWriter::checkRemoveBalSupprInPlainTextEdit(QPlainTextEdit *areaTxt)
     }
 }
 
-void CeCWriter::checkRemoveBalBckpInLineEdit(QLineEdit* areaTxt)
+void QRecipeWriter::checkRemoveBalBckpInLineEdit(QLineEdit* areaTxt)
 {
     //Get character that will be deleted:
     int caretPos = areaTxt->cursorPosition();
@@ -4660,7 +4683,7 @@ void CeCWriter::checkRemoveBalBckpInLineEdit(QLineEdit* areaTxt)
     }
 }
 
-void CeCWriter::checkRemoveBalBckpInPlainTextEdit(QPlainTextEdit *areaTxt)
+void QRecipeWriter::checkRemoveBalBckpInPlainTextEdit(QPlainTextEdit *areaTxt)
 {
     //Get character that will be deleted:
     int caretPos = areaTxt->textCursor().position();
@@ -4673,7 +4696,7 @@ void CeCWriter::checkRemoveBalBckpInPlainTextEdit(QPlainTextEdit *areaTxt)
     }
 }
 
-void CeCWriter::checkRemoveBalSlctInLineEdit(QLineEdit* areaTxt)
+void QRecipeWriter::checkRemoveBalSlctInLineEdit(QLineEdit* areaTxt)
 {
     QString text = areaTxt->text();
     QList<int> slct;
@@ -4687,7 +4710,7 @@ void CeCWriter::checkRemoveBalSlctInLineEdit(QLineEdit* areaTxt)
     }
 }
 
-void CeCWriter::checkRemoveBalSlctInPlainTextEdit(QPlainTextEdit* areaTxt)
+void QRecipeWriter::checkRemoveBalSlctInPlainTextEdit(QPlainTextEdit* areaTxt)
 {
     QString text = areaTxt->toPlainText();
     QList<int> slct;
@@ -4706,7 +4729,7 @@ void CeCWriter::checkRemoveBalSlctInPlainTextEdit(QPlainTextEdit* areaTxt)
 
 //4. DO DELETE BALISES ON FIELDS:
 
-void CeCWriter::deleteBalInLineEdit(QLineEdit* areaTxt)
+void QRecipeWriter::deleteBalInLineEdit(QLineEdit* areaTxt)
 {
     QString initialTxt = areaTxt->text().replace("<" + balise + ">", "");
     initialTxt = initialTxt.replace("</" + balise + ">", "");
@@ -4715,7 +4738,7 @@ void CeCWriter::deleteBalInLineEdit(QLineEdit* areaTxt)
     balise = "";
 }
 
-void CeCWriter::deleteBalInPlainTextEdit(QPlainTextEdit* areaTxt)
+void QRecipeWriter::deleteBalInPlainTextEdit(QPlainTextEdit* areaTxt)
 {
     QString initialTxt = areaTxt->toPlainText().replace("<" + balise + ">", "");
     initialTxt = initialTxt.replace("</" + balise + ">", "");
@@ -4726,7 +4749,7 @@ void CeCWriter::deleteBalInPlainTextEdit(QPlainTextEdit* areaTxt)
     balise = "";
 }
 
-void CeCWriter::deleteBalsInLineEdit(QLineEdit* areaTxt)
+void QRecipeWriter::deleteBalsInLineEdit(QLineEdit* areaTxt)
 {
     QList<int> slct;
     slct << areaTxt->selectionStart() << areaTxt->selectionStart() + areaTxt->selectedText().length();
@@ -4754,7 +4777,7 @@ void CeCWriter::deleteBalsInLineEdit(QLineEdit* areaTxt)
     balises.clear();
 }
 
-void CeCWriter::deleteBalsInPlainTextEdit(QPlainTextEdit* areaTxt)
+void QRecipeWriter::deleteBalsInPlainTextEdit(QPlainTextEdit* areaTxt)
 {
     QList<int> slct;
     slct << areaTxt->textCursor().selectionStart() << areaTxt->textCursor().selectionEnd();
@@ -4788,7 +4811,7 @@ void CeCWriter::deleteBalsInPlainTextEdit(QPlainTextEdit* areaTxt)
  * On selection changed : (des)activating lien button
  ***/
 
-void CeCWriter::on_editIngr_selectionChanged()
+void QRecipeWriter::on_editIngr_selectionChanged()
 {
     if (ui->editIngr->selectedText().length() > 0) {
         ui->lienButton->setEnabled(true);
@@ -4798,7 +4821,7 @@ void CeCWriter::on_editIngr_selectionChanged()
     }
 }
 
-void CeCWriter::on_editMat_selectionChanged()
+void QRecipeWriter::on_editMat_selectionChanged()
 {
     if (ui->editMat->selectedText().length() > 0) {
         ui->lienButton->setEnabled(true);
@@ -4808,7 +4831,7 @@ void CeCWriter::on_editMat_selectionChanged()
     }
 }
 
-void CeCWriter::on_editPrep_selectionChanged()
+void QRecipeWriter::on_editPrep_selectionChanged()
 {
     if (ui->editPrep->textCursor().selectedText().length() > 0) {
         ui->lienButton->setEnabled(true);
@@ -4818,7 +4841,7 @@ void CeCWriter::on_editPrep_selectionChanged()
     }
 }
 
-void CeCWriter::on_editCons_selectionChanged()
+void QRecipeWriter::on_editCons_selectionChanged()
 {
     if (ui->editCons->textCursor().selectedText().length() > 0) {
         ui->lienButton->setEnabled(true);
@@ -4828,7 +4851,7 @@ void CeCWriter::on_editCons_selectionChanged()
     }
 }
 
-void CeCWriter::on_description_selectionChanged()
+void QRecipeWriter::on_description_selectionChanged()
 {
     if (ui->description->textCursor().selectedText().length() > 0) {
         ui->lienButton->setEnabled(true);
@@ -4838,7 +4861,7 @@ void CeCWriter::on_description_selectionChanged()
     }
 }
 
-void CeCWriter::on_switchNbPers_clicked()
+void QRecipeWriter::on_switchNbPers_clicked()
 {
     bool fourchettes = false;
     if (ui->switchNbPers->isChecked()) {

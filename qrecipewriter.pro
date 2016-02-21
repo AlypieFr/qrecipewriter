@@ -8,12 +8,12 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = qcecwriter
+TARGET = qrecipewriter
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        cecwriter.cpp \
+        qrecipewriter.cpp \
     options.cpp \
     categories.cpp \
     listviewdelegate.cpp \
@@ -35,7 +35,7 @@ SOURCES += main.cpp\
     Json.cpp \
     searchupdates.cpp
 
-HEADERS  += cecwriter.h \
+HEADERS  += qrecipewriter.h \
     options.h \
     categories.h \
     listviewdelegate.h \
@@ -57,7 +57,7 @@ HEADERS  += cecwriter.h \
     Json.h \
     searchupdates.h
 
-FORMS    += cecwriter.ui \
+FORMS    += qrecipewriter.ui \
     options.ui \
     categories.ui \
     apropos.ui \
@@ -90,7 +90,7 @@ unix {
                     LIBS += /usr/lib/libhunspell-1.3.so
                 }
                 !exists("/usr/lib/libhunspell-1.3.so") {
-                    message("ERROR: libhunspell-1.3.so not found. Please edit cecwriter.pro file and set the correct location")
+                    message("ERROR: libhunspell-1.3.so not found. Please edit qrecipewriter.pro file and set the correct location")
                 }
             }
         }
@@ -107,7 +107,7 @@ unix {
                         LIBS += /usr/lib/libqjson.so
                     }
                     !exists("/usr/lib/libqjson.so") {
-                        message("ERROR: libqjson.so not found. Please edit cecwriter.pro file and set the correct location")
+                        message("ERROR: libqjson.so not found. Please edit qrecipewriter.pro file and set the correct location")
                     }
                 }
             }
@@ -126,7 +126,7 @@ unix {
                     LIBS += /usr/lib/libhunspell-1.3.so
                 }
                 !exists("/usr/lib/libhunspell-1.3.so") {
-                    message("ERROR: libhunspell-1.3.so not found. Please edit cecwriter.pro file and set the correct location")
+                    message("ERROR: libhunspell-1.3.so not found. Please edit qrecipewriter.pro file and set the correct location")
                 }
             }
         }
@@ -143,7 +143,7 @@ unix {
                         LIBS += /usr/lib/libqjson.so
                     }
                     !exists("/usr/lib/libqjson.so") {
-                        message("ERROR: libqjson.so not found. Please edit cecwriter.pro file and set the correct location")
+                        message("ERROR: libqjson.so not found. Please edit qrecipewriter.pro file and set the correct location")
                     }
                 }
             }
@@ -155,17 +155,17 @@ unix {
     INSTICONS.files = $$ICONS
     INSTALLS += INSTICONS
 
-    DESK = applications/QCeCWriter.desktop
+    DESK = applications/QRecipeWriter.desktop
     INSTDESK.path = /usr/share/applications
     INSTDESK.files = $$DESK
     INSTALLS += INSTDESK
 
     SHARE = LICENCE.txt modeleHtml wordpress
-    INSTSHARE.path = /usr/share/qcecwriter
+    INSTSHARE.path = /usr/share/qrecipewriter
     INSTSHARE.files = $$SHARE
     INSTALLS += INSTSHARE
 
-    BIN = qcecwriter
+    BIN = qrecipewriter
     INSTBIN.path = /usr/bin
     INSTBIN.files = $$BIN
     INSTALLS += INSTBIN
@@ -186,7 +186,7 @@ win32 {
      	LIBS += C:/hunspellI686/lib/libhunspell-1.3.a   
     }
     RC_FILE = myapp.rc
-    TARGET = QCeCWriter
+    TARGET = QRecipeWriter
 }
 
 DISTFILES +=

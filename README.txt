@@ -1,4 +1,4 @@
-Bienvenue, et merci d'avoir téléchargé QCeCWriter !
+Bienvenue, et merci d'avoir téléchargé QRecipeWriter !
 
 Pour utiliser le logiciel, vous devez tout d'abord compiler le logiciel :
 qmake
@@ -19,7 +19,7 @@ Si vous déplacez l'exécutable, veuillez vous assurer que les dossiers SendToWo
 
 N'hésitez pas à nous contacter en cas de problèmes,
 via le formulaire :
-http://www.conseilsencuisine.fr/contact?menu=contact
+http://www.coolcooking.fr/contact?menu=contact
 
 
 L'équipe de développement.

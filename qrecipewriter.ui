@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CeCWriter</class>
- <widget class="QMainWindow" name="CeCWriter">
+ <class>QRecipeWriter</class>
+ <widget class="QMainWindow" name="QRecipeWriter">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,11 +17,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Conseils En Cuisine ! Writer | Écrire une nouvelle recette</string>
+   <string>QRecipeWriter | Écrire une nouvelle recette</string>
   </property>
   <property name="windowIcon">
    <iconset resource="Ressources.qrc">
-    <normaloff>:/images/QCeCWriter.png</normaloff>:/images/QCeCWriter.png</iconset>
+    <normaloff>:/images/QRecipeWriter.png</normaloff>:/images/QRecipeWriter.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="mouseTracking">

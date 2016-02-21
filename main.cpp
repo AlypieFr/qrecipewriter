@@ -1,17 +1,17 @@
 /*
- * © 2013-2014 Conseils en Cuisine !
+ * © 2013-2016 Flo-Art.fr
  *
- * CeCWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
+ * QRecipeWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
  * Toutes les modifications et la redistribution sont autorisés pour une utilisation NON COMMERCIALE.
  * Par ailleurs, les modifications et la reproduction doivent respecter les règles ci-dessous :
  *    - Cette en-tête doit être maintenue.
  *    - Vous devez redistribuer la version modifiée ou non sous licence Creative Common au moins autant
  *      restrictive.
- *    - ConseilsEnCuisine! ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
+ *    - Flo-Art.fr ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
  *    - Toute utilisation commerciale partielle ou complète est interdite.
  */
 
-#include "cecwriter.h"
+#include "qrecipewriter.h"
 #include "options.h"
 #include <QApplication>
 #include "categories.h"
@@ -47,9 +47,9 @@ void *ptr2insertVideo = NULL;
 /**
  * GLOBAL VARIABLES
  */
-QString shareDir = "/usr/share/qcecwriter";
+QString shareDir = "/usr/share/qrecipewriter";
 QString userDir = QDir::homePath(); //User directory
-QString confDir = userDir + "/.CeCWriter/"; //Directory where all config is stored
+QString confDir = userDir + "/.QRecipeWriter/"; //Directory where all config is stored
 QString confFile; //Configuration file, where options choosen by user is saved
 QFile *confCatFile; //File containing categories choosen by user, if it doesn't want default categories
 
@@ -57,9 +57,9 @@ QStringList otherPicts; //List of pictures, except main picture
 QString dirPict = ""; //Default local directory of pictures
 QString systExp = ""; //Operating system of the user
 #ifdef Q_OS_LINUX
-QString dirTmp = "/tmp/CeCWriter";
+QString dirTmp = "/tmp/QRecipeWriter";
 #else
-QString dirTmp = userDir + "/AppData/Local/Temp/CeCWriter";
+QString dirTmp = userDir + "/AppData/Local/Temp/QRecipeWriter";
 #endif
 QString cmdNav = ""; //Command to launch navigator
 QString dirSav; //Directory used to save recipes or "conseils & technics"
@@ -85,7 +85,7 @@ bool checkF7beforeSend = false;
 bool autoCheckUpdt = true;
 QString updtUrl = "";
 
-QString VERSION = "3.0.0";
+QString VERSION = "3.1.0";
 QString QTVERSION;
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe
@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
     }
     #endif
 
-    CeCWriter w;
+    QRecipeWriter w;
     w.openStartupFile = openFilename;
 
     //Define Dialogs:

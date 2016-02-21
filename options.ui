@@ -36,7 +36,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="Ressources.qrc">
-    <normaloff>:/images/QCeCWriter.png</normaloff>:/images/QCeCWriter.png</iconset>
+    <normaloff>:/images/QRecipeWriter.png</normaloff>:/images/QRecipeWriter.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget" native="true">
    <property name="geometry">
@@ -537,7 +537,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Conseils En Cuisine !&lt;/i&gt;</string>
+         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
        <widget class="QLabel" name="labelDossierDistantImages">
@@ -771,7 +771,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Conseils En Cuisine !&lt;/i&gt;</string>
+         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="cecSearch_2">
@@ -959,7 +959,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Conseils En Cuisine !&lt;/i&gt;</string>
+         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="cecSearch_3">
@@ -1147,7 +1147,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Conseils En Cuisine !&lt;/i&gt;</string>
+         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="cecPrinter_4">
@@ -1335,7 +1335,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Conseils En Cuisine !&lt;/i&gt;</string>
+         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="cecPrinter_5">
