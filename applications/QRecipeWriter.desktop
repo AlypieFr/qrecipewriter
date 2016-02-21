@@ -1,11 +1,11 @@
 [Desktop Entry]
-Version=1.0
+Version=3.1
 Type=Application
-Name=Nouvelle recette
-GenericName[fr]=QCeCWriter
+Name=QRecipeWriter
+GenericName[fr]=QRecipeWriter
 Comment=Ecrire une recette pour son site Wordpress
-Exec=QCeCWriter
-Icon=QCeCWriter
+Exec=QRecipeWriter
+Icon=QRecipeWriter
 Terminal=false
 Categories=Network
 StartupNotify=true

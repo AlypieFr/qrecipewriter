@@ -172,14 +172,15 @@ unix {
 }
 
 win32 {
-    INCLUDEPATH += C:/hunspell/include
     contains(QMAKE_HOST.arch, x86_64) {
+        INCLUDEPATH += C:/hunspellX64/include
         !exists("C:/hunspellX64/lib/libhunspell-1.3.a") {
             message("Error: hunspell lib not found: C:/hunspellX64/lib/libhunspell-1.3.a");
         }
         LIBS += C:/hunspellX64/lib/libhunspell-1.3.a
     }
     else {
+        INCLUDEPATH += C:/hunspellI686/include
         !exists("C:/hunspellI686/lib/libhunspell-1.3.a") {
             message("Error: hunspell lib not found: C:/hunspellI686/lib/libhunspell-1.3.a");
         }

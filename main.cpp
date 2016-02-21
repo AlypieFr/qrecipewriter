@@ -152,12 +152,21 @@ int main(int argc, char *argv[])
         corrOrtho = "/usr/share/myspell/dicts/fr_FR";
     }
     #else
-    QFile fileDictTest1 ("C:/hunspell/dicts/fr.dic");
-    QFile fileDictTest2 ("C:/hunspell/dicts/fr.aff");
-    if (fileDictTest1.exists() && fileDictTest2.exists())
-    {
-        corrOrtho = "C:/hunspell/dicts/fr";
-    }
+        #if _WIN64
+            QFile fileDictTest1 ("C:/hunspellX64/dicts/fr.dic");
+            QFile fileDictTest2 ("C:/hunspellX64/dicts/fr.aff");
+            if (fileDictTest1.exists() && fileDictTest2.exists())
+            {
+                corrOrtho = "C:/hunspellX64/dicts/fr";
+            }
+        #else
+            QFile fileDictTest1 ("C:/hunspellI686/dicts/fr.dic");
+            QFile fileDictTest2 ("C:/hunspellI686/dicts/fr.aff");
+            if (fileDictTest1.exists() && fileDictTest2.exists())
+            {
+                corrOrtho = "C:/hunspellI686/dicts/fr";
+            }
+        #endif
     #endif
 
     QRecipeWriter w;
