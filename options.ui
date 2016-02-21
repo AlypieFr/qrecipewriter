@@ -498,7 +498,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="config1">
        <attribute name="title">
@@ -558,7 +558,7 @@
          <rect>
           <x>0</x>
           <y>190</y>
-          <width>171</width>
+          <width>211</width>
           <height>23</height>
          </rect>
         </property>
@@ -566,7 +566,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Search *</string>
+         <string>Activer Recipes Search *</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="lineEditAdresseSite">
@@ -607,7 +607,7 @@
          <rect>
           <x>0</x>
           <y>160</y>
-          <width>161</width>
+          <width>201</width>
           <height>23</height>
          </rect>
         </property>
@@ -615,7 +615,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Printer</string>
+         <string>Activer Recipes Printer</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="recCoupDeCoeur">
@@ -623,7 +623,7 @@
          <rect>
           <x>0</x>
           <y>220</y>
-          <width>231</width>
+          <width>261</width>
           <height>23</height>
          </rect>
         </property>
@@ -631,7 +631,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Coup de Coeur *</string>
+         <string>Activer Recipes Coup de Coeur *</string>
         </property>
        </widget>
        <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso">
@@ -676,7 +676,7 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>400</width>
+          <width>431</width>
           <height>23</height>
          </rect>
         </property>
@@ -779,7 +779,7 @@
          <rect>
           <x>0</x>
           <y>190</y>
-          <width>171</width>
+          <width>211</width>
           <height>23</height>
          </rect>
         </property>
@@ -787,7 +787,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Search *</string>
+         <string>Activer Recipes Search *</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="recCoupDeCoeur_2">
@@ -795,7 +795,7 @@
          <rect>
           <x>0</x>
           <y>220</y>
-          <width>231</width>
+          <width>261</width>
           <height>23</height>
          </rect>
         </property>
@@ -803,7 +803,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Coup de Coeur *</string>
+         <string>Activer Recipes Coup de Coeur *</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="richSnippets_2">
@@ -811,7 +811,7 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>400</width>
+          <width>431</width>
           <height>23</height>
          </rect>
         </property>
@@ -864,7 +864,7 @@
          <rect>
           <x>0</x>
           <y>160</y>
-          <width>161</width>
+          <width>201</width>
           <height>23</height>
          </rect>
         </property>
@@ -872,7 +872,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Printer</string>
+         <string>Activer Recipes Printer</string>
         </property>
        </widget>
       </widget>
@@ -967,7 +967,7 @@
          <rect>
           <x>0</x>
           <y>190</y>
-          <width>171</width>
+          <width>211</width>
           <height>23</height>
          </rect>
         </property>
@@ -975,7 +975,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Search *</string>
+         <string>Activer Recipes Search *</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="recCoupDeCoeur_3">
@@ -983,7 +983,7 @@
          <rect>
           <x>0</x>
           <y>220</y>
-          <width>231</width>
+          <width>261</width>
           <height>23</height>
          </rect>
         </property>
@@ -991,7 +991,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Coup de Coeur *</string>
+         <string>Activer Recipes Coup de Coeur *</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="richSnippets_3">
@@ -999,7 +999,7 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>400</width>
+          <width>431</width>
           <height>23</height>
          </rect>
         </property>
@@ -1052,7 +1052,7 @@
          <rect>
           <x>0</x>
           <y>160</y>
-          <width>161</width>
+          <width>201</width>
           <height>23</height>
          </rect>
         </property>
@@ -1060,7 +1060,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Printer</string>
+         <string>Activer Recipes Printer</string>
         </property>
        </widget>
       </widget>
@@ -1155,7 +1155,7 @@
          <rect>
           <x>0</x>
           <y>160</y>
-          <width>161</width>
+          <width>201</width>
           <height>23</height>
          </rect>
         </property>
@@ -1163,7 +1163,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Printer</string>
+         <string>Activer Recipes Printer</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="configActive_4">
@@ -1195,7 +1195,7 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>400</width>
+          <width>431</width>
           <height>23</height>
          </rect>
         </property>
@@ -1211,7 +1211,7 @@
          <rect>
           <x>0</x>
           <y>220</y>
-          <width>231</width>
+          <width>261</width>
           <height>23</height>
          </rect>
         </property>
@@ -1219,7 +1219,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Coup de Coeur *</string>
+         <string>Activer Recipes Coup de Coeur *</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="recSearch_4">
@@ -1227,7 +1227,7 @@
          <rect>
           <x>0</x>
           <y>190</y>
-          <width>171</width>
+          <width>211</width>
           <height>23</height>
          </rect>
         </property>
@@ -1235,7 +1235,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Search *</string>
+         <string>Activer Recipes Search *</string>
         </property>
        </widget>
        <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_4">
@@ -1343,7 +1343,7 @@
          <rect>
           <x>0</x>
           <y>160</y>
-          <width>161</width>
+          <width>201</width>
           <height>23</height>
          </rect>
         </property>
@@ -1351,7 +1351,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Printer</string>
+         <string>Activer Recipes Printer</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="richSnippets_5">
@@ -1359,7 +1359,7 @@
          <rect>
           <x>0</x>
           <y>130</y>
-          <width>400</width>
+          <width>431</width>
           <height>23</height>
          </rect>
         </property>
@@ -1381,7 +1381,7 @@
          <rect>
           <x>0</x>
           <y>190</y>
-          <width>171</width>
+          <width>211</width>
           <height>23</height>
          </rect>
         </property>
@@ -1389,7 +1389,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Search *</string>
+         <string>Activer Recipes Search *</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="recCoupDeCoeur_5">
@@ -1397,7 +1397,7 @@
          <rect>
           <x>0</x>
           <y>220</y>
-          <width>231</width>
+          <width>261</width>
           <height>23</height>
          </rect>
         </property>
@@ -1405,7 +1405,7 @@
          <string notr="true">font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Activer CeC Coup de Coeur *</string>
+         <string>Activer Recipes Coup de Coeur *</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="configActive_5">
