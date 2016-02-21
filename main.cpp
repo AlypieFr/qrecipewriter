@@ -73,10 +73,10 @@ QString correction = ""; //Path to the dictionnary (prefix of .dic and .aff file
 QStringList namesCats; //Contains names of categories
 bool cancel = false; //Keep if user cancel orthographical correction
 bool richSnippets = false; //Active rich snippets for recipes in google search results
-bool cecPrinter = false; //CeC Printer status
+bool recPrinter = false; //CeC Printer status
 bool sendAuto = true; //Send in an automatic manner
-bool cecSearch = false; //Activate or not search module
-bool cecCoupDeCoeur = false; //Activate or not "coups de coeur"
+bool recSearch = false; //Activate or not search module
+bool recCoupDeCoeur = false; //Activate or not "coups de coeur"
 int configActive = 1;
 int idRecipe = -1;
 bool openLastDir_sauvegarde = false;

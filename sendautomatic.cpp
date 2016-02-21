@@ -22,8 +22,8 @@ extern QString cmdNav; //Command to launch navigator
 extern QString addrSite; //Address of the website
 extern QString addrPub; //Address of publication (XML-RPC)
 extern QString dirTmp;
-extern bool cecSearch;
-extern bool cecCoupDeCoeur;
+extern bool recSearch;
+extern bool recCoupDeCoeur;
 extern int configActive;
 extern int idRecipe;
 
@@ -86,16 +86,16 @@ void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     mainPicture = mainPicture_lu;
     excerpt = excerpt_lu;
     tags = "";
-    if (cecSearch && (categories.size() > 1 || categories[0] != "Base")) {
+    if (recSearch && (categories.size() > 1 || categories[0] != "Base")) {
         tags = makeTags(tpsPrep, tpsCuis, tpsRep);
-        if (cecCoupDeCoeur) {
+        if (recCoupDeCoeur) {
             tags += ",";
         }
         else {
             tags = "null";
         }
     }
-    if (cecCoupDeCoeur) {
+    if (recCoupDeCoeur) {
         tags += coupDeCoeur_lu;
     }
     envoiEnCours = new QDialog((QWidget*)this->parent());

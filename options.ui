@@ -553,7 +553,7 @@
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecSearch">
+       <widget class="QCheckBox" name="recSearch">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -602,7 +602,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecPrinter">
+       <widget class="QCheckBox" name="recPrinter">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -618,7 +618,7 @@
          <string>Activer CeC Printer</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecCoupDeCoeur">
+       <widget class="QCheckBox" name="recCoupDeCoeur">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -774,7 +774,7 @@
          <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecSearch_2">
+       <widget class="QCheckBox" name="recSearch_2">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -790,7 +790,7 @@
          <string>Activer CeC Search *</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecCoupDeCoeur_2">
+       <widget class="QCheckBox" name="recCoupDeCoeur_2">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -859,7 +859,7 @@
          <bool>false</bool>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecPrinter_2">
+       <widget class="QCheckBox" name="recPrinter_2">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -962,7 +962,7 @@
          <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecSearch_3">
+       <widget class="QCheckBox" name="recSearch_3">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -978,7 +978,7 @@
          <string>Activer CeC Search *</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecCoupDeCoeur_3">
+       <widget class="QCheckBox" name="recCoupDeCoeur_3">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1047,7 +1047,7 @@
          <bool>false</bool>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecPrinter_3">
+       <widget class="QCheckBox" name="recPrinter_3">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1150,7 +1150,7 @@
          <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecPrinter_4">
+       <widget class="QCheckBox" name="recPrinter_4">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1206,7 +1206,7 @@
          <string>Activer les extraits enrichis dans les recherches Google</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecCoupDeCoeur_4">
+       <widget class="QCheckBox" name="recCoupDeCoeur_4">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1222,7 +1222,7 @@
          <string>Activer CeC Coup de Coeur *</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecSearch_4">
+       <widget class="QCheckBox" name="recSearch_4">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1338,7 +1338,7 @@
          <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecPrinter_5">
+       <widget class="QCheckBox" name="recPrinter_5">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1376,7 +1376,7 @@
          <string>Activer les extraits enrichis dans les recherches Google</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecSearch_5">
+       <widget class="QCheckBox" name="recSearch_5">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1392,7 +1392,7 @@
          <string>Activer CeC Search *</string>
         </property>
        </widget>
-       <widget class="QCheckBox" name="cecCoupDeCoeur_5">
+       <widget class="QCheckBox" name="recCoupDeCoeur_5">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1498,45 +1498,45 @@
   <tabstop>lineEditAdressePublication</tabstop>
   <tabstop>lineEditDossierDistantImages</tabstop>
   <tabstop>richSnippets</tabstop>
-  <tabstop>cecPrinter</tabstop>
-  <tabstop>cecSearch</tabstop>
-  <tabstop>cecCoupDeCoeur</tabstop>
+  <tabstop>recPrinter</tabstop>
+  <tabstop>recSearch</tabstop>
+  <tabstop>recCoupDeCoeur</tabstop>
   <tabstop>configActive</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso</tabstop>
   <tabstop>lineEditAdresseSite_2</tabstop>
   <tabstop>lineEditAdressePublication_2</tabstop>
   <tabstop>lineEditDossierDistantImages_2</tabstop>
   <tabstop>richSnippets_2</tabstop>
-  <tabstop>cecPrinter_2</tabstop>
-  <tabstop>cecSearch_2</tabstop>
-  <tabstop>cecCoupDeCoeur_2</tabstop>
+  <tabstop>recPrinter_2</tabstop>
+  <tabstop>recSearch_2</tabstop>
+  <tabstop>recCoupDeCoeur_2</tabstop>
   <tabstop>configActive_2</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_2</tabstop>
   <tabstop>lineEditAdresseSite_3</tabstop>
   <tabstop>lineEditAdressePublication_3</tabstop>
   <tabstop>lineEditDossierDistantImages_3</tabstop>
   <tabstop>richSnippets_3</tabstop>
-  <tabstop>cecPrinter_3</tabstop>
-  <tabstop>cecSearch_3</tabstop>
-  <tabstop>cecCoupDeCoeur_3</tabstop>
+  <tabstop>recPrinter_3</tabstop>
+  <tabstop>recSearch_3</tabstop>
+  <tabstop>recCoupDeCoeur_3</tabstop>
   <tabstop>configActive_3</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_3</tabstop>
   <tabstop>lineEditAdresseSite_4</tabstop>
   <tabstop>lineEditAdressePublication_4</tabstop>
   <tabstop>lineEditDossierDistantImages_4</tabstop>
   <tabstop>richSnippets_4</tabstop>
-  <tabstop>cecPrinter_4</tabstop>
-  <tabstop>cecSearch_4</tabstop>
-  <tabstop>cecCoupDeCoeur_4</tabstop>
+  <tabstop>recPrinter_4</tabstop>
+  <tabstop>recSearch_4</tabstop>
+  <tabstop>recCoupDeCoeur_4</tabstop>
   <tabstop>configActive_4</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_4</tabstop>
   <tabstop>lineEditAdresseSite_5</tabstop>
   <tabstop>lineEditAdressePublication_5</tabstop>
   <tabstop>lineEditDossierDistantImages_5</tabstop>
   <tabstop>richSnippets_5</tabstop>
-  <tabstop>cecPrinter_5</tabstop>
-  <tabstop>cecSearch_5</tabstop>
-  <tabstop>cecCoupDeCoeur_5</tabstop>
+  <tabstop>recPrinter_5</tabstop>
+  <tabstop>recSearch_5</tabstop>
+  <tabstop>recCoupDeCoeur_5</tabstop>
   <tabstop>configActive_5</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_5</tabstop>
   <tabstop>tabWidget</tabstop>

@@ -45,10 +45,10 @@ extern QString correction;
 extern QStringList namesCats;
 extern bool cancel;
 extern bool richSnippets;
-extern bool cecPrinter;
+extern bool recPrinter;
 extern bool sendAuto;
-extern bool cecSearch;
-extern bool cecCoupDeCoeur;
+extern bool recSearch;
+extern bool recCoupDeCoeur;
 extern int idRecipe;
 extern bool openLastDir_sauvegarde;
 extern bool openLastDir_Img;
@@ -389,7 +389,7 @@ void QRecipeWriter::init()
     ui->scrollCats->setWidget(wid);
     //Load config:
     Functions::loadConfig();
-    if (!cecPrinter) {
+    if (!recPrinter) {
         ui->noPrint->setToolTip("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
         ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
     }
@@ -400,7 +400,7 @@ void QRecipeWriter::init()
         ui->actionCorrection_orthographique->setEnabled(false);
     }
     //CeC Coup de coeur ? :
-    ui->setCoupDeCoeur->setVisible(cecCoupDeCoeur);
+    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur);
     //Initialize ident variables:
     idIngr = 0;
     idPrep = "0.0";
@@ -671,7 +671,7 @@ void QRecipeWriter::on_actionOptions_triggered()
         ui->abcButton->setEnabled(true);
         ui->actionCorrection_orthographique->setEnabled(true);
     }
-    if (!cecPrinter) {
+    if (!recPrinter) {
         ui->noPrint->setToolTip("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
         ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
     }
@@ -679,7 +679,7 @@ void QRecipeWriter::on_actionOptions_triggered()
         ui->noPrint->setToolTip("Ne pas imprimer une partie de texte");
         ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher");
     }
-    ui->setCoupDeCoeur->setVisible(cecCoupDeCoeur);
+    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur);
     toggleEditPict();
 }
 
@@ -2438,7 +2438,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         ui->grasButton->setEnabled(true);
         ui->italicButton->setEnabled(true);
         ui->soulignButton->setEnabled(true);
-        if (cecPrinter) {
+        if (recPrinter) {
             ui->noPrint->setEnabled(true);
             ui->printOnly->setEnabled(true);
         }
@@ -2454,7 +2454,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         ui->grasButton->setEnabled(true);
         ui->italicButton->setEnabled(true);
         ui->soulignButton->setEnabled(true);
-        if (cecPrinter) {
+        if (recPrinter) {
             ui->noPrint->setEnabled(true);
             ui->printOnly->setEnabled(true);
         }
@@ -2472,7 +2472,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         ui->grasButton->setEnabled(true);
         ui->italicButton->setEnabled(true);
         ui->soulignButton->setEnabled(true);
-        if (cecPrinter) {
+        if (recPrinter) {
             ui->noPrint->setEnabled(true);
             ui->printOnly->setEnabled(true);
         }
@@ -2493,7 +2493,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         ui->grasButton->setEnabled(true);
         ui->italicButton->setEnabled(true);
         ui->soulignButton->setEnabled(true);
-        if (cecPrinter) {
+        if (recPrinter) {
             ui->noPrint->setEnabled(true);
             ui->printOnly->setEnabled(true);
         }
@@ -2510,7 +2510,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         ui->grasButton->setEnabled(true);
         ui->italicButton->setEnabled(true);
         ui->soulignButton->setEnabled(true);
-        if (cecPrinter) {
+        if (recPrinter) {
             ui->noPrint->setEnabled(true);
             ui->printOnly->setEnabled(true);
         }

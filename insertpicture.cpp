@@ -15,7 +15,7 @@
 #include "ui_insertpicture.h"
 
 extern QString dirPict;
-extern bool cecPrinter;
+extern bool recPrinter;
 
 InsertPicture::InsertPicture(QWidget *parent) :
     QDialog(parent),
@@ -62,7 +62,7 @@ void InsertPicture::init(QString imgFile, QString afficher, int width, int heigh
     if (center) {
         ui->centerImg->setChecked(true);
     }
-    if (!cecPrinter) {
+    if (!recPrinter) {
         ui->noPrint->setDisabled(true);
         ui->noPrint->setToolTip("Nécessite d'activer CeC printer");
         ui->printOnly->setDisabled(true);

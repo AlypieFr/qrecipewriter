@@ -31,9 +31,9 @@ extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
 extern bool richSnippets;
-extern bool cecPrinter;
-extern bool cecSearch;
-extern bool cecCoupDeCoeur;
+extern bool recPrinter;
+extern bool recSearch;
+extern bool recCoupDeCoeur;
 extern bool sendAuto;
 extern int configActive;
 extern bool openLastDir_sauvegarde;
@@ -184,19 +184,19 @@ void Functions::loadConfig()
                     richSnippets = xmlS.text().toString() == "1" ? true: false;
                     continue;
                 }
-                if(xmlS.name() == "cecPrinter") {
+                if(xmlS.name() == "recPrinter") {
                     xmlS.readNext();
-                    cecPrinter = xmlS.text().toString() == "1" ? true: false;
+                    recPrinter = xmlS.text().toString() == "1" ? true: false;
                     continue;
                 }
-                if(xmlS.name() == "cecSearch") {
+                if(xmlS.name() == "recSearch") {
                     xmlS.readNext();
-                    cecSearch = xmlS.text().toString() == "1" ? true: false;
+                    recSearch = xmlS.text().toString() == "1" ? true: false;
                     continue;
                 }
-                if(xmlS.name() == "cecCoupDeCoeur") {
+                if(xmlS.name() == "recCoupDeCoeur") {
                     xmlS.readNext();
-                    cecCoupDeCoeur = xmlS.text().toString() == "1" ? true: false;
+                    recCoupDeCoeur = xmlS.text().toString() == "1" ? true: false;
                     continue;
                 }
             }
@@ -1404,7 +1404,7 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
         htmlCode = htmlCode + "<conseils><p><b>Conseils :</b></p>"+conseils+"</conseils>";
     }
     //Adding "Version imprimable" balise, only if the website is Cool Cooking, because others might not use it:
-    if (cecPrinter) {
+    if (recPrinter) {
         htmlCode = htmlCode + "<br/>[VERSION_IMPRIMABLE]";
     }
     //Replace oe by "e dans l'o", because we speak French :
