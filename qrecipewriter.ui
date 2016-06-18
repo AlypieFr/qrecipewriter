@@ -168,21 +168,21 @@ left: 10px; padding: 0 3px;}</string>
                  <property name="geometry">
                   <rect>
                    <x>0</x>
-                   <y>-135</y>
-                   <width>345</width>
-                   <height>462</height>
+                   <y>0</y>
+                   <width>338</width>
+                   <height>460</height>
                   </rect>
                  </property>
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>462</height>
+                   <height>460</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>462</height>
+                   <height>460</height>
                   </size>
                  </property>
                  <widget class="QLabel" name="label_2">
@@ -1157,7 +1157,7 @@ left: 10px; padding: 0 3px;}</string>
              </property>
              <property name="iconSize">
               <size>
-               <width>60</width>
+               <width>20</width>
                <height>20</height>
               </size>
              </property>
@@ -1195,7 +1195,7 @@ left: 10px; padding: 0 3px;}</string>
              </property>
              <property name="iconSize">
               <size>
-               <width>60</width>
+               <width>20</width>
                <height>20</height>
               </size>
              </property>
@@ -1230,7 +1230,7 @@ left: 10px; padding: 0 3px;}</string>
              </property>
              <property name="iconSize">
               <size>
-               <width>50</width>
+               <width>20</width>
                <height>20</height>
               </size>
              </property>
@@ -1356,7 +1356,7 @@ left: 10px; padding: 0 3px;}</string>
              <x>0</x>
              <y>0</y>
              <width>673</width>
-             <height>639</height>
+             <height>634</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -2154,12 +2154,12 @@ left: 10px; padding: 0 3px;}</string>
      <x>0</x>
      <y>0</y>
      <width>1149</width>
-     <height>25</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOutils">
     <property name="title">
-     <string>Outils</string>
+     <string>Outi&amp;ls</string>
     </property>
     <addaction name="separator"/>
     <addaction name="separator"/>
@@ -2172,7 +2172,7 @@ left: 10px; padding: 0 3px;}</string>
    </widget>
    <widget class="QMenu" name="menuRecette">
     <property name="title">
-     <string>Fichier</string>
+     <string>Fic&amp;hier</string>
     </property>
     <addaction name="actionNouvelle_Recette"/>
     <addaction name="actionOuvrir_une_recette_existante"/>
@@ -2180,7 +2180,7 @@ left: 10px; padding: 0 3px;}</string>
    </widget>
    <widget class="QMenu" name="menuRecette_2">
     <property name="title">
-     <string>Recette</string>
+     <string>&amp;Recette</string>
     </property>
     <addaction name="actionEnregistrer"/>
     <addaction name="actionEnregistrer_sous"/>
@@ -2193,7 +2193,7 @@ left: 10px; padding: 0 3px;}</string>
   </widget>
   <action name="actionOptions">
    <property name="text">
-    <string>Préférences</string>
+    <string>&amp;Préférences</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
@@ -2201,7 +2201,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionNouvelle_Recette">
    <property name="text">
-    <string>Nouvelle Recette</string>
+    <string>&amp;Nouvelle Recette</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -2209,7 +2209,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionOuvrir_une_recette_existante">
    <property name="text">
-    <string>Ouvrir une recette existante</string>
+    <string>&amp;Ouvrir une recette existante</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -2217,7 +2217,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionEnregistrer">
    <property name="text">
-    <string>Enregistrer</string>
+    <string>&amp;Enregistrer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -2225,7 +2225,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionEnregistrer_sous">
    <property name="text">
-    <string>Enregistrer sous...</string>
+    <string>E&amp;nregistrer sous...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
@@ -2233,7 +2233,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionApercu">
    <property name="text">
-    <string>Aperçu</string>
+    <string>&amp;Aperçu</string>
    </property>
    <property name="shortcut">
     <string>F6</string>
@@ -2241,7 +2241,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionEnvoyer">
    <property name="text">
-    <string>Envoyer</string>
+    <string>En&amp;voyer</string>
    </property>
    <property name="shortcut">
     <string>F5</string>
@@ -2249,7 +2249,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionGerer_les_categories">
    <property name="text">
-    <string>Gérer les catégories</string>
+    <string>&amp;Gérer les catégories</string>
    </property>
    <property name="shortcut">
     <string>F3</string>
@@ -2265,7 +2265,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionAide">
    <property name="text">
-    <string>Aide</string>
+    <string>&amp;Aide</string>
    </property>
    <property name="shortcut">
     <string>F1</string>
@@ -2273,7 +2273,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="action_propos">
    <property name="text">
-    <string>À propos</string>
+    <string>&amp;À propos</string>
    </property>
    <property name="shortcut">
     <string>F2</string>
@@ -2281,7 +2281,7 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionCorrection_orthographique">
    <property name="text">
-    <string>Correction orthographique</string>
+    <string>&amp;Correction orthographique</string>
    </property>
    <property name="shortcut">
     <string>F7</string>
@@ -2289,12 +2289,12 @@ left: 10px; padding: 0 3px;}</string>
   </action>
   <action name="actionRechercher_une_mise_jour">
    <property name="text">
-    <string>Rechercher une mise à jour</string>
+    <string>&amp;Rechercher une mise à jour</string>
    </property>
   </action>
   <action name="actionOuvrir_une_recette_en_ligne">
    <property name="text">
-    <string>Ouvrir une recette en ligne</string>
+    <string>Ouvrir &amp;une recette en ligne</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+O</string>
