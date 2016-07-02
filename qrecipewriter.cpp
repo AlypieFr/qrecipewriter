@@ -447,7 +447,7 @@ void QRecipeWriter::init()
     //Install events on description field:
     ui->description->installEventFilter(this);
 
-    updtUrl = "http://qrecipewriter.coolcooking.fr/files/LATEST-" + systExp + "-QT-" + QTVERSION;
+    updtUrl = "https://qrecipewriter.coolcooking.fr/files/LATEST-" + systExp + "-QT-" + QTVERSION;
 }
 
 void QRecipeWriter::launch() {
