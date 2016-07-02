@@ -90,11 +90,14 @@ unix {
                     LIBS += /usr/lib/libhunspell-1.3.so
                 }
                 !exists("/usr/lib/libhunspell-1.3.so") {
-                    message("ERROR: libhunspell-1.3.so not found. Please edit qrecipewriter.pro file and set the correct location")
+                    LIBS += /usr/lib/libhunspell.so
+                    !exists("/usr/lib/libhunspell.so") {
+                        message("ERROR: libhunspell.so not found. Please edit qrecipewriter.pro file and set the correct location")
+                    }
                 }
             }
         }
-        !greaterThan(QT_MAJOR_VERSION, 5) {
+        equals(QT_MAJOR_VERSION, 4) {
             exists("/usr/lib/x86_64-linux-gnu/libqjson.so") {
                 LIBS += /usr/lib/x86_64-linux-gnu/libqjson.so
             }
@@ -126,11 +129,14 @@ unix {
                     LIBS += /usr/lib/libhunspell-1.3.so
                 }
                 !exists("/usr/lib/libhunspell-1.3.so") {
-                    message("ERROR: libhunspell-1.3.so not found. Please edit qrecipewriter.pro file and set the correct location")
+                    LIBS += /usr/lib/libhunspell.so
+                    !exists("/usr/lib/libhunspell.so") {
+                        message("ERROR: libhunspell.so not found. Please edit qrecipewriter.pro file and set the correct location")
+                    }
                 }
             }
         }
-        !greaterThan(QT_MAJOR_VERSION, 5) {
+        equals(QT_MAJOR_VERSION, 4) {
             exists("/usr/lib/i386-linux-gnu/libqjson.so") {
                 LIBS += /usr/lib/i386-linux-gnu/libqjson.so
             }
