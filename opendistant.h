@@ -19,6 +19,7 @@
 
 #include <QCheckBox>
 #include <QDialog>
+#include <QList>
 #include <QMessageBox>
 #include <QModelIndex>
 #include <QRegExp>
@@ -49,6 +50,8 @@ private slots:
 
     void on_listRecipes_doubleClicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::OpenDistant *ui;
     QWidget *parentWidget;
@@ -56,6 +59,7 @@ private:
     QMap<QString,QMap<QString,QVariant> > recipes;
     QMap<QString, QStringList > recipesByCats;
     void updateNbRecipes(int nbRecipes);
+    QList<QCheckBox*> cboxes;
 };
 
 #endif // OPENDISTANT_H

@@ -40,11 +40,11 @@ void OpenDistant::init() {
     catLay->setContentsMargins(0,10,0,0);
     catLay->setSpacing(2);
     foreach (QString cat, namesCats) {
-        recipesByCats[cat] = QStringList();
         QCheckBox *catI = new QCheckBox(cat);
         catI->setMaximumHeight(21);
         catI->setMinimumHeight(21);
         catLay->addWidget(catI);
+        cboxes.append(catI);
         connect(catI, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));;
     }
     FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPostsJson.php?user=" + pseudoWp, "Récupération de la liste des recettes...", parentWidget);
@@ -59,10 +59,15 @@ void OpenDistant::init() {
         QList<QVariant> recipesRaw = result["recettes"].toList();
         foreach (QVariant recipeRaw, recipesRaw) {
             QMap<QString, QVariant> recipe = recipeRaw.toMap();
-            recipe["cats"] = recipe["cats"].toStringList();
+            QStringList catsOld = recipe["cats"].toStringList();
+            QStringList catsNew;
+            foreach (QString catO, catsOld) {
+                catsNew.append(catO.replace("&", ""));
+            }
+            recipe["cats"] = catsNew;
             recipes[recipe["title"].toString()] = recipe;
             foreach (QString cat, recipe["cats"].toStringList()) {
-                recipesByCats[cat.replace("&", "&&")].append(recipe["title"].toString());
+                recipesByCats[cat].append(recipe["title"].toString());
             }
             items.append(recipe["title"].toString());
         }
@@ -84,7 +89,8 @@ void OpenDistant::stateChanged() {
         QCheckBox *cbox = qobject_cast<QCheckBox*>(box);
         if (cbox) {
             if (cbox->isChecked()) {
-                catsSelected.append(cbox->text());
+                QString catSlct = cbox->text().replace("&", "");
+                catsSelected.append(catSlct);
             }
         }
     }
@@ -158,4 +164,11 @@ void OpenDistant::on_buttonBox_accepted()
 void OpenDistant::on_listRecipes_doubleClicked()
 {
     on_buttonBox_accepted();
+}
+
+void OpenDistant::on_pushButton_clicked()
+{
+    foreach (QCheckBox* cbox, cboxes) {
+        cbox->setChecked(false);
+    }
 }
