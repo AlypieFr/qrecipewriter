@@ -2022,7 +2022,7 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
         }
 
         //Load preparation:
-        if (rct.keys().contains("preparation"))
+        if (rct.keys().contains("preparation") && !rct["preparation"].isEmpty())
         {
             prept = rct["preparation"];
             foreach (QString prep, prept) {
@@ -2090,8 +2090,14 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
         if(rct.keys().contains("liens"))
         {
             foreach (QString lien, rct["liens"]) {
-                liens.insert("L" + QString::number(idLien), lien);
-                idLien++;
+                QRegExp exp ("^L(\\d+)\\|(.+)$");
+                if (lien.contains(exp)) {
+                    QString idLnk = exp.cap(1);
+                    qDebug() << idLnk;
+                    liens.insert("L" + idLnk, exp.cap(2));
+                    using std::max;
+                    idLien = max(idLnk.toInt() + 1, idLien);
+                }
             }
         }
 

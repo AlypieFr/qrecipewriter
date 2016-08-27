@@ -209,75 +209,32 @@ bool Functions::saveRecipeToFile(QString title, QStringList categories, QString 
                                  QStringList materiel, QStringList preparation, QStringList conseils, QString picture,
                                  QMap<QString, QString> liens, QFile *file, QString coupDeCoeur, int idRecipe) {
     file->open(QIODevice::WriteOnly);
-    QXmlStreamWriter writer(file);
+    QStringList liensList;
+    foreach (QString key, liens.keys()) {
+        qDebug() << key;
+        liensList.append(key + "|" + liens[key]);
+    }
+    QMap<QString, QVariant> data;
+    data.insert("title", title);
+    data.insert("categories", categories);
+    data.insert("tpsPrep", tpsPrep);
+    data.insert("tpsCuis", tpsCuis);
+    data.insert("tpsRep", tpsRep);
+    data.insert("nbPers", nbPers);
+    data.insert("precision", precision);
+    data.insert("description", description);
+    data.insert("ingredients", ingredients);
+    data.insert("materiel", materiel);
+    data.insert("preparation", preparation);
+    data.insert("conseils", conseils);
+    data.insert("picture", picture);
+    data.insert("liens", liensList);
+    data.insert("coupDeCoeur", coupDeCoeur);
+    data.insert("idRecipe", idRecipe);
 
-    writer.setAutoFormatting(true);
-    writer.writeStartDocument("1.0");
-    writer.writeTextElement("titre", title);
-    writer.writeStartElement("categories");
-    int id = 1;
-    foreach (QString cat, categories) {
-        writer.writeTextElement("cat" + QString::number(id), cat);
-        id++;
-    }
-    writer.writeEndElement();
-    writer.writeTextElement("image", picture);
-    writer.writeTextElement("tpsPrep", tpsPrep);
-    writer.writeTextElement("tpsCuis", tpsCuis);
-    writer.writeTextElement("tpsRep", tpsRep);
-    writer.writeTextElement("nbPers", nbPers);
-    writer.writeTextElement("precision", precision);
-    writer.writeTextElement("description", description);
-    writer.writeTextElement("idRecipe", QString::number(idRecipe));
-    if (ingredients.size() > 0)
-    {
-        writer.writeStartElement("ingredients");
-        id = 1;
-        foreach (QString ingr, ingredients) {
-            writer.writeTextElement("ingr" + QString::number(id), ingr);
-            id++;
-        }
-        writer.writeEndElement();
-    }
-    if (materiel.size() > 0)
-    {
-        writer.writeStartElement("materiel");
-        id = 1;
-        foreach (QString mat, materiel) {
-            writer.writeTextElement("mat" + QString::number(id), mat);
-            id++;
-        }
-        writer.writeEndElement();
-    }
-    if (preparation.size() > 0)
-    {
-        writer.writeStartElement("preparation");
-        id = 1;
-        foreach (QString prep, preparation) {
-            writer.writeTextElement("prep" + QString::number(id), prep);
-            id++;
-        }
-        writer.writeEndElement();
-    }
-    if (conseils.size() > 0)
-    {
-        writer.writeStartElement("conseils");
-        id = 1;
-        foreach (QString cons, conseils) {
-            writer.writeTextElement("cons" + QString::number(id), cons);
-            id++;
-        }
-        writer.writeEndElement();
-    }
-    writer.writeTextElement("coupDeCoeur", coupDeCoeur);
-    if (liens.size() > 0)
-    {
-        writer.writeStartElement("liens");
-        for (int k = 1; k <= liens.size(); ++k) {
-            writer.writeTextElement("L" + QString::number(k), liens["L" + QString::number(k)]);
-        }
-        writer.writeEndDocument();
-    }
+    QDataStream out(file);
+    out << data;
+
     file->close();
     return true;
 }
@@ -707,170 +664,36 @@ QMap<QString, QStringList> Functions::loadRecipe(QString fileName)
     //Creating Map:
     QMap<QString, QStringList> result;
 
-    //Loading xml file:
-    XMLDocument doc;
-    doc.LoadFile(fileName.toStdString().c_str());
+    QMap<QString, QVariant> map;
 
-    //Titre:
-    XMLElement* elem = doc.FirstChildElement("titre");
-    if (elem)
+    QFile* file = new QFile(fileName);
+
+    QDataStream in(file);
+
+    if (!file->open(QIODevice::ReadOnly))
     {
-        result.insert("titre", QStringList(elem->GetText()));
+        qDebug() << "Could not read the file:" << fileName << "Error string:" << file->errorString();
+        return result;
     }
 
-    //Categories:
-    QStringList elemsList;
-    elem = doc.FirstChildElement("categories");
-    if (elem)
-    {
-        for( XMLNode* ele = elem->FirstChild();
-                 ele;
-                 ele = ele->NextSibling() )
-            {
-            elemsList.append(ele->ToElement()->GetText());
-        }
-        result.insert("categories", elemsList);
-    }
+    in >> map;
 
-    //Image:
-    elem = doc.FirstChildElement("image");
-    if (elem)
-    {
-        result.insert("image", QStringList(elem->GetText()));
-    }
-
-    //Temps de preparation:
-    elem = doc.FirstChildElement("tpsPrep");
-    if (elem)
-    {
-        QString txt = elem->GetText();
-        QStringList tps = txt.split("h");
-        result.insert("tpsPrep", tps);
-    }
-
-    //Temps de cuisson:
-    elem = doc.FirstChildElement("tpsCuis");
-    if (elem)
-    {
-        QString txt = elem->GetText();
-        QStringList tps = txt.split("h");
-        result.insert("tpsCuis", tps);
-    }
-
-    //Temps de repos:
-    elem = doc.FirstChildElement("tpsRep");
-    if (elem)
-    {
-        QString txt = elem->GetText();
-        QStringList tps = txt.split(QRegExp("[jh]"));
-        result.insert("tpsRep", tps);
-    }
-
-    //Nb personnes:
-    elem = doc.FirstChildElement("nbPers");
-    if (elem)
-    {
-        result.insert("nbPers", QStringList(elem->GetText()));
-    }
-
-    //Precision:
-    elem = doc.FirstChildElement("precision");
-    if (elem)
-    {
-        result.insert("precision", QStringList(elem->GetText()));
-    }
-
-    //Description:
-    elem = doc.FirstChildElement("description");
-    if (elem)
-    {
-        result.insert("description", QStringList(elem->GetText()));
-    }
-
-    //IdRecipe:
-    elem = doc.FirstChildElement("idRecipe");
-    if (elem)
-    {
-        result.insert("idRecipe", QStringList(elem->GetText()));
-    }
-
-    //Ingredients:
-    elemsList.clear();
-    elem = doc.FirstChildElement("ingredients");
-    if (elem)
-    {
-        for( XMLNode* ele = elem->FirstChild();
-                 ele;
-                 ele = ele->NextSibling() )
-            {
-            elemsList.append(ele->ToElement()->GetText());
-        }
-        result.insert("ingredients", elemsList);
-    }
-
-    //Materiel:
-    elemsList.clear();
-    elem = doc.FirstChildElement("materiel");
-    if (elem)
-    {
-        for( XMLNode* ele = elem->FirstChild();
-                 ele;
-                 ele = ele->NextSibling() )
-            {
-            elemsList.append(ele->ToElement()->GetText());
-        }
-        result.insert("materiel", elemsList);
-    }
-
-    //Preparation:
-    elemsList.clear();
-    elem = doc.FirstChildElement("preparation");
-    if (elem)
-    {
-        for( XMLNode* ele = elem->FirstChild();
-                 ele;
-                 ele = ele->NextSibling() )
-            {
-            elemsList.append(ele->ToElement()->GetText());
-        }
-        result.insert("preparation", elemsList);
-    }
-
-    //Conseils:
-    elemsList.clear();
-    elem = doc.FirstChildElement("conseils");
-    if (elem)
-    {
-        for( XMLNode* ele = elem->FirstChild();
-                 ele;
-                 ele = ele->NextSibling() )
-            {
-            elemsList.append(ele->ToElement()->GetText());
-        }
-        result.insert("conseils", elemsList);
-    }
-
-    //Coup de coeur:
-    elemsList.clear();
-    elem = doc.FirstChildElement("coupDeCoeur");
-    if (elem)
-    {
-        result.insert("coupDeCoeur", QStringList(elem->GetText()));
-    }
-
-    //Liens:
-    elemsList.clear();
-    elem = doc.FirstChildElement("liens");
-    if (elem)
-    {
-        for( XMLNode* ele = elem->FirstChild();
-                 ele;
-                 ele = ele->NextSibling() )
-            {
-            elemsList.append(ele->ToElement()->GetText());
-        }
-        result.insert("liens", elemsList);
-    }
+    result["titre"] = QStringList(map["title"].toString());
+    result["categories"] = map["categories"].toStringList();
+    result["image"] = QStringList(map["picture"].toString());
+    result["tpsPrep"] = map["tpsPrep"].toString().split("h");
+    result["tpsCuis"] = map["tpsCuis"].toString().split("h");
+    result["tpsRep"] = map["tpsRep"].toString().split(QRegExp("[jh]"));
+    result["nbPers"] = QStringList(map["nbPers"].toString());
+    result["precision"] = QStringList(map["precision"].toString());
+    result["description"] = QStringList(map["description"].toString());
+    result["ingredients"] = map["ingredients"].toStringList();
+    result["materiel"] = map["materiel"].toStringList();
+    result["preparation"] = map["preparation"].toStringList();
+    result["conseils"] = map["conseils"].toStringList();
+    result["coupDeCoeur"] = QStringList(map["coupDeCoeur"].toString());
+    result["idRecipe"] = QStringList(map["idRecipe"].toString());
+    result["liens"] = map["liens"].toStringList();
 
     return result;
 }
