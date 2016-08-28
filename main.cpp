@@ -85,7 +85,7 @@ bool checkF7beforeSend = false;
 bool autoCheckUpdt = true;
 QString updtUrl = "";
 
-QString VERSION = "3.1.1";
+QString VERSION = "3.2.0";
 QString QTVERSION;
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe
