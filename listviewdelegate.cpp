@@ -19,7 +19,7 @@ ListViewDelegate::ListViewDelegate()
 
 void ListViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    QStyleOptionViewItemV4 opt = option;
+    QStyleOptionViewItem opt = option;
     initStyleOption(&opt, index);
 
     QString allLine = opt.text; //Get text
@@ -89,7 +89,7 @@ void ListViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
 }
 QSize ListViewDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index ) const
 {
-    QStyleOptionViewItemV4 opt = option;
+    QStyleOptionViewItem opt = option;
     initStyleOption(&opt, index);
 
     QString allLine = opt.text;

@@ -13,7 +13,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        qrecipewriter.cpp \
+    qrecipewriter.cpp \
     options.cpp \
     categories.cpp \
     listviewdelegate.cpp \
