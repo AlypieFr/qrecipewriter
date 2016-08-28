@@ -2058,7 +2058,7 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
                         imgFile = imgFileName = "";
                     }
                 }
-                else if (imgFile.startsWith("/") && QFile(imgFile).exists())
+                else if ((imgFile.startsWith("/") || imgFile.startsWith("C:")) && QFile(imgFile).exists())
                 {
                     imgFileName = imgFile.split("/").last();
                     ui->mainPicture->setText(imgFileName);
