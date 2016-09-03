@@ -470,6 +470,19 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>titre</tabstop>
+  <tabstop>copyTitre</tabstop>
+  <tabstop>htmlCode</tabstop>
+  <tabstop>copyHtmlCode</tabstop>
+  <tabstop>excerpt</tabstop>
+  <tabstop>copyExcerpt</tabstop>
+  <tabstop>imagesToAdd</tabstop>
+  <tabstop>categories</tabstop>
+  <tabstop>saveInFile</tabstop>
+  <tabstop>openInline</tabstop>
+  <tabstop>closeDialog</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

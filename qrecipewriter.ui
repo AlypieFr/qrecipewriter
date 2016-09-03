@@ -168,7 +168,7 @@ left: 10px; padding: 0 3px;}</string>
                  <property name="geometry">
                   <rect>
                    <x>0</x>
-                   <y>0</y>
+                   <y>-137</y>
                    <width>338</width>
                    <height>460</height>
                   </rect>
@@ -2315,32 +2315,51 @@ left: 10px; padding: 0 3px;}</string>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>titre</tabstop>
+  <tabstop>scrollCats</tabstop>
+  <tabstop>mainPicture</tabstop>
+  <tabstop>hPrep</tabstop>
+  <tabstop>minPrep</tabstop>
+  <tabstop>hCuis</tabstop>
+  <tabstop>minCuis</tabstop>
+  <tabstop>jRep</tabstop>
+  <tabstop>hRep</tabstop>
+  <tabstop>minRep</tabstop>
+  <tabstop>nbPersonnes</tabstop>
+  <tabstop>nbPersonnes_2</tabstop>
+  <tabstop>switchNbPers</tabstop>
+  <tabstop>setCoupDeCoeur</tabstop>
+  <tabstop>precision</tabstop>
   <tabstop>description</tabstop>
-  <tabstop>editIngr</tabstop>
-  <tabstop>editMat</tabstop>
-  <tabstop>editPrep</tabstop>
-  <tabstop>editCons</tabstop>
-  <tabstop>envoyer</tabstop>
-  <tabstop>apercu</tabstop>
-  <tabstop>enregistrer</tabstop>
-  <tabstop>listIngr</tabstop>
-  <tabstop>listMat</tabstop>
-  <tabstop>listPrep</tabstop>
-  <tabstop>listCons</tabstop>
-  <tabstop>ingrListMoins</tabstop>
-  <tabstop>scrollContent</tabstop>
-  <tabstop>ingrListPlus</tabstop>
-  <tabstop>ingrListShow</tabstop>
-  <tabstop>prepListMoins</tabstop>
-  <tabstop>prepListPlus</tabstop>
-  <tabstop>prepListShow</tabstop>
   <tabstop>grasButton</tabstop>
   <tabstop>italicButton</tabstop>
   <tabstop>soulignButton</tabstop>
   <tabstop>commButton</tabstop>
   <tabstop>lienButton</tabstop>
   <tabstop>imgButton</tabstop>
+  <tabstop>movie</tabstop>
   <tabstop>abcButton</tabstop>
+  <tabstop>noPrint</tabstop>
+  <tabstop>printOnly</tabstop>
+  <tabstop>ingrListMoins</tabstop>
+  <tabstop>ingrListPlus</tabstop>
+  <tabstop>ingrListShow</tabstop>
+  <tabstop>listIngr</tabstop>
+  <tabstop>editIngr</tabstop>
+  <tabstop>listMat</tabstop>
+  <tabstop>editMat</tabstop>
+  <tabstop>prepListMoins</tabstop>
+  <tabstop>prepListPlus</tabstop>
+  <tabstop>prepListShow</tabstop>
+  <tabstop>listPrep</tabstop>
+  <tabstop>editPrep</tabstop>
+  <tabstop>listCons</tabstop>
+  <tabstop>editCons</tabstop>
+  <tabstop>envoyer</tabstop>
+  <tabstop>apercu</tabstop>
+  <tabstop>enregistrer</tabstop>
+  <tabstop>scrollContent</tabstop>
  </tabstops>
  <resources>
   <include location="Ressources.qrc"/>

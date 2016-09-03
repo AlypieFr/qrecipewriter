@@ -528,6 +528,20 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>urlVideo</tabstop>
+  <tabstop>importFromHtml</tabstop>
+  <tabstop>largeur</tabstop>
+  <tabstop>hauteur</tabstop>
+  <tabstop>startMin</tabstop>
+  <tabstop>startSec</tabstop>
+  <tabstop>bordure</tabstop>
+  <tabstop>fullScreen</tabstop>
+  <tabstop>suggestions</tabstop>
+  <tabstop>commandes</tabstop>
+  <tabstop>titreVideo</tabstop>
+  <tabstop>confidentialite</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
