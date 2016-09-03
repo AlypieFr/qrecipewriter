@@ -925,6 +925,10 @@ QString Functions::insertLinks(QString data)
                 data.replace("<" + balise + ">", "<a href=\"" + liens[balise] + "\" target=\"blank\">");
                 data.replace("</" + balise + ">", "</a>");
             }
+            else {
+                QMessageBox::critical(NULL, "Lien introuvable", "Le lien " + balise + " est introuvable. Veuillez corriger la balise. Si ceci est un bug, merci de nous le rapporter.");
+                break;
+            }
         }
     }
     return data;
