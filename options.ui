@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -220,9 +220,9 @@
      <widget class="QRadioButton" name="radioButtonWindows">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>340</y>
-        <width>111</width>
+        <x>540</x>
+        <y>322</y>
+        <width>101</width>
         <height>17</height>
        </rect>
       </property>
@@ -233,7 +233,7 @@
      <widget class="QRadioButton" name="radioButtonLinuxAutre">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>390</x>
         <y>340</y>
         <width>121</width>
         <height>17</height>
@@ -246,27 +246,27 @@
      <widget class="QRadioButton" name="radioButtonLinuxSlack">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>390</x>
         <y>322</y>
         <width>141</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>Linux Slackware</string>
+       <string>Linux Slac&amp;kware</string>
       </property>
      </widget>
      <widget class="QRadioButton" name="radioButtonLinuxUbuntu">
       <property name="geometry">
        <rect>
-        <x>390</x>
+        <x>190</x>
         <y>322</y>
-        <width>211</width>
+        <width>201</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>Linux Ubuntu / Debian like</string>
+       <string>Linux U&amp;buntu / Debian like</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelSystemeExploitation">
@@ -326,7 +326,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Automatique (nécessite JAVA)</string>
+        <string>Automatique (nécessite JA&amp;VA)</string>
        </property>
       </widget>
       <widget class="QRadioButton" name="sendManual">
@@ -481,6 +481,19 @@
       </property>
       <property name="text">
        <string>Vérification de l'orthographe avant envoi</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButtonLinuxArch">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>340</y>
+        <width>201</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Llinux Archlinux / Manjaro</string>
       </property>
      </widget>
     </widget>
@@ -1487,13 +1500,13 @@
   <tabstop>buttonModifEditeurImages</tabstop>
   <tabstop>autoSearchUpdt</tabstop>
   <tabstop>checkF7Send</tabstop>
-  <tabstop>radioButtonLinuxSlack</tabstop>
   <tabstop>radioButtonLinuxUbuntu</tabstop>
+  <tabstop>radioButtonLinuxSlack</tabstop>
+  <tabstop>radioButtonLinuxArch</tabstop>
   <tabstop>radioButtonLinuxAutre</tabstop>
   <tabstop>radioButtonWindows</tabstop>
   <tabstop>sendAuto</tabstop>
   <tabstop>sendManual</tabstop>
-  <tabstop>configs</tabstop>
   <tabstop>lineEditAdresseSite</tabstop>
   <tabstop>lineEditAdressePublication</tabstop>
   <tabstop>lineEditDossierDistantImages</tabstop>
@@ -1540,6 +1553,7 @@
   <tabstop>configActive_5</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_5</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>configs</tabstop>
  </tabstops>
  <resources>
   <include location="Ressources.qrc"/>

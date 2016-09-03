@@ -113,6 +113,10 @@ void Options::init()
     {
         ui->radioButtonLinuxUbuntu->setChecked(1);
     }
+    else if (systExp=="linuxArch")
+    {
+        ui->radioButtonLinuxArch->setChecked(true);
+    }
 
     QFile *idFile = new QFile(idfile + ".1");
     if(idFile->exists())
@@ -255,7 +259,7 @@ void Options::on_buttonBox_accepted()
     }
     if(ui->lineEditCommandeNavigateur->text()==""||ui->lineEditDossierTemp->text()==""\
             ||ui->lineEditPseudoWordpress->text()==""||(!ui->radioButtonLinuxAutre->isChecked()&&!ui->radioButtonLinuxSlack->isChecked()&&!ui->radioButtonLinuxUbuntu->isChecked()\
-            &&!ui->radioButtonWindows->isChecked()))
+            &&!ui->radioButtonLinuxArch->isChecked()&&!ui->radioButtonWindows->isChecked()))
     {
         QMessageBox::critical(this,"Options","Veuillez remplir tous les champs obligatoires des paramètres client",QMessageBox::Ok);
     }
