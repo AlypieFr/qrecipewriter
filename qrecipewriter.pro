@@ -75,6 +75,9 @@ RESOURCES += \
 
 CONFIG += wwwidgets
 
+TRANSLATIONS+=  i18n/qrecipewriter_en.ts
+TRANSLATIONS+=  i18n/qrecipewriter_fr.ts
+
 unix {
     INCLUDEPATH += /usr/include/hunspell
     contains(QMAKE_HOST.arch, x86_64) {

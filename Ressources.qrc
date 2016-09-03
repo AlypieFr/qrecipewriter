@@ -39,5 +39,7 @@
         <file>images/fourchettes-blanc.png</file>
         <file>images/fourchettes.png</file>
         <file>images/splash.png</file>
+        <file>i18n/qrecipewriter_en.qm</file>
+        <file>i18n/qrecipewriter_fr.qm</file>
     </qresource>
 </RCC>

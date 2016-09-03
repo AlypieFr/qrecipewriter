@@ -139,8 +139,13 @@ int main(int argc, char *argv[])
 
     //Set locale:
     QString locale = QLocale::system().name();
+    QString lang = locale.split("_")[0];
     QTranslator translator;
     translator.load(QString("qt_") + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    QString trFile = ":/i18n/qrecipewriter_"+ lang +".qm";
+    if (QFile(trFile).exists()) {
+        translator.load(trFile);
+    }
     a.installTranslator(&translator);
 
     //Define values

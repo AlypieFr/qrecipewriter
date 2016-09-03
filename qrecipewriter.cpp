@@ -484,7 +484,7 @@ void QRecipeWriter::resetFields()
     }
     imgFile = "";
     imgFileName = "";
-    ui->mainPicture->setText("Sélectionner une image...");
+    ui->mainPicture->setText(trUtf8("Sélectionner une image..."));
     ui->mainPicture->setIcon(QPixmap(":/images/image.png"));
     ui->hPrep->setValue(0);
     ui->minPrep->setValue(0);

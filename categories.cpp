@@ -70,36 +70,36 @@ void Categories::reset()
         QLineEdit *line2 = new QLineEdit();
         line2 ->setAlignment(Qt::AlignCenter);
         if (wi==0){
-            line2->setText("Plat principal");
+            line2->setText(trUtf8("Plat principal"));
         }
 
         if (wi==1){
-            line2->setText("Dessert");
+            line2->setText(trUtf8("Dessert"));
         }
 
 
         if (wi==2){
-            line2->setText("Accompagnement");
+            line2->setText(trUtf8("Accompagnement"));
         }
 
 
         if (wi==3){
-            line2->setText("Base");
+            line2->setText(trUtf8("Base"));
         }
 
 
         if (wi==4){
-            line2->setText("Biscuits & Friandises");
+            line2->setText(trUtf8("Biscuits & Friandises"));
         }
 
 
         if (wi==5){
-            line2->setText("Pain & Viennoiserie");
+            line2->setText(trUtf8("Pain & Viennoiserie"));
         }
 
 
         if (wi==6){
-            line2->setText("Divers");
+            line2->setText(trUtf8("Divers"));
         }
 
         line2->setMinimumHeight(30);
@@ -194,7 +194,6 @@ void Categories::init(QStringList cats)
     connect(&mapper, SIGNAL(mapped(int)), this, SLOT(delCatPushed(int)));
     idCatList = 0;
     ui->scroll_categories->setStyleSheet("QScrollArea {border: none;}");
-    setWindowTitle("Gestion des Catégories");
     initCats(cats);
 }
 

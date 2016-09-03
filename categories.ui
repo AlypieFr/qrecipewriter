@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Gestion des catégories</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
@@ -41,7 +41,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>557</width>
+             <width>561</width>
              <height>303</height>
             </rect>
            </property>
