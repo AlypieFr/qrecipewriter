@@ -11,64 +11,67 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = qrecipewriter
 TEMPLATE = app
 
+INCLUDEPATH += headers
+INCLUDEPATH += src
+INCLUDEPATH += ui
 
-SOURCES += main.cpp\
-    qrecipewriter.cpp \
-    options.cpp \
-    categories.cpp \
-    listviewdelegate.cpp \
-    functions.cpp \
-    apropos.cpp \
-    tinyxml2.cpp \
-    sendmanual.cpp \
-    mylineedit.cpp \
-    myplaintextedit.cpp \
-    sendautomatic.cpp  \
-    spellcheckdialog.cpp \
-    spellchecker.cpp \
-    filedownloader.cpp \
-    insertvideo.cpp \
-    insertpicture.cpp \
-    qinputmultiline.cpp \
-    coupdecoeur.cpp \
-    opendistant.cpp \
-    Json.cpp \
-    searchupdates.cpp
+SOURCES += src/main.cpp\
+    src/qrecipewriter.cpp \
+    src/options.cpp \
+    src/categories.cpp \
+    src/listviewdelegate.cpp \
+    src/functions.cpp \
+    src/apropos.cpp \
+    src/tinyxml2.cpp \
+    src/sendmanual.cpp \
+    src/mylineedit.cpp \
+    src/myplaintextedit.cpp \
+    src/sendautomatic.cpp  \
+    src/spellcheckdialog.cpp \
+    src/spellchecker.cpp \
+    src/filedownloader.cpp \
+    src/insertvideo.cpp \
+    src/insertpicture.cpp \
+    src/qinputmultiline.cpp \
+    src/coupdecoeur.cpp \
+    src/opendistant.cpp \
+    src/Json.cpp \
+    src/searchupdates.cpp
 
-HEADERS  += qrecipewriter.h \
-    options.h \
-    categories.h \
-    listviewdelegate.h \
-    functions.h \
-    apropos.h \
-    tinyxml2.h \
-    sendmanual.h \
-    mylineedit.h \
-    myplaintextedit.h \
-    sendautomatic.h \
-    spellcheckdialog.h \
-    spellchecker.h \
-    filedownloader.h \
-    insertvideo.h \
-    insertpicture.h \
-    qinputmultiline.h \
-    coupdecoeur.h \
-    opendistant.h \
-    Json.h \
-    searchupdates.h
+HEADERS  += headers/qrecipewriter.h \
+    headers/options.h \
+    headers/categories.h \
+    headers/listviewdelegate.h \
+    headers/functions.h \
+    headers/apropos.h \
+    headers/tinyxml2.h \
+    headers/sendmanual.h \
+    headers/mylineedit.h \
+    headers/myplaintextedit.h \
+    headers/sendautomatic.h \
+    headers/spellcheckdialog.h \
+    headers/spellchecker.h \
+    headers/filedownloader.h \
+    headers/insertvideo.h \
+    headers/insertpicture.h \
+    headers/qinputmultiline.h \
+    headers/coupdecoeur.h \
+    headers/opendistant.h \
+    headers/Json.h \
+    headers/searchupdates.h
 
-FORMS    += qrecipewriter.ui \
-    options.ui \
-    categories.ui \
-    apropos.ui \
-    sendmanual.ui \
-    sendautomatic.ui \
-    spellcheckdialog.ui \
-    insertvideo.ui \
-    insertpicture.ui \
-    qinputmultiline.ui \
-    coupdecoeur.ui \
-    opendistant.ui
+FORMS    += ui/qrecipewriter.ui \
+    ui/options.ui \
+    ui/categories.ui \
+    ui/apropos.ui \
+    ui/sendmanual.ui \
+    ui/sendautomatic.ui \
+    ui/spellcheckdialog.ui \
+    ui/insertvideo.ui \
+    ui/insertpicture.ui \
+    ui/qinputmultiline.ui \
+    ui/coupdecoeur.ui \
+    ui/opendistant.ui
 
 RESOURCES += \
     Ressources.qrc
