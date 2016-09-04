@@ -30,6 +30,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QMessageBox>
+#include <QObject>
 #include <QPushButton>
 #include <QRegExp>
 #include <QSpacerItem>

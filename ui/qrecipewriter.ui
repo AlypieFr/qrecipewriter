@@ -20,7 +20,7 @@
    <string>QRecipeWriter | Écrire une nouvelle recette</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="Ressources.qrc">
+   <iconset resource="../Ressources.qrc">
     <normaloff>:/images/QRecipeWriter.png</normaloff>:/images/QRecipeWriter.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -60,7 +60,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="Ressources.qrc">:/images/logo.png</pixmap>
+         <pixmap resource="../Ressources.qrc">:/images/logo.png</pixmap>
         </property>
        </widget>
       </item>
@@ -244,7 +244,7 @@ left: 10px; padding: 0 3px;}</string>
                    <string/>
                   </property>
                   <property name="pixmap">
-                   <pixmap resource="Ressources.qrc">:/images/editPict.png</pixmap>
+                   <pixmap resource="../Ressources.qrc">:/images/editPict.png</pixmap>
                   </property>
                  </widget>
                  <widget class="MyLineEdit" name="precision">
@@ -313,18 +313,21 @@ left: 10px; padding: 0 3px;}</string>
                       <widget class="QLabel" name="nbPersonnes_a">
                        <property name="minimumSize">
                         <size>
-                         <width>10</width>
+                         <width>15</width>
                          <height>0</height>
                         </size>
                        </property>
                        <property name="maximumSize">
                         <size>
-                         <width>10</width>
+                         <width>15</width>
                          <height>16777215</height>
                         </size>
                        </property>
                        <property name="text">
                         <string>à</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
                        </property>
                       </widget>
                      </item>
@@ -348,13 +351,13 @@ left: 10px; padding: 0 3px;}</string>
                       <widget class="QLabel" name="label_15">
                        <property name="minimumSize">
                         <size>
-                         <width>78</width>
+                         <width>85</width>
                          <height>0</height>
                         </size>
                        </property>
                        <property name="maximumSize">
                         <size>
-                         <width>78</width>
+                         <width>85</width>
                          <height>16777215</height>
                         </size>
                        </property>
@@ -386,7 +389,7 @@ left: 10px; padding: 0 3px;}</string>
                         <string/>
                        </property>
                        <property name="icon">
-                        <iconset resource="Ressources.qrc">
+                        <iconset resource="../Ressources.qrc">
                          <normaloff>:/images/fourchettes.png</normaloff>:/images/fourchettes.png</iconset>
                        </property>
                        <property name="iconSize">
@@ -436,7 +439,7 @@ left: 10px; padding: 0 3px;}</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="Ressources.qrc">
+                   <iconset resource="../Ressources.qrc">
                     <normaloff>:/images/coup_de_coeur.png</normaloff>:/images/coup_de_coeur.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -794,7 +797,7 @@ left: 10px; padding: 0 3px;}</string>
                    <string>Sélectionner une image...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="Ressources.qrc">
+                   <iconset resource="../Ressources.qrc">
                     <normaloff>:/images/image.png</normaloff>:/images/image.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -1105,7 +1108,7 @@ left: 10px; padding: 0 3px;}</string>
               </font>
              </property>
              <property name="toolTip">
-              <string>Commentaire (ligne sans puce), dans une liste à pice</string>
+              <string>Commentaire (ligne sans puce), dans une liste à puce</string>
              </property>
              <property name="styleSheet">
               <string notr="true"/>
@@ -1114,7 +1117,7 @@ left: 10px; padding: 0 3px;}</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="Ressources.qrc">
+              <iconset resource="../Ressources.qrc">
                <normaloff>:/images/comment.png</normaloff>:/images/comment.png</iconset>
              </property>
              <property name="iconSize">
@@ -1152,7 +1155,7 @@ left: 10px; padding: 0 3px;}</string>
               <string>Lien</string>
              </property>
              <property name="icon">
-              <iconset resource="Ressources.qrc">
+              <iconset resource="../Ressources.qrc">
                <normaloff>:/images/lien_button.png</normaloff>:/images/lien_button.png</iconset>
              </property>
              <property name="iconSize">
@@ -1190,7 +1193,7 @@ left: 10px; padding: 0 3px;}</string>
               <string>IMG</string>
              </property>
              <property name="icon">
-              <iconset resource="Ressources.qrc">
+              <iconset resource="../Ressources.qrc">
                <normaloff>:/images/img.png</normaloff>:/images/img.png</iconset>
              </property>
              <property name="iconSize">
@@ -1225,7 +1228,7 @@ left: 10px; padding: 0 3px;}</string>
               <string extracomment="Correction orthographique">ABC</string>
              </property>
              <property name="icon">
-              <iconset resource="Ressources.qrc">
+              <iconset resource="../Ressources.qrc">
                <normaloff>:/images/abc.png</normaloff>:/images/abc.png</iconset>
              </property>
              <property name="iconSize">
@@ -1254,7 +1257,7 @@ left: 10px; padding: 0 3px;}</string>
               <string>NoPrint</string>
              </property>
              <property name="icon">
-              <iconset resource="Ressources.qrc">
+              <iconset resource="../Ressources.qrc">
                <normaloff>:/images/noprint.png</normaloff>:/images/noprint.png</iconset>
              </property>
             </widget>
@@ -1277,7 +1280,7 @@ left: 10px; padding: 0 3px;}</string>
               <string>PrintOnly</string>
              </property>
              <property name="icon">
-              <iconset resource="Ressources.qrc">
+              <iconset resource="../Ressources.qrc">
                <normaloff>:/images/print.png</normaloff>:/images/print.png</iconset>
              </property>
             </widget>
@@ -1309,7 +1312,7 @@ left: 10px; padding: 0 3px;}</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="Ressources.qrc">
+              <iconset resource="../Ressources.qrc">
                <normaloff>:/images/movie.png</normaloff>:/images/movie.png</iconset>
              </property>
              <property name="iconSize">
@@ -1455,7 +1458,7 @@ left: 10px; padding: 0 3px;}</string>
                              <string/>
                             </property>
                             <property name="icon">
-                             <iconset resource="Ressources.qrc">
+                             <iconset resource="../Ressources.qrc">
                               <normaloff>:/images/format-indent-less.png</normaloff>:/images/format-indent-less.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1484,7 +1487,7 @@ left: 10px; padding: 0 3px;}</string>
                              <string/>
                             </property>
                             <property name="icon">
-                             <iconset resource="Ressources.qrc">
+                             <iconset resource="../Ressources.qrc">
                               <normaloff>:/images/format-indent-more.png</normaloff>:/images/format-indent-more.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1510,7 +1513,7 @@ left: 10px; padding: 0 3px;}</string>
                              </size>
                             </property>
                             <property name="text">
-                             <string>0</string>
+                             <string notr="true">0</string>
                             </property>
                            </widget>
                           </item>
@@ -1749,7 +1752,7 @@ left: 10px; padding: 0 3px;}</string>
                            <string/>
                           </property>
                           <property name="icon">
-                           <iconset resource="Ressources.qrc">
+                           <iconset resource="../Ressources.qrc">
                             <normaloff>:/images/format-indent-less.png</normaloff>:/images/format-indent-less.png</iconset>
                           </property>
                           <property name="iconSize">
@@ -1778,7 +1781,7 @@ left: 10px; padding: 0 3px;}</string>
                            <string/>
                           </property>
                           <property name="icon">
-                           <iconset resource="Ressources.qrc">
+                           <iconset resource="../Ressources.qrc">
                             <normaloff>:/images/format-indent-more.png</normaloff>:/images/format-indent-more.png</iconset>
                           </property>
                           <property name="iconSize">
@@ -1804,7 +1807,7 @@ left: 10px; padding: 0 3px;}</string>
                            </size>
                           </property>
                           <property name="text">
-                           <string>0</string>
+                           <string notr="true">0</string>
                           </property>
                          </widget>
                         </item>
@@ -2362,7 +2365,7 @@ left: 10px; padding: 0 3px;}</string>
   <tabstop>scrollContent</tabstop>
  </tabstops>
  <resources>
-  <include location="Ressources.qrc"/>
+  <include location="../Ressources.qrc"/>
  </resources>
  <connections/>
 </ui>

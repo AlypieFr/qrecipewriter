@@ -47,12 +47,12 @@ void OpenDistant::init() {
         cboxes.append(catI);
         connect(catI, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));;
     }
-    FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPostsJson.php?user=" + pseudoWp, "Récupération de la liste des recettes...", parentWidget);
+    FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPostsJson.php?user=" + pseudoWp, tr("Récupération de la liste des recettes..."), parentWidget);
     QByteArray resData = fdower->downloadedData();
     bool ok;
     QVariantMap result = QJsonWrapper::parseJson(resData, &ok).toMap();
     if (!ok) {
-        QMessageBox::critical(this, "Erreur !", "Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support.",
+        QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
                                       QMessageBox::Ok);
     }
     else if (result["success"].toString() == "true") {
@@ -76,7 +76,7 @@ void OpenDistant::init() {
         updateNbRecipes(items.count());
     }
     else {
-        QMessageBox::critical(this, "Erreur !", "Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support.",
+        QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
                                       QMessageBox::Ok);
     }
 
@@ -157,7 +157,7 @@ void OpenDistant::on_buttonBox_accepted()
         this->close();
     }
     else {
-        QMessageBox::critical(this, "Aucune recette sélectionnée", "Veuillez sélectionner une recette à ouvrir !");
+        QMessageBox::critical(this, tr("Aucune recette sélectionnée"), tr("Veuillez sélectionner une recette à ouvrir !"));
     }
 }
 

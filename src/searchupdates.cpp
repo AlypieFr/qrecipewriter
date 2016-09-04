@@ -63,8 +63,8 @@ void SearchUpdates::replyFinished(QNetworkReply *pReply)
                 if (hasUpdate)
                 {
                     //Propose to user downloading the last version
-                    int rep = QMessageBox::information(_parent, "Mise à jour disponible", QString("Une mise à jour du logicielle est disponible, voulez-vous ")
-                                                       + QString("mettre à jour votre version ") + VERSION + QString(" à la dernière version (" + version + ") ?"), QMessageBox::Yes, QMessageBox::No);
+                    int rep = QMessageBox::information(_parent, tr("Mise à jour disponible"), QString(tr("Une mise à jour du logicielle est disponible, voulez-vous "))
+                                                       + QString(tr("mettre à jour votre version ")) + VERSION + QString(tr(" à la dernière version") + " (" + version + tr(") ?")), QMessageBox::Yes, QMessageBox::No);
                     if (rep == QMessageBox::Yes)
                     {
                         QString adresse = lines[1].left(lines[1].length() - 1);

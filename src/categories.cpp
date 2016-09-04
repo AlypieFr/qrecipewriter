@@ -45,7 +45,7 @@ void Categories::reset()
     //Creating first line:
     QLineEdit *line1 = new QLineEdit();
     line1->setMinimumHeight(30);
-    line1->setText("Entrée");
+    line1->setText(tr("Entrée"));
     line1 ->setAlignment(Qt::AlignCenter);
     QHBoxLayout *hLay = new QHBoxLayout(wid);
     hLay->setAlignment(Qt::AlignTop);
@@ -70,36 +70,36 @@ void Categories::reset()
         QLineEdit *line2 = new QLineEdit();
         line2 ->setAlignment(Qt::AlignCenter);
         if (wi==0){
-            line2->setText(trUtf8("Plat principal"));
+            line2->setText(tr("Plat principal"));
         }
 
         if (wi==1){
-            line2->setText(trUtf8("Dessert"));
+            line2->setText(tr("Dessert"));
         }
 
 
         if (wi==2){
-            line2->setText(trUtf8("Accompagnement"));
+            line2->setText(tr("Accompagnement"));
         }
 
 
         if (wi==3){
-            line2->setText(trUtf8("Base"));
+            line2->setText(tr("Base"));
         }
 
 
         if (wi==4){
-            line2->setText(trUtf8("Biscuits & Friandises"));
+            line2->setText(tr("Biscuits & Friandises"));
         }
 
 
         if (wi==5){
-            line2->setText(trUtf8("Pain & Viennoiserie"));
+            line2->setText(tr("Pain & Viennoiserie"));
         }
 
 
         if (wi==6){
-            line2->setText(trUtf8("Divers"));
+            line2->setText(tr("Divers"));
         }
 
         line2->setMinimumHeight(30);

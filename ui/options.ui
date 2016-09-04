@@ -35,7 +35,7 @@
    <string>Préférences</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="Ressources.qrc">
+   <iconset resource="../Ressources.qrc">
     <normaloff>:/images/QRecipeWriter.png</normaloff>:/images/QRecipeWriter.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget" native="true">
@@ -83,7 +83,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>...</string>
+       <string notr="true">...</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelDossierDefautImages">
@@ -132,7 +132,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>...</string>
+       <string notr="true">...</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEditEditeurImages">
@@ -201,7 +201,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>...</string>
+       <string notr="true">...</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelDossierSauvegardes_2">
@@ -366,7 +366,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>...</string>
+       <string notr="true">...</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEditDossierTemp">
@@ -425,7 +425,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>...</string>
+       <string notr="true">...</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="img_useLastOne">
@@ -493,7 +493,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Llinux Archlinux / Manjaro</string>
+       <string>Linux Archlinux / Manjaro</string>
       </property>
      </widget>
     </widget>
@@ -1556,7 +1556,7 @@
   <tabstop>configs</tabstop>
  </tabstops>
  <resources>
-  <include location="Ressources.qrc"/>
+  <include location="../Ressources.qrc"/>
  </resources>
  <connections/>
 </ui>

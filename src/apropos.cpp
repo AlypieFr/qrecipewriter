@@ -33,5 +33,5 @@ void Apropos::init() {
     QPixmap logo(":/images/apropos2.png");
     ui->label_3->setPixmap(logo);
     ui->versionApp->setTextFormat(Qt::RichText);
-    ui->versionApp->setText("<span style=' font-size:12pt;'>VERSION ACTUELLE : "+ VERSION +"</span>");
+    ui->versionApp->setText("<span style=' font-size:12pt;'>" + tr("VERSION ACTUELLE :") + " "+ VERSION +"</span>");
 }

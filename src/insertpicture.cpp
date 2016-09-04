@@ -64,9 +64,9 @@ void InsertPicture::init(QString imgFile, QString afficher, int width, int heigh
     }
     if (!recPrinter) {
         ui->noPrint->setDisabled(true);
-        ui->noPrint->setToolTip("Nécessite d'activer CeC printer");
+        ui->noPrint->setToolTip(tr("Nécessite d'activer Recipe printer"));
         ui->printOnly->setDisabled(true);
-        ui->printOnly->setToolTip("Nécessite d'activer CeC printer");
+        ui->printOnly->setToolTip(tr("Nécessite d'activer Recipe printer"));
     }
 }
 
@@ -103,7 +103,7 @@ void InsertPicture::on_buttonBox_accepted()
         this->close();
     }
     else {
-        QMessageBox::critical(this, "Fichier image requis", "Veuillez entrer un nom de fichier image !");
+        QMessageBox::critical(this, tr("Fichier image requis"), tr("Veuillez entrer un nom de fichier image !"));
     }
 }
 
@@ -128,9 +128,9 @@ void InsertPicture::on_hauteur_valueChanged(int arg1)
 
 void InsertPicture::on_changePicture_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Choisir une image",
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Choisir une image"),
     dirPict,
-    "Images : *.jpg, *.JPG (*.jpg *.JPG)");
+    tr("Images :") + " *.jpg, *.JPG (*.jpg *.JPG)");
     if (fileName != "") {
         ui->filename->setText(fileName);
         QPixmap* img = new QPixmap(fileName);

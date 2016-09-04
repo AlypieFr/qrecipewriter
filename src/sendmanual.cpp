@@ -37,7 +37,7 @@ void SendManual::init(QString titre_lu, QString htmlCode_lu, QString excerpt_lu,
     excerpt = excerpt_lu;
     imagesToAdd = imagesToAdd_lu;
     categories = categories_lu;
-    this->setWindowTitle(titre_lu + " - Envoi Manuel");
+    this->setWindowTitle(titre_lu + tr(" - Envoi Manuel"));
     ui->titre->clear();
     ui->titre->setText(titre_lu);
     ui->htmlCode->clear();
@@ -74,9 +74,9 @@ void SendManual::on_closeDialog_clicked()
 void SendManual::on_saveInFile_clicked()
 {
     QString *ext = new QString("*.txt");
-    QString fileName = QFileDialog::getSaveFileName(this, "Enregistrer",
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Enregistrer"),
     userDir + "/" + titre.replace(" ", "_") + ".txt",
-    "Fichier texte (*.txt) (*.txt)", ext);
+    tr("Fichier texte (*.txt) (*.txt)"), ext);
     if (fileName != "")
     {
         if (!fileName.endsWith(".txt", Qt::CaseInsensitive))
@@ -93,7 +93,7 @@ void SendManual::on_saveInFile_clicked()
         foreach (QString img, imagesToAdd) {
             imgToAdd.append(img + "\n");
         }
-        in << "TITRE :\n" << titre << "\n\n\nCATEGORIES :\n" << cats << "\n\nIMAGES A AJOUTER :\n" << imgToAdd << "\n\nEXCERPT :\n" << excerpt << "\n\n\nCODE HTML (corps) :\n" << htmlCode << endl;
+        in << tr("TITRE :") + "\n" << titre << "\n\n\n" + tr("CATEGORIES :") + "\n" << cats << "\n\n" + tr("IMAGES A AJOUTER :") + "\n" << imgToAdd << "\n\n" + tr("EXTRAIT :") + "\n" << excerpt << "\n\n\n"+ tr("CODE HTML (corps) :") + "\n" << htmlCode << endl;
         saveFile.close();
     }
 }

@@ -101,15 +101,15 @@ void InsertVideo::on_buttonBox_accepted()
                 this->close();
             }
             else {
-                QMessageBox::critical(this, "URL incorrect", "Erreur : l'URL de la vidéo que vous avez renseigné n'est pas un lien youtube valide : \nl'id de la vidéo doit être de 11 caractères.");
+                QMessageBox::critical(this, tr("URL incorrect"), tr("Erreur : l'URL de la vidéo que vous avez renseigné n'est pas un lien youtube valide : \nl'id de la vidéo doit être de 11 caractères."));
             }
         }
         else {
-            QMessageBox::critical(this, "URL incorrect", "Erreur : l'URL de la vidéo que vous avez renseigné n'est pas un lien youtube valide !");
+            QMessageBox::critical(this, tr("URL incorrect"), tr("Erreur : l'URL de la vidéo que vous avez renseigné n'est pas un lien youtube valide !"));
         }
     }
     else {
-        QMessageBox::critical(this, "Champs vides", "Erreur : vous n'avez pas renseigné d'URL !");
+        QMessageBox::critical(this, tr("Champs vides"), tr("Erreur : vous n'avez pas renseigné d'URL !"));
     }
 }
 
@@ -120,7 +120,7 @@ void InsertVideo::on_buttonBox_rejected()
 
 void InsertVideo::on_importFromHtml_clicked()
 {
-    QString html = QInputDialog::getText(this, "HTML video tag", "Entrez le code HTML youtube de la vidéo :");
+    QString html = QInputDialog::getText(this, tr("HTML video tag"), tr("Entrez le code HTML youtube de la vidéo :"));
     if (html != "") {
         QRegExp exp ("<iframe.+src=\"([^\"]+)\".*></iframe>");
         if (html.contains(exp)) {
@@ -182,11 +182,11 @@ void InsertVideo::on_importFromHtml_clicked()
                 }
             }
             else {
-                QMessageBox::critical(this, "Données incorrect", "Erreur : le code HTML fournit contient un url non valide !");
+                QMessageBox::critical(this, tr("Données incorrect"), tr("Erreur : le code HTML fournit contient un url non valide !"));
             }
         }
         else {
-            QMessageBox::critical(this, "Données incorrect", "Erreur : le code HTML fournit n'est pas correct !");
+            QMessageBox::critical(this, tr("Données incorrect"), tr("Erreur : le code HTML fournit n'est pas correct !"));
         }
     }
 }

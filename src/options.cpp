@@ -188,7 +188,7 @@ void Options::init()
 
 void Options::on_buttonModifDefautImages_clicked()
 {
-    QString fichier = QFileDialog::getExistingDirectory(this,"Choisir un dossier", userDir);
+    QString fichier = QFileDialog::getExistingDirectory(this,tr("Choisir un dossier"), userDir);
     if(fichier != "")
     {
        ui->lineEditDossierDefautImages->setEnabled(true);
@@ -201,7 +201,7 @@ void Options::on_buttonModifDefautImages_clicked()
 void Options::on_buttonModifCommandeNavigateur_clicked()
 {
     //Chemin qui mène à l'exécutable windows qui lance le navigateur
-    QString fichier = QFileDialog::getOpenFileName(this,"Choisir un fichier","/");
+    QString fichier = QFileDialog::getOpenFileName(this,tr("Choisir un fichier"),"/");
     if(fichier != "")
     {
         ui->lineEditCommandeNavigateur->setText(fichier);
@@ -212,7 +212,7 @@ void Options::on_buttonModifCommandeNavigateur_clicked()
 void Options::on_buttonModifDossierTemp_clicked()
 {
     //Selection de dossier
-    QString fichier = QFileDialog::getExistingDirectory(this,"Choisir un dossier", "/");
+    QString fichier = QFileDialog::getExistingDirectory(this,tr("Choisir un dossier"), "/");
     if(fichier != "")
     {
         ui->lineEditDossierTemp->setText(fichier);
@@ -223,7 +223,7 @@ void Options::on_buttonModifDossierTemp_clicked()
 void Options::on_buttonModifDossierSauvegardes_clicked()
 {
     //Sélection de dossier
-    QString fichier = QFileDialog::getExistingDirectory(this,"Choisir un dossier", userDir);
+    QString fichier = QFileDialog::getExistingDirectory(this,tr("Choisir un dossier"), userDir);
     if(fichier != "")
     {
         ui->lineEditDossierSauvegardes->setEnabled(true);
@@ -236,7 +236,7 @@ void Options::on_buttonModifDossierSauvegardes_clicked()
 void Options::on_buttonModifEditeurImages_clicked()
 {
     //Chemin qui mène à l'exécutable windows pour lancer l'éditeur d'images
-    QString fichier = QFileDialog::getOpenFileName(this,"Choisir un fichier", "/");
+    QString fichier = QFileDialog::getOpenFileName(this,tr("Choisir un fichier"), "/");
     if(fichier != "")
     {
         ui->lineEditEditeurImages->setText(fichier);
@@ -261,28 +261,28 @@ void Options::on_buttonBox_accepted()
             ||ui->lineEditPseudoWordpress->text()==""||(!ui->radioButtonLinuxAutre->isChecked()&&!ui->radioButtonLinuxSlack->isChecked()&&!ui->radioButtonLinuxUbuntu->isChecked()\
             &&!ui->radioButtonLinuxArch->isChecked()&&!ui->radioButtonWindows->isChecked()))
     {
-        QMessageBox::critical(this,"Options","Veuillez remplir tous les champs obligatoires des paramètres client",QMessageBox::Ok);
+        QMessageBox::critical(this,tr("Préférences"),tr("Veuillez remplir tous les champs obligatoires des paramètres client"),QMessageBox::Ok);
     }
     else
     {
         bool proceed = true;
         if (!QDir(ui->lineEditDossierSauvegardes->text()).exists() && !ui->backup_useLastOne->isChecked()) {
-            QMessageBox::critical(this, "Options", "Le dossier de sauvegardes indiqué n'existe pas", QMessageBox::Ok);
+            QMessageBox::critical(this, tr("Préférences"), tr("Le dossier de sauvegardes indiqué n'existe pas"), QMessageBox::Ok);
             proceed = false;
         }
         else if (!QDir(ui->lineEditDossierDefautImages->text()).exists() && !ui->img_useLastOne->isChecked()) {
-            QMessageBox::critical(this, "Options", "Le dossier par défaut des images indiqué n'existe pas", QMessageBox::Ok);
+            QMessageBox::critical(this, tr("Préférences"), tr("Le dossier par défaut des images indiqué n'existe pas"), QMessageBox::Ok);
             proceed = false;
         }
         else if(!QDir(ui->lineEditDossierTemp->text()).exists()) {
             QDir().mkpath(ui->lineEditDossierTemp->text());
             if(!QDir(ui->lineEditDossierTemp->text()).exists()) {
-                QMessageBox::critical(this, "Options", "Le dossier temporaire indiqué n'existe pas et ne peut être créé", QMessageBox::Ok);
+                QMessageBox::critical(this, tr("Préférences"), tr("Le dossier temporaire indiqué n'existe pas et ne peut être créé"), QMessageBox::Ok);
                 proceed = false;
             }
         }
         else if (ui->lineEditDictionnairePath->text() != "" && (!QFile(ui->lineEditDictionnairePath->text() + ".dic").exists() || !QFile(ui->lineEditDictionnairePath->text() + ".aff").exists())) {
-            QMessageBox::critical(this, "Options", "Le dictionnaire path indiqué est incorrect : les fichiers (avec extension .dic et/ou .aff) n'existe(nt) pas", QMessageBox::Ok);
+            QMessageBox::critical(this, tr("Préférences"), tr("Le dictionnaire path indiqué est incorrect : les fichiers (avec extension .dic et/ou .aff) n'existe(nt) pas"), QMessageBox::Ok);
             proceed = false;
         }
         if (proceed && ((ui->configActive->isChecked() && (ui->lineEditAdressePublication->text()==""||ui->lineEditAdresseSite->text()==""||ui->lineEditDossierDistantImages->text()==""))\
@@ -290,10 +290,10 @@ void Options::on_buttonBox_accepted()
             || (ui->configActive_3->isChecked() && (ui->lineEditAdressePublication_3->text()==""||ui->lineEditAdresseSite_3->text()==""||ui->lineEditDossierDistantImages_3->text()==""))\
             || (ui->configActive_4->isChecked() && (ui->lineEditAdressePublication_4->text()==""||ui->lineEditAdresseSite_4->text()==""||ui->lineEditDossierDistantImages_4->text()==""))\
             || (ui->configActive_5->isChecked() && (ui->lineEditAdressePublication_5->text()==""||ui->lineEditAdresseSite_5->text()==""||ui->lineEditDossierDistantImages_5->text()=="")))) {
-            QMessageBox::critical(this,"Options","Veuillez remplir tous les champs des paramètres serveur de la configuration active",QMessageBox::Ok);
+            QMessageBox::critical(this,tr("Préférences"),tr("Veuillez remplir tous les champs des paramètres serveur de la configuration active"),QMessageBox::Ok);
         }
         else if (proceed && !ui->configActive->isChecked() && !ui->configActive_2->isChecked() && !ui->configActive_3->isChecked() && !ui->configActive_4->isChecked() && !ui->configActive_5->isChecked()) {
-            QMessageBox::critical(this,"Options","Vous devez avoir une configuration serveur active",QMessageBox::Ok);
+            QMessageBox::critical(this,tr("Préférences"),tr("Vous devez avoir une configuration serveur active"),QMessageBox::Ok);
         }
         else if(proceed) {
             if (ui->lineEditDossierDistantImages->text() != "" && ui->lineEditDossierDistantImages->text().right(1) != "/")

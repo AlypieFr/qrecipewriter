@@ -88,7 +88,7 @@ void QRecipeWriter::closeEvent(QCloseEvent *event)
         saveSizeAndQuit();
     else
     {
-        int rep = QMessageBox::warning(this, "Enregistrer avant de quitter ?", "La recette a été modifiée. Voulez-vous enregistrer la recette avant de quitter le programme ?", QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
+        int rep = QMessageBox::warning(this, tr("Enregistrer avant de quitter ?"), tr("La recette a été modifiée. Voulez-vous enregistrer la recette avant de quitter le programme ?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
         if (rep == QMessageBox::Yes)
         {
             on_enregistrer_clicked();
@@ -160,7 +160,7 @@ void QRecipeWriter::config()
 {
     Options* opt = new Options();
     opt->init();
-    QMessageBox::information(0, "Configuration introuvable !", "C'est la première fois que vous lancez l'application. Vous allez être invité à configurer le logiciel.", QMessageBox::Ok);
+    QMessageBox::information(0, tr("Configuration introuvable !"), tr("C'est la première fois que vous lancez l'application. Vous allez être invité à configurer le logiciel."), QMessageBox::Ok);
     QDir dirConf (confDir);
     if (!dirConf.exists())
         dirConf.mkpath(".");
@@ -320,25 +320,25 @@ void QRecipeWriter::init()
     catLay->setMargin(0);
     if(!confCatFile->exists())
     {
-        QCheckBox *platPrincipal = new QCheckBox("Plat principal");
+        QCheckBox *platPrincipal = new QCheckBox(tr("Plat principal"));
         platPrincipal->setMaximumHeight(21);
-        QCheckBox *entree = new QCheckBox("Entrée");
+        QCheckBox *entree = new QCheckBox(tr("Entrée"));
         entree->setMaximumHeight(21);
-        QCheckBox *dessert = new QCheckBox("Dessert");
+        QCheckBox *dessert = new QCheckBox(tr("Dessert"));
         dessert->setMaximumHeight(21);
-        QCheckBox *accompagnement = new QCheckBox("Accompagnement");
+        QCheckBox *accompagnement = new QCheckBox(tr("Accompagnement"));
         accompagnement->setMaximumHeight(21);
         lLeft->addWidget(platPrincipal);
         lLeft->addWidget(entree);
         lLeft->addWidget(dessert);
         lLeft->addWidget(accompagnement);
-        QCheckBox *base = new QCheckBox("Base");
+        QCheckBox *base = new QCheckBox(tr("Base"));
         base->setMaximumHeight(21);
-        QCheckBox *biscuits = new QCheckBox("Biscuits && Friandises");
+        QCheckBox *biscuits = new QCheckBox(tr("Biscuits && Friandises"));
         biscuits->setMaximumHeight(21);
-        QCheckBox *pain = new QCheckBox("Pain && Viennoiserie");
+        QCheckBox *pain = new QCheckBox(tr("Pain && Viennoiserie"));
         pain->setMaximumHeight(21);
-        QCheckBox *divers = new QCheckBox("Divers");
+        QCheckBox *divers = new QCheckBox(tr("Divers"));
         divers->setMaximumHeight(21);
         lRight->addWidget(base);
         lRight->addWidget(biscuits);
@@ -347,22 +347,22 @@ void QRecipeWriter::init()
         catLay->addWidget(wLeft);
         catLay->addWidget(wRight);
         //Fill disctionary:
-        categories.insert(platPrincipal, "Plat principal");
-        namesCats.append("Plat principal");
-        categories.insert(entree, "Entrée");
-        namesCats.append("Entrée");
-        categories.insert(dessert, "Dessert");
-        namesCats.append("Dessert");
-        categories.insert(accompagnement, "Accompagnement");
-        namesCats.append("Accompagnement");
-        categories.insert(base, "Base");
-        namesCats.append("Base");
-        categories.insert(biscuits, "Biscuits & Friandises");
-        namesCats.append("Biscuits & Friandises");
-        categories.insert(pain, "Pain & Viennoiserie");
-        namesCats.append("Pain & Viennoiseries");
-        categories.insert(divers, "Divers");
-        namesCats.append("Divers");
+        categories.insert(platPrincipal, tr("Plat principal"));
+        namesCats.append(tr("Plat principal"));
+        categories.insert(entree, tr("Entrée"));
+        namesCats.append(tr("Entrée"));
+        categories.insert(dessert, tr("Dessert"));
+        namesCats.append(tr("Dessert"));
+        categories.insert(accompagnement, tr("Accompagnement"));
+        namesCats.append(tr("Accompagnement"));
+        categories.insert(base, tr("Base"));
+        namesCats.append(tr("Base"));
+        categories.insert(biscuits, tr("Biscuits & Friandises"));
+        namesCats.append(tr("Biscuits & Friandises"));
+        categories.insert(pain, tr("Pain & Viennoiserie"));
+        namesCats.append(tr("Pain & Viennoiserie"));
+        categories.insert(divers, tr("Divers"));
+        namesCats.append(tr("Divers"));
     }
     else {
         QStringList theCats = Functions::loadCategories();
@@ -390,8 +390,8 @@ void QRecipeWriter::init()
     //Load config:
     Functions::loadConfig();
     if (!recPrinter) {
-        ui->noPrint->setToolTip("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
-        ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+        ui->noPrint->setToolTip(tr("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER RECIPES PRINTER]"));
+        ui->printOnly->setToolTip(tr("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER RECIPES PRINTER]"));
     }
     //Test if dictrionary path is given:
     if (corrOrtho == "")
@@ -463,7 +463,7 @@ void QRecipeWriter::launch() {
             loadRecipe(openStartupFile, false);
         }
         else {
-            QMessageBox::critical(this, "Fichier non reconnu", "Le fichier n'est pas un fichier de recette (extension .rct)");
+            QMessageBox::critical(this, tr("Fichier non reconnu"), tr("Le fichier n'est pas un fichier de recette (extension .rct)"));
         }
     }
     if (autoCheckUpdt) {
@@ -484,7 +484,7 @@ void QRecipeWriter::resetFields()
     }
     imgFile = "";
     imgFileName = "";
-    ui->mainPicture->setText(trUtf8("Sélectionner une image..."));
+    ui->mainPicture->setText(tr("Sélectionner une image..."));
     ui->mainPicture->setIcon(QPixmap(":/images/image.png"));
     ui->hPrep->setValue(0);
     ui->minPrep->setValue(0);
@@ -672,12 +672,12 @@ void QRecipeWriter::on_actionOptions_triggered()
         ui->actionCorrection_orthographique->setEnabled(true);
     }
     if (!recPrinter) {
-        ui->noPrint->setToolTip("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
-        ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER CEC PRINTER]");
+        ui->noPrint->setToolTip(tr("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER RECIPES PRINTER]"));
+        ui->printOnly->setToolTip(tr("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER RECIPES PRINTER]"));
     }
     else {
-        ui->noPrint->setToolTip("Ne pas imprimer une partie de texte");
-        ui->printOnly->setToolTip("Imprimer une partie de texte mais ne pas l'afficher");
+        ui->noPrint->setToolTip(tr("Ne pas imprimer une partie de texte"));
+        ui->printOnly->setToolTip(tr("Imprimer une partie de texte mais ne pas l'afficher"));
     }
     ui->setCoupDeCoeur->setVisible(recCoupDeCoeur);
     toggleEditPict();
@@ -725,7 +725,7 @@ void QRecipeWriter::on_mainPicture_clicked()
             dir = dirLoad;
         }
     }
-    QString fileName = QFileDialog::getOpenFileName(this, "Choisir une image",
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Choisir une image"),
     dir,
     "Images : *.jpg, *.JPG (*.jpg *.JPG);;");
     if ( !fileName.isEmpty() )
@@ -989,9 +989,9 @@ void QRecipeWriter::on_lienButton_clicked()
         QString idL = "L" + QString::number(idLien);
         bool modified = false;
         chooseLink = new QDialog(this);
-        chooseLink->setWindowTitle("Insérer un lien");
+        chooseLink->setWindowTitle(tr("Insérer un lien"));
         QVBoxLayout *vlay = new QVBoxLayout();
-        QLabel *txt = new QLabel("Entrez l'adresse du lien :");
+        QLabel *txt = new QLabel(tr("Entrez l'adresse du lien :"));
         txt->setMinimumHeight(30);
         chooseAddrLnk = new QLineEdit(ui->titre->text());
         chooseAddrLnk->setMinimumHeight(30);
@@ -1024,11 +1024,11 @@ void QRecipeWriter::on_lienButton_clicked()
         vlay->addWidget(txt);
         vlay->addWidget(chooseAddrLnk);
         QWidget *buttons = new QWidget();
-        QPushButton *valider = new QPushButton("Valider");
+        QPushButton *valider = new QPushButton(tr("Valider"));
         connect(valider, SIGNAL(released()), this, SLOT(handleChooseLnkValider()));
         valider->setMinimumSize(100, 30);
         valider->setMaximumSize(100,30);
-        QPushButton *annuler = new QPushButton("Annuler");
+        QPushButton *annuler = new QPushButton(tr("Annuler"));
         connect(annuler, SIGNAL(released()), this, SLOT(handleChooseLnkAnnuler()));
         annuler->setMinimumSize(100, 30);
         annuler->setMaximumSize(100,30);
@@ -1156,7 +1156,7 @@ void QRecipeWriter::on_imgButton_clicked()
     if (cible != "")
     {
         if (fileName == "") {
-            fileName = QFileDialog::getOpenFileName(this, "Choisir une image",
+            fileName = QFileDialog::getOpenFileName(this, tr("Choisir une image"),
             dirPict,
             "Images : *.jpg, *.JPG (*.jpg *.JPG)");
         }
@@ -1499,7 +1499,7 @@ bool QRecipeWriter::isReadyTosend(bool alert)
     else
     {
         if (alert) {
-            QMessageBox::critical(this, "Tout n'est pas prêt !", "L'ensemble des paramètres requis de la recette ne sont pas renseignés. Veullez les renseigner.\nParamètres requis :\n      - Titre\n      - Catégorie(s)\n      - Image principale\n      - Temps de préparation\n      - Nombre de personnes\n      - Description\n      - Ingrédients\n      - Instructions de préparation", QMessageBox::Ok);
+            QMessageBox::critical(this, tr("Tout n'est pas prêt !"), tr("L'ensemble des paramètres requis de la recette ne sont pas renseignés. Veullez les renseigner.\nParamètres requis :\n      - Titre\n      - Catégorie(s)\n      - Image principale\n      - Temps de préparation\n      - Nombre de personnes\n      - Description\n      - Ingrédients\n      - Instructions de préparation"), QMessageBox::Ok);
         }
         return false;
     }
@@ -1524,13 +1524,13 @@ void QRecipeWriter::on_envoyer_clicked()
     if (isReadyTosend(true))
     {
         if (ui->nbPersonnes_2->isVisible() && ui->nbPersonnes_2->value() < ui->nbPersonnes->value()) {
-            QMessageBox::critical(this, "Erreur dans le nombre de personnes", "Erreur: la borne inférieure du nombre de personnes indiqué est supérieure à la borne supérieure.");
+            QMessageBox::critical(this, tr("Erreur dans le nombre de personnes"), tr("Erreur: la borne inférieure du nombre de personnes indiqué est supérieure à la borne supérieure."));
         }
         else {
             if (checkF7beforeSend && corrOrtho != "") {
                 QDialog *wait = new QDialog(this);
                 QHBoxLayout *lay = new QHBoxLayout();
-                QLabel *lab = new QLabel("Vérification orthogaphique en cours...");
+                QLabel *lab = new QLabel(tr("Vérification orthogaphique en cours..."));
                 lab->setAlignment(Qt::AlignHCenter);
                 lay->addWidget(lab);
                 wait->setLayout(lay);
@@ -1803,9 +1803,9 @@ bool QRecipeWriter::askSaveFile() {
             dir = dirLoad;
         }
     }
-    QString fileName = QFileDialog::getSaveFileName(this, "Enregistrer la recette sous...",
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Enregistrer la recette sous..."),
     dir + "/" + ui->titre->text(),
-    "Recettes : *.rct (*.rct)");
+    tr("Recettes : *.rct (*.rct)"));
     if ( !fileName.isEmpty() )
     {
         Functions::saveLastDir("backup", fileName.left(fileName.lastIndexOf("/")));
@@ -1881,7 +1881,7 @@ void QRecipeWriter::on_enregistrer_clicked()
         if (success)
         {
             saveVariables(ingrList.join("\n"), matList.join("\n"), prepList.join("\n"), consList.join("\n"));
-            ui->state->setText("Enregistrement terminé !");
+            ui->state->setText(tr("Enregistrement terminé !"));
             QTimer::singleShot(4000, this, SLOT(refreshState()));
         }
     }
@@ -2101,13 +2101,7 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
             }
         }
 
-        ui->state->setText("Recette chargée !");
-        QTimer::singleShot(4000, this, SLOT(refreshState()));
-
-        ui->state->setText("Recette chargée !");
-        QTimer::singleShot(4000, this, SLOT(refreshState()));
-
-        ui->state->setText("Recette chargée !");
+        ui->state->setText(tr("Recette chargée !"));
         QTimer::singleShot(4000, this, SLOT(refreshState()));
 
         //fileName = fileName;
@@ -2116,7 +2110,7 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
         toggleEditPict();
         if (testReadyToSend) {
             if (!isReadyTosend(false)) {
-                QMessageBox::warning(this, "Import partiel", "Certains champs n'ont pas pu être récupérés car le formatage de la recette était incorrecte. Vous avez probablement modifié le code source manuellement, ou publié la recette avec une version ancienne du logiciel.\n Veuillez vous assurer de remplir les champs manquants avant de renvoyer la recette en ligne.");
+                QMessageBox::warning(this, tr("Import partiel"), tr("Certains champs n'ont pas pu être récupérés car le formatage de la recette était incorrecte. Vous avez probablement modifié le code source manuellement, ou publié la recette avec une version ancienne du logiciel.\n Veuillez vous assurer de remplir les champs manquants avant de renvoyer la recette en ligne."));
             }
         }
     }
@@ -2129,11 +2123,11 @@ void QRecipeWriter::toggleEditPict() {
     }
     else if(editPict == "") {
         ui->editPicture->setEnabled(false);
-        ui->editPicture->setToolTip("Vous devez indiquer un éditeur d'images dans\nles préférences pour pouvoir éditer l'image");
+        ui->editPicture->setToolTip(tr("Vous devez indiquer un éditeur d'images dans\nles préférences pour pouvoir éditer l'image"));
     }
     else if(imgFile.startsWith("http")) {
         ui->editPicture->setEnabled(false);
-        ui->editPicture->setToolTip("Vous ne pouvez pas éditer une image en ligne");
+        ui->editPicture->setToolTip(tr("Vous ne pouvez pas éditer une image en ligne"));
     }
 }
 
@@ -2146,7 +2140,7 @@ void QRecipeWriter::on_actionOuvrir_une_recette_existante_triggered()
     bool doOpen = true;
     if (checkHasBeenModified())
     {
-        int rep = QMessageBox::warning(this, "Enregistrer avant de quitter ?", "La recette a été modifiée. Voulez-vous enregistrer la recette avant de continuer ?", QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
+        int rep = QMessageBox::warning(this, tr("Enregistrer avant de quitter ?"), tr("La recette a été modifiée. Voulez-vous enregistrer la recette avant de continuer ?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
         if (rep == QMessageBox::Yes)
         {
             on_enregistrer_clicked();
@@ -2169,9 +2163,9 @@ void QRecipeWriter::on_actionOuvrir_une_recette_existante_triggered()
                 dir = dirLoad;
             }
         }
-        QString fileName = QFileDialog::getOpenFileName(this, "Ouvrir une recette",
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Ouvrir une recette"),
         dir,
-        "Recettes : *.rct (*.rct)");
+        tr("Recettes : *.rct (*.rct)"));
         if ( !fileName.isEmpty() )
         {
             Functions::saveLastDir("backup", fileName.left(fileName.lastIndexOf("/")));
@@ -2185,7 +2179,7 @@ void QRecipeWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
     bool doOpen = true;
     if (checkHasBeenModified())
     {
-        int rep = QMessageBox::warning(this, "Enregistrer avant de quitter ?", "La recette a été modifiée. Voulez-vous enregistrer la recette avant de continuer ?", QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
+        int rep = QMessageBox::warning(this, tr("Enregistrer avant de quitter ?"), tr("La recette a été modifiée. Voulez-vous enregistrer la recette avant de continuer ?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
         if (rep == QMessageBox::Yes)
         {
             on_enregistrer_clicked();
@@ -2207,12 +2201,12 @@ void QRecipeWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
         openDistant = NULL;
 
         if (idRecipeToOpen > -1) {
-             FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPost.php?p=" + QString::number(idRecipeToOpen), "Récupération de la recette...", this);
+             FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPost.php?p=" + QString::number(idRecipeToOpen), tr("Récupération de la recette..."), this);
              QByteArray resData = fdower->downloadedData();
              bool ok;
              QVariantMap result = QJsonWrapper::parseJson(resData, &ok).toMap();
              if (!ok) {
-                 QMessageBox::critical(this, "Erreur !", "Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support.",
+                 QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
                                                QMessageBox::Ok);
              }
              else if (result["success"].toString() == "true") {
@@ -2224,12 +2218,12 @@ void QRecipeWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
                      loadRecipe(tmpFile->fileName(), true);
                  }
                  else {
-                     QMessageBox::critical(this, "Erreur !", "Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support.",
+                     QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
                                                    QMessageBox::Ok);
                  }
              }
              else {
-                 QMessageBox::critical(this, "Erreur !", "Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support.",
+                 QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
                                                QMessageBox::Ok);
              }
         }
@@ -2244,7 +2238,7 @@ void QRecipeWriter::on_actionNouvelle_Recette_triggered()
 {
     if (checkHasBeenModified())
     {
-        int rep = QMessageBox::warning(this, "Enregistrer avant de quitter ?", "La recette a été modifiée. Voulez-vous enregistrer la recette avant de continuer ?", QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
+        int rep = QMessageBox::warning(this, tr("Enregistrer avant de quitter ?"), tr("La recette a été modifiée. Voulez-vous enregistrer la recette avant de continuer ?"), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
         if (rep == QMessageBox::Yes)
         {
             on_enregistrer_clicked();
@@ -2296,7 +2290,7 @@ void QRecipeWriter::openEditor()
 }
 
 void QRecipeWriter::searchUpdate() {
-    FileDownloader *fdower = new FileDownloader(updtUrl, "Checking for update..." ,this);
+    FileDownloader *fdower = new FileDownloader(updtUrl, tr("Recherche d'une mise à jour...") ,this);
     QByteArray resFile = fdower->downloadedData();
     if (!resFile.isEmpty())
     {
@@ -2322,8 +2316,8 @@ void QRecipeWriter::searchUpdate() {
             if (hasUpdate)
             {
                 //Propose to user downloading the last version
-                int rep = QMessageBox::information(this, "Mise à jour disponible", QString("Une mise à jour du logicielle est disponible, voulez-vous ")
-                                                   + QString("mettre à jour votre version ") + VERSION + QString(" à la dernière version (" + latestVersion + ") ?"), QMessageBox::Yes, QMessageBox::No);
+                int rep = QMessageBox::information(this, tr("Mise à jour disponible"), QString(tr("Une mise à jour du logicielle est disponible, voulez-vous "))
+                                                   + QString(tr("mettre à jour votre version ")) + VERSION + QString(tr(" à la dernière version") + " (" + latestVersion + tr(") ?")), QMessageBox::Yes, QMessageBox::No);
                 if (rep == QMessageBox::Yes)
                 {
                     QString adresse = lines[1].left(lines[1].length() - 1);
@@ -2332,18 +2326,18 @@ void QRecipeWriter::searchUpdate() {
             }
             else
             {
-                QMessageBox::information(this, "Aucune mise à jour disponible", "Vous possédez la dernière version du logiciel !", QMessageBox::Ok);
+                QMessageBox::information(this, tr("Aucune mise à jour disponible"), tr("Vous possédez la dernière version du logiciel !"), QMessageBox::Ok);
             }
         }
         else
         {
-            QMessageBox::critical(this, "Erreur !", "Une erreur est survenue lors de la recherche de la mise à jour\nVeuillez contacter le support.",
+            QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la recherche de la mise à jour\nVeuillez contacter le support."),
                                           QMessageBox::Ok);
         }
     }
     else
     {
-        QMessageBox::critical(this, "Erreur !", "Impossible de déterminer la dernière version du logiciel.\nVeuillez vérifier votre connexion internet.",
+        QMessageBox::critical(this, tr("Erreur !"), tr("Impossible de déterminer la dernière version du logiciel.\nVeuillez vérifier votre connexion internet."),
                               QMessageBox::Ok);
     }
 }
@@ -3429,10 +3423,10 @@ void QRecipeWriter::on_listIngr_customContextMenuRequested(const QPoint &pos)
         QStringList cont_menu;
         if (ui->listIngr->selectionModel()->selectedIndexes().size() == 1)
         {
-            cont_menu << "Modifier l'élément";
-            cont_menu << "Supprimer l'élément";
-            cont_menu << "Insérer un élément après";
-            cont_menu << "Insérer un élément avant";
+            cont_menu << tr("Modifier l'élément");
+            cont_menu << tr("Supprimer l'élément");
+            cont_menu << tr("Insérer un élément après");
+            cont_menu << tr("Insérer un élément avant");
 
             QMenu my_menu;
             for (int i = 0; i < cont_menu.size(); ++i)
@@ -3477,7 +3471,7 @@ void QRecipeWriter::on_listIngr_customContextMenuRequested(const QPoint &pos)
         }
         else
         {
-            cont_menu << "Supprimer les éléments";
+            cont_menu << tr("Supprimer les éléments");
             QMenu my_menu;
             for (int i = 0; i < cont_menu.size(); ++i)
             my_menu.addAction(cont_menu.at(i));
@@ -3506,10 +3500,10 @@ void QRecipeWriter::on_listMat_customContextMenuRequested(const QPoint &pos)
         QStringList cont_menu;
         if (ui->listMat->selectionModel()->selectedIndexes().size() == 1)
         {
-            cont_menu << "Modifier l'élément";
-            cont_menu << "Supprimer l'élément";
-            cont_menu << "Insérer un élément après";
-            cont_menu << "Insérer un élément avant";
+            cont_menu << tr("Modifier l'élément");
+            cont_menu << tr("Supprimer l'élément");
+            cont_menu << tr("Insérer un élément après");
+            cont_menu << tr("Insérer un élément avant");
 
             QMenu my_menu;
             for (int i = 0; i < cont_menu.size(); ++i)
@@ -3551,7 +3545,7 @@ void QRecipeWriter::on_listMat_customContextMenuRequested(const QPoint &pos)
         }
         else
         {
-            cont_menu << "Supprimer les éléments";
+            cont_menu << tr("Supprimer les éléments");
             QMenu my_menu;
             for (int i = 0; i < cont_menu.size(); ++i)
             my_menu.addAction(cont_menu.at(i));
@@ -3580,10 +3574,10 @@ void QRecipeWriter::on_listPrep_customContextMenuRequested(const QPoint &pos)
         QStringList cont_menu;
         if (ui->listPrep->selectionModel()->selectedIndexes().size() == 1)
         {
-            cont_menu << "Modifier l'élément";
-            cont_menu << "Supprimer l'élément";
-            cont_menu << "Insérer un élément après";
-            cont_menu << "Insérer un élément avant";
+            cont_menu << tr("Modifier l'élément");
+            cont_menu << tr("Supprimer l'élément");
+            cont_menu << tr("Insérer un élément après");
+            cont_menu << tr("Insérer un élément avant");
 
             QMenu my_menu;
             for (int i = 0; i < cont_menu.size(); ++i)
@@ -3674,7 +3668,7 @@ void QRecipeWriter::on_listPrep_customContextMenuRequested(const QPoint &pos)
         }
         else
         {
-            cont_menu << "Supprimer les éléments";
+            cont_menu << tr("Supprimer les éléments");
             QMenu my_menu;
             for (int i = 0; i < cont_menu.size(); ++i)
             my_menu.addAction(cont_menu.at(i));
@@ -3703,10 +3697,10 @@ void QRecipeWriter::on_listCons_customContextMenuRequested(const QPoint &pos)
         QStringList cont_menu;
         if (ui->listCons->selectionModel()->selectedIndexes().size() == 1)
         {
-            cont_menu << "Modifier l'élément";
-            cont_menu << "Supprimer l'élément";
-            cont_menu << "Insérer un élément après";
-            cont_menu << "Insérer un élément avant";
+            cont_menu << tr("Modifier l'élément");
+            cont_menu << tr("Supprimer l'élément");
+            cont_menu << tr("Insérer un élément après");
+            cont_menu << tr("Insérer un élément avant");
 
             QMenu my_menu;
             for (int i = 0; i < cont_menu.size(); ++i)
@@ -3748,7 +3742,7 @@ void QRecipeWriter::on_listCons_customContextMenuRequested(const QPoint &pos)
         }
         else
         {
-            cont_menu << "Supprimer les éléments";
+            cont_menu << tr("Supprimer les éléments");
             QMenu my_menu;
             for (int i = 0; i < cont_menu.size(); ++i)
             my_menu.addAction(cont_menu.at(i));
@@ -3773,7 +3767,7 @@ void QRecipeWriter::on_listCons_customContextMenuRequested(const QPoint &pos)
 void QRecipeWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
 {
     QStringList cont_menu;
-    cont_menu << "Importer des ingrédients";
+    cont_menu << tr("Importer des ingrédients");
     QMenu my_menu;
     for (int i = 0; i < cont_menu.size(); ++i)
         my_menu.addAction(cont_menu.at(i));
@@ -3784,7 +3778,7 @@ void QRecipeWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
         QString s = sel_item->text();
         if (s == cont_menu.at(0))
         {
-            QInputMultiline* dialg = new QInputMultiline(this, "Importer une liste d'ingrédients", "Entrez les ingrédients (1 par ligne)", "", false);
+            QInputMultiline* dialg = new QInputMultiline(this, tr("Importer une liste d'ingrédients"), tr("Entrez les ingrédients (1 par ligne)"), "", false);
             dialg->exec();
             QString txtImp = dialg->text;
             if (txtImp != "") {
@@ -3822,7 +3816,7 @@ void QRecipeWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
 void QRecipeWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
 {
     QStringList cont_menu;
-    cont_menu << "Importer du matériel";
+    cont_menu << tr("Importer du matériel");
     QMenu my_menu;
     for (int i = 0; i < cont_menu.size(); ++i)
         my_menu.addAction(cont_menu.at(i));
@@ -3833,7 +3827,7 @@ void QRecipeWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
         QString s = sel_item->text();
         if (s == cont_menu.at(0))
         {
-            QInputMultiline* dialg = new QInputMultiline(this, "Importer une liste de matériel", "Entrez le matériel (1 par ligne)", "", false);
+            QInputMultiline* dialg = new QInputMultiline(this, tr("Importer une liste de matériel"), tr("Entrez le matériel (1 par ligne)"), "", false);
             dialg->exec();
             QString txtImp = dialg->text;
             if (txtImp != "") {
@@ -3860,7 +3854,7 @@ void QRecipeWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
 void QRecipeWriter::on_editPrep_customContextMenuRequested(const QPoint &pos)
 {
     QStringList cont_menu;
-    cont_menu << "Importer des instructions de préparation";
+    cont_menu << tr("Importer des instructions de préparation");
     QMenu my_menu;
     for (int i = 0; i < cont_menu.size(); ++i)
         my_menu.addAction(cont_menu.at(i));
@@ -3871,7 +3865,7 @@ void QRecipeWriter::on_editPrep_customContextMenuRequested(const QPoint &pos)
         QString s = sel_item->text();
         if (s == cont_menu.at(0))
         {
-            QInputMultiline* dialg = new QInputMultiline(this, "Importer des instructions de préparation", "Entrez les instructions de préparation (1 par ligne)", "", false);
+            QInputMultiline* dialg = new QInputMultiline(this, tr("Importer des instructions de préparation"), tr("Entrez les instructions de préparation (1 par ligne)"), "", false);
             dialg->exec();
             QString txtImp = dialg->text;
             if (txtImp != "") {
@@ -3922,7 +3916,7 @@ void QRecipeWriter::on_editPrep_customContextMenuRequested(const QPoint &pos)
 void QRecipeWriter::on_editCons_customContextMenuRequested(const QPoint &pos)
 {
     QStringList cont_menu;
-    cont_menu << "Importer des conseils";
+    cont_menu << tr("Importer des conseils");
     QMenu my_menu;
     for (int i = 0; i < cont_menu.size(); ++i)
         my_menu.addAction(cont_menu.at(i));
@@ -3933,7 +3927,7 @@ void QRecipeWriter::on_editCons_customContextMenuRequested(const QPoint &pos)
         QString s = sel_item->text();
         if (s == cont_menu.at(0))
         {
-            QInputMultiline* dialg = new QInputMultiline(this, "Importer une liste de conseils", "Entrez les conseils (1 par ligne)", "", false);
+            QInputMultiline* dialg = new QInputMultiline(this, tr("Importer une liste de conseils"), tr("Entrez les conseils (1 par ligne)"), "", false);
             dialg->exec();
             QString txtImp = dialg->text;
             if (txtImp != "") {
@@ -3985,7 +3979,7 @@ void QRecipeWriter::handleChooseLnkValider()
 
 void QRecipeWriter::refreshState()
 {
-    ui->state->setText("Prêt.");
+    ui->state->setText(tr("Prêt."));
 }
 
 /**

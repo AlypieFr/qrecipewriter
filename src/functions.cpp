@@ -493,9 +493,9 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
             txt = txt.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
             nbLien++;
         }
-        QRegExp header = QRegExp("Ingrédients \\(pour (\\d+) personnes?([^:]+):");
-        QRegExp header2 = QRegExp("Ingrédients \\(pour (\\d+ à \\d+) personnes?([^:]+):");
-        QRegExp header3 = QRegExp("Ingrédients \\(pour (\\d+-\\d+) personnes?([^:]+):");
+        QRegExp header = QRegExp(QObject::tr("Ingrédients") + " \\(" + QObject::tr("pour") + " (\\d+) "+ QObject::tr("personnes") + "?([^:]+):");
+        QRegExp header2 = QRegExp(QObject::tr("Ingrédients") + " \\(" + QObject::tr("pour") + " (\\d+ " + QObject::tr("à") + " \\d+) " + QObject::tr("personnes") + "?([^:]+):");
+        QRegExp header3 = QRegExp(QObject::tr("Ingrédients") + " \\(" + QObject::tr("pour") + " (\\d+-\\d+) " + QObject::tr("personnes") + "?([^:]+):");
         QString txtPrecision;
         bool isHeader = false;
         int endHeader = -1;
@@ -525,9 +525,9 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
         }
         int begin = endHeader;
         if (begin > -1) {
-            int isMat = txt.indexOf("<p><b>Matériel nécessaire");
+            int isMat = txt.indexOf("<p><b>" + QObject::tr("Matériel nécessaire"));
             if (isMat == -1) {
-                isMat = txt.indexOf("Matériel nécessaire");
+                isMat = txt.indexOf(QObject::tr("Matériel nécessaire"));
             }
             if (isMat > -1) {
                 ingredients = makeSimpleListWithSubLists(txt.mid(begin, isMat - begin));
@@ -537,7 +537,7 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
             }
         }
         //Get materiel:
-        QRegExp matExp = QRegExp("Matériel nécessaire(.+)");
+        QRegExp matExp = QRegExp(QObject::tr("Matériel nécessaire") + "(.+)");
         if (txt.contains(matExp)) {
             QString mat = matExp.cap(1);
             int begin = mat.indexOf("<ul>");
@@ -559,7 +559,7 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
         }
         txt.replace("<ul>", "<ol>").replace("</ul>", "</ol>").replace("<ol class=\"lbold\">", "<ol>").replace("<ol class=lbold>", "<ol>");
         int begin = -1;
-        QRegExp header = QRegExp("Pr[ée]paration[^:]*:", Qt::CaseInsensitive);
+        QRegExp header = QRegExp(QObject::tr("Pr[ée]paration[^:]*:"), Qt::CaseInsensitive);
         if (txt.contains(header)) {
             begin = txt.indexOf(header.cap(0)) + header.cap(0).length();
         }
@@ -579,7 +579,7 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
             nbLien++;
         }
         int begin = -1;
-        QRegExp header = QRegExp("Conseils[^:]*:", Qt::CaseInsensitive);
+        QRegExp header = QRegExp(QObject::tr("Conseils") + "[^:]*:", Qt::CaseInsensitive);
         if (txt.contains(header)) {
             begin = txt.indexOf(header.cap(0)) + header.cap(0).length();
         }
@@ -592,10 +592,10 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
     QRegExp  timesExp = QRegExp("<temps>(.+)</temps>");
     QRegExp minExp = QRegExp("(\\d+)\\s?min");
     QRegExp hExp = QRegExp("(\\d+)\\s?h");
-    QRegExp jExp = QRegExp("(\\d+)\\s?j");
+    QRegExp jExp = QRegExp(QObject::tr("(\\d+)\\s?j"));
     if (content.contains(timesExp)) {
         QString txt = timesExp.cap(1);
-        QRegExp  prepTime = QRegExp("Temps de Préparation[^:]*:\\s?([^<]+)", Qt::CaseInsensitive);
+        QRegExp  prepTime = QRegExp(QObject::tr("Temps de Préparation") + "[^:]*:\\s?([^<]+)", Qt::CaseInsensitive);
         if (txt.contains(prepTime)) {
             QString pTime = prepTime.cap(1);
             QString h = "0", min = "0";
@@ -610,7 +610,7 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
         else {
             tpsPrep = "0h0";
         }
-        QRegExp cuisTime = QRegExp("Temps de Cuisson[^:]*:\\s?([^<]+)", Qt::CaseInsensitive);
+        QRegExp cuisTime = QRegExp(QObject::tr("Temps de Cuisson") + "[^:]*:\\s?([^<]+)", Qt::CaseInsensitive);
         if (txt.contains(cuisTime)) {
             QString cTime = cuisTime.cap(1);
             QString h = "0", min = "0";
@@ -625,7 +625,7 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
         else {
             tpsCuis = "0h0";
         }
-        QRegExp repTime = QRegExp("Temps de Repos[^:]*:\\s?([^<]+)", Qt::CaseInsensitive);
+        QRegExp repTime = QRegExp(QObject::tr("Temps de Repos") + "[^:]*:\\s?([^<]+)", Qt::CaseInsensitive);
         if (txt.contains(repTime)) {
             QString rTime = repTime.cap(1);
             QString j = "0", h = "0", min = "0";
@@ -926,7 +926,7 @@ QString Functions::insertLinks(QString data)
                 data.replace("</" + balise + ">", "</a>");
             }
             else {
-                QMessageBox::critical(NULL, "Lien introuvable", "Le lien " + balise + " est introuvable. Veuillez corriger la balise. Si ceci est un bug, merci de nous le rapporter.");
+                QMessageBox::critical(NULL, QObject::tr("Lien introuvable"), QObject::tr("Le lien") + " " + balise + QObject::tr(" est introuvable. Veuillez corriger la balise. Si ceci est un bug, merci de nous le rapporter."));
                 break;
             }
         }
@@ -961,7 +961,7 @@ QString Functions::insertPictures(QString data)
         }
         QString centerBegin = center ? "<center>" : "";
         QString centerEnd = center ? "</center>" : "";
-        data.replace(imgBal, centerBegin + "<img src=\"" + dirDistPict + img.split("/").last() + "\" alt=\"Image d'illustration\" width=\"" + largeur + "\" height=\"" + hauteur + "\"" + classDef + " />" + centerEnd + "<br/>");
+        data.replace(imgBal, centerBegin + "<img src=\"" + dirDistPict + img.split("/").last() + "\" alt=\"" + QObject::tr("Image d'illustration") + "\" width=\"" + largeur + "\" height=\"" + hauteur + "\"" + classDef + " />" + centerEnd + "<br/>");
         if (!otherPicts.contains(img))
             otherPicts.append(img);
     }
@@ -1190,27 +1190,27 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
     htmlCode = "<div id='masquer'><div><a href=\"" + dirDistPict + mainPicture + "\"><photo><img style=\"float: left; "
              + "margin-right: 6px;\" class=shadow alt=\"Image d'illustation de la recette\" title=\""
              + titre+"\" src=\"" + dirDistPict + mainPicture + "\" width=\"254\" height=\"190\"></photo></a></div><description>"
-             + description+ "</description></div><div id=\"detail\"><temps><b>Temps de Préparation : "+tpsPrep;
+             + description+ "</description></div><div id=\"detail\"><temps><b>" + QObject::tr("Temps de Préparation :") + " " +tpsPrep;
     //Adding temps de repos if used:
     if (tpsRep != "")
     {
-        htmlCode = htmlCode + "<br/>Temps de Repos : "+tpsRep;
+        htmlCode = htmlCode + "<br/>" + QObject::tr("Temps de Repos :") + " " + tpsRep;
     }
     //Adding temps de cuisson if used:
     if (tpsCuis != "")
     {
-            htmlCode = htmlCode + "<br/>Temps de Cuisson : "+tpsCuis;
+            htmlCode = htmlCode + "<br/>" + QObject::tr("Temps de Cuisson :") + " " + tpsCuis;
     }
     //Adding next code:
-    htmlCode = htmlCode + "</b></temps></div><!--more--><br/><ingredients><p><b>Ingrédients (pour " + QString::number(nbPersonnes);
+    htmlCode = htmlCode + "</b></temps></div><!--more--><br/><ingredients><p><b>" + QObject::tr("Ingrédients") + " (" + QObject::tr("pour") + " " + QString::number(nbPersonnes);
     //Adding word "personne(s)":
     if (nbPersonnes2 > 0  && nbPersonnes2 > nbPersonnes) {
-        htmlCode = htmlCode + " à " + QString::number(nbPersonnes2) + " personnes";
+        htmlCode = htmlCode + QObject::tr(" à ") + QString::number(nbPersonnes2) + QObject::tr(" personnes");
     }
     else if (nbPersonnes > 1)
-        htmlCode = htmlCode + " personnes";
+        htmlCode = htmlCode + QObject::tr(" personnes");
     else
-        htmlCode = htmlCode + " personne";
+        htmlCode = htmlCode + QObject::tr(" personne");
     //Adding precision if used:
     if (precision != "")
     {
@@ -1221,14 +1221,14 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
     //Materiel if used:
     if (materiel != "")
     {
-        htmlCode = htmlCode + "<p><b>Matériel nécessaire :</b></p>"+materiel;
+        htmlCode = htmlCode + "<p><b>" + QObject::tr("Matériel nécessaire :") + "</b></p>"+materiel;
     }
     //Preparation:
-    htmlCode = htmlCode + "</ingredients><preparation><p><b>Préparation :</b></p>"+preparation+"</preparation>";
+    htmlCode = htmlCode + "</ingredients><preparation><p><b>" + QObject::tr("Préparation :") + "</b></p>"+preparation+"</preparation>";
     //Conseils if used:
     if (conseils != "")
     {
-        htmlCode = htmlCode + "<conseils><p><b>Conseils :</b></p>"+conseils+"</conseils>";
+        htmlCode = htmlCode + "<conseils><p><b>" + QObject::tr("Conseils :") + "</b></p>"+conseils+"</conseils>";
     }
     //Adding "Version imprimable" balise, only if the website is Cool Cooking, because others might not use it:
     if (recPrinter) {
@@ -1278,11 +1278,11 @@ QString Functions::makeExcerpt(QStringList descWords, QString tpsPrep, QString t
     QString descExpt = "";
     for(int i=0; i<qMin(descWords.length(),20); ++i)
         descExpt = descExpt + " " + descWords[i];
-    QString expt = "<b>Préparation : "+tpsPrep+".";
+    QString expt = "<b>" + QObject::tr("Préparation :") + " " + tpsPrep+".";
     if(tpsRep !="")
-        expt = expt + " Repos : "+tpsRep+".";
+        expt = expt + QObject::tr(" Repos :") + " " + tpsRep+".";
     if(tpsCuis !="")
-        expt = expt + "<br/> Cuisson : "+tpsCuis+".";
+        expt = expt + "<br/> " + QObject::tr("Cuisson :") + " " + tpsCuis+".";
     expt = expt + "</b> <br/> " + descExpt + "...";
     return expt;
 }
@@ -1351,7 +1351,7 @@ bool Functions::removeDir(const QString &dirName)
 }
 
 bool Functions::downloadPicture(QString url, QString fileName, QWidget *parent) {
-    FileDownloader *fdower = new FileDownloader(url, "Récupération de l'a recette'image d'illustration...", parent);
+    FileDownloader *fdower = new FileDownloader(url, QObject::tr("Récupération de l'image d'illustration de la recette..."), parent);
              QByteArray resData = fdower->downloadedData();
     resData = fdower->downloadedData();
     QString imgFileSave = fileName;
@@ -1415,16 +1415,16 @@ QString Functions::getLastDir(QString action) {
 void Functions::downloadUpdate(QString adresse, QWidget *parent) {
     QString fileToSave = adresse.split("/").last();
     QString extOfFile = fileToSave.split(".").last();
-    QString fileToSaveUser = QFileDialog::getSaveFileName(parent, "Enregistrer l'archive sous...", userDir + "/" + fileToSave, "Package d'installation  : *."+extOfFile+" (*."+extOfFile+")");
+    QString fileToSaveUser = QFileDialog::getSaveFileName(parent, QObject::tr("Enregistrer l'archive sous..."), userDir + "/" + fileToSave, QObject::tr("Package d'installation  :") + " *."+extOfFile+" (*."+extOfFile+")");
     if (fileToSaveUser != "")
     {
-        FileDownloader *fdower = new FileDownloader(adresse, "Téléchargement de la mise à jour..." ,parent);
+        FileDownloader *fdower = new FileDownloader(adresse, QObject::tr("Téléchargement de la mise à jour...") ,parent);
         QByteArray package = fdower->downloadedData();
         QFile saveFile(fileToSaveUser);
         saveFile.open(QIODevice::WriteOnly);
         saveFile.write(package);
         saveFile.close();
-        QMessageBox::information(parent, "Téléchargement terminé !", "Vous pouvez maintenant installer\nle package d'installation téléchargé !", QMessageBox::Ok);
+        QMessageBox::information(parent, QObject::tr("Téléchargement terminé !"), QObject::tr("Vous pouvez maintenant installer\nle package d'installation téléchargé !"), QMessageBox::Ok);
     }
 
 }

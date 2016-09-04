@@ -48,10 +48,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>Est un coup de coeur de niveau 1 (Très Bon)</string>
+    <string>Est un coup de coeur de niveau &amp;1 (Très Bon)</string>
    </property>
    <property name="icon">
-    <iconset resource="Ressources.qrc">
+    <iconset resource="../Ressources.qrc">
      <normaloff>:/images/coup_de_coeur.png</normaloff>:/images/coup_de_coeur.png</iconset>
    </property>
   </widget>
@@ -65,10 +65,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>Est un coup de coeur de niveau 2 (Super Bon)</string>
+    <string>Est un coup de coeur de niveau &amp;2 (Super Bon)</string>
    </property>
    <property name="icon">
-    <iconset resource="Ressources.qrc">
+    <iconset resource="../Ressources.qrc">
      <normaloff>:/images/coup_de_coeur_2.png</normaloff>:/images/coup_de_coeur_2.png</iconset>
    </property>
    <property name="iconSize">
@@ -88,10 +88,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>Est un coup de coeur de niveau 3 (Une Tuerie !)</string>
+    <string>Est un coup de coeur de niveau &amp;3 (Une Tuerie !)</string>
    </property>
    <property name="icon">
-    <iconset resource="Ressources.qrc">
+    <iconset resource="../Ressources.qrc">
      <normaloff>:/images/coup_de_coeur_3.png</normaloff>:/images/coup_de_coeur_3.png</iconset>
    </property>
    <property name="iconSize">
@@ -116,7 +116,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="Ressources.qrc"/>
+  <include location="../Ressources.qrc"/>
  </resources>
  <connections/>
 </ui>

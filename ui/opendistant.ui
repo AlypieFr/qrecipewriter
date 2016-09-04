@@ -96,8 +96,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>158</width>
-                    <height>290</height>
+                    <width>160</width>
+                    <height>268</height>
                    </rect>
                   </property>
                  </widget>
@@ -153,7 +153,7 @@
        <item>
         <widget class="QLabel" name="nbTotal">
          <property name="text">
-          <string>0</string>
+          <string notr="true">0</string>
          </property>
         </widget>
        </item>

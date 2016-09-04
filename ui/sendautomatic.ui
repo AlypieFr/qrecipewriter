@@ -194,7 +194,7 @@
        <item>
         <widget class="QLabel" name="configNb">
          <property name="text">
-          <string>Config: </string>
+          <string>Config : </string>
          </property>
         </widget>
        </item>

@@ -100,9 +100,9 @@ void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     }
     envoiEnCours = new QDialog((QWidget*)this->parent());
     envoiEnCours->setModal(true);
-    QLabel *lab = new QLabel("<b>Envoi en cours...</b>");
+    QLabel *lab = new QLabel("<b>" + tr("Envoi en cours...") + "</b>");
     lab->setAlignment(Qt::AlignCenter);
-    envoiEnCours->setWindowTitle("CeC Writer");
+    envoiEnCours->setWindowTitle("QRecipeWriter");
     QHBoxLayout *layEnvoiEnCours = new QHBoxLayout();
     layEnvoiEnCours->addWidget(lab);
     envoiEnCours->setLayout(layEnvoiEnCours);
@@ -219,7 +219,7 @@ void SendAutomatic::on_valider_clicked()
     }
     if (i < lines.size() && lines[i].replace("\r", "") == "!!!Send recipe SUCCEEDED!!!")
     {
-        int rep = QMessageBox::information(this, "Envoi terminé", "Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?", QMessageBox::Yes, QMessageBox::No);
+        int rep = QMessageBox::information(this, tr("Envoi terminé"), tr("Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?"), QMessageBox::Yes, QMessageBox::No);
         if (rep == QMessageBox::Yes)
         {
             QString Program = "\"" + cmdNav + "\" " + addrSite + "/?p=" + lines[i+1].replace("\r", "");
@@ -236,7 +236,7 @@ void SendAutomatic::on_valider_clicked()
         verrorShowContent = new QVBoxLayout();
         verrorShowContent->addWidget(mainError);
         vlay->addLayout(verrorShowContent);
-        details = new QPushButton("Détails >>");
+        details = new QPushButton(tr("Détails >>"));
         details->setFixedSize(100,30);
         connect(details, SIGNAL(clicked()), this, SLOT(errorDetails_clicked()));
         QPushButton *ok = new QPushButton("Ok");
@@ -256,32 +256,32 @@ void SendAutomatic::on_valider_clicked()
         {
             if (lines[i+3].replace("\r", "") == "redstone.xmlrpc.XmlRpcFault: Identifiant ou mot de passe incorrect.")
             {
-                mainError->setText("L'envoi a échoué : identifiant ou mot de passe incorrect !");
+                mainError->setText(tr("L'envoi a échoué : identifiant ou mot de passe incorrect !"));
             }
             else if (lines[i+3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: A network error occurred.")
             {
-                mainError->setText("L'envoi a échoué : impossible de se connecter au site web. Vérifiez votre connexion internet.");
+                mainError->setText(tr("L'envoi a échoué : impossible de se connecter au site web. Vérifiez votre connexion internet."));
             }
             else if (lines[i+3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: The response could not be parsed.")
             {
-                mainError->setText("L'envoi a échoué : l'adresse de publication est-elle correcte ?");
+                mainError->setText(tr("L'envoi a échoué : l'adresse de publication est-elle correcte ?"));
             }
             else if(lines[i+3].replace("\r", "").contains(QRegExp("redstone.xmlrpc.XmlRpcFault: D.+sol.+, vous n.+avez pas l.+autorisation de modifier cet article."))) {
-                mainError->setText("L'envoi a échoué : vous n'avez pas l'autorisation de modifier cette recette !");
+                mainError->setText(tr("L'envoi a échoué : vous n'avez pas l'autorisation de modifier cette recette !"));
             }
 
             else
             {
-                mainError->setText("L'envoi a échoué. Cliquez sur Détails pour en savoir plus.");
+                mainError->setText(tr("L'envoi a échoué. Cliquez sur Détails pour en savoir plus."));
             }
-            errorShow->setWindowTitle("L'envoi a échoué");
+            errorShow->setWindowTitle(tr("L'envoi a échoué"));
             errorSize = errorShow->size();
             errorShow->exec();
         }
         else
         {
-            mainError->setText("L'envoi a échoué pour une raison inconnue. Cliquez sur Détails pour en savoir plus.");
-            errorShow->setWindowTitle("L'envoi a échoué");
+            mainError->setText(tr("L'envoi a échoué pour une raison inconnue. Cliquez sur Détails pour en savoir plus."));
+            errorShow->setWindowTitle(tr("L'envoi a échoué"));
             errorSize = errorShow->size();
             errorShow->exec();
         }
@@ -297,14 +297,14 @@ void SendAutomatic::errorDetails_clicked()
         showError->setMinimumSize(600,200);
         verrorShowContent->addWidget(showError);
         isErrorDetailsOpened = true;
-        details->setText("<< Détails");
+        details->setText(tr("<< Détails"));
     }
     else
     {
         delete showError;
         errorShow->setMaximumSize(errorSize);
         isErrorDetailsOpened = false;
-        details->setText("Détails >>");
+        details->setText(tr("Détails >>"));
     }
 }
 

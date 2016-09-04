@@ -139,6 +139,13 @@ int main(int argc, char *argv[])
 
     //Set locale:
     QString locale = QLocale::system().name();
+    /*
+     *
+     * DEBUG
+     *
+     */
+    locale = "en_US";
+    //END DEBUG
     QString lang = locale.split("_")[0];
     QTranslator translator;
     translator.load(QString("qt_") + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
