@@ -211,7 +211,6 @@ bool Functions::saveRecipeToFile(QString title, QStringList categories, QString 
     file->open(QIODevice::WriteOnly);
     QStringList liensList;
     foreach (QString key, liens.keys()) {
-        qDebug() << key;
         liensList.append(key + "|" + liens[key]);
     }
     QMap<QString, QVariant> data;
@@ -672,7 +671,7 @@ QMap<QString, QStringList> Functions::loadRecipe(QString fileName)
 
     if (!file->open(QIODevice::ReadOnly))
     {
-        qDebug() << "Could not read the file:" << fileName << "Error string:" << file->errorString();
+        qCritical() << "Could not read the file:" << fileName << "Error string:" << file->errorString();
         return result;
     }
 

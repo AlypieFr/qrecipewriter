@@ -2092,7 +2092,6 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
                 QRegExp exp ("^L(\\d+)\\|(.+)$");
                 if (lien.contains(exp)) {
                     QString idLnk = exp.cap(1);
-                    qDebug() << idLnk;
                     liens.insert("L" + idLnk, exp.cap(2));
                     using std::max;
                     idLien = max(idLnk.toInt() + 1, idLien);
