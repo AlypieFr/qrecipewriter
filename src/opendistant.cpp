@@ -49,35 +49,41 @@ void OpenDistant::init() {
     }
     FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPostsJson.php?user=" + pseudoWp, tr("Récupération de la liste des recettes..."), parentWidget);
     QByteArray resData = fdower->downloadedData();
-    bool ok;
-    QVariantMap result = QJsonWrapper::parseJson(resData, &ok).toMap();
-    if (!ok) {
-        QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
-                                      QMessageBox::Ok);
-    }
-    else if (result["success"].toString() == "true") {
-        QList<QVariant> recipesRaw = result["recettes"].toList();
-        foreach (QVariant recipeRaw, recipesRaw) {
-            QMap<QString, QVariant> recipe = recipeRaw.toMap();
-            QStringList catsOld = recipe["cats"].toStringList();
-            QStringList catsNew;
-            foreach (QString catO, catsOld) {
-                catsNew.append(catO.replace("&", ""));
+    QJsonParseError ok;
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
+    if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
+        QJsonObject json = jsonDoc.object();
+        QVariantMap result = json.toVariantMap();
+        if (result["success"].toString() == "true") {
+            QList<QVariant> recipesRaw = result["recettes"].toList();
+            foreach (QVariant recipeRaw, recipesRaw) {
+                QMap<QString, QVariant> recipe = recipeRaw.toMap();
+                QStringList catsOld = recipe["cats"].toStringList();
+                QStringList catsNew;
+                foreach (QString catO, catsOld) {
+                    catsNew.append(catO.replace("&", ""));
+                }
+                recipe["cats"] = catsNew;
+                recipes[recipe["title"].toString()] = recipe;
+                foreach (QString cat, recipe["cats"].toStringList()) {
+                    recipesByCats[cat].append(recipe["title"].toString());
+                }
+                items.append(recipe["title"].toString());
             }
-            recipe["cats"] = catsNew;
-            recipes[recipe["title"].toString()] = recipe;
-            foreach (QString cat, recipe["cats"].toStringList()) {
-                recipesByCats[cat].append(recipe["title"].toString());
-            }
-            items.append(recipe["title"].toString());
+            ui->listRecipes->addItems(items);
+            ui->listRecipes->sortItems();
+            updateNbRecipes(items.count());
         }
-        ui->listRecipes->addItems(items);
-        ui->listRecipes->sortItems();
-        updateNbRecipes(items.count());
+        else {
+            QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
+                                      QMessageBox::Ok);
+        }
     }
     else {
         QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
                                       QMessageBox::Ok);
+        qCritical() << "Error while parsing JSON: " + ok.errorString();
     }
 
     this->exec();

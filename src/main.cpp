@@ -86,23 +86,11 @@ bool autoCheckUpdt = true;
 QString updtUrl = "";
 
 QString VERSION = "3.2.0";
-QString QTVERSION;
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe
 
 int main(int argc, char *argv[])
 {
-    //QCoreApplication app(argc, argv);
-    //QStringList args = app.arguments();
-#if QT_VERSION < 0x050000
-    QTVERSION = "4";
-    // UTF-8 Encoding (useless in Qt5, as UTF-8 is now the default encoding)
-        QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-        QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-        QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-#else
-    QTVERSION = "5";
-#endif
     QApplication a(argc, argv);
     QString openFilename = NULL;
     if (a.arguments().count() > 1) {

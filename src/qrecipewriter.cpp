@@ -57,7 +57,6 @@ extern bool autoCheckUpdt;
 extern QString updtUrl;
 
 extern QString VERSION;
-extern QString QTVERSION;
 
 extern QMap<QString, QString> liens;
 
@@ -447,7 +446,7 @@ void QRecipeWriter::init()
     //Install events on description field:
     ui->description->installEventFilter(this);
 
-    updtUrl = "https://qrecipewriter.coolcooking.fr/files/LATEST-" + systExp + "-QT-" + QTVERSION;
+    updtUrl = "https://qrecipewriter.coolcooking.fr/files/LATEST-" + systExp;
 }
 
 void QRecipeWriter::launch() {
@@ -2203,29 +2202,34 @@ void QRecipeWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
         if (idRecipeToOpen > -1) {
              FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPost.php?p=" + QString::number(idRecipeToOpen), tr("Récupération de la recette..."), this);
              QByteArray resData = fdower->downloadedData();
-             bool ok;
-             QVariantMap result = QJsonWrapper::parseJson(resData, &ok).toMap();
-             if (!ok) {
-                 QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
-                                               QMessageBox::Ok);
-             }
-             else if (result["success"].toString() == "true") {
-                 QString imgFileDist = result["thumbnailFile"].toString();
-                 QFile *tmpFile = new QFile(dirTmp + "/recipe" + QString::number(QDateTime::currentMSecsSinceEpoch()) + ".rct");
-                 tmpFile->remove(".");
-                 bool success = Functions::saveRecipeFromDist(result["title"].toString(), result["cats"].toStringList(), result["content"].toString(), imgFileDist, result["coupDeCoeur"].toString(), tmpFile, idRecipeToOpen);
-                 if (success) {
-                     loadRecipe(tmpFile->fileName(), true);
+             QJsonParseError ok;
+             QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
+             if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
+                 QJsonObject json = jsonDoc.object();
+                 QVariantMap result = json.toVariantMap();
+                 if (result["success"].toString() == "true") {
+                     QString imgFileDist = result["thumbnailFile"].toString();
+                     QFile *tmpFile = new QFile(dirTmp + "/recipe" + QString::number(QDateTime::currentMSecsSinceEpoch()) + ".rct");
+                     tmpFile->remove(".");
+                     bool success = Functions::saveRecipeFromDist(result["title"].toString(), result["cats"].toStringList(), result["content"].toString(), imgFileDist, result["coupDeCoeur"].toString(), tmpFile, idRecipeToOpen);
+                     if (success) {
+                         loadRecipe(tmpFile->fileName(), true);
+                     }
+                     else {
+                         QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
+                                                       QMessageBox::Ok);
+                     }
                  }
                  else {
                      QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
                                                    QMessageBox::Ok);
                  }
-             }
-             else {
+            }
+            else {
                  QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
                                                QMessageBox::Ok);
-             }
+                 qCritical() << "Error while parsing JSON: " + ok.errorString();
+            }
         }
     }
 }

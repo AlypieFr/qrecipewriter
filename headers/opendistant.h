@@ -15,10 +15,11 @@
 #define OPENDISTANT_H
 
 #include "filedownloader.h"
-#include "Json.h"
 
 #include <QCheckBox>
 #include <QDialog>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QList>
 #include <QMessageBox>
 #include <QModelIndex>

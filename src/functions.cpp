@@ -232,10 +232,12 @@ bool Functions::saveRecipeToFile(QString title, QStringList categories, QString 
     data.insert("coupDeCoeur", coupDeCoeur);
     data.insert("idRecipe", idRecipe);
 
-    QDataStream out(file);
-    out << data;
+    QJsonObject json = QJsonObject::fromVariantMap(data);
+    QJsonDocument jsonDoc = QJsonDocument(json);
 
+    file->write(jsonDoc.toJson());
     file->close();
+
     return true;
 }
 
@@ -668,15 +670,15 @@ QMap<QString, QStringList> Functions::loadRecipe(QString fileName)
 
     QFile* file = new QFile(fileName);
 
-    QDataStream in(file);
-
     if (!file->open(QIODevice::ReadOnly))
     {
         qDebug() << "Could not read the file:" << fileName << "Error string:" << file->errorString();
         return result;
     }
 
-    in >> map;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(file->readAll());
+    QJsonObject json = jsonDoc.object();
+    map = json.toVariantMap();
 
     result["titre"] = QStringList(map["title"].toString());
     result["categories"] = map["categories"].toStringList();
