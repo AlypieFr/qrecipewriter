@@ -63,10 +63,10 @@ QString dirTmp = userDir + "/AppData/Local/Temp/QRecipeWriter";
 #endif
 QString cmdNav = ""; //Command to launch navigator
 QString dirSav; //Directory used to save recipes or "conseils & technics"
-QString pseudoWp = ""; //Pseudo worpdress used for generate "aperçu"
 QString dirDistPict = ""; //Distant directory where pictures are saved in server
 QString addrSite = ""; //Address of the website
 QString addrPub = ""; //Address of publication (XML-RPC)
+QString pseudoWp = "";
 QString editPict = ""; //Program for advanced picture editor
 QString corrOrtho = ""; //Main dictionnary path
 QString correction = ""; //Path to the dictionnary (prefix of .dic and .aff files)
@@ -84,6 +84,7 @@ bool openLastDir_Img = false;
 bool checkF7beforeSend = false;
 bool autoCheckUpdt = true;
 QString updtUrl = "";
+QString appI18n = "en";
 
 QString VERSION = "3.2.0";
 
@@ -102,6 +103,7 @@ int main(int argc, char *argv[])
     QSplashScreen *splash = new QSplashScreen;
     splash -> setPixmap(QPixmap(":/images/splash.png"));
     splash->show();
+    QTimer::singleShot(2000,splash,SLOT(close())); //Start splash screen and keep it 2 seconds
 #ifdef Q_OS_LINUX
     systExp = "linuxAutre"; //Operating system of the user
     QFile fileOs ("/etc/os-release");
@@ -125,19 +127,27 @@ int main(int argc, char *argv[])
     systExp = "windows";
 #endif
 
+    //Define confFile:
+    confFile  = confDir +".config";
+
     //Set locale:
     QString locale = QLocale::system().name();
-    QString lang = locale.split("_")[0];
+    appI18n = locale.split("_")[0] == "fr" ? "fr" : "en";
+
+    //Load config:
+    QFile configFile(confFile);
+    if (configFile.exists()) {
+        Functions::loadConfig();
+    }
     QTranslator translator;
     translator.load(QString("qt_") + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    QString trFile = ":/i18n/qrecipewriter_"+ lang +".qm";
+    QString trFile = ":/i18n/qrecipewriter_"+ appI18n +".qm";
     if (QFile(trFile).exists()) {
         translator.load(trFile);
     }
     a.installTranslator(&translator);
 
-    //Define values
-    confFile  = confDir +".config";
+    //Define other variables:
     QString tmp = confDir + ".cats";
     confCatFile = new QFile(tmp);
     #ifdef Q_OS_LINUX
@@ -171,9 +181,7 @@ int main(int argc, char *argv[])
     //Define Dialogs:
     Apropos *apropos = new Apropos(&w);
     ptr2apropos = apropos;
-    QFile configFile(confFile);
     QDir tmpD (dirTmp);
-    QTimer::singleShot(2000,splash,SLOT(close())); //Start splash screen and keep it 2 seconds
     if (configFile.exists())
     {
         w.init();

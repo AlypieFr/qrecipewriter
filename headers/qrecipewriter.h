@@ -60,6 +60,7 @@
 #include <QString>
 #include <QTextStream>
 #include <QTimer>
+#include <QTranslator>
 #include <QVBoxLayout>
 #include <QWidget>
 

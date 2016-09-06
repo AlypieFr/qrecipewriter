@@ -34,15 +34,16 @@ extern QString dirPict;
 extern QString dirTmp;
 extern QString cmdNav;
 extern QString dirSav;
-extern QString pseudoWp;
 extern QString dirDistPict;
 extern QString addrSite;
 extern QString addrPub;
+extern QString pseudoWp;
 extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
 extern QString correction;
 extern QStringList namesCats;
+extern QString appI18n;
 extern bool cancel;
 extern bool richSnippets;
 extern bool recPrinter;
@@ -386,8 +387,7 @@ void QRecipeWriter::init()
         }
     }
     ui->scrollCats->setWidget(wid);
-    //Load config:
-    Functions::loadConfig();
+    //OLD LOAD CONFIG
     if (!recPrinter) {
         ui->noPrint->setToolTip(tr("Ne pas imprimer une partie de texte\n[NÉCESSITE D'ACTIVER RECIPES PRINTER]"));
         ui->printOnly->setToolTip(tr("Imprimer une partie de texte mais ne pas l'afficher\n[NÉCESSITE D'ACTIVER RECIPES PRINTER]"));

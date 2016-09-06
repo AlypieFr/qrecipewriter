@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -139,18 +139,8 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>240</y>
-        <width>261</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEditPseudoWordpress">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
         <y>175</y>
-        <width>301</width>
+        <width>261</width>
         <height>25</height>
        </rect>
       </property>
@@ -165,24 +155,11 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="labelPseudoWordpress">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>155</y>
-        <width>161</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress* : &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="labelEditeurImages">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>220</y>
+        <y>155</y>
         <width>221</width>
         <height>21</height>
        </rect>
@@ -195,7 +172,7 @@
       <property name="geometry">
        <rect>
         <x>270</x>
-        <y>240</y>
+        <y>175</y>
         <width>31</width>
         <height>25</height>
        </rect>
@@ -240,7 +217,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Linux (autre)</string>
+       <string>Linux (au&amp;tre)</string>
       </property>
      </widget>
      <widget class="QRadioButton" name="radioButtonLinuxSlack">
@@ -259,7 +236,7 @@
      <widget class="QRadioButton" name="radioButtonLinuxUbuntu">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>170</x>
         <y>322</y>
         <width>201</width>
         <height>17</height>
@@ -326,7 +303,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Automatique (nécessite JA&amp;VA)</string>
+        <string>Automatique (nécessite &amp;JAVA)</string>
        </property>
       </widget>
       <widget class="QRadioButton" name="sendManual">
@@ -339,7 +316,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Manuelle</string>
+        <string>&amp;Manuelle</string>
        </property>
       </widget>
      </widget>
@@ -486,7 +463,7 @@
      <widget class="QRadioButton" name="radioButtonLinuxArch">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>170</x>
         <y>340</y>
         <width>201</width>
         <height>17</height>
@@ -495,6 +472,61 @@
       <property name="text">
        <string>Linux Archlinux / Manjaro</string>
       </property>
+     </widget>
+     <widget class="QLabel" name="labelLangage">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>230</y>
+        <width>221</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Langage de l'application :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>250</y>
+        <width>251</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: none;</string>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QRadioButton" name="radioButton_lang_en">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>10</y>
+         <width>105</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string notr="true">English</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radioButton_lang_fr">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>10</y>
+         <width>105</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string notr="true">Fran&amp;çais</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -517,29 +549,6 @@
        <attribute name="title">
         <string>Config 1</string>
        </attribute>
-       <widget class="QLabel" name="labelAdresseSite">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>121</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditAdressePublication">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>40</y>
-          <width>461</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_2">
         <property name="geometry">
          <rect>
@@ -553,24 +562,11 @@
          <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
         </property>
        </widget>
-       <widget class="QLabel" name="labelDossierDistantImages">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>80</y>
-          <width>271</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
        <widget class="QCheckBox" name="recSearch">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>190</y>
+          <y>230</y>
           <width>211</width>
           <height>23</height>
          </rect>
@@ -582,44 +578,11 @@
          <string>Activer Recipes Search *</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEditAdresseSite">
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>0</y>
-          <width>511</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelAddressePublication">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>40</y>
-          <width>181</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditDossierDistantImages">
-        <property name="geometry">
-         <rect>
-          <x>260</x>
-          <y>80</y>
-          <width>371</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QCheckBox" name="recPrinter">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>160</y>
+          <y>200</y>
           <width>201</width>
           <height>23</height>
          </rect>
@@ -635,7 +598,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>220</y>
+          <y>260</y>
           <width>261</width>
           <height>23</height>
          </rect>
@@ -651,7 +614,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>290</y>
+          <y>305</y>
           <width>351</width>
           <height>25</height>
          </rect>
@@ -664,7 +627,7 @@
         <property name="geometry">
          <rect>
           <x>460</x>
-          <y>120</y>
+          <y>170</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -688,7 +651,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>130</y>
+          <y>170</y>
           <width>431</width>
           <height>23</height>
          </rect>
@@ -700,80 +663,99 @@
          <string>Activer les extraits enrichis dans les recherches Google</string>
         </property>
        </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="labelAdresseSite">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdresseSite"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>40</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="labelAddressePublication">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdressePublication"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="labelDossierDistantImages">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditDossierDistantImages"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_4">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="labelPseudoWordpress">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditPseudoWordpress"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="config2">
        <attribute name="title">
         <string>Config 2</string>
        </attribute>
-       <widget class="QLabel" name="labelAdresseSite_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>121</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelAddressePublication_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>40</y>
-          <width>181</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditDossierDistantImages_2">
-        <property name="geometry">
-         <rect>
-          <x>260</x>
-          <y>80</y>
-          <width>371</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditAdresseSite_2">
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>0</y>
-          <width>511</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditAdressePublication_2">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>40</y>
-          <width>461</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelDossierDistantImages_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>80</y>
-          <width>271</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_3">
         <property name="geometry">
          <rect>
@@ -791,7 +773,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>190</y>
+          <y>230</y>
           <width>211</width>
           <height>23</height>
          </rect>
@@ -807,7 +789,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>220</y>
+          <y>260</y>
           <width>261</width>
           <height>23</height>
          </rect>
@@ -823,7 +805,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>130</y>
+          <y>170</y>
           <width>431</width>
           <height>23</height>
          </rect>
@@ -839,7 +821,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>290</y>
+          <y>305</y>
           <width>351</width>
           <height>25</height>
          </rect>
@@ -852,7 +834,7 @@
         <property name="geometry">
          <rect>
           <x>460</x>
-          <y>120</y>
+          <y>170</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -876,7 +858,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>160</y>
+          <y>200</y>
           <width>201</width>
           <height>23</height>
          </rect>
@@ -888,80 +870,99 @@
          <string>Activer Recipes Printer</string>
         </property>
        </widget>
+       <widget class="QWidget" name="layoutWidget_5">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="labelAdresseSite_2">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdresseSite_2"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_6">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>40</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="labelAddressePublication_2">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdressePublication_2"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_7">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="labelDossierDistantImages_2">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditDossierDistantImages_2"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_8">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <widget class="QLabel" name="labelPseudoWordpress_2">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditPseudoWordpress_2"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="config3">
        <attribute name="title">
         <string>Config 3</string>
        </attribute>
-       <widget class="QLabel" name="labelAdresseSite_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>121</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelAddressePublication_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>40</y>
-          <width>181</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditDossierDistantImages_3">
-        <property name="geometry">
-         <rect>
-          <x>260</x>
-          <y>80</y>
-          <width>371</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditAdresseSite_3">
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>0</y>
-          <width>511</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditAdressePublication_3">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>40</y>
-          <width>461</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelDossierDistantImages_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>80</y>
-          <width>271</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_4">
         <property name="geometry">
          <rect>
@@ -979,7 +980,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>190</y>
+          <y>230</y>
           <width>211</width>
           <height>23</height>
          </rect>
@@ -995,7 +996,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>220</y>
+          <y>260</y>
           <width>261</width>
           <height>23</height>
          </rect>
@@ -1011,7 +1012,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>130</y>
+          <y>170</y>
           <width>431</width>
           <height>23</height>
          </rect>
@@ -1027,7 +1028,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>290</y>
+          <y>305</y>
           <width>351</width>
           <height>25</height>
          </rect>
@@ -1040,7 +1041,7 @@
         <property name="geometry">
          <rect>
           <x>460</x>
-          <y>120</y>
+          <y>170</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -1064,7 +1065,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>160</y>
+          <y>200</y>
           <width>201</width>
           <height>23</height>
          </rect>
@@ -1076,80 +1077,99 @@
          <string>Activer Recipes Printer</string>
         </property>
        </widget>
+       <widget class="QWidget" name="layoutWidget_9">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <widget class="QLabel" name="labelAdresseSite_3">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdresseSite_3"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_10">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>40</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <item>
+          <widget class="QLabel" name="labelAddressePublication_3">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdressePublication_3"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_11">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <item>
+          <widget class="QLabel" name="labelDossierDistantImages_3">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditDossierDistantImages_3"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_12">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <item>
+          <widget class="QLabel" name="labelPseudoWordpress_3">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditPseudoWordpress_3"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="config4">
        <attribute name="title">
         <string>Config 4</string>
        </attribute>
-       <widget class="QLabel" name="labelAdresseSite_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>121</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelAddressePublication_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>40</y>
-          <width>181</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditDossierDistantImages_4">
-        <property name="geometry">
-         <rect>
-          <x>260</x>
-          <y>80</y>
-          <width>371</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditAdresseSite_4">
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>0</y>
-          <width>511</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditAdressePublication_4">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>40</y>
-          <width>461</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelDossierDistantImages_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>80</y>
-          <width>271</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
@@ -1167,7 +1187,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>160</y>
+          <y>200</y>
           <width>201</width>
           <height>23</height>
          </rect>
@@ -1183,7 +1203,7 @@
         <property name="geometry">
          <rect>
           <x>460</x>
-          <y>120</y>
+          <y>170</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -1207,7 +1227,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>130</y>
+          <y>170</y>
           <width>431</width>
           <height>23</height>
          </rect>
@@ -1223,7 +1243,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>220</y>
+          <y>260</y>
           <width>261</width>
           <height>23</height>
          </rect>
@@ -1239,7 +1259,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>190</y>
+          <y>230</y>
           <width>211</width>
           <height>23</height>
          </rect>
@@ -1255,7 +1275,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>290</y>
+          <y>305</y>
           <width>351</width>
           <height>25</height>
          </rect>
@@ -1264,80 +1284,99 @@
          <string>Supprimer les données personnelles (identifiants)</string>
         </property>
        </widget>
+       <widget class="QWidget" name="layoutWidget_13">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <item>
+          <widget class="QLabel" name="labelAdresseSite_4">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdresseSite_4"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_14">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>40</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_14">
+         <item>
+          <widget class="QLabel" name="labelAddressePublication_4">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdressePublication_4"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_15">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_15">
+         <item>
+          <widget class="QLabel" name="labelDossierDistantImages_4">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditDossierDistantImages_4"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_16">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_16">
+         <item>
+          <widget class="QLabel" name="labelPseudoWordpress_4">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditPseudoWordpress_4"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="config5">
        <attribute name="title">
         <string>Config 5</string>
        </attribute>
-       <widget class="QLabel" name="labelAdresseSite_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>121</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelAddressePublication_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>40</y>
-          <width>181</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditDossierDistantImages_5">
-        <property name="geometry">
-         <rect>
-          <x>260</x>
-          <y>80</y>
-          <width>371</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditAdresseSite_5">
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>0</y>
-          <width>511</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEditAdressePublication_5">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>40</y>
-          <width>461</width>
-          <height>25</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="labelDossierDistantImages_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>80</y>
-          <width>271</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_6">
         <property name="geometry">
          <rect>
@@ -1355,7 +1394,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>160</y>
+          <y>200</y>
           <width>201</width>
           <height>23</height>
          </rect>
@@ -1371,7 +1410,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>130</y>
+          <y>170</y>
           <width>431</width>
           <height>23</height>
          </rect>
@@ -1393,7 +1432,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>190</y>
+          <y>230</y>
           <width>211</width>
           <height>23</height>
          </rect>
@@ -1409,7 +1448,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>220</y>
+          <y>260</y>
           <width>261</width>
           <height>23</height>
          </rect>
@@ -1425,7 +1464,7 @@
         <property name="geometry">
          <rect>
           <x>460</x>
-          <y>120</y>
+          <y>170</y>
           <width>171</width>
           <height>23</height>
          </rect>
@@ -1449,7 +1488,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>290</y>
+          <y>305</y>
           <width>351</width>
           <height>25</height>
          </rect>
@@ -1457,6 +1496,94 @@
         <property name="text">
          <string>Supprimer les données personnelles (identifiants)</string>
         </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_17">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_17">
+         <item>
+          <widget class="QLabel" name="labelAdresseSite_5">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdresseSite_5"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_18">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>40</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_18">
+         <item>
+          <widget class="QLabel" name="labelAddressePublication_5">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditAdressePublication_5"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_19">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_19">
+         <item>
+          <widget class="QLabel" name="labelDossierDistantImages_5">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditDossierDistantImages_5"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_20">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>631</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_20">
+         <item>
+          <widget class="QLabel" name="labelPseudoWordpress_5">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditPseudoWordpress_5"/>
+         </item>
+        </layout>
        </widget>
       </widget>
      </widget>
@@ -1484,6 +1611,7 @@
   </widget>
  </widget>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
   <tabstop>lineEditDossierSauvegardes</tabstop>
   <tabstop>buttonModifDossierSauvegardes</tabstop>
   <tabstop>backup_useLastOne</tabstop>
@@ -1494,22 +1622,25 @@
   <tabstop>buttonModifCommandeNavigateur</tabstop>
   <tabstop>lineEditDossierTemp</tabstop>
   <tabstop>buttonModifDossierTemp</tabstop>
-  <tabstop>lineEditPseudoWordpress</tabstop>
-  <tabstop>lineEditDictionnairePath</tabstop>
   <tabstop>lineEditEditeurImages</tabstop>
   <tabstop>buttonModifEditeurImages</tabstop>
+  <tabstop>lineEditDictionnairePath</tabstop>
+  <tabstop>radioButton_lang_en</tabstop>
+  <tabstop>radioButton_lang_fr</tabstop>
   <tabstop>autoSearchUpdt</tabstop>
   <tabstop>checkF7Send</tabstop>
   <tabstop>radioButtonLinuxUbuntu</tabstop>
-  <tabstop>radioButtonLinuxSlack</tabstop>
   <tabstop>radioButtonLinuxArch</tabstop>
+  <tabstop>radioButtonLinuxSlack</tabstop>
   <tabstop>radioButtonLinuxAutre</tabstop>
   <tabstop>radioButtonWindows</tabstop>
   <tabstop>sendAuto</tabstop>
   <tabstop>sendManual</tabstop>
+  <tabstop>configs</tabstop>
   <tabstop>lineEditAdresseSite</tabstop>
   <tabstop>lineEditAdressePublication</tabstop>
   <tabstop>lineEditDossierDistantImages</tabstop>
+  <tabstop>lineEditPseudoWordpress</tabstop>
   <tabstop>richSnippets</tabstop>
   <tabstop>recPrinter</tabstop>
   <tabstop>recSearch</tabstop>
@@ -1519,6 +1650,7 @@
   <tabstop>lineEditAdresseSite_2</tabstop>
   <tabstop>lineEditAdressePublication_2</tabstop>
   <tabstop>lineEditDossierDistantImages_2</tabstop>
+  <tabstop>lineEditPseudoWordpress_2</tabstop>
   <tabstop>richSnippets_2</tabstop>
   <tabstop>recPrinter_2</tabstop>
   <tabstop>recSearch_2</tabstop>
@@ -1528,6 +1660,7 @@
   <tabstop>lineEditAdresseSite_3</tabstop>
   <tabstop>lineEditAdressePublication_3</tabstop>
   <tabstop>lineEditDossierDistantImages_3</tabstop>
+  <tabstop>lineEditPseudoWordpress_3</tabstop>
   <tabstop>richSnippets_3</tabstop>
   <tabstop>recPrinter_3</tabstop>
   <tabstop>recSearch_3</tabstop>
@@ -1537,6 +1670,7 @@
   <tabstop>lineEditAdresseSite_4</tabstop>
   <tabstop>lineEditAdressePublication_4</tabstop>
   <tabstop>lineEditDossierDistantImages_4</tabstop>
+  <tabstop>lineEditPseudoWordpress_4</tabstop>
   <tabstop>richSnippets_4</tabstop>
   <tabstop>recPrinter_4</tabstop>
   <tabstop>recSearch_4</tabstop>
@@ -1546,14 +1680,13 @@
   <tabstop>lineEditAdresseSite_5</tabstop>
   <tabstop>lineEditAdressePublication_5</tabstop>
   <tabstop>lineEditDossierDistantImages_5</tabstop>
+  <tabstop>lineEditPseudoWordpress_5</tabstop>
   <tabstop>richSnippets_5</tabstop>
   <tabstop>recPrinter_5</tabstop>
   <tabstop>recSearch_5</tabstop>
   <tabstop>recCoupDeCoeur_5</tabstop>
   <tabstop>configActive_5</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_5</tabstop>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>configs</tabstop>
  </tabstops>
  <resources>
   <include location="../Ressources.qrc"/>

@@ -23,13 +23,14 @@ extern QString dirPict;
 extern QString dirTmp;
 extern QString cmdNav;
 extern QString dirSav;
-extern QString pseudoWp;
 extern QString dirDistPict;
 extern QString addrSite;
 extern QString addrPub;
+extern QString pseudoWp;
 extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
+extern QString appI18n;
 extern bool richSnippets;
 extern bool recPrinter;
 extern bool recSearch;
@@ -99,11 +100,6 @@ void Functions::loadConfig()
                 cmdNav = xml.text().toString();
                 continue;
             }
-            if(xml.name() == "pseudoWp") {
-                xml.readNext();
-                pseudoWp = xml.text().toString();
-                continue;
-            }
             if(xml.name() == "corrOrtho") {
                 xml.readNext();
                 corrOrtho = xml.text().toString();
@@ -122,6 +118,11 @@ void Functions::loadConfig()
             if(xml.name() == "sendAuto") {
                 xml.readNext();
                 sendAuto = xml.text().toString() == "1";
+                continue;
+            }
+            if(xml.name() == "appI18n") {
+                xml.readNext();
+                appI18n = xml.text().toString();
                 continue;
             }
             if (xml.name() == "activeServerConfig") {
@@ -177,6 +178,11 @@ void Functions::loadConfig()
                 if(xmlS.name() == "dirDistPict") {
                     xmlS.readNext();
                     dirDistPict = xmlS.text().toString();
+                    continue;
+                }
+                if(xmlS.name() == "pseudoWp") {
+                    xmlS.readNext();
+                    pseudoWp = xmlS.text().toString();
                     continue;
                 }
                 if(xmlS.name() == "richSnippets") {
