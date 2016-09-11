@@ -93,6 +93,13 @@ QMap<QString, QString> liens; //Contains all links registered for one recipe
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    //Translators for Qt built-in:
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(),
+            QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&qtTranslator);
+
     QString openFilename = NULL;
     if (a.arguments().count() > 1) {
         QFile *oFile = new QFile(a.arguments()[1]);
