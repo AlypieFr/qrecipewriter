@@ -168,8 +168,8 @@ left: 10px; padding: 0 3px;}</string>
                  <property name="geometry">
                   <rect>
                    <x>0</x>
-                   <y>-137</y>
-                   <width>338</width>
+                   <y>0</y>
+                   <width>344</width>
                    <height>460</height>
                   </rect>
                  </property>
@@ -262,8 +262,8 @@ left: 10px; padding: 0 3px;}</string>
                    <rect>
                     <x>14</x>
                     <y>393</y>
-                    <width>291</width>
-                    <height>31</height>
+                    <width>348</width>
+                    <height>46</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -1359,7 +1359,7 @@ left: 10px; padding: 0 3px;}</string>
              <x>0</x>
              <y>0</y>
              <width>673</width>
-             <height>634</height>
+             <height>645</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1564,7 +1564,7 @@ left: 10px; padding: 0 3px;}</string>
                           <property name="minimumSize">
                            <size>
                             <width>318</width>
-                            <height>138</height>
+                            <height>120</height>
                            </size>
                           </property>
                           <property name="contextMenuPolicy">
@@ -1582,25 +1582,183 @@ left: 10px; padding: 0 3px;}</string>
                          </widget>
                         </item>
                         <item>
-                         <widget class="MyLineEdit" name="editIngr">
+                         <widget class="QTabWidget" name="tab_ingrs">
                           <property name="minimumSize">
                            <size>
-                            <width>318</width>
-                            <height>30</height>
+                            <width>0</width>
+                            <height>62</height>
                            </size>
                           </property>
                           <property name="maximumSize">
                            <size>
                             <width>16777215</width>
-                            <height>30</height>
+                            <height>62</height>
                            </size>
                           </property>
-                          <property name="contextMenuPolicy">
-                           <enum>Qt::CustomContextMenu</enum>
+                          <property name="currentIndex">
+                           <number>0</number>
                           </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
+                          <widget class="QWidget" name="tab_ingr">
+                           <attribute name="title">
+                            <string>Ingrédient</string>
+                           </attribute>
+                           <layout class="QVBoxLayout" name="verticalLayout_13">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <layout class="QHBoxLayout" name="horizontalLayout_17">
+                              <item>
+                               <widget class="QLabel" name="label_22">
+                                <property name="text">
+                                 <string>Q:</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLineEdit" name="qte_ingr">
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>40</width>
+                                  <height>0</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>40</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_23">
+                                <property name="text">
+                                 <string>U:</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QComboBox" name="unit_ingr">
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>50</width>
+                                  <height>0</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>100</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_24">
+                                <property name="text">
+                                 <string>N:</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLineEdit" name="editIngr"/>
+                              </item>
+                             </layout>
+                            </item>
+                           </layout>
+                          </widget>
+                          <widget class="QWidget" name="tab_group">
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <attribute name="title">
+                            <string>Titre de groupe</string>
+                           </attribute>
+                           <layout class="QHBoxLayout" name="horizontalLayout_16">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <widget class="QLineEdit" name="titlegroup_ingr">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>30</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>30</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                          <widget class="QWidget" name="name">
+                           <attribute name="title">
+                            <string>Commentaire</string>
+                           </attribute>
+                           <layout class="QVBoxLayout" name="verticalLayout_14">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <widget class="QLineEdit" name="comment_ingr">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>30</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>30</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
                          </widget>
                         </item>
                        </layout>
@@ -2157,7 +2315,7 @@ left: 10px; padding: 0 3px;}</string>
      <x>0</x>
      <y>0</y>
      <width>1149</width>
-     <height>30</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOutils">
@@ -2349,7 +2507,6 @@ left: 10px; padding: 0 3px;}</string>
   <tabstop>ingrListPlus</tabstop>
   <tabstop>ingrListShow</tabstop>
   <tabstop>listIngr</tabstop>
-  <tabstop>editIngr</tabstop>
   <tabstop>listMat</tabstop>
   <tabstop>editMat</tabstop>
   <tabstop>prepListMoins</tabstop>

@@ -54,6 +54,25 @@ void ListViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
             painter->drawText(rect.left() + 2 + level * 30, rect.top(), 18, 20, 0, puce+'.');
         }
         else { //It is a simple list !
+            if (line.startsWith("ingr#")) {
+                QStringList ingrParts = line.split("#");
+                QString qte = ingrParts[1];
+                QString unit = ingrParts[2];
+                QString name = ingrParts.mid(3).join("#");
+                if (unit == "") {
+                    line = qte + " " + name;
+                }
+                else {
+                    QStringList voyelles;
+                    voyelles << "a" << "e" << "i" << "o" << "u" << "y" << "é" << "è" << "â" << "ê" << "î" << "ô" << "û" << "ŷ" << "ä" << "ë" << "ï" << "ö" << "ü" << "ÿ";
+                    if (voyelles.indexOf(name.toLower().left(1)) > -1) {
+                        line = qte + " " + unit + " " + tr("d'") + name;
+                    }
+                    else {
+                        line = qte + " " + unit + " de " + name;
+                    }
+                }
+            }
             level = indexItem.toInt();
             QPen oldPen = painter->pen(); //Keep previous color
             QPen pen(opt.palette.color(cg, QPalette::Text));

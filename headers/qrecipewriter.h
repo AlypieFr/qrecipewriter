@@ -204,6 +204,12 @@ private slots:
 
     void on_switchNbPers_clicked();
 
+    void on_tab_ingrs_currentChanged(int index);
+
+    void on_titlegroup_ingr_selectionChanged();
+
+    void on_comment_ingr_selectionChanged();
+
 public slots:
     void init();
     void config();
@@ -280,7 +286,9 @@ private:
     void deleteBalsInLineEdit(QLineEdit* areaTxt);
     void deleteBalsInPlainTextEdit(QPlainTextEdit* areaTxt);
     void updatePrepItems();
-    void insertIngredient(QString text);
+    void insertIngredient(QString qte, QString unit, QString name);
+    void insertIngredientGroupTitle(QString title);
+    void insertIngredientComment(QString comment);
     void insertMateriel(QString text);
     void insertPreparation(QString text);
     void insertConseil(QString text);

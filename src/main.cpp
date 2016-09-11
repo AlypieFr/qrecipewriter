@@ -71,6 +71,7 @@ QString editPict = ""; //Program for advanced picture editor
 QString corrOrtho = ""; //Main dictionnary path
 QString correction = ""; //Path to the dictionnary (prefix of .dic and .aff files)
 QStringList namesCats; //Contains names of categories
+QStringList units;
 bool cancel = false; //Keep if user cancel orthographical correction
 bool richSnippets = false; //Active rich snippets for recipes in google search results
 bool recPrinter = false; //CeC Printer status
@@ -133,6 +134,9 @@ int main(int argc, char *argv[])
 #else
     systExp = "windows";
 #endif
+
+    //Default units:
+    units << "" << "ml" << "cl" << "dl" << "L" << "g" << "kg" << "cs" << "cc" << QObject::tr("tasse") << QObject::tr("verre");
 
     //Define confFile:
     confFile  = confDir +".config";
