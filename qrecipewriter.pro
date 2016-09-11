@@ -101,24 +101,6 @@ unix {
                 }
             }
         }
-        equals(QT_MAJOR_VERSION, 4) {
-            exists("/usr/lib/x86_64-linux-gnu/libqjson.so") {
-                LIBS += /usr/lib/x86_64-linux-gnu/libqjson.so
-            }
-            !exists("/usr/lib/x86_64-linux-gnu/libqjson.so") {
-                exists("/usr/lib64/libqjson.so") {
-                    LIBS += /usr/lib64/libqjson.so
-                }
-                !exists("/usr/lib64/libqjson.so") {
-                    exists("/usr/lib/libqjson.so") {
-                        LIBS += /usr/lib/libqjson.so
-                    }
-                    !exists("/usr/lib/libqjson.so") {
-                        message("ERROR: libqjson.so not found. Please edit qrecipewriter.pro file and set the correct location")
-                    }
-                }
-            }
-        }
     }
     else {
         exists("/usr/lib/i386-linux-gnu/libhunspell-1.3.a") {
@@ -136,24 +118,6 @@ unix {
                     LIBS += /usr/lib/libhunspell.so
                     !exists("/usr/lib/libhunspell.so") {
                         message("ERROR: libhunspell.so not found. Please edit qrecipewriter.pro file and set the correct location")
-                    }
-                }
-            }
-        }
-        equals(QT_MAJOR_VERSION, 4) {
-            exists("/usr/lib/i386-linux-gnu/libqjson.so") {
-                LIBS += /usr/lib/i386-linux-gnu/libqjson.so
-            }
-            !exists("/usr/lib/i386-linux-gnu/libqjson.so") {
-                exists("/usr/lib32/libqjson.so") {
-                    LIBS += /usr/lib32/libqjson.so
-                }
-                !exists("/usr/lib32/libqjson.so") {
-                    exists("/usr/lib/libqjson.so") {
-                        LIBS += /usr/lib/libqjson.so
-                    }
-                    !exists("/usr/lib/libqjson.so") {
-                        message("ERROR: libqjson.so not found. Please edit qrecipewriter.pro file and set the correct location")
                     }
                 }
             }
