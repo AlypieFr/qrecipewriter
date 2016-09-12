@@ -73,6 +73,12 @@ void ListViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
                     }
                 }
             }
+            else if (line.startsWith("mat#")) {
+                QStringList ingrParts = line.split("#");
+                QString qte = ingrParts[1];
+                QString name = ingrParts[2];
+                line = qte + " " + name;
+            }
             level = indexItem.toInt();
             QPen oldPen = painter->pen(); //Keep previous color
             QPen pen(opt.palette.color(cg, QPalette::Text));

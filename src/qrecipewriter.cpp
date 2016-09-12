@@ -429,6 +429,8 @@ void QRecipeWriter::init()
     ui->listMat->setItemDelegate(new ListViewDelegate());
     ui->listMat->installEventFilter(this);
     ui->editMat->installEventFilter(this);
+    ui->qte_mat->installEventFilter(this);
+    ui->comment_mat->installEventFilter(this);
     //ON PREP:
     model3 = new QStandardItemModel(this);
     ui->listPrep->setIconSize(QSize(20,20));
@@ -1006,6 +1008,11 @@ void QRecipeWriter::on_lienButton_clicked()
         cible = "editMat";
         searchLink = ui->editMat->text().mid(ui->editMat->selectionStart() - 5, 5 + ui->editMat->selectedText().length() + 6);
     }
+    else if (ui->comment_mat->hasFocus() && ui->comment_mat->selectionStart() != -1)
+    {
+        cible = "comment_mat";
+        searchLink = ui->comment_mat->text().mid(ui->comment_mat->selectionStart() - 5, 5 + ui->comment_mat->selectedText().length() + 6);
+    }
     else if (ui->editPrep->hasFocus() && ui->editPrep->textCursor().selectionStart() != ui->editPrep->textCursor().selectionEnd())
     {
         cible = "editPrep";
@@ -1116,6 +1123,14 @@ void QRecipeWriter::on_lienButton_clicked()
                     ui->editMat->setText(initial.left(selStart) + "<"+ idL +">" + sel
                           + "</"+ idL +">" + initial.right(initial.length() - (selStart + sel.length())));
                     ui->editMat->setCursorPosition(selStart + sel.length() + 5 + (idL.length() * 2));
+                }
+                else if (cible == "comment_mat") {
+                    int selStart = ui->comment_mat->selectionStart();
+                    QString sel = ui->comment_mat->selectedText();
+                    QString initial = ui->comment_mat->text();
+                    ui->comment_mat->setText(initial.left(selStart) + "<"+ idL +">" + sel
+                          + "</"+ idL +">" + initial.right(initial.length() - (selStart + sel.length())));
+                    ui->comment_mat->setCursorPosition(selStart + sel.length() + 5 + (idL.length() * 2));
                 }
                 else if (cible == "editPrep")
                 {
@@ -1411,7 +1426,6 @@ void QRecipeWriter::startAbcCheck(bool silent) {
             head = expIngr.cap(0);
             correction.replace(head, "");
         }
-        qDebug() << correction;
         correction.replace(">","> ");
         if(cancel == false)
         {
@@ -1429,6 +1443,12 @@ void QRecipeWriter::startAbcCheck(bool silent) {
     {
         QString item = model2->item(i)->text();
         correction = item.split("|")[1];
+        QString head = "";
+        QRegExp expMat("mat#.*#");
+        if (correction.contains(expMat)) {
+            head = expMat.cap(0);
+            correction.replace(head, "");
+        }
         correction.replace(">","> ");
 
         if(cancel == false)
@@ -1437,6 +1457,7 @@ void QRecipeWriter::startAbcCheck(bool silent) {
             delete(checkMat);
         }
         correction.replace("> ",">");
+        correction = head + correction;
         correction = item.split("|")[0] + "|" + correction;
         model2->item(i)->setText(correction);
 
@@ -2508,9 +2529,8 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         }
         return false;
     }
-    else if (object == ui->editMat && event->type() == QEvent::FocusIn)
+    else if ((object == ui->editMat || object == ui->comment_mat) && event->type() == QEvent::FocusIn)
     {
-        ui->commButton->setEnabled(true);
         ui->grasButton->setEnabled(true);
         ui->italicButton->setEnabled(true);
         ui->soulignButton->setEnabled(true);
@@ -2518,11 +2538,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
             ui->noPrint->setEnabled(true);
             ui->printOnly->setEnabled(true);
         }
-        if (matComm)
-            ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
-        else
-            ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
-        return false;
+       return false;
     }
     else if (object == ui->editPrep && event->type() == QEvent::FocusIn)
     {
@@ -2758,13 +2774,31 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
     }
 
     //Materiel:
-    else if (object == ui->editMat && event->type() == QEvent::KeyPress) {
+    else if ((object == ui->editMat || object == ui->qte_mat || object == ui->comment_mat) && event->type() == QEvent::KeyPress) {
         QKeyEvent *ke = static_cast<QKeyEvent *>(event);
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {
-            this->insertMateriel(ui->editMat->text());
-            ui->editMat->setText("");
-            return true;
+            if (object == ui->editMat || object == ui->qte_mat) {
+                if (ui->editMat->text() != "" && ui->qte_mat->text() != "") {
+                    this->insertMateriel(ui->qte_mat->text(), ui->editMat->text());
+                    ui->qte_mat->setText("");
+                    ui->editMat->setText("");
+                    return true;
+                }
+                ui->state->setText(tr("Vous devez renseigner une quantité et un nom !"));
+                QTimer::singleShot(4000, this, SLOT(refreshState()));
+                return true;
+            }
+            else if (object == ui->comment_mat) {
+                if (ui->comment_mat->text() != "") {
+                    this->insertMaterielComment(ui->comment_mat->text());
+                    ui->comment_mat->setText("");
+                    return true;
+                }
+                ui->state->setText(tr("Le champs est vide !"));
+                QTimer::singleShot(4000, this, SLOT(refreshState()));
+                return true;
+            }
         }
         else if (ke->key() == Qt::Key_Escape)
         {
@@ -2773,40 +2807,62 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                 if (model2->item(matEdit)->text().split("|").at(1) != "")
                 {
                     model2->setItem(matEdit, new QStandardItem(model2->item(matEdit)->text()));
-                    matEdit = -1;
-                    ui->editMat->clear();
                 }
                 else
                 {
                     model2->removeRow(matEdit);
-                    matEdit = -1;
-                    ui->editMat->clear();
                 }
-                matComm = false;
-                ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+                matEdit = -1;
+                ui->editMat->clear();
+                ui->qte_mat->clear();
+                ui->comment_mat->clear();
             }
             ui->listMat->setSelectionMode(QAbstractItemView::ExtendedSelection);
             return true;
         }
-        else if (ke->key() == Qt::Key_Backspace)
-        {
-            if (ui->editMat->selectionStart() == -1)
-                checkRemoveBalBckpInLineEdit(ui->editMat);
-            else
-                checkRemoveBalSlctInLineEdit(ui->editMat);
-            if (balise != "" || balises.size() > 0)
-                return true;
-            return false;
+        else if (object == ui->editMat) {
+            if (ke->key() == Qt::Key_Backspace)
+            {
+                if (ui->editMat->selectionStart() == -1)
+                    checkRemoveBalBckpInLineEdit(ui->editMat);
+                else
+                    checkRemoveBalSlctInLineEdit(ui->editMat);
+                if (balise != "" || balises.size() > 0)
+                    return true;
+                return false;
+            }
+            else if (ke->key() == Qt::Key_Delete)
+            {
+                if (ui->editMat->selectionStart() == -1)
+                    checkRemoveBalSupprInLineEdit(ui->editMat);
+                else
+                    checkRemoveBalSlctInLineEdit(ui->editMat);
+                if (balise != "" || balises.size() > 0)
+                    return true;
+                return false;
+            }
         }
-        else if (ke->key() == Qt::Key_Delete)
-        {
-            if (ui->editMat->selectionStart() == -1)
-                checkRemoveBalSupprInLineEdit(ui->editMat);
-            else
-                checkRemoveBalSlctInLineEdit(ui->editMat);
-            if (balise != "" || balises.size() > 0)
-                return true;
-            return false;
+        else if (object == ui->comment_mat) {
+            if (ke->key() == Qt::Key_Backspace)
+            {
+                if (ui->comment_mat->selectionStart() == -1)
+                    checkRemoveBalBckpInLineEdit(ui->comment_mat);
+                else
+                    checkRemoveBalSlctInLineEdit(ui->comment_mat);
+                if (balise != "" || balises.size() > 0)
+                    return true;
+                return false;
+            }
+            else if (ke->key() == Qt::Key_Delete)
+            {
+                if (ui->comment_mat->selectionStart() == -1)
+                    checkRemoveBalSupprInLineEdit(ui->comment_mat);
+                else
+                    checkRemoveBalSlctInLineEdit(ui->comment_mat);
+                if (balise != "" || balises.size() > 0)
+                    return true;
+                return false;
+            }
         }
         return false;
     }
@@ -2818,6 +2874,17 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                 deleteBalInLineEdit(ui->editMat);
             else if (balises.size() > 0)
                 deleteBalsInLineEdit(ui->editMat);
+        }
+        return false;
+    }
+    else if (object == ui->comment_mat && event->type() == QEvent::KeyRelease) {
+        QKeyEvent *ke = static_cast<QKeyEvent *>(event);
+        if (ke->key() == Qt::Key_Backspace || ke->key() == Qt::Key_Delete)
+        {
+            if (balise != "")
+                deleteBalInLineEdit(ui->comment_mat);
+            else if (balises.size() > 0)
+                deleteBalsInLineEdit(ui->comment_mat);
         }
         return false;
     }
@@ -3056,11 +3123,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
  */
 
 void QRecipeWriter::insertIngredient(QString qte, QString unit, QString name) {
-    QStandardItem* itemNew;
-    //if (!ingrComm)
-        itemNew = new QStandardItem(QString::number(idIngr) + "|ingr#" +qte + "#" + unit + "#" + name);
-    //else
-    //    itemNew = new QStandardItem("comm|" + text);
+    QStandardItem* itemNew = new QStandardItem(QString::number(idIngr) + "|ingr#" +qte + "#" + unit + "#" + name);
     if (ingrEdit == -1)
     {
         model1->appendRow(itemNew);
@@ -3125,13 +3188,26 @@ void QRecipeWriter::insertIngredientComment(QString comment) {
     }
 }
 
-void QRecipeWriter::insertMateriel(QString text) {
-    QStandardItem* itemNew;
-    if (!matComm)
-        itemNew = new QStandardItem("0|" + text);
-    else
-        itemNew = new QStandardItem("comm|" + text);
+void QRecipeWriter::insertMateriel(QString qte, QString name) {
+    QStandardItem* itemNew = new QStandardItem("0|mat#" + qte + "#" + name);
 
+    if (matEdit == -1)
+    {
+        model2->appendRow(itemNew);
+        ui->listMat->scrollToBottom();
+    }
+    else
+    {
+        model2->setItem(matEdit, itemNew);
+        matEdit = -1;
+        ui->listMat->setSelectionMode(QAbstractItemView::ExtendedSelection);
+        matComm = false;
+        ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+    }
+}
+
+void QRecipeWriter::insertMaterielComment(QString comment) {
+    QStandardItem* itemNew = new QStandardItem("comm|" + comment);
     if (matEdit == -1)
     {
         model2->appendRow(itemNew);
@@ -3326,19 +3402,24 @@ void QRecipeWriter::modifierMat(const QModelIndex &index)
     QStringList parts = text.split("|");
     if (parts[0] == "comm")
     {
-        matComm = true;
-        ui->commButton->setStyleSheet("QPushButton {background-color: red;}");
+        ui->tab_mats->setCurrentIndex(1);
+        ui->comment_mat->setText(parts[1]);
+        ui->comment_mat->setFocus();
     }
     else
     {
-        matComm = false;
-        ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
+        ui->tab_mats->setCurrentIndex(0);
+        QRegExp expMat("mat#(.+)#(.+)");
+        if (parts[1].contains(expMat)) {
+            QString quantity = expMat.cap(1);
+            QString name = expMat.cap(2);
+            ui->qte_mat->setText(quantity);
+            ui->editMat->setText(name);
+        }
     }
     model2->item(matEdit)->setBackground(QBrush(colorEdit));
     ui->listMat->clearSelection();
     ui->listMat->setSelectionMode(QAbstractItemView::NoSelection);
-    ui->editMat->setText(parts[1]);
-    ui->editMat->setFocus();
 }
 
 /**
@@ -4039,6 +4120,7 @@ void QRecipeWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
                         }
                     }
                     idIngr = idIngrOrig + indent;
+                    //TODO: fix import of ingredients
                     //if (txt != "")
                         //this->insertIngredient(txt);
                 }
@@ -4078,8 +4160,9 @@ void QRecipeWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
                         txt = exp.cap(1);
                         matComm = true;
                     }
-                    if (txt != "")
-                        this->insertMateriel(txt);
+                    //TODO: fix import of material
+                    //if (txt != "")
+                        //this->insertMateriel(txt);
                 }
                 matComm = matCommOrig;
             }
@@ -5087,6 +5170,16 @@ void QRecipeWriter::on_editMat_selectionChanged()
     }
 }
 
+void QRecipeWriter::on_comment_mat_selectionChanged()
+{
+    if (ui->comment_mat->selectedText().length() > 0) {
+        ui->lienButton->setEnabled(true);
+    }
+    else {
+        ui->lienButton->setEnabled(false);
+    }
+}
+
 void QRecipeWriter::on_editPrep_selectionChanged()
 {
     if (ui->editPrep->textCursor().selectedText().length() > 0) {
@@ -5162,8 +5255,19 @@ void QRecipeWriter::on_tab_ingrs_currentChanged(int index)
     }
     else if (index == 2) {
         ui->comment_ingr->setFocus();
+
         ui->ingrListMoins->setEnabled(false);
         ui->ingrListPlus->setEnabled(false);
         ui->ingrListShow->setText("");
+    }
+}
+
+void QRecipeWriter::on_tab_mats_currentChanged(int index)
+{
+    if (index == 0) {
+        ui->qte_mat->setFocus();
+    }
+    else if (index == 1) {
+        ui->comment_mat->setFocus();
     }
 }

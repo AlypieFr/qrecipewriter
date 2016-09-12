@@ -210,6 +210,10 @@ private slots:
 
     void on_comment_ingr_selectionChanged();
 
+    void on_tab_mats_currentChanged(int index);
+
+    void on_comment_mat_selectionChanged();
+
 public slots:
     void init();
     void config();
@@ -289,7 +293,8 @@ private:
     void insertIngredient(QString qte, QString unit, QString name);
     void insertIngredientGroupTitle(QString title);
     void insertIngredientComment(QString comment);
-    void insertMateriel(QString text);
+    void insertMateriel(QString qte, QString name);
+    void insertMaterielComment(QString comment);
     void insertPreparation(QString text);
     void insertConseil(QString text);
     void sendManual();
