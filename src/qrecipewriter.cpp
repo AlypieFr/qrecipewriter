@@ -2585,15 +2585,19 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {
             if (object == ui->editIngr || object == ui->qte_ingr || object == ui->unit_ingr) {
-                //this->insertIngredient(ui->qte_ingr->text() + " " + ui->unit_ingr->currentText() + " : " + ui->editIngr->text());
-                this->insertIngredient(ui->qte_ingr->text(), ui->unit_ingr->currentText(), ui->editIngr->text());
-                ui->editIngr->setText("");
-                ui->qte_ingr->setText("");
-                ui->unit_ingr->setCurrentIndex(0);
-                ui->qte_ingr->setFocus();
-                return true;
+                if (ui->qte_ingr->text() != "" && ui->editIngr->text() != "") {
+                    //this->insertIngredient(ui->qte_ingr->text() + " " + ui->unit_ingr->currentText() + " : " + ui->editIngr->text());
+                    this->insertIngredient(ui->qte_ingr->text(), ui->unit_ingr->currentText(), ui->editIngr->text());
+                    ui->editIngr->setText("");
+                    ui->qte_ingr->setText("");
+                    ui->unit_ingr->setCurrentIndex(0);
+                    ui->qte_ingr->setFocus();
+                    return true;
+                }
+                return false;
             }
             else if (object == ui->titlegroup_ingr) {
+                if (ui->titlegroup_ingr->text() != "") {
                     this->insertIngredientGroupTitle(ui->titlegroup_ingr->text());
                     ui->titlegroup_ingr->setText("");
                     ui->tab_ingrs->setCurrentIndex(0);
@@ -2602,11 +2606,15 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                         ui->ingrListShow->setText(QString::number(idIngr));
                     }
                     return true;
+                }
+                return false;
             }
             else if (object == ui->comment_ingr) {
-                this->insertIngredientComment(ui->comment_ingr->text());
-                ui->comment_ingr->setText("");
-                return true;
+                if (ui->comment_ingr->text() != "") {
+                    this->insertIngredientComment(ui->comment_ingr->text());
+                    ui->comment_ingr->setText("");
+                    return true;
+                }
             }
         }
         else if (ke->key() == Qt::Key_Escape)
