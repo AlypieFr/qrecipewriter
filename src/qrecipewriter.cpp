@@ -2594,7 +2594,9 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                     ui->qte_ingr->setFocus();
                     return true;
                 }
-                return false;
+                ui->state->setText(tr("Vous devez renseigner une quantité et un nom !"));
+                QTimer::singleShot(4000, this, SLOT(refreshState()));
+                return true;
             }
             else if (object == ui->titlegroup_ingr) {
                 if (ui->titlegroup_ingr->text() != "") {
@@ -2607,7 +2609,9 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                     }
                     return true;
                 }
-                return false;
+                ui->state->setText(tr("Le champs est vide !"));
+                QTimer::singleShot(4000, this, SLOT(refreshState()));
+                return true;
             }
             else if (object == ui->comment_ingr) {
                 if (ui->comment_ingr->text() != "") {
@@ -2615,6 +2619,9 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                     ui->comment_ingr->setText("");
                     return true;
                 }
+                ui->state->setText(tr("Le champs est vide !"));
+                QTimer::singleShot(4000, this, SLOT(refreshState()));
+                return true;
             }
         }
         else if (ke->key() == Qt::Key_Escape)
@@ -2829,8 +2836,13 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         QKeyEvent *ke = static_cast<QKeyEvent *>(event);
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {
-            this->insertPreparation(ui->editPrep->toPlainText());
-            ui->editPrep->setPlainText("");
+            if (ui->editPrep->toPlainText() != "") {
+                this->insertPreparation(ui->editPrep->toPlainText());
+                ui->editPrep->setPlainText("");
+                return true;
+            }
+            ui->state->setText(tr("Le champs est vide !"));
+            QTimer::singleShot(4000, this, SLOT(refreshState()));
             return true;
         }
         else if (ke->key() == Qt::Key_Escape && prepEdit != -1)
@@ -2925,8 +2937,13 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         QKeyEvent *ke = static_cast<QKeyEvent *>(event);
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {
-            this->insertConseil(ui->editCons->toPlainText());
-            ui->editCons->setPlainText("");
+            if (ui->editCons->toPlainText() != "") {
+                this->insertConseil(ui->editCons->toPlainText());
+                ui->editCons->setPlainText("");
+                return true;
+            }
+            ui->state->setText(tr("Le champs est vide !"));
+            QTimer::singleShot(4000, this, SLOT(refreshState()));
             return true;
         }
         else if (ke->key() == Qt::Key_Escape)
