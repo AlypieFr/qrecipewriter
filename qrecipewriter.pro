@@ -34,7 +34,8 @@ SOURCES += src/main.cpp\
     src/qinputmultiline.cpp \
     src/coupdecoeur.cpp \
     src/opendistant.cpp \
-    src/searchupdates.cpp
+    src/searchupdates.cpp \
+    src/login.cpp
 
 HEADERS  += headers/qrecipewriter.h \
     headers/options.h \
@@ -54,7 +55,8 @@ HEADERS  += headers/qrecipewriter.h \
     headers/qinputmultiline.h \
     headers/coupdecoeur.h \
     headers/opendistant.h \
-    headers/searchupdates.h
+    headers/searchupdates.h \
+    headers/login.h
 
 FORMS    += ui/qrecipewriter.ui \
     ui/options.ui \
@@ -66,7 +68,8 @@ FORMS    += ui/qrecipewriter.ui \
     ui/insertpicture.ui \
     ui/qinputmultiline.ui \
     ui/coupdecoeur.ui \
-    ui/opendistant.ui
+    ui/opendistant.ui \
+    ui/login.ui
 
 RESOURCES += \
     Ressources.qrc

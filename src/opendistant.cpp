@@ -33,60 +33,66 @@ OpenDistant::~OpenDistant()
 
 void OpenDistant::init() {
     idRecipeToOpen = -1;
-    ui->categoriesBox->setContentsMargins(0,10,0,0);
-    /*ui->categoriesBox->setMinimumHeight(70);*/
-    QVBoxLayout *catLay = new QVBoxLayout(ui->scrollCatsContent);
-    catLay->setMargin(0);
-    catLay->setContentsMargins(0,10,0,0);
-    catLay->setSpacing(2);
-    foreach (QString cat, namesCats) {
-        QCheckBox *catI = new QCheckBox(cat);
-        catI->setMaximumHeight(21);
-        catI->setMinimumHeight(21);
-        catLay->addWidget(catI);
-        cboxes.append(catI);
-        connect(catI, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));;
-    }
-    FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPostsJson.php?user=" + pseudoWp, tr("Récupération de la liste des recettes..."), parentWidget);
-    QByteArray resData = fdower->downloadedData();
-    QJsonParseError ok;
+    Login *login = new Login((QWidget*)this->parent());
+    login->init(false);
+    if (login->getAccepted()) {
+        QString pseudoWp = login->getUsername();
 
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
-    if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
-        QJsonObject json = jsonDoc.object();
-        QVariantMap result = json.toVariantMap();
-        if (result["success"].toString() == "true") {
-            QList<QVariant> recipesRaw = result["recettes"].toList();
-            foreach (QVariant recipeRaw, recipesRaw) {
-                QMap<QString, QVariant> recipe = recipeRaw.toMap();
-                QStringList catsOld = recipe["cats"].toStringList();
-                QStringList catsNew;
-                foreach (QString catO, catsOld) {
-                    catsNew.append(catO.replace("&", ""));
+        ui->categoriesBox->setContentsMargins(0,10,0,0);
+        /*ui->categoriesBox->setMinimumHeight(70);*/
+        QVBoxLayout *catLay = new QVBoxLayout(ui->scrollCatsContent);
+        catLay->setMargin(0);
+        catLay->setContentsMargins(0,10,0,0);
+        catLay->setSpacing(2);
+        foreach (QString cat, namesCats) {
+            QCheckBox *catI = new QCheckBox(cat);
+            catI->setMaximumHeight(21);
+            catI->setMinimumHeight(21);
+            catLay->addWidget(catI);
+            cboxes.append(catI);
+            connect(catI, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));;
+        }
+        FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPostsJson.php?user=" + pseudoWp, tr("Récupération de la liste des recettes..."), parentWidget);
+        QByteArray resData = fdower->downloadedData();
+        QJsonParseError ok;
+
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
+        if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
+            QJsonObject json = jsonDoc.object();
+            QVariantMap result = json.toVariantMap();
+            if (result["success"].toString() == "true") {
+                QList<QVariant> recipesRaw = result["recettes"].toList();
+                foreach (QVariant recipeRaw, recipesRaw) {
+                    QMap<QString, QVariant> recipe = recipeRaw.toMap();
+                    QStringList catsOld = recipe["cats"].toStringList();
+                    QStringList catsNew;
+                    foreach (QString catO, catsOld) {
+                        catsNew.append(catO.replace("&", ""));
+                    }
+                    recipe["cats"] = catsNew;
+                    recipes[recipe["title"].toString()] = recipe;
+                    foreach (QString cat, recipe["cats"].toStringList()) {
+                        recipesByCats[cat].append(recipe["title"].toString());
+                    }
+                    items.append(recipe["title"].toString());
                 }
-                recipe["cats"] = catsNew;
-                recipes[recipe["title"].toString()] = recipe;
-                foreach (QString cat, recipe["cats"].toStringList()) {
-                    recipesByCats[cat].append(recipe["title"].toString());
-                }
-                items.append(recipe["title"].toString());
+                ui->listRecipes->addItems(items);
+                ui->listRecipes->sortItems();
+                updateNbRecipes(items.count());
             }
-            ui->listRecipes->addItems(items);
-            ui->listRecipes->sortItems();
-            updateNbRecipes(items.count());
+            else {
+                QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
+                                          QMessageBox::Ok);
+            }
         }
         else {
             QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
-                                      QMessageBox::Ok);
+                                          QMessageBox::Ok);
+            qCritical() << "Error while parsing JSON: " + ok.errorString();
         }
-    }
-    else {
-        QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
-                                      QMessageBox::Ok);
-        qCritical() << "Error while parsing JSON: " + ok.errorString();
-    }
 
-    this->exec();
+        this->exec();
+    }
 }
 
 void OpenDistant::stateChanged() {

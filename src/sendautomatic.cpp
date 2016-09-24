@@ -28,55 +28,22 @@ extern int configActive;
 extern int idRecipe;
 
 SendAutomatic::SendAutomatic(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::SendAutomatic)
+    QDialog(parent)
 {
-    ui->setupUi(this);
+
 }
 
 SendAutomatic::~SendAutomatic()
 {
-    delete ui;
-}
 
-void SendAutomatic::closeEvent(QCloseEvent *e)
-{
-    if (!isSending)
-        envoiEnCours->close();
-    e->accept();
-}
-
-void SendAutomatic::keyPressEvent(QKeyEvent *e)
-{
-    //Disable hide dialog by press escape
-    if(e->key() != Qt::Key_Escape)
-        QDialog::keyPressEvent(e);
 }
 
 void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
                          QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu)
 {
     isSending = false;
-    ui->configNb->setText("Config: " + QString::number(configActive));
-    QFile idFile (confDir + ".id." + QString::number(configActive));
-    if (idFile.exists())
-    {
-        idFile.open(QFile::ReadOnly);
-        QTextStream idStream (&idFile);
-        idStream.setCodec("UTF-8"); //Not useful on linux system as it's a default, but Windows has its own defaults....
-        ui->user->setText(idStream.readLine());
-        ui->password->setText(idStream.readLine());
-        idFile.close();
-        ui->saveId->setChecked(true);
-    }
-    else {
-        ui->user->setText("");
-        ui->password->setText("");
-        ui->saveId->setChecked(false);
-    }
     QString categ = categories_lu[0];
     isErrorDetailsOpened = false;
-    ui->user->setFocus();
     htmlCode = htmlCode_lu;
     titre = titre_lu;
     //categories = categories_lu;
@@ -109,7 +76,17 @@ void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     envoiEnCours->setFixedSize(300,50);
     envoiEnCours->setModal(false);
     envoiEnCours->show();
-    this->exec();
+    Login *login = new Login((QWidget*)this->parent());
+    login->init();
+    if (login->getAccepted()) {
+        user = login->getUsername();
+        passwd = login->getPassword();
+        publier = login->getPublish();
+        this->sendRecipe();
+    }
+    else {
+        envoiEnCours->close();
+    }
 }
 
 QString SendAutomatic::makeExcerpt(QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep)
@@ -139,33 +116,9 @@ QString SendAutomatic::makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<in
     return tags;
 }
 
-void SendAutomatic::on_annuler_clicked()
-{
-    envoiEnCours->close();
-    this->close();
-}
-
-void SendAutomatic::on_valider_clicked()
+void SendAutomatic::sendRecipe()
 {
     isSending = true;
-    this->close();
-    user = ui->user->text();
-    passwd = ui->password->text();
-    publier = ui->publier->isChecked();
-    QFile idFile (confDir + ".id." + QString::number(configActive));
-    if (ui->saveId->isChecked())
-    {
-        idFile.open(QFile::WriteOnly);
-        QTextStream idStream (&idFile);
-        idStream.setCodec("UTF-8"); //Not useful on linux system as it's a default, but Windows has its own defaults....
-        idStream << user << "\n" << passwd << "\n" << endl;
-        idFile.close();
-    }
-    else
-    {
-        ui->user->setText("");
-        ui->password->setText("");
-    }
     //Save htmlCode to tmpFile:
     QFile htmlFile(dirTmp + "/htmlCode.txt");
     if (htmlFile.exists())

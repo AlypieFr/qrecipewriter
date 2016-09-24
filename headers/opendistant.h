@@ -15,6 +15,7 @@
 #define OPENDISTANT_H
 
 #include "filedownloader.h"
+#include "login.h"
 
 #include <QCheckBox>
 #include <QDialog>

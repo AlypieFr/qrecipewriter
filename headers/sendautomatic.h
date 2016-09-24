@@ -15,6 +15,7 @@
 #define SENDAUTOMATIC_H
 
 #include "functions.h"
+#include "login.h"
 
 #include <QDataStream>
 #include <QDialog>
@@ -37,16 +38,9 @@ public:
               QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu);
 
 private slots:
-    void on_annuler_clicked();
-
-    void on_valider_clicked();
-
     void errorDetails_clicked();
 
     void errorOk_clicked();
-
-private:
-    Ui::SendAutomatic *ui;
 
 private:
     QString htmlCode, excerpt, titre, mainPicture, tags;
@@ -67,8 +61,7 @@ private:
 private:
     QString makeExcerpt (QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep);
     QString makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<int> tpsRep);
-    void keyPressEvent(QKeyEvent *e);
-    void closeEvent(QCloseEvent *e);
+    void sendRecipe();
 };
 
 #endif // SENDAUTOMATIC_H
