@@ -2616,10 +2616,11 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
             }
             else if (object == ui->titlegroup_ingr) {
                 if (ui->titlegroup_ingr->text() != "") {
+                    bool isEditing = ingrEdit == -1;
                     this->insertIngredientGroupTitle(ui->titlegroup_ingr->text());
                     ui->titlegroup_ingr->setText("");
                     ui->tab_ingrs->setCurrentIndex(0);
-                    if (ingrEdit == -1) {
+                    if (isEditing) {
                         idIngr++;
                         ui->ingrListShow->setText(QString::number(idIngr));
                     }
