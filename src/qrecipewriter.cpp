@@ -48,7 +48,6 @@ extern QString appI18n;
 extern bool cancel;
 extern bool richSnippets;
 extern bool recPrinter;
-extern bool sendAuto;
 extern bool recSearch;
 extern bool recCoupDeCoeur;
 extern int idRecipe;
@@ -1622,12 +1621,7 @@ void QRecipeWriter::on_envoyer_clicked()
                 wait->close();
             }
             makeHtmlCode();
-            if (sendAuto) {
-                sendAutomatic();
-            }
-            else {
-                sendManual();
-            }
+            sendAutomatic();
         }
     }
 }
@@ -1643,20 +1637,6 @@ void QRecipeWriter::sendAutomatic()
     sendAuto->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt, coupDeCoeur);
     delete sendAuto;
     sendAuto = NULL;
-}
-
-void QRecipeWriter::sendManual()
-{
-    SendManual *sendMa = new SendManual(this);
-    QStringList imagesToAdd;
-    imagesToAdd.append(imgFile);
-    foreach (QString pict, otherPicts) {
-        imagesToAdd.append(pict);
-    }
-    QStringList cats = Functions::getSelectedCategories(categories);
-    sendMa->init(ui->titre->text(), htmlCode, excerpt, imagesToAdd, cats);
-    delete sendMa;
-    sendMa = NULL;
 }
 
 /**

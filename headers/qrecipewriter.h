@@ -19,7 +19,6 @@
 #include "options.h"
 #include "functions.h"
 #include "apropos.h"
-#include "sendmanual.h"
 #include "sendautomatic.h"
 #include "spellcheckdialog.h"
 #include "spellchecker.h"
@@ -297,7 +296,6 @@ private:
     void insertMaterielComment(QString comment);
     void insertPreparation(QString text);
     void insertConseil(QString text);
-    void sendManual();
     void sendAutomatic();
     void loadRecipe(QString fileName, bool testReadyToSend);
     void searchUpdate();

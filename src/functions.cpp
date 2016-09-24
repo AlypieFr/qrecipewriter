@@ -35,7 +35,6 @@ extern bool richSnippets;
 extern bool recPrinter;
 extern bool recSearch;
 extern bool recCoupDeCoeur;
-extern bool sendAuto;
 extern int configActive;
 extern bool openLastDir_sauvegarde;
 extern bool openLastDir_Img;
@@ -113,11 +112,6 @@ void Functions::loadConfig()
             if(xml.name() == "editPict") {
                 xml.readNext();
                 editPict = xml.text().toString();
-                continue;
-            }
-            if(xml.name() == "sendAuto") {
-                xml.readNext();
-                sendAuto = xml.text().toString() == "1";
                 continue;
             }
             if(xml.name() == "appI18n") {

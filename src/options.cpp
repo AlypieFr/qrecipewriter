@@ -45,7 +45,6 @@ extern bool richSnippets;
 extern bool recPrinter; //CeC Printer status
 extern bool recSearch;
 extern bool recCoupDeCoeur;
-extern bool sendAuto;
 extern int configActive;
 extern bool openLastDir_sauvegarde;
 extern bool openLastDir_Img;
@@ -93,8 +92,6 @@ void Options::init()
     ui->recPrinter->setChecked(recPrinter);
     ui->recSearch->setChecked(recSearch);
     ui->recCoupDeCoeur->setChecked(recCoupDeCoeur);
-    ui->sendAuto->setChecked(sendAuto);
-    ui->sendManual->setChecked(!sendAuto);
     ui->autoSearchUpdt->setChecked(autoCheckUpdt);
     ui->checkF7Send->setChecked(checkF7beforeSend);
     if (appI18n == "fr") {
@@ -335,7 +332,6 @@ void Options::on_buttonBox_accepted()
             cmdNav=ui->lineEditCommandeNavigateur->text();
             editPict=ui->lineEditEditeurImages->text();
             corrOrtho = ui->lineEditDictionnairePath->text();
-            sendAuto = ui->sendAuto->isChecked();
             autoCheckUpdt = ui->autoSearchUpdt->isChecked();
             checkF7beforeSend = ui->checkF7Send->isChecked();
             if(ui->radioButtonLinuxAutre->isChecked())
@@ -556,8 +552,6 @@ void Options::saveXML(int activeServerConfig)
     writer.writeTextElement("cmdNav",ui->lineEditCommandeNavigateur->text());
     writer.writeTextElement("corrOrtho", ui->lineEditDictionnairePath->text());
     writer.writeTextElement("editPict",ui->lineEditEditeurImages->text());
-    QString sendType = ui->sendAuto->isChecked() ? "1" : "0";
-    writer.writeTextElement("sendAuto", sendType);
     writer.writeTextElement("appI18n", appI18n);
     if(ui->radioButtonLinuxAutre->isChecked())
     {

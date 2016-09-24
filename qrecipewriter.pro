@@ -23,7 +23,6 @@ SOURCES += src/main.cpp\
     src/functions.cpp \
     src/apropos.cpp \
     src/tinyxml2.cpp \
-    src/sendmanual.cpp \
     src/mylineedit.cpp \
     src/myplaintextedit.cpp \
     src/sendautomatic.cpp  \
@@ -44,7 +43,6 @@ HEADERS  += headers/qrecipewriter.h \
     headers/functions.h \
     headers/apropos.h \
     headers/tinyxml2.h \
-    headers/sendmanual.h \
     headers/mylineedit.h \
     headers/myplaintextedit.h \
     headers/sendautomatic.h \
@@ -62,7 +60,6 @@ FORMS    += ui/qrecipewriter.ui \
     ui/options.ui \
     ui/categories.ui \
     ui/apropos.ui \
-    ui/sendmanual.ui \
     ui/sendautomatic.ui \
     ui/spellcheckdialog.ui \
     ui/insertvideo.ui \

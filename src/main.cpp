@@ -12,12 +12,8 @@
  */
 
 #include "qrecipewriter.h"
-#include "options.h"
 #include <QApplication>
-#include "categories.h"
 #include "apropos.h"
-#include "sendmanual.h"
-#include "sendautomatic.h"
 
 #include <QDir>
 #include <QFile>
@@ -37,12 +33,7 @@
 /**
  * POINTERS TO QDIALOGS USED BY THE PROGRAM
  */
-void *ptr2opt = NULL;
-void *ptr2cat = NULL;
 void *ptr2apropos = NULL;
-void *ptr2sendManual = NULL;
-void *ptr2sendAutomatic = NULL;
-void *ptr2insertVideo = NULL;
 
 /**
  * GLOBAL VARIABLES
@@ -75,7 +66,6 @@ QStringList units;
 bool cancel = false; //Keep if user cancel orthographical correction
 bool richSnippets = false; //Active rich snippets for recipes in google search results
 bool recPrinter = false; //CeC Printer status
-bool sendAuto = true; //Send in an automatic manner
 bool recSearch = false; //Activate or not search module
 bool recCoupDeCoeur = false; //Activate or not "coups de coeur"
 int configActive = 1;

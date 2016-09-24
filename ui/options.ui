@@ -197,8 +197,8 @@
      <widget class="QRadioButton" name="radioButtonWindows">
       <property name="geometry">
        <rect>
-        <x>540</x>
-        <y>322</y>
+        <x>530</x>
+        <y>348</y>
         <width>101</width>
         <height>17</height>
        </rect>
@@ -210,8 +210,8 @@
      <widget class="QRadioButton" name="radioButtonLinuxAutre">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>340</y>
+        <x>530</x>
+        <y>330</y>
         <width>121</width>
         <height>17</height>
        </rect>
@@ -223,8 +223,8 @@
      <widget class="QRadioButton" name="radioButtonLinuxSlack">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>322</y>
+        <x>380</x>
+        <y>330</y>
         <width>141</width>
         <height>17</height>
        </rect>
@@ -237,7 +237,7 @@
       <property name="geometry">
        <rect>
         <x>170</x>
-        <y>322</y>
+        <y>330</y>
         <width>201</width>
         <height>17</height>
        </rect>
@@ -250,32 +250,13 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>320</y>
+        <y>328</y>
         <width>171</width>
         <height>21</height>
        </rect>
       </property>
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Système d'exploitation :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>380</y>
-        <width>121</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Méthode d'envoi :</string>
       </property>
      </widget>
      <widget class="QGroupBox" name="groupBox">
@@ -293,32 +274,6 @@
       <property name="title">
        <string/>
       </property>
-      <widget class="QRadioButton" name="sendAuto">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>231</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Automatique (nécessite &amp;JAVA)</string>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="sendManual">
-       <property name="geometry">
-        <rect>
-         <x>240</x>
-         <y>0</y>
-         <width>101</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&amp;Manuelle</string>
-       </property>
-      </widget>
      </widget>
      <widget class="QLabel" name="labelDossierTemporaire">
       <property name="geometry">
@@ -464,13 +419,13 @@
       <property name="geometry">
        <rect>
         <x>170</x>
-        <y>340</y>
+        <y>348</y>
         <width>201</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>Linux Archlinux / Manjaro</string>
+       <string>Linux Archlinux / Man&amp;jaro</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelLangage">
@@ -527,6 +482,19 @@
         <string notr="true">Fran&amp;çais</string>
        </property>
       </widget>
+     </widget>
+     <widget class="QRadioButton" name="radioButtonLinuxFedora">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>348</y>
+        <width>141</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Linux Fedora</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -1634,8 +1602,6 @@
   <tabstop>radioButtonLinuxSlack</tabstop>
   <tabstop>radioButtonLinuxAutre</tabstop>
   <tabstop>radioButtonWindows</tabstop>
-  <tabstop>sendAuto</tabstop>
-  <tabstop>sendManual</tabstop>
   <tabstop>configs</tabstop>
   <tabstop>lineEditAdresseSite</tabstop>
   <tabstop>lineEditAdressePublication</tabstop>
