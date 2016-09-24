@@ -753,6 +753,30 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
         }
         else
         {
+            //If it's an ingredient:
+            QString line = parts[1];
+            if (line.startsWith("ingr#")) {
+                QStringList ingrParts = line.split("#");
+                QString qte = ingrParts[1];
+                QString unit = ingrParts[2];
+                QString name = ingrParts.mid(3).join("#");
+                if (unit == "") {
+                    line = qte + " " + name;
+                }
+                else {
+                    QStringList voyelles;
+                    voyelles << "a" << "e" << "i" << "o" << "u" << "y" << "é" << "è" << "â" << "ê" << "î" << "ô" << "û" << "ŷ" << "ä" << "ë" << "ï" << "ö" << "ü" << "ÿ";
+                    if (voyelles.indexOf(name.toLower().left(1)) > -1) {
+                        //: For the ingredients
+                        line = qte + " " + unit + " " + QObject::tr("d'", "ingr") + name;
+                    }
+                    else {
+                        line = qte + " " + unit + QObject::tr(" de ", "ingr") + name;
+                    }
+                }
+                parts[1] = line;
+            }
+            //In all cases:
             int puce = parts[0].toInt();
             if (puce == nivList)
             {
@@ -811,6 +835,14 @@ QString Functions::getSimpleList(QStringList items)
             }
         }
         else {
+            //If it's a material:
+            QString line = parts[1];
+            if (line.startsWith("mat#")) {
+                QStringList ingrParts = line.split("#");
+                QString qte = ingrParts[1];
+                QString name = ingrParts[2];
+                parts[1] = qte + " " + name;
+            }
             if (inList)
             {
                 htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");

@@ -66,10 +66,11 @@ void ListViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
                     QStringList voyelles;
                     voyelles << "a" << "e" << "i" << "o" << "u" << "y" << "é" << "è" << "â" << "ê" << "î" << "ô" << "û" << "ŷ" << "ä" << "ë" << "ï" << "ö" << "ü" << "ÿ";
                     if (voyelles.indexOf(name.toLower().left(1)) > -1) {
-                        line = qte + " " + unit + " " + tr("d'") + name;
+                        //: For the ingredients
+                        line = qte + " " + unit + " " + tr("d'", "ingr") + name;
                     }
                     else {
-                        line = qte + " " + unit + " de " + name;
+                        line = qte + " " + unit + tr(" de ", "ingr") + name;
                     }
                 }
             }
