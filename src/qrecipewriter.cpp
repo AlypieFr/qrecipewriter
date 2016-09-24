@@ -37,7 +37,7 @@ extern QString dirSav;
 extern QString dirDistPict;
 extern QString addrSite;
 extern QString addrPub;
-extern QString pseudoWp;
+extern QString typeServer;
 extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;

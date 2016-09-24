@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -425,7 +425,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Linux Archlinux / Man&amp;jaro</string>
+       <string>Linux Archlinux / &amp;Manjaro</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelLangage">
@@ -697,25 +697,65 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget_4">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>120</y>
           <width>631</width>
-          <height>34</height>
+          <height>26</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QLabel" name="labelPseudoWordpress">
+          <widget class="QLabel" name="label">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Type de serveur :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditPseudoWordpress"/>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_wordpress">
+           <property name="text">
+            <string>Wordpress</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_pywebcooking">
+           <property name="text">
+            <string>P&amp;yWebCooking</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -904,25 +944,65 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget_8">
+       <widget class="QWidget" name="layoutWidget_4">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>120</y>
           <width>631</width>
-          <height>34</height>
+          <height>26</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_8">
          <item>
-          <widget class="QLabel" name="labelPseudoWordpress_2">
+          <widget class="QLabel" name="label_8">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Type de serveur :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditPseudoWordpress_2"/>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_wordpress_2">
+           <property name="text">
+            <string>Wordpress</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_pywebcooking_2">
+           <property name="text">
+            <string>P&amp;yWebCooking</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -1111,25 +1191,65 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget_12">
+       <widget class="QWidget" name="layoutWidget_8">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>120</y>
           <width>631</width>
-          <height>34</height>
+          <height>26</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_12">
          <item>
-          <widget class="QLabel" name="labelPseudoWordpress_3">
+          <widget class="QLabel" name="label_9">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Type de serveur :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditPseudoWordpress_3"/>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_wordpress_3">
+           <property name="text">
+            <string>Wordpress</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_pywebcooking_3">
+           <property name="text">
+            <string>P&amp;yWebCooking</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -1318,25 +1438,65 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget_16">
+       <widget class="QWidget" name="layoutWidget_12">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>120</y>
           <width>631</width>
-          <height>34</height>
+          <height>26</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_16">
+        <layout class="QHBoxLayout" name="horizontalLayout_21">
          <item>
-          <widget class="QLabel" name="labelPseudoWordpress_4">
+          <widget class="QLabel" name="label_11">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Type de serveur :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditPseudoWordpress_4"/>
+          <spacer name="horizontalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_wordpress_4">
+           <property name="text">
+            <string>Wo&amp;rdpress</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_pywebcooking_4">
+           <property name="text">
+            <string>P&amp;yWebCooking</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_10">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -1531,25 +1691,65 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget_20">
+       <widget class="QWidget" name="layoutWidget_16">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>120</y>
           <width>631</width>
-          <height>34</height>
+          <height>26</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_20">
          <item>
-          <widget class="QLabel" name="labelPseudoWordpress_5">
+          <widget class="QLabel" name="label_12">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Type de serveur :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditPseudoWordpress_5"/>
+          <spacer name="horizontalSpacer_11">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_wordpress_5">
+           <property name="text">
+            <string>Wo&amp;rdpress</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="typeServer_pywebcooking_5">
+           <property name="text">
+            <string>P&amp;yWebCooking</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_12">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -1606,7 +1806,6 @@
   <tabstop>lineEditAdresseSite</tabstop>
   <tabstop>lineEditAdressePublication</tabstop>
   <tabstop>lineEditDossierDistantImages</tabstop>
-  <tabstop>lineEditPseudoWordpress</tabstop>
   <tabstop>richSnippets</tabstop>
   <tabstop>recPrinter</tabstop>
   <tabstop>recSearch</tabstop>
@@ -1616,7 +1815,6 @@
   <tabstop>lineEditAdresseSite_2</tabstop>
   <tabstop>lineEditAdressePublication_2</tabstop>
   <tabstop>lineEditDossierDistantImages_2</tabstop>
-  <tabstop>lineEditPseudoWordpress_2</tabstop>
   <tabstop>richSnippets_2</tabstop>
   <tabstop>recPrinter_2</tabstop>
   <tabstop>recSearch_2</tabstop>
@@ -1626,7 +1824,6 @@
   <tabstop>lineEditAdresseSite_3</tabstop>
   <tabstop>lineEditAdressePublication_3</tabstop>
   <tabstop>lineEditDossierDistantImages_3</tabstop>
-  <tabstop>lineEditPseudoWordpress_3</tabstop>
   <tabstop>richSnippets_3</tabstop>
   <tabstop>recPrinter_3</tabstop>
   <tabstop>recSearch_3</tabstop>
@@ -1636,7 +1833,6 @@
   <tabstop>lineEditAdresseSite_4</tabstop>
   <tabstop>lineEditAdressePublication_4</tabstop>
   <tabstop>lineEditDossierDistantImages_4</tabstop>
-  <tabstop>lineEditPseudoWordpress_4</tabstop>
   <tabstop>richSnippets_4</tabstop>
   <tabstop>recPrinter_4</tabstop>
   <tabstop>recSearch_4</tabstop>
@@ -1646,7 +1842,6 @@
   <tabstop>lineEditAdresseSite_5</tabstop>
   <tabstop>lineEditAdressePublication_5</tabstop>
   <tabstop>lineEditDossierDistantImages_5</tabstop>
-  <tabstop>lineEditPseudoWordpress_5</tabstop>
   <tabstop>richSnippets_5</tabstop>
   <tabstop>recPrinter_5</tabstop>
   <tabstop>recSearch_5</tabstop>

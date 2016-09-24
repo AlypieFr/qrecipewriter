@@ -36,7 +36,7 @@ extern QString dirSav; //Directory used to save recipes or "conseils & technics"
 extern QString dirDistPict; //Distant directory where pictures are saved in server
 extern QString addrSite; //Address of the website
 extern QString addrPub; //Address of publication (XML-RPC)
-extern QString pseudoWp;
+extern QString typeServer;
 extern QString systExp; //Operating system of the user
 extern QString editPict; //Program for advanced picture editor
 extern QString corrOrtho; //Use orthograph correction when typing
@@ -288,11 +288,11 @@ void Options::on_buttonBox_accepted()
             QMessageBox::critical(this, tr("Préférences"), tr("Le dictionnaire path indiqué est incorrect : les fichiers (avec extension .dic et/ou .aff) n'existe(nt) pas"), QMessageBox::Ok);
             proceed = false;
         }
-        if (proceed && ((ui->configActive->isChecked() && (ui->lineEditAdressePublication->text()==""||ui->lineEditAdresseSite->text()==""||ui->lineEditDossierDistantImages->text()==""||ui->lineEditPseudoWordpress->text()==""))\
-            || (ui->configActive_2->isChecked() && (ui->lineEditAdressePublication_2->text()==""||ui->lineEditAdresseSite_2->text()==""||ui->lineEditDossierDistantImages_2->text()==""||ui->lineEditPseudoWordpress_2->text()==""))\
-            || (ui->configActive_3->isChecked() && (ui->lineEditAdressePublication_3->text()==""||ui->lineEditAdresseSite_3->text()==""||ui->lineEditDossierDistantImages_3->text()==""||ui->lineEditPseudoWordpress_3->text()==""))\
-            || (ui->configActive_4->isChecked() && (ui->lineEditAdressePublication_4->text()==""||ui->lineEditAdresseSite_4->text()==""||ui->lineEditDossierDistantImages_4->text()==""||ui->lineEditPseudoWordpress_4->text()==""))\
-            || (ui->configActive_5->isChecked() && (ui->lineEditAdressePublication_5->text()==""||ui->lineEditAdresseSite_5->text()==""||ui->lineEditDossierDistantImages_5->text()==""||ui->lineEditPseudoWordpress_5->text()=="")))) {
+        if (proceed && ((ui->configActive->isChecked() && (ui->lineEditAdressePublication->text()==""||ui->lineEditAdresseSite->text()==""||ui->lineEditDossierDistantImages->text()==""||(!ui->typeServer_wordpress->isChecked() && ui->typeServer_pywebcooking->isChecked())))\
+            || (ui->configActive_2->isChecked() && (ui->lineEditAdressePublication_2->text()==""||ui->lineEditAdresseSite_2->text()==""||ui->lineEditDossierDistantImages_2->text()==""||(!ui->typeServer_wordpress_2->isChecked() && ui->typeServer_pywebcooking_2->isChecked())))\
+            || (ui->configActive_3->isChecked() && (ui->lineEditAdressePublication_3->text()==""||ui->lineEditAdresseSite_3->text()==""||ui->lineEditDossierDistantImages_3->text()==""||(!ui->typeServer_wordpress_3->isChecked() && ui->typeServer_pywebcooking_3->isChecked())))\
+            || (ui->configActive_4->isChecked() && (ui->lineEditAdressePublication_4->text()==""||ui->lineEditAdresseSite_4->text()==""||ui->lineEditDossierDistantImages_4->text()==""||(!ui->typeServer_wordpress_4->isChecked() && ui->typeServer_pywebcooking_4->isChecked())))\
+            || (ui->configActive_5->isChecked() && (ui->lineEditAdressePublication_5->text()==""||ui->lineEditAdresseSite_5->text()==""||ui->lineEditDossierDistantImages_5->text()==""||(!ui->typeServer_wordpress_5->isChecked() && ui->typeServer_pywebcooking_5->isChecked()))))) {
             QMessageBox::critical(this,tr("Préférences"),tr("Veuillez remplir tous les champs des paramètres serveur de la configuration active"),QMessageBox::Ok);
         }
         else if (proceed && !ui->configActive->isChecked() && !ui->configActive_2->isChecked() && !ui->configActive_3->isChecked() && !ui->configActive_4->isChecked() && !ui->configActive_5->isChecked()) {
@@ -355,7 +355,7 @@ void Options::on_buttonBox_accepted()
                 addrSite=ui->lineEditAdresseSite->text();
                 addrPub=ui->lineEditAdressePublication->text();
                 dirDistPict=ui->lineEditDossierDistantImages->text();
-                pseudoWp=ui->lineEditPseudoWordpress->text();
+                typeServer=(ui->typeServer_wordpress->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking->isChecked() ? "pywebcooking" : ""));
                 richSnippets = ui->richSnippets->isChecked();
                 recPrinter = ui->recPrinter->isChecked();
                 recSearch = ui->recSearch->isChecked();
@@ -366,7 +366,7 @@ void Options::on_buttonBox_accepted()
                 addrSite=ui->lineEditAdresseSite_2->text();
                 addrPub=ui->lineEditAdressePublication_2->text();
                 dirDistPict=ui->lineEditDossierDistantImages_2->text();
-                pseudoWp=ui->lineEditPseudoWordpress_2->text();
+                typeServer=(ui->typeServer_wordpress_2->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_2->isChecked() ? "pywebcooking" : ""));
                 richSnippets = ui->richSnippets_2->isChecked();
                 recPrinter = ui->recPrinter_2->isChecked();
                 recSearch = ui->recSearch_2->isChecked();
@@ -377,7 +377,7 @@ void Options::on_buttonBox_accepted()
                 addrSite=ui->lineEditAdresseSite_3->text();
                 addrPub=ui->lineEditAdressePublication_3->text();
                 dirDistPict=ui->lineEditDossierDistantImages_3->text();
-                pseudoWp=ui->lineEditPseudoWordpress_3->text();
+                typeServer=(ui->typeServer_wordpress_3->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_3->isChecked() ? "pywebcooking" : ""));
                 richSnippets = ui->richSnippets_3->isChecked();
                 recPrinter = ui->recPrinter_3->isChecked();
                 recSearch = ui->recSearch_3->isChecked();
@@ -388,7 +388,7 @@ void Options::on_buttonBox_accepted()
                 addrSite=ui->lineEditAdresseSite_4->text();
                 addrPub=ui->lineEditAdressePublication_4->text();
                 dirDistPict=ui->lineEditDossierDistantImages_4->text();
-                pseudoWp=ui->lineEditPseudoWordpress_4->text();
+                typeServer=(ui->typeServer_wordpress_4->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_4->isChecked() ? "pywebcooking" : ""));
                 richSnippets = ui->richSnippets_4->isChecked();
                 recPrinter = ui->recPrinter_4->isChecked();
                 recSearch = ui->recSearch_4->isChecked();
@@ -399,7 +399,7 @@ void Options::on_buttonBox_accepted()
                 addrSite=ui->lineEditAdresseSite_5->text();
                 addrPub=ui->lineEditAdressePublication_5->text();
                 dirDistPict=ui->lineEditDossierDistantImages_5->text();
-                pseudoWp=ui->lineEditPseudoWordpress_5->text();
+                typeServer=(ui->typeServer_wordpress_5->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_5->isChecked() ? "pywebcooking" : ""));
                 richSnippets = ui->richSnippets_5->isChecked();
                 recPrinter = ui->recPrinter_5->isChecked();
                 recSearch = ui->recSearch_5->isChecked();
@@ -455,9 +455,9 @@ void Options::loadConfigsServer() {
                         configServer[i]["dirDistPict"] = xml.text().toString();
                         continue;
                     }
-                    if(xml.name() == "pseudoWp") {
+                    if(xml.name() == "typeServer") {
                         xml.readNext();
-                        configServer[i]["pseudoWp"] = xml.text().toString();
+                        configServer[i]["typeServer"] = xml.text().toString();
                         continue;
                     }
                     if(xml.name() == "richSnippets") {
@@ -488,7 +488,8 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite->setText(configServer[1]["addrSite"]);
         ui->lineEditAdressePublication->setText(configServer[1]["addrPub"]);
         ui->lineEditDossierDistantImages->setText(configServer[1]["dirDistPict"]);
-        ui->lineEditPseudoWordpress->setText(configServer[1]["pseudoWp"]);
+        ui->typeServer_wordpress->setChecked(configServer[1]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking->setChecked(configServer[1]["typeServer"] == "pywebcooking");
         ui->richSnippets->setChecked(configServer[1]["richSnippets"] == "1");
         ui->recPrinter->setChecked(configServer[1]["recPrinter"] == "1");
         ui->recSearch->setChecked(configServer[1]["recSearch"] == "1");
@@ -498,7 +499,8 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite_2->setText(configServer[2]["addrSite"]);
         ui->lineEditAdressePublication_2->setText(configServer[2]["addrPub"]);
         ui->lineEditDossierDistantImages_2->setText(configServer[2]["dirDistPict"]);
-        ui->lineEditPseudoWordpress_2->setText(configServer[2]["pseudoWp"]);
+        ui->typeServer_wordpress_2->setChecked(configServer[2]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking_2->setChecked(configServer[2]["typeServer"] == "pywebcooking");
         ui->richSnippets_2->setChecked(configServer[2]["richSnippets"] == "1");
         ui->recPrinter_2->setChecked(configServer[2]["recPrinter"] == "1");
         ui->recSearch_2->setChecked(configServer[2]["recSearch"] == "1");
@@ -508,7 +510,8 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite_3->setText(configServer[3]["addrSite"]);
         ui->lineEditAdressePublication_3->setText(configServer[3]["addrPub"]);
         ui->lineEditDossierDistantImages_3->setText(configServer[3]["dirDistPict"]);
-        ui->lineEditPseudoWordpress_3->setText(configServer[3]["pseudoWp"]);
+        ui->typeServer_wordpress_3->setChecked(configServer[3]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking_3->setChecked(configServer[3]["typeServer"] == "pywebcooking");
         ui->richSnippets_3->setChecked(configServer[3]["richSnippets"] == "1");
         ui->recPrinter_3->setChecked(configServer[3]["recPrinter"] == "1");
         ui->recSearch_3->setChecked(configServer[3]["recSearch"] == "1");
@@ -518,7 +521,8 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite_4->setText(configServer[4]["addrSite"]);
         ui->lineEditAdressePublication_4->setText(configServer[4]["addrPub"]);
         ui->lineEditDossierDistantImages_4->setText(configServer[4]["dirDistPict"]);
-        ui->lineEditPseudoWordpress_4->setText(configServer[4]["pseudoWp"]);
+        ui->typeServer_wordpress_4->setChecked(configServer[4]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking_4->setChecked(configServer[4]["typeServer"] == "pywebcooking");
         ui->richSnippets_4->setChecked(configServer[4]["richSnippets"] == "1");
         ui->recPrinter_4->setChecked(configServer[4]["recPrinter"] == "1");
         ui->recSearch_4->setChecked(configServer[4]["recSearch"] == "1");
@@ -528,7 +532,8 @@ void Options::loadConfigsServer() {
         ui->lineEditAdresseSite_5->setText(configServer[5]["addrSite"]);
         ui->lineEditAdressePublication_5->setText(configServer[5]["addrPub"]);
         ui->lineEditDossierDistantImages_5->setText(configServer[5]["dirDistPict"]);
-        ui->lineEditPseudoWordpress_5->setText(configServer[5]["pseudoWp"]);
+        ui->typeServer_wordpress_5->setChecked(configServer[5]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking_5->setChecked(configServer[5]["typeServer"] == "pywebcooking");
         ui->richSnippets_5->setChecked(configServer[5]["richSnippets"] == "1");
         ui->recPrinter_5->setChecked(configServer[5]["recPrinter"] == "1");
         ui->recSearch_5->setChecked(configServer[5]["recSearch"] == "1");
@@ -593,7 +598,7 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages->text());
-    writerS->writeTextElement("pseudoWp", ui->lineEditPseudoWordpress->text());
+    writerS->writeTextElement("typeServer", (ui->typeServer_wordpress->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking->isChecked() ? "pywebcooking" : "none")));
     QString activeRichSnippets = ui->richSnippets->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     QString activeCeCPrinter = ui->recPrinter->isChecked() ? "1": "0";
@@ -614,7 +619,7 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_2->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_2->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_2->text());
-    writerS->writeTextElement("pseudoWp", ui->lineEditPseudoWordpress_2->text());
+    writerS->writeTextElement("typeServer", (ui->typeServer_wordpress_2->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_2->isChecked() ? "pywebcooking" : "none")));
     activeRichSnippets = ui->richSnippets_2->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->recPrinter_2->isChecked() ? "1": "0";
@@ -635,7 +640,7 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_3->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_3->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_3->text());
-    writerS->writeTextElement("pseudoWp", ui->lineEditPseudoWordpress_3->text());
+    writerS->writeTextElement("typeServer", (ui->typeServer_wordpress_3->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_3->isChecked() ? "pywebcooking" : "none")));
     activeRichSnippets = ui->richSnippets_3->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->recPrinter_3->isChecked() ? "1": "0";
@@ -656,7 +661,7 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_4->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_4->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_4->text());
-    writerS->writeTextElement("pseudoWp", ui->lineEditPseudoWordpress_4->text());
+    writerS->writeTextElement("typeServer", (ui->typeServer_wordpress_4->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_4->isChecked() ? "pywebcooking" : "none")));
     activeRichSnippets = ui->richSnippets_4->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->recPrinter_4->isChecked() ? "1": "0";
@@ -677,7 +682,7 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_5->text());
     writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_5->text());
     writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_5->text());
-    writerS->writeTextElement("pseudoWp", ui->lineEditPseudoWordpress_5->text());
+    writerS->writeTextElement("typeServer", (ui->typeServer_wordpress_5->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_5->isChecked() ? "pywebcooking" : "none")));
     activeRichSnippets = ui->richSnippets_5->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->recPrinter_5->isChecked() ? "1": "0";

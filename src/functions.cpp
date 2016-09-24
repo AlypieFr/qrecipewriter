@@ -17,6 +17,7 @@ extern QString userDir;
 extern QString confDir;
 extern QString confFile;
 extern QFile *confCatFile;
+extern QString typeServer;
 
 extern QStringList otherPicts;
 extern QString dirPict;
@@ -26,7 +27,6 @@ extern QString dirSav;
 extern QString dirDistPict;
 extern QString addrSite;
 extern QString addrPub;
-extern QString pseudoWp;
 extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
@@ -174,9 +174,9 @@ void Functions::loadConfig()
                     dirDistPict = xmlS.text().toString();
                     continue;
                 }
-                if(xmlS.name() == "pseudoWp") {
+                if(xmlS.name() == "typeServer") {
                     xmlS.readNext();
-                    pseudoWp = xmlS.text().toString();
+                    typeServer = xmlS.text().toString();
                     continue;
                 }
                 if(xmlS.name() == "richSnippets") {
@@ -1167,7 +1167,7 @@ QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPre
               \"image\": \"" + photo + mainPicture + "\",\n\
               \"author\": {\n\
                 \"@type\":\"Person\",\n\
-                \"name\":\"" + pseudoWp + "\"\n\
+                \"name\":\"QRecipeWriter\"\n\
               },\n\
               \"datePublished\": \"" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + "\",\n\
               \"description\": \"" + description + "\",\n\

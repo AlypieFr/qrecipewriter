@@ -57,7 +57,7 @@ QString dirSav; //Directory used to save recipes or "conseils & technics"
 QString dirDistPict = ""; //Distant directory where pictures are saved in server
 QString addrSite = ""; //Address of the website
 QString addrPub = ""; //Address of publication (XML-RPC)
-QString pseudoWp = "";
+QString typeServer = "wordpress";
 QString editPict = ""; //Program for advanced picture editor
 QString corrOrtho = ""; //Main dictionnary path
 QString correction = ""; //Path to the dictionnary (prefix of .dic and .aff files)

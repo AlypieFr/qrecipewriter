@@ -16,7 +16,6 @@
 
 extern QString addrSite;
 extern QStringList namesCats;
-extern QString pseudoWp;
 
 OpenDistant::OpenDistant(QWidget *parent) :
     QDialog(parent),
