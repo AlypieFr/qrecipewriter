@@ -1803,10 +1803,7 @@ void QRecipeWriter::on_apercu_clicked()
                         cats += ", <a href=\"#\">"+catsSelected.at(cat)+"</a>";
                 }
                 page = page.replace("[!TITRE!]",ui->titre->text());
-                page = page.replace("[!AUTEUR!]",pseudoWp);
                 page = page.replace("[!CONTENU!]",htmlCode);
-                page = page.replace("[!DATE!]",date);
-                page = page.replace("[!CATEGORIES!]",cats);
                 QFile indexFile (dirTmp + "/apercu/index.html");
                 indexFile.open(QFile::WriteOnly);
                 QTextStream in1(&indexFile);
