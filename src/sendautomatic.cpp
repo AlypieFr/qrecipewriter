@@ -172,7 +172,7 @@ void SendAutomatic::sendRecipe()
     }
     if (i < lines.size() && lines[i].replace("\r", "") == "!!!Send recipe SUCCEEDED!!!")
     {
-        int rep = QMessageBox::information(this, tr("Envoi terminé"), tr("Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?"), QMessageBox::Yes, QMessageBox::No);
+        int rep = QMessageBox::information((QWidget*)this->parent(), tr("Envoi terminé"), tr("Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?"), QMessageBox::Yes, QMessageBox::No);
         if (rep == QMessageBox::Yes)
         {
             QString Program = "\"" + cmdNav + "\" " + addrSite + "/?p=" + lines[i+1].replace("\r", "");

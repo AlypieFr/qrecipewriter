@@ -52,11 +52,6 @@ SpellCheckDialog::SpellCheckDialog(SpellChecker *spellChecker, QWidget *parent) 
     ui(new Ui::SpellCheckDialog)
 {
     ui->setupUi(this);
-    int scr_width = QApplication::desktop()->width();
-    int scr_height = QApplication::desktop()->height();
-    int x = (scr_width - this->width()) /2;
-    int y = (scr_height - this->height()) /2;
-    this->setGeometry(x, y, this->width(), this->height());
 
 
     _spellChecker = spellChecker;
@@ -184,7 +179,7 @@ SpellCheckDialog::SpellCheckAction SpellCheckDialog::checkWord(const QString &wo
         ui->listWidget->setCurrentRow(0, QItemSelectionModel::Select);
  
     _returnCode = AbortCheck;
-    QDialog::exec();
+    this->exec();
     return _returnCode;
 }
  
