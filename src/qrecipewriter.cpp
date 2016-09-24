@@ -3590,7 +3590,7 @@ void QRecipeWriter::on_ingrListPlus_clicked()
         idIngr++;
         ui->ingrListShow->setText(QString::number(idIngr));
         if (ui->tab_ingrs->currentIndex() == 0) {
-                ui->editIngr->setFocus();
+            ui->qte_ingr->setFocus();
         }
         else if (ui->tab_ingrs->currentIndex() == 1) {
             ui->titlegroup_ingr->setFocus();
@@ -3609,7 +3609,7 @@ void QRecipeWriter::on_ingrListMoins_clicked()
         idIngr--;
         ui->ingrListShow->setText(QString::number(idIngr));
         if (ui->tab_ingrs->currentIndex() == 0) {
-                ui->editIngr->setFocus();
+            ui->qte_ingr->setFocus();
         }
         else if (ui->tab_ingrs->currentIndex() == 1) {
             ui->titlegroup_ingr->setFocus();
