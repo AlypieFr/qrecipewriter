@@ -62,7 +62,6 @@ FORMS    += ui/qrecipewriter.ui \
     ui/options.ui \
     ui/categories.ui \
     ui/apropos.ui \
-    ui/sendautomatic.ui \
     ui/spellcheckdialog.ui \
     ui/insertvideo.ui \
     ui/insertpicture.ui \
