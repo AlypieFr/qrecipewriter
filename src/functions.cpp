@@ -357,13 +357,13 @@ QStringList Functions::makeSimpleList(QString text) {
 
 QStringList Functions::makeSimpleListWithSubLists(QString text) {
     QStringList list;
-    int niv = 0;
+    int niv = -1;
     QString next = text;
     int nextUl = -1, nextFUl = -1, nextLi = -1;
     while (next != "") {
         nextUl = next.indexOf("<ul>");
         nextFUl = next.indexOf("</ul>");
-        nextLi = next.indexOf("<li>");
+        nextLi = next.indexOf(QRegExp("<li[^>]*>"));
         if (nextUl == -1) {
             nextUl = 1000000;
         }
@@ -388,9 +388,23 @@ QStringList Functions::makeSimpleListWithSubLists(QString text) {
                 next = next.mid(nextFUl + 5);
             }
             else if(min == nextLi) {
-                next = next.mid(nextLi + 4);
-                int endLi = next.indexOf("</li>");
-                list.append(QString::number(niv) + "|" + removeSpecialChars(next.left(endLi)));
+                QString text = "";
+                int endLi = 0;
+                if (next.startsWith("<li class='ingredient'>")) {
+                    next = next.mid(nextLi + 23);
+                    endLi = next.indexOf("</li>");
+                    text = removeSpecialChars(next.left(endLi));
+                    QRegExp ingrExp("^(\\d+) (\\w ((de )|(d')))?(.+)$");
+                    if (ingrExp.exactMatch(text)) {
+                        qDebug() << ingrExp.cap(0);
+                    }
+                }
+                else {
+                    next = next.mid(nextLi + 4);
+                    endLi = next.indexOf("</li>");
+                    text = removeSpecialChars(next.left(endLi));
+                }
+                list.append(QString::number(niv) + "|" + text);
                 next = next.mid(endLi + 5);
             }
         }
@@ -748,6 +762,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
         else
         {
             //If it's an ingredient:
+            bool isIngr = false;
             QString line = parts[1];
             if (line.startsWith("ingr#")) {
                 QStringList ingrParts = line.split("#");
@@ -769,12 +784,13 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
                     }
                 }
                 parts[1] = line;
+                isIngr = true;
             }
             //In all cases:
             int puce = parts[0].toInt();
             if (puce == nivList)
             {
-                htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 nivList = puce;
             }
             else if (puce > nivList)
@@ -782,7 +798,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
                 for (int var = nivList; var < puce; ++var) {
                     htmlCode.append("<ul>\n");
                 }
-                htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 nivList = puce;
             }
             else if (puce < nivList)
@@ -790,7 +806,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
                 for (int var = nivList; var > puce; --var) {
                     htmlCode.append("</ul>\n");
                 }
-                htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 nivList = puce;
             }
         }
