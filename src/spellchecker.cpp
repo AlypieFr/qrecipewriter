@@ -10,7 +10,7 @@
  *    - Flo-Art.fr ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
  *    - Toute utilisation commerciale partielle ou complète est interdite.
  *
- * Initial code by Volker Götz, modified by Conseils En Cusine !
+ * Initial code by Volker Götz, modified by Flo-Art.fr
  */
 
 /*
