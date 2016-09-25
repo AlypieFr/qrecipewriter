@@ -2600,14 +2600,14 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {
             if (object == ui->editIngr || object == ui->qte_ingr || object == ui->unit_ingr) {
-                if (ui->qte_ingr->text() != "" && ui->editIngr->text() != "") {
+                if (ui->editIngr->text() != "") {
                     //this->insertIngredient(ui->qte_ingr->text() + " " + ui->unit_ingr->currentText() + " : " + ui->editIngr->text());
                     this->insertIngredient(ui->qte_ingr->text(), ui->unit_ingr->currentText(), ui->editIngr->text());
                     this->resetIngrFields();
                     ui->qte_ingr->setFocus();
                     return true;
                 }
-                ui->state->setText(tr("Vous devez renseigner une quantité et un nom !"));
+                ui->state->setText(tr("Vous devez renseigner un nom d'ingrédient' !"));
                 QTimer::singleShot(4000, this, SLOT(refreshState()));
                 return true;
             }
@@ -3365,7 +3365,7 @@ void QRecipeWriter::modifierIngr(const QModelIndex &index)
     }
     else {
         idIngr = parts[0].toInt();
-        QRegExp expIngr("ingr#(.+)#(.*)#(.+)");
+        QRegExp expIngr("ingr#(.+)?#(.*)#(.+)");
         if (parts[1].contains(expIngr)) {
              QString quantity = expIngr.cap(1);
              QString unit = expIngr.cap(2);

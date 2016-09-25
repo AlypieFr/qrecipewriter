@@ -394,9 +394,15 @@ QStringList Functions::makeSimpleListWithSubLists(QString text) {
                     next = next.mid(nextLi + 23);
                     endLi = next.indexOf("</li>");
                     text = removeSpecialChars(next.left(endLi));
-                    QRegExp ingrExp("^(\\d+) (\\w ((de )|(d')))?(.+)$");
+                    QRegExp ingrExp("^(\\d+) ((\\w+) ((de )|(d')))?(.+)$");
                     if (ingrExp.exactMatch(text)) {
-                        qDebug() << ingrExp.cap(0);
+                        QString qte = ingrExp.cap(1);
+                        QString unit = ingrExp.cap(3);
+                        QString name = ingrExp.cap(7);
+                        text = "ingr#" + qte + "#" + unit + "#" + name;
+                    }
+                    else {
+                        text = "ingr###" + text;
                     }
                 }
                 else {

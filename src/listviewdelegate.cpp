@@ -59,7 +59,10 @@ void ListViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
                 QString qte = ingrParts[1];
                 QString unit = ingrParts[2];
                 QString name = ingrParts.mid(3).join("#");
-                if (unit == "") {
+                if (qte == "" && unit == "") {
+                    line = name;
+                }
+                else if (unit == "") {
                     line = qte + " " + name;
                 }
                 else {
