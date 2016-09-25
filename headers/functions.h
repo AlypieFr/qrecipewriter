@@ -74,7 +74,7 @@ public:
                                     QString description, QString ingredients, QString materiel, QString preparation,
                                     QString conseils);
     static QString getSimpleListWithSubLists(QStringList items);
-    static QStringList makeSimpleList(QString text);
+    static QStringList makeSimpleList(QString text, bool isMat=false);
     static QStringList makeSimpleListWithSubLists(QString text);
     static QString getSimpleList(QStringList items);
     static QString getNumberedList(QStringList items);

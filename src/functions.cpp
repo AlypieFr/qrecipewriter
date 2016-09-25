@@ -311,9 +311,10 @@ QStringList Functions::addCommentLines(QString txt) {
     return res;
 }
 
-QStringList Functions::makeSimpleList(QString text) {
+QStringList Functions::makeSimpleList(QString text, bool isMat) {
     QStringList list;
     QString next = text;
+    QString messageError = "";
     int nextUl = -1, nextFUl = -1, nextLi = -1;
     while (next != "") {
         nextUl = next.indexOf("<ul>");
@@ -334,7 +335,19 @@ QStringList Functions::makeSimpleList(QString text) {
             if (min == nextLi) {
                 next = next.mid(nextLi + 4);
                 int endLi = next.indexOf("</li>");
-                list.append("0|" + next.left(endLi));
+                QString text = next.left(endLi);
+                if (isMat) {
+                    QRegExp matExp("^(\\d+) (.+)$");
+                    if (matExp.exactMatch(text)) {
+                        QString qte = matExp.cap(1);
+                        QString name = matExp.cap(2);
+                        text = "mat#" + qte + "#" + name;
+                    }
+                    else {
+                        messageError = "Some materials are not correct, they have been ignored";
+                    }
+                }
+                list.append("0|" + text);
                 next = next.mid(endLi + 5);
             }
             else if (min == nextUl) {
@@ -351,6 +364,9 @@ QStringList Functions::makeSimpleList(QString text) {
             list.append(addCommentLines(next));
             next = "";
         }
+    }
+    if (messageError != "") {
+        QMessageBox::warning(NULL, "Errors while loading recipe", messageError);
     }
     return list;
 }
@@ -563,7 +579,7 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
             QString mat = matExp.cap(1);
             int begin = mat.indexOf("<ul>");
             if (begin > -1) {
-                materiel = makeSimpleList(mat.mid(begin));
+                materiel = makeSimpleList(mat.mid(begin), true);
             }
         }
     }
