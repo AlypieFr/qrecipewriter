@@ -249,6 +249,8 @@ private:
     int roundValueToFive(double value);
     bool askSaveFile();
     void toggleEditPict();
+    void resetIngrFields();
+    void resetMatFields();
 
 private:
     void closeEvent (QCloseEvent *event);

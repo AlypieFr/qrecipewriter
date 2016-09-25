@@ -2434,6 +2434,28 @@ void QRecipeWriter::on_setCoupDeCoeur_clicked()
         ui->setCoupDeCoeur->setIcon(QIcon(":/images/coup_de_coeur.png"));
 }
 
+/**
+ * Reset fields of ingredients
+ * @brief QRecipeWriter::resetIngrFields
+ */
+void QRecipeWriter::resetIngrFields() {
+    ui->editIngr->setText("");
+    ui->qte_ingr->setText("");
+    ui->unit_ingr->setCurrentIndex(0);
+    ui->titlegroup_ingr->setText("");
+    ui->comment_ingr->setText("");
+}
+
+/**
+ * Reset fields of meteriel
+ * @brief QRecipeWriter::resetMatFields
+ */
+void QRecipeWriter::resetMatFields() {
+    ui->qte_mat->setText("");
+    ui->editMat->setText("");
+    ui->comment_mat->setText("");
+}
+
 //Events config:
 
 /**
@@ -2581,9 +2603,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                 if (ui->qte_ingr->text() != "" && ui->editIngr->text() != "") {
                     //this->insertIngredient(ui->qte_ingr->text() + " " + ui->unit_ingr->currentText() + " : " + ui->editIngr->text());
                     this->insertIngredient(ui->qte_ingr->text(), ui->unit_ingr->currentText(), ui->editIngr->text());
-                    ui->editIngr->setText("");
-                    ui->qte_ingr->setText("");
-                    ui->unit_ingr->setCurrentIndex(0);
+                    this->resetIngrFields();
                     ui->qte_ingr->setFocus();
                     return true;
                 }
@@ -2595,7 +2615,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                 if (ui->titlegroup_ingr->text() != "") {
                     bool isEditing = ingrEdit == -1;
                     this->insertIngredientGroupTitle(ui->titlegroup_ingr->text());
-                    ui->titlegroup_ingr->setText("");
+                    this->resetIngrFields();
                     ui->tab_ingrs->setCurrentIndex(0);
                     if (isEditing) {
                         idIngr++;
@@ -2610,7 +2630,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
             else if (object == ui->comment_ingr) {
                 if (ui->comment_ingr->text() != "") {
                     this->insertIngredientComment(ui->comment_ingr->text());
-                    ui->comment_ingr->setText("");
+                    this->resetIngrFields();
                     return true;
                 }
                 ui->state->setText(tr("Le champs est vide !"));
@@ -2759,8 +2779,8 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
             if (object == ui->editMat || object == ui->qte_mat) {
                 if (ui->editMat->text() != "" && ui->qte_mat->text() != "") {
                     this->insertMateriel(ui->qte_mat->text(), ui->editMat->text());
-                    ui->qte_mat->setText("");
-                    ui->editMat->setText("");
+                    this->resetMatFields();
+                    ui->qte_mat->setFocus();
                     return true;
                 }
                 ui->state->setText(tr("Vous devez renseigner une quantité et un nom !"));
@@ -2770,7 +2790,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
             else if (object == ui->comment_mat) {
                 if (ui->comment_mat->text() != "") {
                     this->insertMaterielComment(ui->comment_mat->text());
-                    ui->comment_mat->setText("");
+                    this->resetMatFields();
                     return true;
                 }
                 ui->state->setText(tr("Le champs est vide !"));

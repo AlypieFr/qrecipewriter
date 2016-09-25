@@ -1849,7 +1849,7 @@ left: 10px; padding: 0 3px;}</string>
                               <property name="minimumSize">
                                <size>
                                 <width>0</width>
-                                <height>30</height>
+                                <height>0</height>
                                </size>
                               </property>
                               <property name="maximumSize">
@@ -1887,7 +1887,7 @@ left: 10px; padding: 0 3px;}</string>
                               <property name="minimumSize">
                                <size>
                                 <width>0</width>
-                                <height>30</height>
+                                <height>0</height>
                                </size>
                               </property>
                               <property name="maximumSize">
@@ -2083,7 +2083,7 @@ left: 10px; padding: 0 3px;}</string>
                               <property name="minimumSize">
                                <size>
                                 <width>0</width>
-                                <height>30</height>
+                                <height>0</height>
                                </size>
                               </property>
                               <property name="maximumSize">
