@@ -4121,6 +4121,17 @@ void QRecipeWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
                     //TODO: fix import of ingredients
                     //if (txt != "")
                         //this->insertIngredient(txt);
+                    QRegExp ingrExp("^(\\d+) ((\\w+) ((de )|(d')))?(.+)$");
+                    if (ingrExp.exactMatch(txt)) {
+                        QString qte = ingrExp.cap(1);
+                        QString unit = ingrExp.cap(3);
+                        QString name = ingrExp.cap(7);
+                        this->insertIngredient(qte, unit, name);
+                    }
+                    else {
+                        this->insertIngredient("", "", txt);
+                    }
+
                 }
                 idIngr = idIngrOrig;
                 ingrComm = ingrCommOrig;

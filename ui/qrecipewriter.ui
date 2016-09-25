@@ -1815,7 +1815,11 @@ left: 10px; padding: 0 3px;}</string>
                                </widget>
                               </item>
                               <item>
-                               <widget class="QLineEdit" name="editIngr"/>
+                               <widget class="QLineEdit" name="editIngr">
+                                <property name="contextMenuPolicy">
+                                 <enum>Qt::CustomContextMenu</enum>
+                                </property>
+                               </widget>
                               </item>
                              </layout>
                             </item>
