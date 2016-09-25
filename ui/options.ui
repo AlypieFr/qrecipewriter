@@ -466,7 +466,7 @@
         </rect>
        </property>
        <property name="text">
-        <string notr="true">English</string>
+        <string notr="true">En&amp;glish</string>
        </property>
       </widget>
       <widget class="QRadioButton" name="radioButton_lang_fr">
@@ -697,7 +697,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget">
+       <widget class="QWidget" name="layoutWidget_20">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -733,7 +733,7 @@
          <item>
           <widget class="QRadioButton" name="typeServer_wordpress">
            <property name="text">
-            <string>Wordpress</string>
+            <string>Wordpress (nécessite Ja&amp;va)</string>
            </property>
           </widget>
          </item>
@@ -980,7 +980,7 @@
          <item>
           <widget class="QRadioButton" name="typeServer_wordpress_2">
            <property name="text">
-            <string>Wordpress</string>
+            <string>Wordpress (nécessite Ja&amp;va)</string>
            </property>
           </widget>
          </item>
@@ -1227,7 +1227,7 @@
          <item>
           <widget class="QRadioButton" name="typeServer_wordpress_3">
            <property name="text">
-            <string>Wordpress</string>
+            <string>Wordpress (nécessite Ja&amp;va)</string>
            </property>
           </widget>
          </item>
@@ -1474,7 +1474,7 @@
          <item>
           <widget class="QRadioButton" name="typeServer_wordpress_4">
            <property name="text">
-            <string>Wo&amp;rdpress</string>
+            <string>Wordpress (nécessite Ja&amp;va)</string>
            </property>
           </widget>
          </item>
@@ -1727,7 +1727,7 @@
          <item>
           <widget class="QRadioButton" name="typeServer_wordpress_5">
            <property name="text">
-            <string>Wo&amp;rdpress</string>
+            <string>Wordpress (nécessite Ja&amp;va)</string>
            </property>
           </widget>
          </item>
