@@ -2056,7 +2056,11 @@ left: 10px; padding: 0 3px;}</string>
                                </widget>
                               </item>
                               <item>
-                               <widget class="QLineEdit" name="editMat"/>
+                               <widget class="QLineEdit" name="editMat">
+                                <property name="contextMenuPolicy">
+                                 <enum>Qt::CustomContextMenu</enum>
+                                </property>
+                               </widget>
                               </item>
                              </layout>
                             </item>

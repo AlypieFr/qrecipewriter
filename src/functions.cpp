@@ -344,7 +344,7 @@ QStringList Functions::makeSimpleList(QString text, bool isMat) {
                         text = "mat#" + qte + "#" + name;
                     }
                     else {
-                        messageError = "Some materials are not correct, they have been ignored";
+                        messageError = QObject::tr("Certains matériels de la recette ne sont pas correctes. Ils ont été ignorés.");
                     }
                 }
                 list.append("0|" + text);
@@ -366,7 +366,7 @@ QStringList Functions::makeSimpleList(QString text, bool isMat) {
         }
     }
     if (messageError != "") {
-        QMessageBox::warning(NULL, "Errors while loading recipe", messageError);
+        QMessageBox::warning(NULL, QObject::tr("Erreur lors du chargement de la recette"), messageError);
     }
     return list;
 }

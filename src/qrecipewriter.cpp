@@ -4118,9 +4118,6 @@ void QRecipeWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
                         }
                     }
                     idIngr = idIngrOrig + indent;
-                    //TODO: fix import of ingredients
-                    //if (txt != "")
-                        //this->insertIngredient(txt);
                     QRegExp ingrExp("^(\\d+) ((\\w+) ((de )|(d')))?(.+)$");
                     if (ingrExp.exactMatch(txt)) {
                         QString qte = ingrExp.cap(1);
@@ -4149,6 +4146,7 @@ void QRecipeWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
         my_menu.addAction(cont_menu.at(i));
     QPoint pt = ui->editMat->mapToGlobal(pos);
     QAction* sel_item = my_menu.exec(pt);
+    QString errorMessage = "";
     if (sel_item)
     {
         QString s = sel_item->text();
@@ -4169,13 +4167,22 @@ void QRecipeWriter::on_editMat_customContextMenuRequested(const QPoint &pos)
                         txt = exp.cap(1);
                         matComm = true;
                     }
-                    //TODO: fix import of material
-                    //if (txt != "")
-                        //this->insertMateriel(txt);
+                    QRegExp matExp("^(\\d+) (.+)$");
+                    if (matExp.exactMatch(txt)) {
+                        QString qte = matExp.cap(1);
+                        QString name = matExp.cap(2);
+                        this->insertMateriel(qte, name);
+                    }
+                    else {
+                        errorMessage = tr("Certaines lignes ne sont pas correctes. Elles ont été ignorées.");
+                    }
                 }
                 matComm = matCommOrig;
             }
         }
+    }
+    if (errorMessage != "") {
+         QMessageBox::warning(NULL, tr("Erreur lors de l'importation du matériel"), errorMessage);
     }
 }
 
