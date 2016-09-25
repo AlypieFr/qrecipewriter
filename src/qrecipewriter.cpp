@@ -3414,6 +3414,7 @@ void QRecipeWriter::modifierMat(const QModelIndex &index)
             ui->qte_mat->setText(quantity);
             ui->editMat->setText(name);
         }
+        ui->qte_mat->setFocus();
     }
     model2->item(matEdit)->setBackground(QBrush(colorEdit));
     ui->listMat->clearSelection();
