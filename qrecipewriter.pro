@@ -35,7 +35,8 @@ SOURCES += src/main.cpp\
     src/coupdecoeur.cpp \
     src/opendistant.cpp \
     src/searchupdates.cpp \
-    src/login.cpp
+    src/login.cpp \
+    src/httprequestworker.cpp
 
 HEADERS  += headers/qrecipewriter.h \
     headers/options.h \
@@ -56,7 +57,8 @@ HEADERS  += headers/qrecipewriter.h \
     headers/coupdecoeur.h \
     headers/opendistant.h \
     headers/searchupdates.h \
-    headers/login.h
+    headers/login.h \
+    headers/httprequestworker.h
 
 FORMS    += ui/qrecipewriter.ui \
     ui/options.ui \
