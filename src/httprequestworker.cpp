@@ -240,8 +240,6 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
     // prepare connection
 
     QUrl url(input->url_str);
-    //url.setUserName(input->username);
-    //url.setPassword(input->password);
     QNetworkRequest request = QNetworkRequest(url);
     QString concatenated = input->username + ":" + input->password;
     QByteArray data = concatenated.toLocal8Bit().toBase64();
