@@ -36,6 +36,7 @@ extern bool recPrinter;
 extern bool recSearch;
 extern bool recCoupDeCoeur;
 extern int configActive;
+extern QHash<int,QHash<QString, QString>> serverConfs;
 extern bool openLastDir_sauvegarde;
 extern bool openLastDir_Img;
 extern bool checkF7beforeSend;
@@ -147,61 +148,77 @@ void Functions::loadConfig()
         }
     }
 
-    file = new QFile(confFile + ".serv" + QString::number(configActive));
-    if (file->exists()) {
-        file->open(QIODevice::ReadOnly);
-        QXmlStreamReader xmlS(file);
-        while(!xmlS.atEnd() &&
-                !xmlS.hasError()) {
+    serverConfs = loadServerConfigs();
+    addrSite = serverConfs[configActive]["addrSite"];
+    addrPub = serverConfs[configActive]["addrPub"];
+    dirDistPict = serverConfs[configActive]["dirDistPict"];
+    typeServer = serverConfs[configActive]["typeServer"];
+    richSnippets = serverConfs[configActive]["richSnippets"] == "1";
+    recPrinter = serverConfs[configActive]["recPrinter"] == "1";
+    recSearch = serverConfs[configActive]["recSearch"] == "1";
+    recCoupDeCoeur = serverConfs[configActive]["recCoupDeCoeur"] == "1";
+}
 
-            QXmlStreamReader::TokenType token = xmlS.readNext();
-            if(token == QXmlStreamReader::StartDocument) {
-                continue;
-            }
-            if(token == QXmlStreamReader::StartElement) {
-                if(xmlS.name() == "addrSite") {
-                    xmlS.readNext();
-                    addrSite = xmlS.text().toString();
+QHash<int, QHash<QString, QString>> Functions::loadServerConfigs() {
+    QHash<int, QHash<QString, QString> > configServer;
+    for (int i = 1; i <= 5; i++) {
+        QFile *file = new QFile(confFile + ".serv" + QString::number(i));
+        if (file->exists()) {
+            file->open(QIODevice::ReadOnly);
+            QXmlStreamReader xml(file);
+            while(!xml.atEnd() &&
+                    !xml.hasError()) {
+
+                QXmlStreamReader::TokenType token = xml.readNext();
+                if(token == QXmlStreamReader::StartDocument) {
                     continue;
                 }
-                if(xmlS.name() == "addrPub") {
-                    xmlS.readNext();
-                    addrPub = xmlS.text().toString();
-                    continue;
-                }
-                if(xmlS.name() == "dirDistPict") {
-                    xmlS.readNext();
-                    dirDistPict = xmlS.text().toString();
-                    continue;
-                }
-                if(xmlS.name() == "typeServer") {
-                    xmlS.readNext();
-                    typeServer = xmlS.text().toString();
-                    continue;
-                }
-                if(xmlS.name() == "richSnippets") {
-                    xmlS.readNext();
-                    richSnippets = xmlS.text().toString() == "1" ? true: false;
-                    continue;
-                }
-                if(xmlS.name() == "recPrinter") {
-                    xmlS.readNext();
-                    recPrinter = xmlS.text().toString() == "1" ? true: false;
-                    continue;
-                }
-                if(xmlS.name() == "recSearch") {
-                    xmlS.readNext();
-                    recSearch = xmlS.text().toString() == "1" ? true: false;
-                    continue;
-                }
-                if(xmlS.name() == "recCoupDeCoeur") {
-                    xmlS.readNext();
-                    recCoupDeCoeur = xmlS.text().toString() == "1" ? true: false;
-                    continue;
+                if(token == QXmlStreamReader::StartElement) {
+                    if(xml.name() == "addrSite") {
+                        xml.readNext();
+                        configServer[i]["addrSite"] = xml.text().toString();
+                        continue;
+                    }
+                    if(xml.name() == "addrPub") {
+                        xml.readNext();
+                        configServer[i]["addrPub"] = xml.text().toString();
+                        continue;
+                    }
+                    if(xml.name() == "dirDistPict") {
+                        xml.readNext();
+                        configServer[i]["dirDistPict"] = xml.text().toString();
+                        continue;
+                    }
+                    if(xml.name() == "typeServer") {
+                        xml.readNext();
+                        configServer[i]["typeServer"] = xml.text().toString();
+                        continue;
+                    }
+                    if(xml.name() == "richSnippets") {
+                        xml.readNext();
+                        configServer[i]["richSnippets"] = xml.text().toString();
+                        continue;
+                    }
+                    if(xml.name() == "recPrinter") {
+                        xml.readNext();
+                        configServer[i]["recPrinter"] = xml.text().toString();
+                        continue;
+                    }
+                    if(xml.name() == "recSearch") {
+                        xml.readNext();
+                        configServer[i]["recSearch"] = xml.text().toString();
+                        continue;
+                    }
+                    if(xml.name() == "recCoupDeCoeur") {
+                        xml.readNext();
+                        configServer[i]["recCoupDeCoeur"] = xml.text().toString();
+                        continue;
+                    }
                 }
             }
         }
     }
+    return configServer;
 }
 
 bool Functions::saveRecipeToFile(QString title, QStringList categories, QString tpsPrep, QString tpsCuis, QString tpsRep,

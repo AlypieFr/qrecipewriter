@@ -36,7 +36,6 @@ void Login::init(bool showPublish) {
         this->adjustSize();
     }
     //Load credentials if available:
-    ui->configNb->setText("Config: " + QString::number(configActive));
     QFile idFile (confDir + ".id." + QString::number(configActive));
     if (idFile.exists())
     {
@@ -54,6 +53,10 @@ void Login::init(bool showPublish) {
         ui->saveId->setChecked(false);
     }
 
+    ui->config_nb->clear();
+    ui->config_nb->addItems(QStringList() << "Config 1" << "Config 2" << "Config 3" << "Config 4" << "Config 5");
+    ui->config_nb->setCurrentIndex(configActive - 1);
+
     //Show dialog
     this->exec();
 }
@@ -64,11 +67,12 @@ void Login::on_valider_clicked()
     username = ui->user->text();
     password = ui->password->text();
     publish = ui->publier->isChecked();
+    config = ui->config_nb->currentIndex() + 1;
 
     //Save credientials if checked:
     if (ui->saveId->isChecked())
     {
-        QFile idFile (confDir + ".id." + QString::number(configActive));
+        QFile idFile (confDir + ".id." + QString::number(config));
         idFile.open(QFile::WriteOnly);
         QTextStream idStream (&idFile);
         idStream.setCodec("UTF-8"); //Not useful on linux system as it's a default, but Windows has its own defaults....
@@ -105,6 +109,33 @@ QString Login::getPassword() {
     return password;
 }
 
+int Login::getConfig() {
+    return config;
+}
+
 bool Login::getPublish() {
     return publish;
+}
+
+void Login::on_config_nb_currentIndexChanged(int index)
+{
+    int idConfig = index + 1;
+    QFile idFile (confDir + ".id." + QString::number(idConfig));
+    qDebug() << index;
+    qDebug() << idFile.fileName();
+    if (idFile.exists())
+    {
+        idFile.open(QFile::ReadOnly);
+        QTextStream idStream (&idFile);
+        idStream.setCodec("UTF-8"); //Not useful on linux system as it's a default, but Windows has its own defaults....
+        ui->user->setText(idStream.readLine());
+        ui->password->setText(idStream.readLine());
+        idFile.close();
+        ui->saveId->setChecked(true);
+    }
+    else {
+        ui->user->setText("");
+        ui->password->setText("");
+        ui->saveId->setChecked(false);
+    }
 }

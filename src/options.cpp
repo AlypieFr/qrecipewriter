@@ -46,6 +46,7 @@ extern bool recPrinter; //CeC Printer status
 extern bool recSearch;
 extern bool recCoupDeCoeur;
 extern int configActive;
+extern QHash<int,QHash<QString, QString>> serverConfs;
 extern bool openLastDir_sauvegarde;
 extern bool openLastDir_Img;
 extern bool checkF7beforeSend;
@@ -426,118 +427,60 @@ void Options::on_buttonOptionsSupprimerDonneesPerso_clicked()
 }
 
 void Options::loadConfigsServer() {
-    QHash<int, QHash<QString, QString> > configServer;
-    for (int i = 1; i <= 5; i++) {
-        QFile *file = new QFile(confFile + ".serv" + QString::number(i));
-        if (file->exists()) {
-            file->open(QIODevice::ReadOnly);
-            QXmlStreamReader xml(file);
-            while(!xml.atEnd() &&
-                    !xml.hasError()) {
-
-                QXmlStreamReader::TokenType token = xml.readNext();
-                if(token == QXmlStreamReader::StartDocument) {
-                    continue;
-                }
-                if(token == QXmlStreamReader::StartElement) {
-                    if(xml.name() == "addrSite") {
-                        xml.readNext();
-                        configServer[i]["addrSite"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "addrPub") {
-                        xml.readNext();
-                        configServer[i]["addrPub"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "dirDistPict") {
-                        xml.readNext();
-                        configServer[i]["dirDistPict"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "typeServer") {
-                        xml.readNext();
-                        configServer[i]["typeServer"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "richSnippets") {
-                        xml.readNext();
-                        configServer[i]["richSnippets"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "recPrinter") {
-                        xml.readNext();
-                        configServer[i]["recPrinter"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "recSearch") {
-                        xml.readNext();
-                        configServer[i]["recSearch"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "recCoupDeCoeur") {
-                        xml.readNext();
-                        configServer[i]["recCoupDeCoeur"] = xml.text().toString();
-                        continue;
-                    }
-                }
-            }
-        }
+    if (serverConfs.contains(1)) {
+        ui->lineEditAdresseSite->setText(serverConfs[1]["addrSite"]);
+        ui->lineEditAdressePublication->setText(serverConfs[1]["addrPub"]);
+        ui->lineEditDossierDistantImages->setText(serverConfs[1]["dirDistPict"]);
+        ui->typeServer_wordpress->setChecked(serverConfs[1]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking->setChecked(serverConfs[1]["typeServer"] == "pywebcooking");
+        ui->richSnippets->setChecked(serverConfs[1]["richSnippets"] == "1");
+        ui->recPrinter->setChecked(serverConfs[1]["recPrinter"] == "1");
+        ui->recSearch->setChecked(serverConfs[1]["recSearch"] == "1");
+        ui->recCoupDeCoeur->setChecked(serverConfs[1]["recCoupDeCoeur"] == "1");
     }
-    if (configServer.contains(1)) {
-        ui->lineEditAdresseSite->setText(configServer[1]["addrSite"]);
-        ui->lineEditAdressePublication->setText(configServer[1]["addrPub"]);
-        ui->lineEditDossierDistantImages->setText(configServer[1]["dirDistPict"]);
-        ui->typeServer_wordpress->setChecked(configServer[1]["typeServer"] == "wordpress");
-        ui->typeServer_pywebcooking->setChecked(configServer[1]["typeServer"] == "pywebcooking");
-        ui->richSnippets->setChecked(configServer[1]["richSnippets"] == "1");
-        ui->recPrinter->setChecked(configServer[1]["recPrinter"] == "1");
-        ui->recSearch->setChecked(configServer[1]["recSearch"] == "1");
-        ui->recCoupDeCoeur->setChecked(configServer[1]["recCoupDeCoeur"] == "1");
+    if (serverConfs.contains(2)) {
+        ui->lineEditAdresseSite_2->setText(serverConfs[2]["addrSite"]);
+        ui->lineEditAdressePublication_2->setText(serverConfs[2]["addrPub"]);
+        ui->lineEditDossierDistantImages_2->setText(serverConfs[2]["dirDistPict"]);
+        ui->typeServer_wordpress_2->setChecked(serverConfs[2]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking_2->setChecked(serverConfs[2]["typeServer"] == "pywebcooking");
+        ui->richSnippets_2->setChecked(serverConfs[2]["richSnippets"] == "1");
+        ui->recPrinter_2->setChecked(serverConfs[2]["recPrinter"] == "1");
+        ui->recSearch_2->setChecked(serverConfs[2]["recSearch"] == "1");
+        ui->recCoupDeCoeur_2->setChecked(serverConfs[2]["recCoupDeCoeur"] == "1");
     }
-    if (configServer.contains(2)) {
-        ui->lineEditAdresseSite_2->setText(configServer[2]["addrSite"]);
-        ui->lineEditAdressePublication_2->setText(configServer[2]["addrPub"]);
-        ui->lineEditDossierDistantImages_2->setText(configServer[2]["dirDistPict"]);
-        ui->typeServer_wordpress_2->setChecked(configServer[2]["typeServer"] == "wordpress");
-        ui->typeServer_pywebcooking_2->setChecked(configServer[2]["typeServer"] == "pywebcooking");
-        ui->richSnippets_2->setChecked(configServer[2]["richSnippets"] == "1");
-        ui->recPrinter_2->setChecked(configServer[2]["recPrinter"] == "1");
-        ui->recSearch_2->setChecked(configServer[2]["recSearch"] == "1");
-        ui->recCoupDeCoeur_2->setChecked(configServer[2]["recCoupDeCoeur"] == "1");
+    if (serverConfs.contains(3)) {
+        ui->lineEditAdresseSite_3->setText(serverConfs[3]["addrSite"]);
+        ui->lineEditAdressePublication_3->setText(serverConfs[3]["addrPub"]);
+        ui->lineEditDossierDistantImages_3->setText(serverConfs[3]["dirDistPict"]);
+        ui->typeServer_wordpress_3->setChecked(serverConfs[3]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking_3->setChecked(serverConfs[3]["typeServer"] == "pywebcooking");
+        ui->richSnippets_3->setChecked(serverConfs[3]["richSnippets"] == "1");
+        ui->recPrinter_3->setChecked(serverConfs[3]["recPrinter"] == "1");
+        ui->recSearch_3->setChecked(serverConfs[3]["recSearch"] == "1");
+        ui->recCoupDeCoeur_3->setChecked(serverConfs[3]["recCoupDeCoeur"] == "1");
     }
-    if (configServer.contains(3)) {
-        ui->lineEditAdresseSite_3->setText(configServer[3]["addrSite"]);
-        ui->lineEditAdressePublication_3->setText(configServer[3]["addrPub"]);
-        ui->lineEditDossierDistantImages_3->setText(configServer[3]["dirDistPict"]);
-        ui->typeServer_wordpress_3->setChecked(configServer[3]["typeServer"] == "wordpress");
-        ui->typeServer_pywebcooking_3->setChecked(configServer[3]["typeServer"] == "pywebcooking");
-        ui->richSnippets_3->setChecked(configServer[3]["richSnippets"] == "1");
-        ui->recPrinter_3->setChecked(configServer[3]["recPrinter"] == "1");
-        ui->recSearch_3->setChecked(configServer[3]["recSearch"] == "1");
-        ui->recCoupDeCoeur_3->setChecked(configServer[3]["recCoupDeCoeur"] == "1");
+    if (serverConfs.contains(4)) {
+        ui->lineEditAdresseSite_4->setText(serverConfs[4]["addrSite"]);
+        ui->lineEditAdressePublication_4->setText(serverConfs[4]["addrPub"]);
+        ui->lineEditDossierDistantImages_4->setText(serverConfs[4]["dirDistPict"]);
+        ui->typeServer_wordpress_4->setChecked(serverConfs[4]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking_4->setChecked(serverConfs[4]["typeServer"] == "pywebcooking");
+        ui->richSnippets_4->setChecked(serverConfs[4]["richSnippets"] == "1");
+        ui->recPrinter_4->setChecked(serverConfs[4]["recPrinter"] == "1");
+        ui->recSearch_4->setChecked(serverConfs[4]["recSearch"] == "1");
+        ui->recCoupDeCoeur_4->setChecked(serverConfs[4]["recCoupDeCoeur"] == "1");
     }
-    if (configServer.contains(4)) {
-        ui->lineEditAdresseSite_4->setText(configServer[4]["addrSite"]);
-        ui->lineEditAdressePublication_4->setText(configServer[4]["addrPub"]);
-        ui->lineEditDossierDistantImages_4->setText(configServer[4]["dirDistPict"]);
-        ui->typeServer_wordpress_4->setChecked(configServer[4]["typeServer"] == "wordpress");
-        ui->typeServer_pywebcooking_4->setChecked(configServer[4]["typeServer"] == "pywebcooking");
-        ui->richSnippets_4->setChecked(configServer[4]["richSnippets"] == "1");
-        ui->recPrinter_4->setChecked(configServer[4]["recPrinter"] == "1");
-        ui->recSearch_4->setChecked(configServer[4]["recSearch"] == "1");
-        ui->recCoupDeCoeur_4->setChecked(configServer[4]["recCoupDeCoeur"] == "1");
-    }
-    if (configServer.contains(5)) {
-        ui->lineEditAdresseSite_5->setText(configServer[5]["addrSite"]);
-        ui->lineEditAdressePublication_5->setText(configServer[5]["addrPub"]);
-        ui->lineEditDossierDistantImages_5->setText(configServer[5]["dirDistPict"]);
-        ui->typeServer_wordpress_5->setChecked(configServer[5]["typeServer"] == "wordpress");
-        ui->typeServer_pywebcooking_5->setChecked(configServer[5]["typeServer"] == "pywebcooking");
-        ui->richSnippets_5->setChecked(configServer[5]["richSnippets"] == "1");
-        ui->recPrinter_5->setChecked(configServer[5]["recPrinter"] == "1");
-        ui->recSearch_5->setChecked(configServer[5]["recSearch"] == "1");
-        ui->recCoupDeCoeur_5->setChecked(configServer[5]["recCoupDeCoeur"] == "1");
+    if (serverConfs.contains(5)) {
+        ui->lineEditAdresseSite_5->setText(serverConfs[5]["addrSite"]);
+        ui->lineEditAdressePublication_5->setText(serverConfs[5]["addrPub"]);
+        ui->lineEditDossierDistantImages_5->setText(serverConfs[5]["dirDistPict"]);
+        ui->typeServer_wordpress_5->setChecked(serverConfs[5]["typeServer"] == "wordpress");
+        ui->typeServer_pywebcooking_5->setChecked(serverConfs[5]["typeServer"] == "pywebcooking");
+        ui->richSnippets_5->setChecked(serverConfs[5]["richSnippets"] == "1");
+        ui->recPrinter_5->setChecked(serverConfs[5]["recPrinter"] == "1");
+        ui->recSearch_5->setChecked(serverConfs[5]["recSearch"] == "1");
+        ui->recCoupDeCoeur_5->setChecked(serverConfs[5]["recCoupDeCoeur"] == "1");
     }
 }
 

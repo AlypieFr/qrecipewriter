@@ -28,6 +28,7 @@ extern QString userDir;
 extern QString confDir;
 extern QString confFile;
 extern QFile *confCatFile;
+extern QHash<int,QHash<QString, QString>> serverConfs;
 
 extern QStringList otherPicts;
 extern QString dirPict;
@@ -2254,12 +2255,13 @@ void QRecipeWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
         openDistant->init();
 
         int idRecipeToOpen = openDistant->idRecipeToOpen;
+        int idConf = openDistant->config;
         //Delete pointer after close event:
         delete openDistant;
         openDistant = NULL;
 
         if (idRecipeToOpen > -1) {
-             FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPost.php?p=" + QString::number(idRecipeToOpen), tr("Récupération de la recette..."), this);
+             FileDownloader *fdower = new FileDownloader(serverConfs[idConf]["addrSite"] + "/requests/getPost.php?p=" + QString::number(idRecipeToOpen), tr("Récupération de la recette..."), this);
              QByteArray resData = fdower->downloadedData();
              QJsonParseError ok;
              QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);

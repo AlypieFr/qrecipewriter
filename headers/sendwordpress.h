@@ -46,6 +46,7 @@ private:
     QString htmlCode, excerpt, titre, mainPicture, tags;
     QStringList categories;
     QString user, passwd;
+    int config;
     bool publier;
     QString resultSend;
     QDialog *envoiEnCours;

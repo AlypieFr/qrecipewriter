@@ -41,6 +41,7 @@ public:
     ~OpenDistant();
     void init();
     int idRecipeToOpen;
+    int config;
 
 private slots:
     void on_search_textChanged(const QString &arg1);

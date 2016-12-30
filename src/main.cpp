@@ -69,6 +69,7 @@ bool recPrinter = false; //CeC Printer status
 bool recSearch = false; //Activate or not search module
 bool recCoupDeCoeur = false; //Activate or not "coups de coeur"
 int configActive = 1;
+QHash<int,QHash<QString, QString>> serverConfs; //Store config for all server configurations
 int idRecipe = -1;
 bool openLastDir_sauvegarde = false;
 bool openLastDir_Img = false;

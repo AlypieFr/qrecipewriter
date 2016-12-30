@@ -14,7 +14,7 @@
 #include "opendistant.h"
 #include "ui_opendistant.h"
 
-extern QString addrSite;
+extern QHash<int,QHash<QString, QString>> serverConfs;
 extern QStringList namesCats;
 
 OpenDistant::OpenDistant(QWidget *parent) :
@@ -36,6 +36,7 @@ void OpenDistant::init() {
     login->init(false);
     if (login->getAccepted()) {
         QString pseudoWp = login->getUsername();
+        config = login->getConfig();
 
         ui->categoriesBox->setContentsMargins(0,10,0,0);
         /*ui->categoriesBox->setMinimumHeight(70);*/
@@ -51,7 +52,8 @@ void OpenDistant::init() {
             cboxes.append(catI);
             connect(catI, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));;
         }
-        FileDownloader *fdower = new FileDownloader(addrSite + "/requests/getPostsJson.php?user=" + pseudoWp, tr("Récupération de la liste des recettes..."), parentWidget);
+        FileDownloader *fdower = new FileDownloader(serverConfs[config]["addrSite"] + "/requests/getPostsJson.php?user=" + \
+                pseudoWp, tr("Récupération de la liste des recettes..."), parentWidget);
         QByteArray resData = fdower->downloadedData();
         QJsonParseError ok;
 

@@ -36,11 +36,14 @@ private slots:
 
     void on_annuler_clicked();
 
+    void on_config_nb_currentIndexChanged(int index);
+
 public:
     void init(bool showPublish=true);
     bool getAccepted();
     QString getUsername();
     QString getPassword();
+    int getConfig();
     bool getPublish();
 
 private:
@@ -48,6 +51,7 @@ private:
     bool accepted;
     QString username;
     QString password;
+    int config;
     bool publish;
 };
 

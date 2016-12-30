@@ -24,7 +24,7 @@ extern QString addrPub; //Address of publication (XML-RPC)
 extern QString dirTmp;
 extern bool recSearch;
 extern bool recCoupDeCoeur;
-extern int configActive;
+extern QHash<int,QHash<QString, QString>> serverConfs;
 extern int idRecipe;
 
 SendWordpress::SendWordpress(QWidget *parent) :
@@ -81,6 +81,7 @@ void SendWordpress::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     if (login->getAccepted()) {
         user = login->getUsername();
         passwd = login->getPassword();
+        config = login->getConfig();
         publier = login->getPublish();
         this->sendRecipe();
     }
@@ -147,7 +148,7 @@ void SendWordpress::sendRecipe()
         stwPath = shareDir + "/wordpress";
     }
     QString Program = "java -jar \"" + stwPath + "/SendToWordpress.jar\" \""
-            + addrPub + "\" \"" + cats + "\" \"" + tags + "\" \"" + mainPicture + "\" \"" + htmlFile.fileName()
+            + serverConfs[config]["addrPub"] + "\" \"" + cats + "\" \"" + tags + "\" \"" + mainPicture + "\" \"" + htmlFile.fileName()
             + "\" \"" + oPicts + "\" \"" + isPublier + "\" " + QString::number(idRecipe);
     QProcess *myProcess = new QProcess();
     myProcess->setProcessChannelMode(QProcess::MergedChannels);
@@ -175,7 +176,7 @@ void SendWordpress::sendRecipe()
         int rep = QMessageBox::information((QWidget*)this->parent(), tr("Envoi terminé"), tr("Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?"), QMessageBox::Yes, QMessageBox::No);
         if (rep == QMessageBox::Yes)
         {
-            QString Program = "\"" + cmdNav + "\" " + addrSite + "/?p=" + lines[i+1].replace("\r", "");
+            QString Program = "\"" + cmdNav + "\" " + serverConfs[config]["addrSite"] + "/?p=" + lines[i+1].replace("\r", "");
             QProcess *myProcess = new QProcess();
             myProcess->setProcessChannelMode(QProcess::MergedChannels);
             myProcess->start(Program);
