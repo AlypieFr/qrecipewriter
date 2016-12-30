@@ -11,7 +11,7 @@
  *    - Toute utilisation commerciale partielle ou complète est interdite.
  */
 
-#include "sendautomatic.h"
+#include "sendwordpress.h"
 #include "ui_sendautomatic.h"
 #include <QTextStream>
 
@@ -27,18 +27,18 @@ extern bool recCoupDeCoeur;
 extern int configActive;
 extern int idRecipe;
 
-SendAutomatic::SendAutomatic(QWidget *parent) :
+SendWordpress::SendWordpress(QWidget *parent) :
     QDialog(parent)
 {
 
 }
 
-SendAutomatic::~SendAutomatic()
+SendWordpress::~SendWordpress()
 {
 
 }
 
-void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
+void SendWordpress::init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
                          QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu)
 {
     isSending = false;
@@ -89,7 +89,7 @@ void SendAutomatic::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     }
 }
 
-QString SendAutomatic::makeExcerpt(QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep)
+QString SendWordpress::makeExcerpt(QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep)
 {
     QString descExpt = "";
     for(int i=0; i<qMin(descWords.length(),20); ++i)
@@ -103,7 +103,7 @@ QString SendAutomatic::makeExcerpt(QStringList descWords, QString tpsPrep, QStri
     return expt;
 }
 
-QString SendAutomatic::makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<int> tpsRep)
+QString SendWordpress::makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<int> tpsRep)
 {
     int tPrep = tpsPrep[0] * 60 + tpsPrep[1];
     int tCuis = tpsCuis[0] * 60 + tpsCuis[1];
@@ -116,7 +116,7 @@ QString SendAutomatic::makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<in
     return tags;
 }
 
-void SendAutomatic::sendRecipe()
+void SendWordpress::sendRecipe()
 {
     isSending = true;
     //Save htmlCode to tmpFile:
@@ -241,7 +241,7 @@ void SendAutomatic::sendRecipe()
     }
 }
 
-void SendAutomatic::errorDetails_clicked()
+void SendWordpress::errorDetails_clicked()
 {
     if (!isErrorDetailsOpened)
     {
@@ -261,7 +261,7 @@ void SendAutomatic::errorDetails_clicked()
     }
 }
 
-void SendAutomatic::errorOk_clicked()
+void SendWordpress::errorOk_clicked()
 {
     errorShow->close();
 }

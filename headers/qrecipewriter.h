@@ -19,7 +19,7 @@
 #include "options.h"
 #include "functions.h"
 #include "apropos.h"
-#include "sendautomatic.h"
+#include "sendwordpress.h"
 #include "spellcheckdialog.h"
 #include "spellchecker.h"
 #include "insertvideo.h"
@@ -298,7 +298,7 @@ private:
     void insertMaterielComment(QString comment);
     void insertPreparation(QString text);
     void insertConseil(QString text);
-    void sendAutomatic();
+    void sendWordpress();
     void loadRecipe(QString fileName, bool testReadyToSend);
     void searchUpdate();
     void startAbcCheck(bool silent);

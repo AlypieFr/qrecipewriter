@@ -27,13 +27,13 @@ namespace Ui {
 class SendAutomatic;
 }
 
-class SendAutomatic : public QDialog
+class SendWordpress : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit SendAutomatic(QWidget *parent = 0);
-    ~SendAutomatic();
+    explicit SendWordpress(QWidget *parent = 0);
+    ~SendWordpress();
     void init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
               QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu);
 

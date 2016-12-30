@@ -25,7 +25,6 @@ SOURCES += src/main.cpp\
     src/tinyxml2.cpp \
     src/mylineedit.cpp \
     src/myplaintextedit.cpp \
-    src/sendautomatic.cpp  \
     src/spellcheckdialog.cpp \
     src/spellchecker.cpp \
     src/filedownloader.cpp \
@@ -36,7 +35,8 @@ SOURCES += src/main.cpp\
     src/opendistant.cpp \
     src/searchupdates.cpp \
     src/login.cpp \
-    src/httprequestworker.cpp
+    src/httprequestworker.cpp \
+    src/sendwordpress.cpp
 
 HEADERS  += headers/qrecipewriter.h \
     headers/options.h \
@@ -47,7 +47,6 @@ HEADERS  += headers/qrecipewriter.h \
     headers/tinyxml2.h \
     headers/mylineedit.h \
     headers/myplaintextedit.h \
-    headers/sendautomatic.h \
     headers/spellcheckdialog.h \
     headers/spellchecker.h \
     headers/filedownloader.h \
@@ -58,7 +57,8 @@ HEADERS  += headers/qrecipewriter.h \
     headers/opendistant.h \
     headers/searchupdates.h \
     headers/login.h \
-    headers/httprequestworker.h
+    headers/httprequestworker.h \
+    headers/sendwordpress.h
 
 FORMS    += ui/qrecipewriter.ui \
     ui/options.ui \

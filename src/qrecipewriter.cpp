@@ -1621,22 +1621,22 @@ void QRecipeWriter::on_envoyer_clicked()
                 wait->close();
             }
             makeHtmlCode();
-            sendAutomatic();
+            sendWordpress();
         }
     }
 }
 
-void QRecipeWriter::sendAutomatic()
+void QRecipeWriter::sendWordpress()
 {
-    SendAutomatic *sendAuto = new SendAutomatic(this);
+    SendWordpress *sendWp = new SendWordpress(this);
     QStringList cats = Functions::getSelectedCategories(categories);
     QList<int> tpsPrep, tpsCuis, tpsRep;
     tpsPrep << ui->hPrep->value() << ui->minPrep->value();
     tpsCuis << ui->hCuis->value() << ui->minCuis->value();
     tpsRep << ui->jRep->value() << ui->hRep->value() << ui->minRep->value();
-    sendAuto->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt, coupDeCoeur);
-    delete sendAuto;
-    sendAuto = NULL;
+    sendWp->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt, coupDeCoeur);
+    delete sendWp;
+    sendWp = NULL;
 }
 
 /**
