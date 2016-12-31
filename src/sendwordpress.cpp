@@ -19,11 +19,7 @@ extern QString shareDir;
 extern QString confDir;
 extern QStringList otherPicts;
 extern QString cmdNav; //Command to launch navigator
-extern QString addrSite; //Address of the website
-extern QString addrPub; //Address of publication (XML-RPC)
 extern QString dirTmp;
-extern bool recSearch;
-extern bool recCoupDeCoeur;
 extern QHash<int,QHash<QString, QString>> serverConfs;
 extern int idRecipe;
 
@@ -53,17 +49,17 @@ void SendWordpress::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     mainPicture = mainPicture_lu;
     excerpt = excerpt_lu;
     tags = "";
-    if (recSearch && (categories.size() > 1 || categories[0] != "Base")) {
+    if (serverConfs[config]["recSearch"] == "1" && (categories.size() > 1 || categories[0] != "Base")) {
         tags = makeTags(tpsPrep, tpsCuis, tpsRep);
-        if (recCoupDeCoeur) {
+        if (serverConfs[config]["recCoupDeCoeur"] == "1") {
             tags += ",";
         }
-        else {
-            tags = "null";
-        }
     }
-    if (recCoupDeCoeur) {
+    if (serverConfs[config]["recCoupDeCoeur"] == "1") {
         tags += coupDeCoeur_lu;
+    }
+    if (tags.isEmpty()) {
+        tags = "null";
     }
     envoiEnCours = new QDialog((QWidget*)this->parent());
     envoiEnCours->setModal(true);
@@ -147,12 +143,12 @@ void SendWordpress::sendRecipe()
     else {
         stwPath = shareDir + "/wordpress";
     }
-    QString Program = "java -jar \"" + stwPath + "/SendToWordpress.jar\" \""
+    QString program = "java -jar \"" + stwPath + "/SendToWordpress.jar\" \""
             + serverConfs[config]["addrPub"] + "\" \"" + cats + "\" \"" + tags + "\" \"" + mainPicture + "\" \"" + htmlFile.fileName()
-            + "\" \"" + oPicts + "\" \"" + isPublier + "\" " + QString::number(idRecipe);
+            + "\" \"" + oPicts + "\" \"" + isPublier + "\" \"" + QString::number(idRecipe) + "\"";
     QProcess *myProcess = new QProcess();
     myProcess->setProcessChannelMode(QProcess::MergedChannels);
-    myProcess->start(Program);
+    myProcess->start(program);
     myProcess->waitForFinished(-1); //-1 to wait until program has not finished, without any limit of time
     //Uuuh, it's finished, keeping if java program has send successfully or not the recipe:
     resultSend = myProcess->readAll();
@@ -176,10 +172,10 @@ void SendWordpress::sendRecipe()
         int rep = QMessageBox::information((QWidget*)this->parent(), tr("Envoi terminé"), tr("Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?"), QMessageBox::Yes, QMessageBox::No);
         if (rep == QMessageBox::Yes)
         {
-            QString Program = "\"" + cmdNav + "\" " + serverConfs[config]["addrSite"] + "/?p=" + lines[i+1].replace("\r", "");
+            QString program = "\"" + cmdNav + "\" " + serverConfs[config]["addrSite"] + "/?p=" + lines[i+1].replace("\r", "");
             QProcess *myProcess = new QProcess();
             myProcess->setProcessChannelMode(QProcess::MergedChannels);
-            myProcess->start(Program);
+            myProcess->start(program);
         }
     }
     else
