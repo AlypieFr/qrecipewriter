@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: SendToWordpress_lib/xmlrpc-1.1.1.jar SendToWordpress_lib/jwordpress-0.5.1-cec3.jar
+Main-Class: sendtowordpress.SendToWordpress
+
