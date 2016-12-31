@@ -98,6 +98,7 @@ public:
     static bool saveLastDir(QString action, QString dir);
     static QString getLastDir(QString action);
     static void downloadUpdate(QString adresse, QWidget *parent);
+    static bool is_config_valid(int id);
 };
 
 #endif // FUNCTIONS_H

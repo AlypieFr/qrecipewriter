@@ -1516,3 +1516,8 @@ void Functions::downloadUpdate(QString adresse, QWidget *parent) {
     }
 
 }
+
+bool Functions::is_config_valid(int id) {
+    QHash<QString, QString> conf = serverConfs[id];
+    return conf["addrSite"] != "" && conf["addrPub"] != "" && conf["dirDistPict"] != "" && conf["typeServer"] != "";
+}

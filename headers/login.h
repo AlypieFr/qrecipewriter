@@ -19,6 +19,8 @@
 #include <QFile>
 #include <QTextStream>
 
+#include "functions.h"
+
 namespace Ui {
 class Login;
 }

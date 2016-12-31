@@ -16,6 +16,7 @@
 
 extern QString confDir;
 extern int configActive;
+extern QHash<int,QHash<QString, QString>> serverConfs;
 
 Login::Login(QWidget *parent) :
     QDialog(parent),
@@ -54,8 +55,16 @@ void Login::init(bool showPublish) {
     }
 
     ui->config_nb->clear();
-    ui->config_nb->addItems(QStringList() << "Config 1" << "Config 2" << "Config 3" << "Config 4" << "Config 5");
-    ui->config_nb->setCurrentIndex(configActive - 1);
+    QStringList validConfs;
+    QList<int> idConfs = serverConfs.keys();
+    qSort(idConfs);
+    foreach (int idConf, idConfs) {
+        if (Functions::is_config_valid(idConf)) {
+            validConfs.append("Config " + QString::number(idConf));
+        }
+    }
+    ui->config_nb->addItems(validConfs);
+    ui->config_nb->setCurrentIndex(validConfs.indexOf("Config " + QString::number(configActive)));
 
     //Show dialog
     this->exec();
