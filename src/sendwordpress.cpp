@@ -12,7 +12,6 @@
  */
 
 #include "sendwordpress.h"
-#include "ui_sendautomatic.h"
 #include <QTextStream>
 
 extern QString shareDir;
@@ -34,8 +33,26 @@ SendWordpress::~SendWordpress()
 
 }
 
+/**
+ * @brief SendWordpress::init Initialize send to Wordpress
+ * @param htmlCode_lu
+ * @param titre_lu
+ * @param categories_lu
+ * @param tpsPrep
+ * @param tpsCuis
+ * @param tpsRep
+ * @param mainPicture_lu
+ * @param excerpt_lu
+ * @param coupDeCoeur_lu
+ * @param user_lu: username
+ * @param passwd_lu: password
+ * @param config_lu: id of the server config to use
+ * @param publier_lu: publish the recipe (bool)
+ * @param envoiEnCours_lu: "Envoi en cours" wainting window already opened (to be closed at the end)
+ */
 void SendWordpress::init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
-                         QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu)
+                         QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu,
+                         QString user_lu, QString passwd_lu, int config_lu, bool publier_lu, QDialog *envoiEnCours_lu)
 {
     isSending = false;
     QString categ = categories_lu[0];
@@ -61,29 +78,12 @@ void SendWordpress::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     if (tags.isEmpty()) {
         tags = "null";
     }
-    envoiEnCours = new QDialog((QWidget*)this->parent());
-    envoiEnCours->setModal(true);
-    QLabel *lab = new QLabel("<b>" + tr("Envoi en cours...") + "</b>");
-    lab->setAlignment(Qt::AlignCenter);
-    envoiEnCours->setWindowTitle("QRecipeWriter");
-    QHBoxLayout *layEnvoiEnCours = new QHBoxLayout();
-    layEnvoiEnCours->addWidget(lab);
-    envoiEnCours->setLayout(layEnvoiEnCours);
-    envoiEnCours->setFixedSize(300,50);
-    envoiEnCours->setModal(false);
-    envoiEnCours->show();
-    Login *login = new Login((QWidget*)this->parent());
-    login->init();
-    if (login->getAccepted()) {
-        user = login->getUsername();
-        passwd = login->getPassword();
-        config = login->getConfig();
-        publier = login->getPublish();
-        this->sendRecipe();
-    }
-    else {
-        envoiEnCours->close();
-    }
+    envoiEnCours = envoiEnCours_lu;
+    user = user_lu;
+    passwd = passwd_lu;
+    config = config_lu;
+    publier = publier_lu;
+    this->sendRecipe();
 }
 
 QString SendWordpress::makeExcerpt(QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep)

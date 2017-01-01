@@ -36,7 +36,8 @@ SOURCES += src/main.cpp\
     src/searchupdates.cpp \
     src/login.cpp \
     src/httprequestworker.cpp \
-    src/sendwordpress.cpp
+    src/sendwordpress.cpp \
+    src/sendpywebcooking.cpp
 
 HEADERS  += headers/qrecipewriter.h \
     headers/options.h \
@@ -58,7 +59,8 @@ HEADERS  += headers/qrecipewriter.h \
     headers/searchupdates.h \
     headers/login.h \
     headers/httprequestworker.h \
-    headers/sendwordpress.h
+    headers/sendwordpress.h \
+    headers/sendpywebcooking.h
 
 FORMS    += ui/qrecipewriter.ui \
     ui/options.ui \

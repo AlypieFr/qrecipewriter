@@ -17,15 +17,12 @@
 #include "functions.h"
 #include "login.h"
 
+#include <QCoreApplication>
 #include <QDataStream>
 #include <QDialog>
 #include <QKeyEvent>
 #include <QPlainTextEdit>
 #include <QProcess>
-
-namespace Ui {
-class SendAutomatic;
-}
 
 class SendWordpress : public QDialog
 {
@@ -35,7 +32,8 @@ public:
     explicit SendWordpress(QWidget *parent = 0);
     ~SendWordpress();
     void init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
-              QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu);
+              QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu,
+              QString user_lu, QString passwd_lu, int config_lu, bool publier_lu, QDialog *envoiEnCours_lu);
 
 private slots:
     void errorDetails_clicked();

@@ -1621,13 +1621,37 @@ void QRecipeWriter::on_envoyer_clicked()
                 startAbcCheck(true);
                 wait->close();
             }
-            makeHtmlCode();
-            sendWordpress();
+            QDialog *envoiEnCours = new QDialog((QWidget*)this->parent());
+            envoiEnCours->setModal(true);
+            QLabel *lab = new QLabel("<b>" + tr("Envoi en cours...") + "</b>");
+            lab->setAlignment(Qt::AlignCenter);
+            envoiEnCours->setWindowTitle("QRecipeWriter");
+            QHBoxLayout *layEnvoiEnCours = new QHBoxLayout();
+            layEnvoiEnCours->addWidget(lab);
+            envoiEnCours->setLayout(layEnvoiEnCours);
+            envoiEnCours->setFixedSize(300,50);
+            envoiEnCours->setModal(false);
+            envoiEnCours->show();
+            Login *login = new Login((QWidget*)this->parent());
+            login->init();
+            if (login->getAccepted()) {
+                QString user = login->getUsername();
+                QString passwd = login->getPassword();
+                int config = login->getConfig();
+                bool publier = login->getPublish();
+                if (serverConfs[config]["typeServer"] == "wordpress") {
+                    makeHtmlCode();
+                    sendWordpress(user, passwd, config, publier, envoiEnCours);
+                }
+                else if (typeServer == "pywebcooking") {
+
+                }
+            }
         }
     }
 }
 
-void QRecipeWriter::sendWordpress()
+void QRecipeWriter::sendWordpress(QString user, QString password, int config, bool publier, QDialog *envoiEnCours)
 {
     SendWordpress *sendWp = new SendWordpress(this);
     QStringList cats = Functions::getSelectedCategories(categories);
@@ -1635,7 +1659,8 @@ void QRecipeWriter::sendWordpress()
     tpsPrep << ui->hPrep->value() << ui->minPrep->value();
     tpsCuis << ui->hCuis->value() << ui->minCuis->value();
     tpsRep << ui->jRep->value() << ui->hRep->value() << ui->minRep->value();
-    sendWp->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt, coupDeCoeur);
+    sendWp->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt, coupDeCoeur,
+                 user, password, config, publier, envoiEnCours);
     delete sendWp;
     sendWp = NULL;
 }

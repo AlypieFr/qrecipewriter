@@ -298,7 +298,7 @@ private:
     void insertMaterielComment(QString comment);
     void insertPreparation(QString text);
     void insertConseil(QString text);
-    void sendWordpress();
+    void sendWordpress(QString user, QString password, int config, bool publier, QDialog *envoiEnCours);
     void loadRecipe(QString fileName, bool testReadyToSend);
     void searchUpdate();
     void startAbcCheck(bool silent);
