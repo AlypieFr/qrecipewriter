@@ -3,4 +3,4 @@ QRecipeWriter is a softwate that permit writing recipes without thinking about a
 
 More details on [Project website](http://qrecipewriter.coolcooking.fr) (french)
 
-[Download the software](/tags/)
+[Download the software](https://gite.flo-art.fr/cooking/qrecipewriter/tags/)
