@@ -20,6 +20,7 @@
 #include "functions.h"
 #include "apropos.h"
 #include "sendwordpress.h"
+#include "sendpywebcooking.h"
 #include "spellcheckdialog.h"
 #include "spellchecker.h"
 #include "insertvideo.h"
@@ -299,6 +300,7 @@ private:
     void insertPreparation(QString text);
     void insertConseil(QString text);
     void sendWordpress(QString user, QString password, int config, bool publier, QDialog *envoiEnCours);
+    void sendPyWebCooking(QString user, QString password, int config, bool publier, QDialog *envoiEnCours);
     void loadRecipe(QString fileName, bool testReadyToSend);
     void searchUpdate();
     void startAbcCheck(bool silent);

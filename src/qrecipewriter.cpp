@@ -1640,12 +1640,14 @@ void QRecipeWriter::on_envoyer_clicked()
                 int config = login->getConfig();
                 bool publier = login->getPublish();
                 if (serverConfs[config]["typeServer"] == "wordpress") {
-                    makeHtmlCode();
                     sendWordpress(user, passwd, config, publier, envoiEnCours);
                 }
                 else if (typeServer == "pywebcooking") {
-
+                    sendPyWebCooking(user, passwd, config, publier, envoiEnCours);
                 }
+            }
+            else {
+                envoiEnCours->close();
             }
         }
     }
@@ -1653,6 +1655,7 @@ void QRecipeWriter::on_envoyer_clicked()
 
 void QRecipeWriter::sendWordpress(QString user, QString password, int config, bool publier, QDialog *envoiEnCours)
 {
+    makeHtmlCode();
     SendWordpress *sendWp = new SendWordpress(this);
     QStringList cats = Functions::getSelectedCategories(categories);
     QList<int> tpsPrep, tpsCuis, tpsRep;
@@ -1663,6 +1666,35 @@ void QRecipeWriter::sendWordpress(QString user, QString password, int config, bo
                  user, password, config, publier, envoiEnCours);
     delete sendWp;
     sendWp = NULL;
+}
+
+void QRecipeWriter::sendPyWebCooking(QString user, QString password, int config, bool publier, QDialog *envoiEnCours) {
+    QStringList allIngr;
+    for (int it = 0; it < model1->rowCount(); ++it) {
+        allIngr.append(model1->item(it)->text());
+    }
+    QStringList allMat;
+    for (int it = 0; it < model2->rowCount(); ++it) {
+        allMat.append(model2->item(it)->text());
+    }
+    QStringList allPrep;
+    for (int it = 0; it < model3->rowCount(); ++it) {
+        allPrep.append(model3->item(it)->text());
+    }
+    QStringList allCons;
+    for (int it = 0; it < model4->rowCount(); ++it) {
+        allCons.append(model4->item(it)->text());
+    }
+    QStringList cats = Functions::getSelectedCategories(categories);
+    QList<int> tpsPrep, tpsCuis, tpsRep;
+    tpsPrep << ui->hPrep->value() << ui->minPrep->value();
+    tpsCuis << ui->hCuis->value() << ui->minCuis->value();
+    tpsRep << ui->jRep->value() << ui->hRep->value() << ui->minRep->value();
+    SendPyWebCooking *sendPwc = new SendPyWebCooking(this);
+    QString description = Functions::insertLinks(ui->description->toPlainText());
+    sendPwc->init(ui->titre->text(), imgFileName, ui->precision->text(), description, coupDeCoeur, tpsPrep, tpsCuis,
+                  tpsRep, cats, allIngr, allMat, allPrep, allCons, ui->nbPersonnes->value(), ui->nbPersonnes_2->value(),
+                  publier, user, password, config, envoiEnCours);
 }
 
 /**
