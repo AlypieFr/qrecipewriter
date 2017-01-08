@@ -15,7 +15,6 @@
 #include <QTextStream>
 
 extern QString shareDir;
-extern QString confDir;
 extern QStringList otherPicts;
 extern QString cmdNav; //Command to launch navigator
 extern QString dirTmp;
