@@ -7,6 +7,9 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
+#include "filenotfoundexception.h"
+#include "globalexception.h"
+
 
 enum HttpRequestVarLayout {NOT_SET, ADDRESS, URL_ENCODED, MULTIPART};
 

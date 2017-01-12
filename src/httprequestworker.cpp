@@ -174,21 +174,19 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
         // add files
         for (QList<HttpRequestInputFileElement>::iterator file_info = input->files.begin(); file_info != input->files.end(); file_info++) {
             QFileInfo fi(file_info->local_filename);
-
-            // ensure necessary variables are available
             if (
                 file_info->local_filename == NULL || file_info->local_filename.isEmpty()
                 || file_info->variable_name == NULL || file_info->variable_name.isEmpty()
                 || !fi.exists() || !fi.isFile() || !fi.isReadable()
             ) {
-                // silent abort for the current file
-                continue;
+                // raise exception
+                throw FileNotFoundException(file_info->local_filename);
             }
 
             QFile file(file_info->local_filename);
             if (!file.open(QIODevice::ReadOnly)) {
-                // silent abort for the current file
-                continue;
+                //raise exception
+                throw GlobalException(tr("Une erreur est survenue lors de la préparation du fichier : ") + file_info->local_filename);
             }
 
             // ensure filename for the request

@@ -8,19 +8,24 @@ SendPyWebCooking::SendPyWebCooking(QWidget *parent) :
 
 }
 
-void SendPyWebCooking::init(QString title_lu, QString mainPicture_lu, QString precision_lu, QString description_lu, QString coupDeCoeur_lu,
+void SendPyWebCooking::init(QString title_lu, QString mainPicture_lu, QString mainPictureName_lu, QString precision_lu, QString description_lu, QString coupDeCoeur_lu,
                             QList<int> tpsPrep_lu, QList<int> tpsCuis_lu, QList<int> tpsRep_lu, QStringList categories_lu,
                             QStringList ingredients_lu, QStringList material_lu, QStringList instructions_lu, QStringList proposals_lu,
                             int nbPeople_lu, int nbPeopleMax_lu, bool publish_lu, QString user_lu, QString password_lu, int config_lu,
                             QDialog *envoiEnCours_lu) {
     title = title_lu;
     mainPicture = mainPicture_lu;
+    mainPictureName = mainPictureName_lu;
     precision = precision_lu;
     description = description_lu;
     coupDeCoeur = coupDeCoeur_lu;
-    tpsPrep = tpsPrep_lu;
-    tpsCuis = tpsCuis_lu;
-    tpsRep = tpsRep_lu;
+    tpsPrep["hour"] = tpsPrep_lu[0];
+    tpsPrep["min"] = tpsPrep_lu[1];
+    tpsCuis["hour"] = tpsCuis_lu[0];
+    tpsCuis["min"] = tpsCuis_lu[1];
+    tpsRep["day"] = tpsRep_lu[0];
+    tpsRep["hour"] = tpsRep_lu[1];
+    tpsRep["min"] = tpsRep_lu[2];
     categories = categories_lu;
     buildIngredients(ingredients_lu);
     if (material_lu.length() > 0)
@@ -48,6 +53,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
     int current_level = 0;
     QRegExp exp ("(\\d+)\\|(.+)");
     QRegExp exp_comm ("comm\\|(.+)");
+    QHash<int, QStringList> ig_in_grp;
     foreach (QString ingr, ingrsList) {
         if (ingr.contains(exp)) {
             int level = exp.cap(1).toInt() + 1;
@@ -68,7 +74,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
                 ingr_obj["unit"] = unit;
                 ingr_obj["name"] = name;
                 ingr_obj["nb"] = nb_ingr;
-                ingredients[id_ingr] = ingr_obj;
+                ingredients[QString::number(id_ingr)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ingr_obj)).toJson());;
 
                 //Add ingredient to it's group:
                 if (current_ig_group == -1) {
@@ -76,14 +82,14 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
                     ig_group["level"] = current_level-1;
                     ig_group["nb"] = nb_group;
                     ig_group["title"] = "";
-                    ingredients_groups[id_group] = ig_group;
+                    ingredients_groups[QString::number(id_group)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ig_group)).toJson());;
                     current_ig_group = id_group;
                     id_group++;
                     nb_group++;
                 }
-                if (!ingredients_in_groups.contains(current_ig_group))
-                    ingredients_in_groups[current_ig_group] = QList<int>();
-                ingredients_in_groups[current_ig_group].append(id_ingr);
+                if (!ig_in_grp.contains(current_ig_group))
+                    ig_in_grp[current_ig_group] = QStringList();
+                ig_in_grp[current_ig_group].append(QString::number(id_ingr));
 
                 id_ingr++;
                 nb_ingr++;
@@ -94,7 +100,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
                 ig_group["level"] = level;
                 ig_group["nb"] = nb_group;
                 ig_group["name"] = ingr_base;
-                ingredients_groups[id_group] = ig_group;
+                ingredients_groups[QString::number(id_group)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ig_group)).toJson());
                 current_ig_group = id_group;
                 id_group++;
                 nb_group++;
@@ -108,15 +114,18 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
             ig_group["level"] = 0;
             ig_group["nb"] = nb_group;
             ig_group["name"] = comm;
-            ingredients_groups[id_group] = ig_group;
+            ingredients_groups[QString::number(id_group)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ig_group)).toJson());
             id_group++;
             nb_group++;
         }
     }
+    foreach (int id_grp, ig_in_grp.keys()) {
+        ingredients_groups[QString::number(id_grp)] = QString(QJsonDocument(QJsonArray::fromStringList(ig_in_grp[id_grp])).toJson());
+    }
 }
 
-QList<QHash<QString,QVariant>> SendPyWebCooking::buildMaterial(QStringList mats) {
-    QList<QHash<QString,QVariant>> objs;
+QStringList SendPyWebCooking::buildMaterial(QStringList mats) {
+    QStringList objs;
     QRegExp exp ("(\\d+|comm)\\|(.+)");
     int nb = 0;
     foreach (QString mat, mats) {
@@ -130,7 +139,7 @@ QList<QHash<QString,QVariant>> SendPyWebCooking::buildMaterial(QStringList mats)
                 mat_obj["name"] = name;
                 mat_obj["quantity"] = qte;
                 mat_obj["isComment"] = false;
-                objs.append(mat_obj);
+                objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(mat_obj)).toJson()));
             }
             else {
                 QHash<QString,QVariant> mat_obj;
@@ -138,7 +147,7 @@ QList<QHash<QString,QVariant>> SendPyWebCooking::buildMaterial(QStringList mats)
                 mat_obj["name"] = exp.cap(2);
                 mat_obj["quantity"] = -1;
                 mat_obj["isComment"] = true;
-                objs.append(mat_obj);
+                objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(mat_obj)).toJson()));
             }
             nb++;
         }
@@ -146,24 +155,24 @@ QList<QHash<QString,QVariant>> SendPyWebCooking::buildMaterial(QStringList mats)
     return objs;
 }
 
-QList<QHash<QString,QVariant>> SendPyWebCooking::buildProposal(QStringList props) {
+QStringList SendPyWebCooking::buildProposal(QStringList props) {
     QRegExp exp ("0\\|(.+)");
-    QList<QHash<QString,QVariant>> objs;
+    QStringList objs;
     int nb = 0;
     foreach (QString prop, props) {
         if (prop.contains(exp)) {
             QHash<QString,QVariant> prop_obj;
             prop_obj["nb"] = nb;
             prop_obj["text_prop"] = exp.cap(1);
-            objs.append(prop_obj);
+            objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(prop_obj)).toJson()));
             nb++;
         }
     }
     return objs;
 }
 
-QList<QHash<QString, QVariant> > SendPyWebCooking::buildInstructions(QStringList instrsList) {
-    QList<QHash<QString,QVariant>> instrs;
+QStringList SendPyWebCooking::buildInstructions(QStringList instrsList) {
+    QStringList instrs;
     QRegExp exp ("([\\d\\.]+)\\|(.+)");
     QRegExp exp_comm ("comm\\|(.+)");
     int nb = 0;
@@ -176,7 +185,7 @@ QList<QHash<QString, QVariant> > SendPyWebCooking::buildInstructions(QStringList
             instr_obj["nb"] = nb;
             instr_obj["level"] = level;
             instr_obj["text_inst"] = exp.cap(2);
-            instrs.append(instr_obj);
+            instrs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(instr_obj)).toJson()));
         }
         else if (instr.contains(exp_comm)) {
             nb++;
@@ -184,7 +193,7 @@ QList<QHash<QString, QVariant> > SendPyWebCooking::buildInstructions(QStringList
             instr_obj["nb"] = nb;
             instr_obj["level"] = 0;
             instr_obj["text_inst"] = exp_comm.cap(1);
-            instrs.append(instr_obj);
+            instrs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(instr_obj)).toJson()));
         }
     }
     return instrs;
@@ -208,20 +217,41 @@ void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
 
 void SendPyWebCooking::sendRecipe() {
     //INIT CONNEXION TO WEBSITE:
+    qDebug() << serverConfs[config]["addrSite"] + "/api/";
     HttpRequestInput input(serverConfs[config]["addrSite"] + "/api/", "POST", user, passwd);
 
     //ADD DATA:
-    input.add_file("main_picture", mainPicture, NULL, "image/jpeg");
     input.add_var("title", title);
     input.add_var("precision", precision);
     input.add_var("description", description);
     input.add_var("coup_de_coeur", coupDeCoeur);
-    input.add_var("tps_prep", QString::number(tpsPrep));
-    QJsonObject json = QJsonObject::fromVariantMap(data);
-    QJsonDocument jsonDoc = QJsonDocument(json);
+    input.add_var("nbPeople", QString::number(nbPeople));
+    input.add_var("nbPeopleMax", QString::number(nbPeopleMax));
+    input.add_var("tps_prep", QString(QJsonDocument(QJsonObject::fromVariantHash(tpsPrep)).toJson()));
+    input.add_var("tps_cuis", QString(QJsonDocument(QJsonObject::fromVariantHash(tpsCuis)).toJson()));
+    input.add_var("tps_rep", QString(QJsonDocument(QJsonObject::fromVariantHash(tpsRep)).toJson()));
+    input.add_var("categories", QString(QJsonDocument(QJsonArray::fromStringList(categories)).toJson()));
+    input.add_var("ingredients", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients)).toJson()));
+    input.add_var("ingredients_groups", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients_groups)).toJson()));
+    input.add_var("ingredients_in_groups", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients_in_groups)).toJson()));
+    input.add_var("material", QString(QJsonDocument(QJsonArray::fromStringList(material)).toJson()));
+    input.add_var("instructions", QString(QJsonDocument(QJsonArray::fromStringList(instructions)).toJson()));
+    input.add_var("proposals", QString(QJsonDocument(QJsonArray::fromStringList(proposals)).toJson()));
+    input.add_var("publish", publish ? "1" : "0");
+    input.add_file("main_picture", mainPicture, mainPictureName, "image/jpg");
 
     //SEND POST
     HttpRequestWorker *worker = new HttpRequestWorker(this);
     connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(handle_result(HttpRequestWorker*)));
-    worker->execute(&input);
+    try {
+        worker->execute(&input);
+    }
+    catch (const FileNotFoundException &e) {
+        QMessageBox::critical((QWidget*)parent(), tr("Fichier non trouvé"), tr("Fichier image non trouvé : ") + e.getMessage());
+        envoiEnCours->close();
+    }
+    catch (const GlobalException &e) {
+        QMessageBox::critical((QWidget*)parent(), tr("Une erreur est survenue"), e.getMessage().isEmpty() ? tr("Une erreur inconnue est survenue. Veuillez rapporter le bug.") : e.getMessage());
+        envoiEnCours->close();
+    }
 }

@@ -4,10 +4,15 @@
 #include <QDialog>
 #include <QDebug>
 #include <QHash>
+#include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QMessageBox>
 #include <QRegExp>
+#include <QWidget>
 
+#include "filenotfoundexception.h"
+#include "globalexception.h"
 #include "httprequestworker.h"
 
 class SendPyWebCooking : public QDialog
@@ -16,19 +21,19 @@ class SendPyWebCooking : public QDialog
 
 public:
     explicit SendPyWebCooking(QWidget *parent = 0);
-    void init(QString title_lu, QString mainPicture_lu, QString precision_lu, QString description_lu, QString coupDeCoeur_lu,
+    void init(QString title_lu, QString mainPicture_lu, QString mainPictureName_lu, QString precision_lu, QString description_lu, QString coupDeCoeur_lu,
               QList<int> tpsPrep_lu, QList<int> tpsCuis_lu, QList<int> tpsRep_lu, QStringList categories_lu, QStringList ingredients_lu,
               QStringList material_lu, QStringList instructions_lu, QStringList proposals_lu, int nbPeople_lu, int nbPeopleMax_lu,
               bool publish_lu, QString user_lu, QString password_lu, int config_lu, QDialog *envoiEnCours_lu);
 
 private:
-    QString title, mainPicture, precision, description, coupDeCoeur;
-    QList<int> tpsPrep, tpsCuis, tpsRep;
+    QString title, mainPicture, mainPictureName, precision, description, coupDeCoeur;
+    QHash<QString,QVariant> tpsPrep, tpsCuis, tpsRep;
     QStringList categories;
-    QHash<int, QHash<QString, QVariant>> ingredients;
-    QHash<int, QHash<QString, QVariant>> ingredients_groups;
-    QHash<int,QList<int>> ingredients_in_groups;
-    QList<QHash<QString,QVariant>> material, instructions, proposals;
+    QHash<QString, QVariant> ingredients;
+    QHash<QString, QVariant> ingredients_groups;
+    QHash<QString, QVariant> ingredients_in_groups;
+    QStringList material, instructions, proposals;
     int nbPeople, nbPeopleMax;
     QString user, passwd;
     int config;
@@ -41,9 +46,9 @@ private slots:
 private:
     void sendRecipe();
     void buildIngredients(QStringList ingrsList);
-    QList<QHash<QString,QVariant>> buildMaterial(QStringList mats);
-    QList<QHash<QString,QVariant>> buildProposal(QStringList props);
-    QList<QHash<QString,QVariant>> buildInstructions(QStringList instrsList);
+    QStringList buildMaterial(QStringList mats);
+    QStringList buildProposal(QStringList props);
+    QStringList buildInstructions(QStringList instrsList);
 };
 
 #endif // SENDPYWEBCOOKING_H

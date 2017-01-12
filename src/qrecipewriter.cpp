@@ -1692,7 +1692,7 @@ void QRecipeWriter::sendPyWebCooking(QString user, QString password, int config,
     tpsRep << ui->jRep->value() << ui->hRep->value() << ui->minRep->value();
     SendPyWebCooking *sendPwc = new SendPyWebCooking(this);
     QString description = Functions::insertLinks(ui->description->toPlainText());
-    sendPwc->init(ui->titre->text(), imgFileName, ui->precision->text(), description, coupDeCoeur, tpsPrep, tpsCuis,
+    sendPwc->init(ui->titre->text(), imgFile, imgFileName, ui->precision->text(), description, coupDeCoeur, tpsPrep, tpsCuis,
                   tpsRep, cats, allIngr, allMat, allPrep, allCons, ui->nbPersonnes->value(), ui->nbPersonnes_2->value(),
                   publier, user, password, config, envoiEnCours);
 }
