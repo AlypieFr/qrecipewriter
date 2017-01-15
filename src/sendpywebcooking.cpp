@@ -95,7 +95,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
                 QHash<QString, QVariant> ig_group;
                 ig_group["level"] = level;
                 ig_group["nb"] = nb_group;
-                ig_group["name"] = ingr_base;
+                ig_group["title"] = ingr_base;
                 ingredients_groups[QString::number(id_group)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ig_group)).toJson());
                 current_ig_group = id_group;
                 id_group++;
@@ -109,7 +109,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
             QHash<QString, QVariant> ig_group;
             ig_group["level"] = 0;
             ig_group["nb"] = nb_group;
-            ig_group["name"] = comm;
+            ig_group["title"] = comm;
             ingredients_groups[QString::number(id_group)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ig_group)).toJson());
             id_group++;
             nb_group++;
