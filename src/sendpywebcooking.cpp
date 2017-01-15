@@ -232,7 +232,7 @@ void SendPyWebCooking::sendRecipe() {
     input.add_var("equipments", QString(QJsonDocument(QJsonArray::fromStringList(material)).toJson()));
     input.add_var("instructions", QString(QJsonDocument(QJsonArray::fromStringList(instructions)).toJson()));
     input.add_var("proposals", QString(QJsonDocument(QJsonArray::fromStringList(proposals)).toJson()));
-    input.add_var("publish", publish ? "1" : "0");
+    input.add_var("published", publish ? "1" : "0");
     input.add_file("main_picture", mainPicture, mainPictureName, "image/jpg");
 
     //SEND POST
