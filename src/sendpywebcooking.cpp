@@ -176,7 +176,6 @@ QStringList SendPyWebCooking::buildInstructions(QStringList instrsList) {
         if (instr.contains(exp)) {
             QStringList id = exp.cap(1).split(".");
             int level = id.length() - 1;
-            nb = id[id.length() - 2].toInt() - 1;
             QHash<QString,QVariant> instr_obj;
             instr_obj["nb"] = nb;
             instr_obj["level"] = level;
@@ -184,13 +183,13 @@ QStringList SendPyWebCooking::buildInstructions(QStringList instrsList) {
             instrs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(instr_obj)).toJson()));
         }
         else if (instr.contains(exp_comm)) {
-            nb++;
             QHash<QString,QVariant> instr_obj;
             instr_obj["nb"] = nb;
             instr_obj["level"] = 0;
             instr_obj["text_inst"] = exp_comm.cap(1);
             instrs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(instr_obj)).toJson()));
         }
+        nb++;
     }
     return instrs;
 }
