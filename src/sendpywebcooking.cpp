@@ -75,7 +75,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
                 //Add ingredient to it's group:
                 if (current_ig_group == -1) {
                     QHash<QString, QVariant> ig_group;
-                    ig_group["level"] = current_level-1;
+                    ig_group["level"] = current_level;
                     ig_group["nb"] = nb_group;
                     ig_group["title"] = "";
                     ingredients_groups[QString::number(id_group)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ig_group)).toJson());;
