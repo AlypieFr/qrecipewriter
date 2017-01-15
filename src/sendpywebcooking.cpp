@@ -1,6 +1,8 @@
 #include "sendpywebcooking.h"
 
 extern QHash<int,QHash<QString, QString>> serverConfs;
+extern QString cmdNav; //Command to launch navigator
+extern int idRecipe;
 
 SendPyWebCooking::SendPyWebCooking(QWidget *parent) :
     QDialog(parent)
@@ -37,6 +39,23 @@ void SendPyWebCooking::init(QString title_lu, QString mainPicture_lu, QString ma
     config = config_lu;
     envoiEnCours = envoiEnCours_lu;
     this->sendRecipe();
+}
+
+QString SendPyWebCooking::insertPictures(QString item) {
+    QRegExp exp ("\\[IMG:(\\w+):(\\d+):(\\d+)(:center)?:([^\\]]+)\\]");
+    while (item.contains(exp))
+    {
+        QString imgBal = exp.cap(0);
+        QString className = exp.cap(1);
+        QString largeur = exp.cap(2);
+        QString hauteur = exp.cap(3);
+        bool center = exp.cap(4).length() > 0;
+        QString img = exp.cap(5);
+        otherPicts.append(img);
+        QString img_filename = img.mid(img.lastIndexOf("/")+1);
+        item = "[PICT:" + className + ":" + largeur + ":" + hauteur + (center ? ":center" : "") + ":" + img_filename + "]";
+    }
+    return item;
 }
 
 void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
@@ -159,7 +178,7 @@ QStringList SendPyWebCooking::buildProposal(QStringList props) {
         if (prop.contains(exp)) {
             QHash<QString,QVariant> prop_obj;
             prop_obj["nb"] = nb;
-            prop_obj["text_prop"] = exp.cap(1);
+            prop_obj["text_prop"] = insertPictures(exp.cap(1));
             objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(prop_obj)).toJson()));
             nb++;
         }
@@ -179,14 +198,14 @@ QStringList SendPyWebCooking::buildInstructions(QStringList instrsList) {
             QHash<QString,QVariant> instr_obj;
             instr_obj["nb"] = nb;
             instr_obj["level"] = level;
-            instr_obj["text_inst"] = exp.cap(2);
+            instr_obj["text_inst"] = insertPictures(exp.cap(2));
             instrs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(instr_obj)).toJson()));
         }
         else if (instr.contains(exp_comm)) {
             QHash<QString,QVariant> instr_obj;
             instr_obj["nb"] = nb;
             instr_obj["level"] = 0;
-            instr_obj["text_inst"] = exp_comm.cap(1);
+            instr_obj["text_inst"] = insertPictures(exp_comm.cap(1));
             instrs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(instr_obj)).toJson()));
         }
         nb++;
@@ -199,14 +218,50 @@ void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
 
     if (worker->error_type == QNetworkReply::NoError) {
         // communication was successful
-        msg = "Success - Response: " + worker->response;
+        //msg = "Success - Response: " + worker->response;
+        QJsonParseError *error = new QJsonParseError();
+        QJsonDocument jsondoc = QJsonDocument::fromJson(worker->response, error);
+        QJsonObject jsonobj = jsondoc.object();
+        QVariantMap map = jsonobj.toVariantMap();
+        if (error->error == QJsonParseError::NoError) {
+            if (map["status"].toInt() == 0) {
+                int rep = QMessageBox::information((QWidget*)this->parent(), tr("Envoi terminé"), tr("Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?"), QMessageBox::Yes, QMessageBox::No);
+                if (rep == QMessageBox::Yes)
+                {
+                    QString program = "\"" + cmdNav + "\" " + "http://" + map["url"].toString();
+                    qDebug() << program;
+                    QProcess *myProcess = new QProcess();
+                    myProcess->setProcessChannelMode(QProcess::MergedChannels);
+                    myProcess->start(program);
+                }
+            }
+            else {
+                QString message = map["message"].toString();
+                if (!message.isNull() && !message.isEmpty()) {
+                    QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), message);
+                }
+                else {
+                    QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"),
+                                          tr("Une erreur inconnue s'est produite. Veuillez rapporter le bug."));
+                }
+            }
+        }
+        else {
+            qDebug() << worker->response;
+            qCritical() << "Error while parsing JSON: " + error->errorString();
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
+        }
     }
     else {
         // an error occurred
-        msg = "Error: " + worker->error_str;
+        if (worker->error_type == QNetworkReply::ContentOperationNotPermittedError) {
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), "Votre identificant ou vote mot de passe est incorrect");
+        }
+        else {
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), worker->error_str);
+        }
     }
 
-    qDebug() << msg;
     envoiEnCours->close();
 }
 
@@ -234,6 +289,17 @@ void SendPyWebCooking::sendRecipe() {
     input.add_var("proposals", QString(QJsonDocument(QJsonArray::fromStringList(proposals)).toJson()));
     input.add_var("published", publish ? "1" : "0");
     input.add_file("main_picture", mainPicture, mainPictureName, "image/jpg");
+    if (otherPicts.length() > 0) {
+        foreach (QString opict, otherPicts) {
+            QString opict_name = opict.mid(opict.lastIndexOf("/") + 1);
+            QString ext = opict.mid(opict.lastIndexOf(".") + 1);
+            QString format = "jpg";
+            if (ext.toLower() == "png") {
+                format = "png";
+            }
+            input.add_file("other_pictures", opict, opict_name, "image/" + format);
+        }
+    }
 
     //SEND POST
     HttpRequestWorker *worker = new HttpRequestWorker(this);

@@ -8,6 +8,8 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QMessageBox>
+#include <QNetworkReply>
+#include <QProcess>
 #include <QRegExp>
 #include <QWidget>
 
@@ -39,6 +41,7 @@ private:
     int config;
     bool publish;
     QDialog *envoiEnCours;
+    QStringList otherPicts;
 
 private slots:
     void handle_result(HttpRequestWorker *worker);
@@ -49,6 +52,7 @@ private:
     QStringList buildMaterial(QStringList mats);
     QStringList buildProposal(QStringList props);
     QStringList buildInstructions(QStringList instrsList);
+    QString insertPictures(QString item);
 };
 
 #endif // SENDPYWEBCOOKING_H
