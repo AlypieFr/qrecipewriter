@@ -229,7 +229,7 @@ void SendPyWebCooking::sendRecipe() {
     input.add_var("ingredients", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients)).toJson()));
     input.add_var("ingredients_groups", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients_groups)).toJson()));
     input.add_var("ingredients_in_groups", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients_in_groups)).toJson()));
-    input.add_var("material", QString(QJsonDocument(QJsonArray::fromStringList(material)).toJson()));
+    input.add_var("equipments", QString(QJsonDocument(QJsonArray::fromStringList(material)).toJson()));
     input.add_var("instructions", QString(QJsonDocument(QJsonArray::fromStringList(instructions)).toJson()));
     input.add_var("proposals", QString(QJsonDocument(QJsonArray::fromStringList(proposals)).toJson()));
     input.add_var("publish", publish ? "1" : "0");
