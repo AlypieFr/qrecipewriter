@@ -120,7 +120,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
         }
     }
     foreach (int id_grp, ig_in_grp.keys()) {
-        ingredients_groups[QString::number(id_grp)] = QString(QJsonDocument(QJsonArray::fromStringList(ig_in_grp[id_grp])).toJson());
+        ingredients_in_groups[QString::number(id_grp)] = QString(QJsonDocument(QJsonArray::fromStringList(ig_in_grp[id_grp])).toJson());
     }
 }
 
