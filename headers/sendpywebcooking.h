@@ -28,7 +28,7 @@ public:
 
 private:
     QString title, mainPicture, mainPictureName, precision, description, coupDeCoeur;
-    QHash<QString,QVariant> tpsPrep, tpsCuis, tpsRep;
+    int tpsPrep, tpsCuis, tpsRep;
     QStringList categories;
     QHash<QString, QVariant> ingredients;
     QHash<QString, QVariant> ingredients_groups;

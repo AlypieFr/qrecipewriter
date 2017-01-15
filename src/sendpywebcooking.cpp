@@ -19,13 +19,9 @@ void SendPyWebCooking::init(QString title_lu, QString mainPicture_lu, QString ma
     precision = precision_lu;
     description = description_lu;
     coupDeCoeur = coupDeCoeur_lu;
-    tpsPrep["hour"] = tpsPrep_lu[0];
-    tpsPrep["min"] = tpsPrep_lu[1];
-    tpsCuis["hour"] = tpsCuis_lu[0];
-    tpsCuis["min"] = tpsCuis_lu[1];
-    tpsRep["day"] = tpsRep_lu[0];
-    tpsRep["hour"] = tpsRep_lu[1];
-    tpsRep["min"] = tpsRep_lu[2];
+    tpsPrep = tpsPrep_lu[0] * 60 + tpsPrep_lu[1];
+    tpsCuis = tpsCuis_lu[0] * 60 + tpsCuis_lu[1];
+    tpsRep = tpsRep_lu[0] * 24 * 60 + tpsRep_lu[1] * 60 + tpsRep_lu[2];
     categories = categories_lu;
     buildIngredients(ingredients_lu);
     if (material_lu.length() > 0)
@@ -225,11 +221,11 @@ void SendPyWebCooking::sendRecipe() {
     input.add_var("precision", precision);
     input.add_var("description", description);
     input.add_var("coup_de_coeur", coupDeCoeur);
-    input.add_var("nbPeople", QString::number(nbPeople));
-    input.add_var("nbPeopleMax", QString::number(nbPeopleMax));
-    input.add_var("tps_prep", QString(QJsonDocument(QJsonObject::fromVariantHash(tpsPrep)).toJson()));
-    input.add_var("tps_cuis", QString(QJsonDocument(QJsonObject::fromVariantHash(tpsCuis)).toJson()));
-    input.add_var("tps_rep", QString(QJsonDocument(QJsonObject::fromVariantHash(tpsRep)).toJson()));
+    input.add_var("nb_people", QString::number(nbPeople));
+    input.add_var("nb_people_max", QString::number(nbPeopleMax));
+    input.add_var("tps_prep", QString::number(tpsPrep));
+    input.add_var("tps_cuis", QString::number(tpsCuis));
+    input.add_var("tps_rep", QString::number(tpsRep));
     input.add_var("categories", QString(QJsonDocument(QJsonArray::fromStringList(categories)).toJson()));
     input.add_var("ingredients", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients)).toJson()));
     input.add_var("ingredients_groups", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients_groups)).toJson()));
