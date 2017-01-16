@@ -400,7 +400,7 @@ void QRecipeWriter::init()
         ui->actionCorrection_orthographique->setEnabled(false);
     }
     //CeC Coup de coeur ? :
-    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur);
+    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur || typeServer == "pywebcooking");
     ui->sync_cats->setVisible(typeServer == "pywebcooking");
     //Initialize ident variables:
     idIngr = 0;
@@ -689,7 +689,7 @@ void QRecipeWriter::on_actionOptions_triggered()
         ui->noPrint->setToolTip(tr("Ne pas imprimer une partie de texte"));
         ui->printOnly->setToolTip(tr("Imprimer une partie de texte mais ne pas l'afficher"));
     }
-    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur);
+    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur || typeServer == "pywebcooking");
     ui->sync_cats->setVisible(typeServer == "pywebcooking");
     toggleEditPict();
 }

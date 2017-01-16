@@ -70,9 +70,20 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_typeServer_pywebcooking_2_toggled(bool checked);
+
+    void on_typeServer_pywebcooking_toggled(bool checked);
+
+    void on_typeServer_pywebcooking_3_toggled(bool checked);
+
+    void on_typeServer_pywebcooking_4_toggled(bool checked);
+
+    void on_typeServer_pywebcooking_5_toggled(bool checked);
+
 private:
     void keyPressEvent(QKeyEvent *e);
     void loadConfigsServer();
+    void updateServerConfs();
     int configActiveOpts;
 };
 

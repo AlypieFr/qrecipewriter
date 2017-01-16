@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -511,7 +511,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="config1">
        <attribute name="title">
@@ -635,7 +635,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>40</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -657,7 +657,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>40</y>
+          <y>80</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -679,7 +679,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>80</y>
+          <y>120</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -701,7 +701,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>120</y>
+          <y>10</y>
           <width>631</width>
           <height>26</height>
          </rect>
@@ -882,7 +882,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>40</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -904,7 +904,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>40</y>
+          <y>80</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -926,7 +926,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>80</y>
+          <y>120</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -948,7 +948,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>120</y>
+          <y>10</y>
           <width>631</width>
           <height>26</height>
          </rect>
@@ -1129,7 +1129,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>40</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -1151,7 +1151,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>40</y>
+          <y>80</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -1173,7 +1173,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>80</y>
+          <y>120</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -1195,7 +1195,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>120</y>
+          <y>10</y>
           <width>631</width>
           <height>26</height>
          </rect>
@@ -1376,7 +1376,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>40</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -1398,7 +1398,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>40</y>
+          <y>80</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -1420,7 +1420,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>80</y>
+          <y>120</y>
           <width>631</width>
           <height>34</height>
          </rect>
@@ -1442,7 +1442,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>120</y>
+          <y>10</y>
           <width>631</width>
           <height>26</height>
          </rect>
@@ -1629,12 +1629,12 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>40</y>
           <width>631</width>
           <height>34</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_17">
+        <layout class="QHBoxLayout" name="addr_site_lay">
          <item>
           <widget class="QLabel" name="labelAdresseSite_5">
            <property name="text">
@@ -1651,12 +1651,12 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>40</y>
+          <y>80</y>
           <width>631</width>
           <height>34</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_18">
+        <layout class="QHBoxLayout" name="addr_pub_lay">
          <item>
           <widget class="QLabel" name="labelAddressePublication_5">
            <property name="text">
@@ -1673,12 +1673,12 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>80</y>
+          <y>120</y>
           <width>631</width>
           <height>34</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_19">
+        <layout class="QHBoxLayout" name="dist_pict_folder_lay">
          <item>
           <widget class="QLabel" name="labelDossierDistantImages_5">
            <property name="text">
@@ -1695,12 +1695,12 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>120</y>
+          <y>10</y>
           <width>631</width>
           <height>26</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_20">
+        <layout class="QHBoxLayout" name="type_serv_lay">
          <item>
           <widget class="QLabel" name="label_12">
            <property name="text">

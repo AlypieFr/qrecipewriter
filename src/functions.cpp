@@ -1519,7 +1519,7 @@ void Functions::downloadUpdate(QString adresse, QWidget *parent) {
 
 bool Functions::is_config_valid(int id) {
     QHash<QString, QString> conf = serverConfs[id];
-    return conf["addrSite"] != "" && conf["addrPub"] != "" && conf["dirDistPict"] != "" && conf["typeServer"] != "";
+    return conf["addrSite"] != "" && conf["typeServer"] != "" && ((conf["typeServer"] == "wordpress" && conf["addrPub"] != "" && conf["dirDistPict"] != "") || conf["typeServer"] == "pywebcooking");
 }
 
 void Functions::write_categories_file(QStringList new_cats) {
