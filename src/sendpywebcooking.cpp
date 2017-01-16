@@ -153,7 +153,7 @@ QStringList SendPyWebCooking::buildMaterial(QStringList mats) {
                 mat_obj["nb"] = nb;
                 mat_obj["name"] = name;
                 mat_obj["quantity"] = qte;
-                mat_obj["isComment"] = false;
+                mat_obj["is_comment"] = false;
                 objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(mat_obj)).toJson()));
             }
             else {
@@ -161,7 +161,7 @@ QStringList SendPyWebCooking::buildMaterial(QStringList mats) {
                 mat_obj["nb"] = nb;
                 mat_obj["name"] = exp.cap(2);
                 mat_obj["quantity"] = -1;
-                mat_obj["isComment"] = true;
+                mat_obj["is_comment"] = true;
                 objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(mat_obj)).toJson()));
             }
             nb++;
@@ -171,14 +171,15 @@ QStringList SendPyWebCooking::buildMaterial(QStringList mats) {
 }
 
 QStringList SendPyWebCooking::buildProposal(QStringList props) {
-    QRegExp exp ("0\\|(.+)");
+    QRegExp exp ("(0|comm)\\|(.+)");
     QStringList objs;
     int nb = 0;
     foreach (QString prop, props) {
         if (prop.contains(exp)) {
             QHash<QString,QVariant> prop_obj;
             prop_obj["nb"] = nb;
-            prop_obj["text_prop"] = insertPictures(exp.cap(1));
+            prop_obj["text_prop"] = insertPictures(exp.cap(2));
+            prop_obj["is_comment"] = exp.cap(1) == "comm";
             objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(prop_obj)).toJson()));
             nb++;
         }
