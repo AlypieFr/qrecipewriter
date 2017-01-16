@@ -401,6 +401,7 @@ void QRecipeWriter::init()
     }
     //CeC Coup de coeur ? :
     ui->setCoupDeCoeur->setVisible(recCoupDeCoeur);
+    ui->sync_cats->setVisible(typeServer == "pywebcooking");
     //Initialize ident variables:
     idIngr = 0;
     idPrep = "0.0";
@@ -689,6 +690,7 @@ void QRecipeWriter::on_actionOptions_triggered()
         ui->printOnly->setToolTip(tr("Imprimer une partie de texte mais ne pas l'afficher"));
     }
     ui->setCoupDeCoeur->setVisible(recCoupDeCoeur);
+    ui->sync_cats->setVisible(typeServer == "pywebcooking");
     toggleEditPict();
 }
 
@@ -1650,6 +1652,50 @@ void QRecipeWriter::on_envoyer_clicked()
                 envoiEnCours->close();
             }
         }
+    }
+}
+
+void QRecipeWriter::received_categories(HttpRequestWorker *worker) {
+    qDebug() << "PASS HERE";
+    if (worker->error_type == QNetworkReply::NoError) {
+        QJsonParseError *error = new QJsonParseError();
+        QJsonDocument jsondoc = QJsonDocument::fromJson(worker->response, error);
+        QJsonArray jsonobj = jsondoc.array();
+        QVariantList list = jsonobj.toVariantList();
+        if (error->error == QJsonParseError::NoError) {
+            QStringList categories_loaded;
+            foreach (QVariant cat, list) {
+                QVariantMap cat_map = cat.toMap();
+                categories_loaded.append(cat_map["name"].toString());
+            }
+            Functions::write_categories_file(categories_loaded);
+            this->resetCats();
+        }
+        else {
+            qDebug() << worker->response;
+            qCritical() << "Error while parsing JSON: " + error->errorString();
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
+        }
+    }
+    else {
+        // an error occurred
+        QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de récupérer les catégories : ") + worker->error_str);
+    }
+}
+
+void QRecipeWriter::on_sync_cats_clicked()
+{
+    qDebug() << "PASS";
+    QString api_url = addrSite + (addrSite.endsWith("/") ? "" : "/") + "api/categories/";
+    qDebug() << api_url;
+    HttpRequestInput input(api_url, "GET");
+    HttpRequestWorker *worker = new HttpRequestWorker(this);
+    connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(received_categories(HttpRequestWorker*)));
+    try {
+        worker->execute(&input);
+    }
+    catch (const GlobalException &e) {
+        QMessageBox::critical((QWidget*)parent(), tr("Une erreur est survenue"), e.getMessage().isEmpty() ? tr("Une erreur inconnue est survenue. Veuillez rapporter le bug.") : e.getMessage());
     }
 }
 

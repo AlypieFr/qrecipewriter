@@ -1521,3 +1521,23 @@ bool Functions::is_config_valid(int id) {
     QHash<QString, QString> conf = serverConfs[id];
     return conf["addrSite"] != "" && conf["addrPub"] != "" && conf["dirDistPict"] != "" && conf["typeServer"] != "";
 }
+
+void Functions::write_categories_file(QStringList new_cats) {
+    confCatFile->remove();
+    confCatFile->open(QIODevice::WriteOnly);
+    QXmlStreamWriter writer(confCatFile);
+
+    writer.setAutoFormatting(true);
+    writer.writeStartDocument("1.0");
+
+    writer.writeStartElement("categories");
+
+    int id = 1;
+    foreach (QString catL, new_cats) {
+        writer.writeTextElement("cat" + QString::number(id), catL);
+        id++;
+    }
+
+    writer.writeEndElement();
+    confCatFile->close();
+}

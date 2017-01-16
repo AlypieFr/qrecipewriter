@@ -99,6 +99,7 @@ public:
     static QString getLastDir(QString action);
     static void downloadUpdate(QString adresse, QWidget *parent);
     static bool is_config_valid(int id);
+    static void write_categories_file(QStringList new_cats);
 };
 
 #endif // FUNCTIONS_H

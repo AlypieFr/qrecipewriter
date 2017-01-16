@@ -238,22 +238,10 @@ void Categories::on_valeurs_def_clicked()
 
 void Categories::on_valider_clicked()
 {
-    confCatFile->remove();
-    confCatFile->open(QIODevice::WriteOnly);
-    QXmlStreamWriter writer(confCatFile);
-
-    writer.setAutoFormatting(true);
-    writer.writeStartDocument("1.0");
-
-    writer.writeStartElement("categories");
-
-    int id = 1;
+    QStringList new_cats;
     foreach (QLineEdit* catL, catList.values()) {
-        writer.writeTextElement("cat" + QString::number(id), catL->text());
-        id++;
+        new_cats.append(catL->text());
     }
-
-    writer.writeEndElement();
-    confCatFile->close();
+    Functions::write_categories_file(new_cats);
     this->close();
 }

@@ -4,6 +4,8 @@
 #include <QFileInfo>
 #include <QBuffer>
 
+extern QString VERSION;
+extern QString systExp;
 
 HttpRequestInput::HttpRequestInput() {
     initialize();
@@ -15,6 +17,12 @@ HttpRequestInput::HttpRequestInput(QString v_url_str, QString v_http_method, QSt
     http_method = v_http_method;
     username = v_username;
     password = v_password;
+}
+
+HttpRequestInput::HttpRequestInput(QString v_url_str, QString v_http_method) {
+    initialize();
+    url_str = v_url_str;
+    http_method = v_http_method;
 }
 
 void HttpRequestInput::initialize() {
@@ -239,11 +247,13 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
 
     QUrl url(input->url_str);
     QNetworkRequest request = QNetworkRequest(url);
-    QString concatenated = input->username + ":" + input->password;
-    QByteArray data = concatenated.toLocal8Bit().toBase64();
-    QString headerData = "Basic " + data;
-    request.setRawHeader("Authorization", headerData.toLocal8Bit());
-    request.setRawHeader("User-Agent", "Agent name goes here");
+    if (!input->username.isNull() && !input->password.isNull()) {
+        QString concatenated = input->username + ":" + input->password;
+        QByteArray data = concatenated.toLocal8Bit().toBase64();
+        QString headerData = "Basic " + data;
+        request.setRawHeader("Authorization", headerData.toLocal8Bit());
+    }
+    request.setRawHeader("User-Agent", QString("QRecipeWriter " + VERSION + " " + systExp).toUtf8());
 
     if (input->var_layout == URL_ENCODED) {
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");

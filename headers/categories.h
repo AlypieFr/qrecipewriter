@@ -14,6 +14,8 @@
 #ifndef CATEGORIES_H
 #define CATEGORIES_H
 
+#include "functions.h"
+
 #include <QDialog>
 #include <QFile>
 #include <QHBoxLayout>

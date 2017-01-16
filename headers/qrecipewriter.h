@@ -214,6 +214,10 @@ private slots:
 
     void on_comment_mat_selectionChanged();
 
+    void on_sync_cats_clicked();
+
+    void received_categories(HttpRequestWorker *worker);
+
 public slots:
     void init();
     void config();
