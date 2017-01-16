@@ -24,7 +24,9 @@ void SendPyWebCooking::init(QString title_lu, QString mainPicture_lu, QString ma
     tpsPrep = tpsPrep_lu[0] * 60 + tpsPrep_lu[1];
     tpsCuis = tpsCuis_lu[0] * 60 + tpsCuis_lu[1];
     tpsRep = tpsRep_lu[0] * 24 * 60 + tpsRep_lu[1] * 60 + tpsRep_lu[2];
-    categories = categories_lu;
+    foreach (QString cat, categories_lu) {
+        categories.append(cat.replace("&amp;&amp;", "&").replace("&amp;", "&"));
+    }
     buildIngredients(ingredients_lu);
     if (material_lu.length() > 0)
         material = buildMaterial(material_lu);
