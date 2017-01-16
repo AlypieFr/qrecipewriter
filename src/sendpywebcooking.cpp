@@ -59,7 +59,6 @@ QString SendPyWebCooking::insertPictures(QString item) {
 }
 
 void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
-    QList<QHash<QString,QVariant>> ingrs;
     int nb_group = 0;
     int nb_ingr = 0;
     int id_ingr = 0;
@@ -68,7 +67,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
     int current_level = 0;
     QRegExp exp ("(\\d+)\\|(.+)");
     QRegExp exp_comm ("comm\\|(.+)");
-    QHash<int, QStringList> ig_in_grp;
+    QHash<QString, QStringList> ig_in_grp;
     foreach (QString ingr, ingrsList) {
         if (ingr.contains(exp)) {
             int level = exp.cap(1).toInt() + 1;
@@ -84,38 +83,38 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
                 double qte = ingrParts[1].toDouble();
                 QString unit = ingrParts[2];
                 QString name = ingrParts.mid(3).join("#");
-                QHash<QString, QVariant> ingr_obj;
+                QVariantMap ingr_obj;
                 ingr_obj["quantity"] = qte;
                 ingr_obj["unit"] = unit;
                 ingr_obj["name"] = name;
                 ingr_obj["nb"] = nb_ingr;
-                ingredients[QString::number(id_ingr)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ingr_obj)).toJson());;
+                ingredients[QString::number(id_ingr)] = ingr_obj;
 
                 //Add ingredient to it's group:
                 if (current_ig_group == -1) {
-                    QHash<QString, QVariant> ig_group;
+                    QVariantMap ig_group;
                     ig_group["level"] = current_level;
                     ig_group["nb"] = nb_group;
                     ig_group["title"] = "";
-                    ingredients_groups[QString::number(id_group)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ig_group)).toJson());;
+                    ingredients_groups[QString::number(id_group)] = ig_group;
                     current_ig_group = id_group;
                     id_group++;
                     nb_group++;
                 }
-                if (!ig_in_grp.contains(current_ig_group))
-                    ig_in_grp[current_ig_group] = QStringList();
-                ig_in_grp[current_ig_group].append(QString::number(id_ingr));
+                if (!ig_in_grp.contains(QString::number(current_ig_group)))
+                    ig_in_grp[QString::number(current_ig_group)] = QStringList();
+                ig_in_grp[QString::number(current_ig_group)].append(QString::number(id_ingr));
 
                 id_ingr++;
                 nb_ingr++;
             }
             else {
                 //It's an ingredient group
-                QHash<QString, QVariant> ig_group;
+                QVariantMap ig_group;
                 ig_group["level"] = level;
                 ig_group["nb"] = nb_group;
                 ig_group["title"] = ingr_base;
-                ingredients_groups[QString::number(id_group)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ig_group)).toJson());
+                ingredients_groups[QString::number(id_group)] = ig_group;
                 current_ig_group = id_group;
                 id_group++;
                 nb_group++;
@@ -125,22 +124,22 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
         else if (ingr.contains(exp_comm)) {
             QString comm = exp_comm.cap(1);
             //Create empty ingr group with level 0 (it's a comment!!)
-            QHash<QString, QVariant> ig_group;
+            QVariantMap ig_group;
             ig_group["level"] = 0;
             ig_group["nb"] = nb_group;
             ig_group["title"] = comm;
-            ingredients_groups[QString::number(id_group)] = QString(QJsonDocument(QJsonObject::fromVariantHash(ig_group)).toJson());
+            ingredients_groups[QString::number(id_group)] = ig_group;
             id_group++;
             nb_group++;
         }
     }
-    foreach (int id_grp, ig_in_grp.keys()) {
-        ingredients_in_groups[QString::number(id_grp)] = QString(QJsonDocument(QJsonArray::fromStringList(ig_in_grp[id_grp])).toJson());
+    foreach (QString id_grp, ig_in_grp.keys()) {
+        ingredients_in_groups[id_grp] = ig_in_grp[id_grp];
     }
 }
 
-QStringList SendPyWebCooking::buildMaterial(QStringList mats) {
-    QStringList objs;
+QVariantList SendPyWebCooking::buildMaterial(QStringList mats) {
+    QVariantList objs;
     QRegExp exp ("(\\d+|comm)\\|(.+)");
     int nb = 0;
     foreach (QString mat, mats) {
@@ -149,20 +148,20 @@ QStringList SendPyWebCooking::buildMaterial(QStringList mats) {
                 QStringList mat_parts = exp.cap(2).split("#");
                 int qte = mat_parts[1].toInt();
                 QString name = mat_parts.mid(2).join("#");
-                QHash<QString,QVariant> mat_obj;
+                QVariantMap mat_obj;
                 mat_obj["nb"] = nb;
                 mat_obj["name"] = name;
                 mat_obj["quantity"] = qte;
                 mat_obj["is_comment"] = false;
-                objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(mat_obj)).toJson()));
+                objs.append(mat_obj);
             }
             else {
-                QHash<QString,QVariant> mat_obj;
+                QVariantMap mat_obj;
                 mat_obj["nb"] = nb;
                 mat_obj["name"] = exp.cap(2);
                 mat_obj["quantity"] = -1;
                 mat_obj["is_comment"] = true;
-                objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(mat_obj)).toJson()));
+                objs.append(mat_obj);
             }
             nb++;
         }
@@ -170,25 +169,8 @@ QStringList SendPyWebCooking::buildMaterial(QStringList mats) {
     return objs;
 }
 
-QStringList SendPyWebCooking::buildProposal(QStringList props) {
-    QRegExp exp ("(0|comm)\\|(.+)");
-    QStringList objs;
-    int nb = 0;
-    foreach (QString prop, props) {
-        if (prop.contains(exp)) {
-            QHash<QString,QVariant> prop_obj;
-            prop_obj["nb"] = nb;
-            prop_obj["text_prop"] = insertPictures(exp.cap(2));
-            prop_obj["is_comment"] = exp.cap(1) == "comm";
-            objs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(prop_obj)).toJson()));
-            nb++;
-        }
-    }
-    return objs;
-}
-
-QStringList SendPyWebCooking::buildInstructions(QStringList instrsList) {
-    QStringList instrs;
+QVariantList SendPyWebCooking::buildInstructions(QStringList instrsList) {
+    QVariantList instrs;
     QRegExp exp ("([\\d\\.]+)\\|(.+)");
     QRegExp exp_comm ("comm\\|(.+)");
     int nb = 0;
@@ -196,22 +178,39 @@ QStringList SendPyWebCooking::buildInstructions(QStringList instrsList) {
         if (instr.contains(exp)) {
             QStringList id = exp.cap(1).split(".");
             int level = id.length() - 1;
-            QHash<QString,QVariant> instr_obj;
+            QVariantMap instr_obj;
             instr_obj["nb"] = nb;
             instr_obj["level"] = level;
             instr_obj["text_inst"] = insertPictures(exp.cap(2));
-            instrs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(instr_obj)).toJson()));
+            instrs.append(instr_obj);
         }
         else if (instr.contains(exp_comm)) {
-            QHash<QString,QVariant> instr_obj;
+            QVariantMap instr_obj;
             instr_obj["nb"] = nb;
             instr_obj["level"] = 0;
             instr_obj["text_inst"] = insertPictures(exp_comm.cap(1));
-            instrs.append(QString(QJsonDocument(QJsonObject::fromVariantHash(instr_obj)).toJson()));
+            instrs.append(instr_obj);
         }
         nb++;
     }
     return instrs;
+}
+
+QVariantList SendPyWebCooking::buildProposal(QStringList props) {
+    QRegExp exp ("(0|comm)\\|(.+)");
+    QVariantList objs;
+    int nb = 0;
+    foreach (QString prop, props) {
+        if (prop.contains(exp)) {
+            QVariantMap prop_obj;
+            prop_obj["nb"] = nb;
+            prop_obj["text_prop"] = insertPictures(exp.cap(2));
+            prop_obj["is_comment"] = exp.cap(1) == "comm";
+            objs.append(prop_obj);
+            nb++;
+        }
+    }
+    return objs;
 }
 
 void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
@@ -282,12 +281,12 @@ void SendPyWebCooking::sendRecipe() {
     input.add_var("tps_cuis", QString::number(tpsCuis));
     input.add_var("tps_rep", QString::number(tpsRep));
     input.add_var("categories", QString(QJsonDocument(QJsonArray::fromStringList(categories)).toJson()));
-    input.add_var("ingredients", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients)).toJson()));
-    input.add_var("ingredients_groups", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients_groups)).toJson()));
-    input.add_var("ingredients_in_groups", QString(QJsonDocument(QJsonObject::fromVariantHash(ingredients_in_groups)).toJson()));
-    input.add_var("equipments", QString(QJsonDocument(QJsonArray::fromStringList(material)).toJson()));
-    input.add_var("instructions", QString(QJsonDocument(QJsonArray::fromStringList(instructions)).toJson()));
-    input.add_var("proposals", QString(QJsonDocument(QJsonArray::fromStringList(proposals)).toJson()));
+    input.add_var("ingredients", QString(QJsonDocument(QJsonObject::fromVariantMap(ingredients)).toJson()));
+    input.add_var("ingredients_groups", QString(QJsonDocument(QJsonObject::fromVariantMap(ingredients_groups)).toJson()));
+    input.add_var("ingredients_in_groups", QString(QJsonDocument(QJsonObject::fromVariantMap(ingredients_in_groups)).toJson()));
+    input.add_var("equipments", QString(QJsonDocument(QJsonArray::fromVariantList(material)).toJson()));
+    input.add_var("instructions", QString(QJsonDocument(QJsonArray::fromVariantList(instructions)).toJson()));
+    input.add_var("proposals", QString(QJsonDocument(QJsonArray::fromVariantList(proposals)).toJson()));
     input.add_var("published", publish ? "1" : "0");
     input.add_file("main_picture", mainPicture, mainPictureName, "image/jpg");
     if (otherPicts.length() > 0) {

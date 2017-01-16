@@ -32,10 +32,10 @@ private:
     QString title, mainPicture, mainPictureName, precision, description, coupDeCoeur;
     int tpsPrep, tpsCuis, tpsRep;
     QStringList categories;
-    QHash<QString, QVariant> ingredients;
-    QHash<QString, QVariant> ingredients_groups;
-    QHash<QString, QVariant> ingredients_in_groups;
-    QStringList material, instructions, proposals;
+    QVariantMap ingredients;
+    QVariantMap ingredients_groups;
+    QVariantMap ingredients_in_groups;
+    QVariantList material, instructions, proposals;
     int nbPeople, nbPeopleMax;
     QString user, passwd;
     int config;
@@ -49,9 +49,9 @@ private slots:
 private:
     void sendRecipe();
     void buildIngredients(QStringList ingrsList);
-    QStringList buildMaterial(QStringList mats);
-    QStringList buildProposal(QStringList props);
-    QStringList buildInstructions(QStringList instrsList);
+    QVariantList buildMaterial(QStringList mats);
+    QVariantList buildInstructions(QStringList instrsList);
+    QVariantList buildProposal(QStringList props);
     QString insertPictures(QString item);
 };
 
