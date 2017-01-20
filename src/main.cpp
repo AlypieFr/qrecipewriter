@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 #endif
 
     //Default units:
-    units << "" << "ml" << "cl" << "dl" << "L" << "g" << "kg" << "cs" << "cc" << QObject::tr("tasse") << QObject::tr("verre");
+    units << "" << "ml" << "cl" << "dl" << "L" << "g" << "kg" << "cs" << "cc" << QObject::tr("tasse") << QObject::tr("verre") << QObject::tr("bol") << QObject::tr("sachet") << QObject::tr("pincée");
 
     //Define confFile:
     confFile  = confDir +".config";
