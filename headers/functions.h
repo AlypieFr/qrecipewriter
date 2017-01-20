@@ -73,15 +73,15 @@ public:
     static QString generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
                                     int hRep, int minRep, int nbPersonnes, int nbPersonnes2, QString precision,
                                     QString description, QString ingredients, QString materiel, QString preparation,
-                                    QString conseils);
-    static QString getSimpleListWithSubLists(QStringList items);
+                                    QString conseils, int config);
+    static QString getSimpleListWithSubLists(QStringList items, int config);
     static QStringList makeSimpleList(QString text, bool isMat=false);
     static QStringList makeSimpleListWithSubLists(QString text);
-    static QString getSimpleList(QStringList items);
-    static QString getNumberedList(QStringList items);
+    static QString getSimpleList(QStringList items, int config);
+    static QString getNumberedList(QStringList items, int config);
     static QStringList makeNumberedList(QString text);
     static QString insertLinks(QString data);
-    static QString insertPictures(QString data);
+    static QString insertPictures(QString data, int config);
     static QString insertMovies(QString data);
     static QStringList getSelectedCategories(QMap<QCheckBox*, QString> categories);
     static QStringList makeTimes (int hPrep, int minPrep, int hCuis, int minCuis, int jRep,

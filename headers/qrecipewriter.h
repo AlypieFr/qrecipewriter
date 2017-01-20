@@ -275,7 +275,7 @@ private:
     void supprimerPrep();
     void supprimerCons();
     QString convert(QString ret);
-    void makeHtmlCode();
+    void makeHtmlCode(int config);
     void openEditor();
     void checkRemoveLnkBckp(QString text, int caretPos);
     void checkRemoveLnkSupprInLineEdit(QLineEdit* areaTxt);

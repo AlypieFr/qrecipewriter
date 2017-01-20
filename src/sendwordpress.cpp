@@ -64,6 +64,11 @@ void SendWordpress::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     }
     mainPicture = mainPicture_lu;
     excerpt = excerpt_lu;
+    envoiEnCours = envoiEnCours_lu;
+    user = user_lu;
+    passwd = passwd_lu;
+    config = config_lu;
+    publier = publier_lu;
     tags = "";
     if (serverConfs[config]["recSearch"] == "1" && (categories.size() > 1 || categories[0] != "Base")) {
         tags = makeTags(tpsPrep, tpsCuis, tpsRep);
@@ -77,11 +82,6 @@ void SendWordpress::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     if (tags.isEmpty()) {
         tags = "null";
     }
-    envoiEnCours = envoiEnCours_lu;
-    user = user_lu;
-    passwd = passwd_lu;
-    config = config_lu;
-    publier = publier_lu;
     this->sendRecipe();
 }
 

@@ -63,10 +63,7 @@ public class SendToWordpress {
                 htmlCode = htmlCode + "\n" + parts[j];
             }
             otherPicts = args[5];
-            publier = false;
-            if ("true".equals(args[6])) {
-                publier = true;
-            }
+            publier = "true".equals(args[6]);
             idRecipe = args[7];
             if ((xmlRpcUrl != null) && (categories != null) && (mainPict != null) && (user != null) && (password != null) && (titre != null) && (excerpt != null) && (htmlCode != null) && (idRecipe != null)) {
                 sendRecipe();
@@ -97,32 +94,20 @@ public class SendToWordpress {
                 post_id = idRecipe;
             }
             if (!mainPict.startsWith("http")) {
-                MediaObject mediaImg = wp.newMediaObject("image/jpg", new File(mainPict), Boolean.valueOf(false), post_id);
+                MediaObject mediaImg = wp.newMediaObject("image/jpg", new File(mainPict), Boolean.FALSE, post_id);
                 post.setThumbnail(mediaImg.getId());
             }
             String publish_statut = publier ? "1" : "0";
-            wp.editPost(Integer.valueOf(post_id).intValue(), post, publish_statut);
+            wp.editPost(Integer.valueOf(post_id), post, publish_statut);
             if (!"null".equals(otherPicts)) {
                 String[] oPicts = otherPicts.split("\\|");
-                String[] arrayOfString1;
-                int j = (arrayOfString1 = oPicts).length;
-                for (int i = 0; i < j; i++) {
-                    String otherImage = arrayOfString1[i];
-                    String ext = otherImage.substring(otherImage.lastIndexOf("."));
-                    String str1;
-                    switch ((str1 = ext).hashCode()) {
-                        case 1475827:
-                            if (str1.equals(".jpg")) {
-                                break;
-                            }
-                            break;
-                        case 1481531:
-                            if (!str1.equals(".png")) {
-                                wp.newMediaObject("image/jpg", new File(otherImage), Boolean.valueOf(false), post_id);
-                            } else {
-                                wp.newMediaObject("image/png", new File(otherImage), Boolean.valueOf(false), post_id);
-                            }
-                            break;
+                int j = oPicts.length;
+                for (String otherImage : oPicts) {
+                    String ext = otherImage.substring(otherImage.lastIndexOf(".")).toLowerCase();
+                    if (!ext.equals(".png")) {
+                        wp.newMediaObject("image/jpg", new File(otherImage), Boolean.FALSE, post_id);
+                    } else {
+                        wp.newMediaObject("image/png", new File(otherImage), Boolean.FALSE, post_id);
                     }
                 }
             }

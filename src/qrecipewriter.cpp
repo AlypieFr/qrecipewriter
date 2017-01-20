@@ -29,6 +29,7 @@ extern QString confDir;
 extern QString confFile;
 extern QFile *confCatFile;
 extern QHash<int,QHash<QString, QString>> serverConfs;
+extern int configActive;
 
 extern QStringList otherPicts;
 extern QString dirPict;
@@ -1701,7 +1702,7 @@ void QRecipeWriter::on_sync_cats_clicked()
 
 void QRecipeWriter::sendWordpress(QString user, QString password, int config, bool publier, QDialog *envoiEnCours)
 {
-    makeHtmlCode();
+    makeHtmlCode(config);
     SendWordpress *sendWp = new SendWordpress(this);
     QStringList cats = Functions::getSelectedCategories(categories);
     QList<int> tpsPrep, tpsCuis, tpsRep;
@@ -1748,7 +1749,7 @@ void QRecipeWriter::sendPyWebCooking(QString user, QString password, int config,
  * Gets all data from the recipe and sends it to Function::generateHtmlCode.
  * Store result in htmlCode
  */
-void QRecipeWriter::makeHtmlCode()
+void QRecipeWriter::makeHtmlCode(int config)
 {
     otherPicts.clear();
     QStringList allIngr;
@@ -1757,28 +1758,28 @@ void QRecipeWriter::makeHtmlCode()
     }
     QString ingredients = "";
     if (allIngr.size() > 0)
-        ingredients = Functions::getSimpleListWithSubLists(allIngr);
+        ingredients = Functions::getSimpleListWithSubLists(allIngr, config);
     QStringList allMat;
     for (int it = 0; it < model2->rowCount(); ++it) {
         allMat.append(model2->item(it)->text());
     }
     QString materiel = "";
     if (allMat.size() != 0)
-        materiel = Functions::getSimpleList(allMat);
+        materiel = Functions::getSimpleList(allMat, config);
     QStringList allPrep;
     for (int it = 0; it < model3->rowCount(); ++it) {
         allPrep.append(model3->item(it)->text());
     }
     QString preparation = "";
     if (allPrep.size() > 0)
-        preparation = Functions::getNumberedList(allPrep);
+        preparation = Functions::getNumberedList(allPrep, config);
     QStringList allCons;
     for (int it = 0; it < model4->rowCount(); ++it) {
         allCons.append(model4->item(it)->text());
     }
     QString conseils = "";
     if (allCons.size() > 0)
-        conseils = Functions::getSimpleList(allCons);
+        conseils = Functions::getSimpleList(allCons, config);
     QString description = Functions::insertLinks(ui->description->toPlainText());
     QString descTmp = description;
     QRegExp exp ("<a href=\"[^\"]+\" target=\"[^\"]+\">");
@@ -1796,8 +1797,8 @@ void QRecipeWriter::makeHtmlCode()
     htmlCode = Functions::generateHtmlCode(ui->titre->text(), imgFileName, ui->hPrep->value(), ui->minPrep->value(),
                                                    ui->hCuis->value(), ui->minCuis->value(), ui->jRep->value(), ui->hRep->value(),
                                                    ui->minRep->value(), ui->nbPersonnes->value(), ui->nbPersonnes_2->value(), ui->precision->text(),
-                                                   description, ingredients, materiel, preparation, conseils);
-    if (richSnippets) {
+                                                   description, ingredients, materiel, preparation, conseils, config);
+    if (serverConfs[config]["richSnippets"] == "1") {
         htmlCode = Functions::makeRichSnippets(ui->titre->text(), imgFileName, ui->hPrep->value(), ui->minPrep->value(),
                                                ui->hCuis->value(), ui->minCuis->value(), ui->jRep->value(), ui->hRep->value(),
                                                ui->minRep->value(), ui->nbPersonnes->value(), ui->precision->text(), description,
@@ -1822,7 +1823,7 @@ void QRecipeWriter::on_apercu_clicked()
 {
     if (isReadyTosend(true))
     {
-        makeHtmlCode();
+        makeHtmlCode(configActive);
         QDate today = QDate::currentDate();
         QString month;
         switch (today.month()) {

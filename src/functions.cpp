@@ -784,7 +784,7 @@ QStringList Functions::loadCategories()
  * @return htmlCode corresponding to the list
  * Transform a list into HtmlCode, in the case of simple list (without numbers), that can include sublists (Ingrédents)
  */
-QString Functions::getSimpleListWithSubLists(QStringList items)
+QString Functions::getSimpleListWithSubLists(QStringList items, int config)
 {
     QString htmlCode = "";
     int nivList = -1;
@@ -795,7 +795,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
             for (int var = -1; var < nivList; ++var) {
                 htmlCode.append("</ul>\n");
             }
-            htmlCode.append(insertLinks(insertPictures(parts[1])) + "<br/>\n");
+            htmlCode.append(insertLinks(insertPictures(parts[1], config)) + "<br/>\n");
             nivList = -1;
         }
         else
@@ -829,7 +829,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
             int puce = parts[0].toInt();
             if (puce == nivList)
             {
-                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
                 nivList = puce;
             }
             else if (puce > nivList)
@@ -837,7 +837,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
                 for (int var = nivList; var < puce; ++var) {
                     htmlCode.append("<ul>\n");
                 }
-                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
                 nivList = puce;
             }
             else if (puce < nivList)
@@ -845,7 +845,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
                 for (int var = nivList; var > puce; --var) {
                     htmlCode.append("</ul>\n");
                 }
-                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
                 nivList = puce;
             }
         }
@@ -865,7 +865,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items)
  * @return htmlCode corresponding to the list
  * Transform a list into HtmlCode, in the case of simple list (without numbers), that can't include sublists (Matériel, Conseils)
  */
-QString Functions::getSimpleList(QStringList items)
+QString Functions::getSimpleList(QStringList items, int config)
 {
     QString htmlCode = "";
     bool inList = false;
@@ -875,12 +875,12 @@ QString Functions::getSimpleList(QStringList items)
         {
             if (inList)
             {
-                htmlCode.append("</ul>\n" + insertLinks(insertPictures(parts[1])) + "<br/>\n");
+                htmlCode.append("</ul>\n" + insertLinks(insertPictures(parts[1], config)) + "<br/>\n");
                 inList = false;
             }
             else
             {
-                htmlCode.append(insertLinks(insertPictures(parts[1])) + "<br/>\n");
+                htmlCode.append(insertLinks(insertPictures(parts[1], config)) + "<br/>\n");
             }
         }
         else {
@@ -894,11 +894,11 @@ QString Functions::getSimpleList(QStringList items)
             }
             if (inList)
             {
-                htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                htmlCode.append("<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
             }
             else
             {
-                htmlCode.append("<ul>\n<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                htmlCode.append("<ul>\n<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
                 inList = true;
             }
         }
@@ -914,7 +914,7 @@ QString Functions::getSimpleList(QStringList items)
  * @return htmlCode corresponding to the list
  * Transform a list into HtmlCode, in the case of numbered lists
  */
-QString Functions::getNumberedList(QStringList items)
+QString Functions::getNumberedList(QStringList items, int config)
 {
     QString htmlCode = "";
     int nivList = -1;
@@ -926,7 +926,7 @@ QString Functions::getNumberedList(QStringList items)
                 htmlCode.append("</span></ul>\n");
             }
             htmlCode.append("</ol>\n");
-            htmlCode.append(insertLinks(insertPictures(parts[1])) + "<br/>\n");
+            htmlCode.append(insertLinks(insertPictures(parts[1], config)) + "<br/>\n");
             nivList = -1;
         }
         else
@@ -936,11 +936,11 @@ QString Functions::getNumberedList(QStringList items)
             {
                 if (puce == 0)
                 {
-                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1])) + "</span></li>\n");
+                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1], config)) + "</span></li>\n");
                 }
                 else
                 {
-                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
                 }
                 nivList = puce;
             }
@@ -956,11 +956,11 @@ QString Functions::getNumberedList(QStringList items)
                 }
                 if (puce == 0)
                 {
-                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1])) + "</span></li>\n");
+                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1], config)) + "</span></li>\n");
                 }
                 else
                 {
-                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
                 }
                 nivList = puce;
             }
@@ -971,11 +971,11 @@ QString Functions::getNumberedList(QStringList items)
                 }
                 if (puce == 0)
                 {
-                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1])) + "</span></li>\n");
+                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1], config)) + "</span></li>\n");
                 }
                 else
                 {
-                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
+                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
                 }
                 nivList = puce;
             }
@@ -1028,7 +1028,7 @@ QString Functions::insertLinks(QString data)
  * @return htmlCode of the picture
  * Transform picture tags to HTML pictures tags, and add corresponding pictures to otherPictures list
  */
-QString Functions::insertPictures(QString data)
+QString Functions::insertPictures(QString data, int config)
 {
     QRegExp exp ("\\[IMG:(\\w+):(\\d+):(\\d+):([^\\]]+)\\]");
     while (data.contains(exp))
@@ -1049,7 +1049,7 @@ QString Functions::insertPictures(QString data)
         }
         QString centerBegin = center ? "<center>" : "";
         QString centerEnd = center ? "</center>" : "";
-        data.replace(imgBal, centerBegin + "<img src=\"" + dirDistPict + img.split("/").last() + "\" alt=\"" + QObject::tr("Image d'illustration") + "\" width=\"" + largeur + "\" height=\"" + hauteur + "\"" + classDef + " />" + centerEnd + "<br/>");
+        data.replace(imgBal, centerBegin + "<img src=\"" + serverConfs[config]["dirDistPict"] + img.split("/").last() + "\" alt=\"" + QObject::tr("Image d'illustration") + "\" width=\"" + largeur + "\" height=\"" + hauteur + "\"" + classDef + " />" + centerEnd + "<br/>");
         if (!otherPicts.contains(img))
             otherPicts.append(img);
     }
@@ -1263,7 +1263,7 @@ QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPre
 QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
                                     int hRep, int minRep, int nbPersonnes, int nbPersonnes2, QString precision,
                                     QString description, QString ingredients, QString materiel, QString preparation,
-                                    QString conseils)
+                                    QString conseils, int config)
 {
     QString htmlCode = "";
     description = "<p>"+description.replace("\n", "<br/>\n")+"</p>";
@@ -1275,9 +1275,9 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
     QString tpsRep = temps[2];
 
     //Generation of the complete code :
-    htmlCode = "<div id='masquer'><div><a href=\"" + dirDistPict + mainPicture + "\"><photo><img style=\"float: left; "
+    htmlCode = "<div id='masquer'><div><a href=\"" + serverConfs[config]["dirDistPict"] + mainPicture + "\"><photo><img style=\"float: left; "
              + "margin-right: 6px;\" class=shadow alt=\"Image d'illustation de la recette\" title=\""
-             + titre+"\" src=\"" + dirDistPict + mainPicture + "\" width=\"254\" height=\"190\"></photo></a></div><description>"
+             + titre+"\" src=\"" + serverConfs[config]["dirDistPict"] + mainPicture + "\" width=\"254\" height=\"190\"></photo></a></div><description>"
              + description+ "</description></div><div id=\"detail\"><temps><b>" + QObject::tr("Temps de Préparation :") + " " +tpsPrep;
     //Adding temps de repos if used:
     if (tpsRep != "")
