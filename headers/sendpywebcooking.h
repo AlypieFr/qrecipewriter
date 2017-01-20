@@ -53,6 +53,7 @@ private:
     QVariantList buildInstructions(QStringList instrsList);
     QVariantList buildProposal(QStringList props);
     QString insertPictures(QString item);
+    double getQuantity(QString qte);
 };
 
 #endif // SENDPYWEBCOOKING_H

@@ -60,6 +60,21 @@ QString SendPyWebCooking::insertPictures(QString item) {
     return item;
 }
 
+
+
+double SendPyWebCooking::getQuantity(QString qte) {
+    bool ok;
+    double qte_double = qte.toDouble(&ok);
+    if (!ok) {
+        QRegExp exp("^(\\d+)/(\\d+)$");
+        if (exp.exactMatch(qte)) {
+            qte_double = exp.cap(1).toDouble() / exp.cap(2).toDouble();
+            qte_double = floor(qte_double * pow(10., 2) + .5) / pow(10., 2);
+        }
+    }
+    return qte_double;
+}
+
 void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
     int nb_group = 0;
     int nb_ingr = 0;
@@ -82,7 +97,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
             if (ingr_base.startsWith("ingr#")) {
                 //It's an ingredient
                 QStringList ingrParts = ingr_base.split("#");
-                double qte = ingrParts[1].toDouble();
+                double qte = getQuantity(ingrParts[1]);
                 QString unit = ingrParts[2];
                 QString name = ingrParts.mid(3).join("#");
                 QVariantMap ingr_obj;
