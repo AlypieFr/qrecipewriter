@@ -68,6 +68,7 @@ public:
                            QStringList preparation, QStringList conseils, QString picture, QMap<QString, QString> liens,
                            QString filename, QString coupDeCoeur, int idRecipe);
     static bool saveRecipeFromDist(QString title, QStringList categories, QString content, QString picture, QString coupDeCoeur, QFile *file, int idRecipe);
+    static bool saveRecipeFromPwcJson(QVariantMap recipe, int config, QFile *tmpFile);
     static QMap<QString, QStringList> loadRecipe(QString fileName);
     static QStringList loadCategories();
     static QString generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
@@ -81,6 +82,7 @@ public:
     static QString getNumberedList(QStringList items, int config);
     static QStringList makeNumberedList(QString text);
     static QString insertLinks(QString data);
+    static int restoreLinks(QString *data, QMap<QString, QString> *liens, int nbLien);
     static QString insertPictures(QString data, int config);
     static QString insertMovies(QString data);
     static QStringList getSelectedCategories(QMap<QCheckBox*, QString> categories);

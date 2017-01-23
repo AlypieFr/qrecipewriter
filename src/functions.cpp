@@ -508,6 +508,17 @@ QStringList Functions::makeNumberedList(QString text) {
     return list;
 }
 
+int Functions::restoreLinks(QString *data, QMap<QString, QString> *liens, int nbLien) {
+    QRegExp lienExp = QRegExp("<a [^>]*href=[\"']([^\"']+)[\"'][^>]*>([^<]+)</a>");
+    while (data->contains(lienExp)) {
+        QString balise = "L" + QString::number(nbLien);
+        liens->insert(balise, lienExp.cap(1));
+        data->replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
+        nbLien++;
+    }
+    return nbLien;
+}
+
 bool Functions::saveRecipeFromDist(QString title, QStringList categories, QString content, QString picture,
                                    QString coupDeCoeur, QFile *file, int idRecipe) {
     for (int i = 0; i < categories.count(); ++i) {
@@ -520,18 +531,12 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
     int nbLien = 1;
 
     //Get description:
-    QRegExp lienExp = QRegExp("<a [^>]*href=[\"']([^\"']+)[\"'][^>]*>([^<]+)</a>");
     QRegExp descExp = QRegExp("<description>(.+)</description>");
     if (content.contains(descExp)) {
         description = descExp.cap(1);
         description = description.replace("<p>", "").replace("</p>", "\n");
         description = description.replace(QRegExp("<br\\s?/?>"), "\n");
-        while (description.contains(lienExp)) {
-            QString balise = "L" + QString::number(nbLien);
-            liens[balise] = lienExp.cap(1);
-            description = description.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
-            nbLien++;
-        }
+        nbLien = Functions::restoreLinks(&description, &liens, nbLien);
         while(description.right(1) == "\n") {
             description = description.left(description.length() - 1);
         }
@@ -541,12 +546,7 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
     QRegExp ingrExp = QRegExp("<ingredients>(.+)</ingredients>");
     if (content.contains(ingrExp)) {
         QString txt = removeSpecialChars(ingrExp.cap(1));
-        while (txt.contains(lienExp)) {
-            QString balise = "L" + QString::number(nbLien);
-            liens[balise] = lienExp.cap(1);
-            txt = txt.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
-            nbLien++;
-        }
+        nbLien = Functions::restoreLinks(&txt, &liens, nbLien);
         QRegExp header = QRegExp(QObject::tr("Ingrédients") + " \\(" + QObject::tr("pour") + " (\\d+) "+ QObject::tr("personnes") + "?([^:]+):");
         QRegExp header2 = QRegExp(QObject::tr("Ingrédients") + " \\(" + QObject::tr("pour") + " (\\d+ " + QObject::tr("à") + " \\d+) " + QObject::tr("personnes") + "?([^:]+):");
         QRegExp header3 = QRegExp(QObject::tr("Ingrédients") + " \\(" + QObject::tr("pour") + " (\\d+-\\d+) " + QObject::tr("personnes") + "?([^:]+):");
@@ -605,12 +605,7 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
     QRegExp prepExp = QRegExp("<preparation>(.+)</preparation>");
     if (content.contains(prepExp)) {
         QString txt = removeSpecialChars(prepExp.cap(1));
-        while (txt.contains(lienExp)) {
-            QString balise = "L" + QString::number(nbLien);
-            liens[balise] = lienExp.cap(1);
-            txt = txt.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
-            nbLien++;
-        }
+        nbLien = Functions::restoreLinks(&txt, &liens, nbLien);
         txt.replace("<ul>", "<ol>").replace("</ul>", "</ol>").replace("<ol class=\"lbold\">", "<ol>").replace("<ol class=lbold>", "<ol>");
         int begin = -1;
         QRegExp header = QRegExp(QObject::tr("Pr[ée]paration[^:]*:"), Qt::CaseInsensitive);
@@ -626,12 +621,7 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
     QRegExp consExp = QRegExp("<conseils>(.+)</conseils>");
     if (content.contains(consExp)) {
         QString txt = removeSpecialChars(consExp.cap(1));
-        while (txt.contains(lienExp)) {
-            QString balise = "L" + QString::number(nbLien);
-            liens[balise] = lienExp.cap(1);
-            txt = txt.replace(lienExp.cap(0), "<" + balise + ">" + lienExp.cap(2) + "</" + balise + ">");
-            nbLien++;
-        }
+        nbLien = Functions::restoreLinks(&txt, &liens, nbLien);
         int begin = -1;
         QRegExp header = QRegExp(QObject::tr("Conseils") + "[^:]*:", Qt::CaseInsensitive);
         if (txt.contains(header)) {
@@ -705,6 +695,145 @@ bool Functions::saveRecipeFromDist(QString title, QStringList categories, QStrin
     }
 
     return saveRecipeToFile(title, categories, tpsPrep, tpsCuis, tpsRep, nbPers, precision, description, ingredients, materiel, preparation, conseils, picture, liens, file, coupDeCoeur, idRecipe);
+}
+
+bool Functions::saveRecipeFromPwcJson(QVariantMap recipe, int config, QFile *tmpFile) {
+    QStringList  ingredients, equipment, instructions, proposals;
+    QMap<QString, QString> liens;
+    int nbLien = 1;
+
+    //Ingredients:
+    QVariantList r_ingrs = recipe["ingredients"].toList();
+    foreach (QVariant grp_v, r_ingrs) {
+        QVariantMap grp = grp_v.toMap();
+        QString title = grp["title"].toString();
+        int level = grp["level"].toInt() - 1;
+        QVariantList sub_ingrs = grp["ingredients"].toList();
+        if (sub_ingrs.length() > 0) {
+            int level_ingrs = level;
+            if (!title.isEmpty()) {
+                ingredients.append(QString::number(level) + "|" + title);
+                level_ingrs++;
+            }
+            foreach (QVariant sub_ingr_v, sub_ingrs) {
+                QVariantMap sub_ingr = sub_ingr_v.toMap();
+                QString quantity = sub_ingr["quantity"].isNull() ? "" : sub_ingr["quantity"].toString();
+                QString name = sub_ingr["name"].toString();
+                nbLien = Functions::restoreLinks(&name, &liens, nbLien);
+                QString unit = sub_ingr["unit"].isNull() ? "" : sub_ingr["unit"].toString();
+                ingredients.append(QString::number(level_ingrs) + "|ingr#" + quantity + "#" + unit + "#" + name);
+            }
+        }
+        else if (!title.isEmpty()) {
+            ingredients.append("comm|" + title);
+        }
+
+    }
+
+    //Equipments:
+    QVariantList r_eqs = recipe["equipments"].toList();
+    foreach (QVariant eq_v, r_eqs) {
+        QVariantMap eq = eq_v.toMap();
+        QString name = eq["name"].toString();
+        nbLien = Functions::restoreLinks(&name, &liens, nbLien);
+        QString quantity = eq["quantity"].isNull() ? "" : eq["quantity"].toString();
+        bool isComment = eq["is_comment"].toBool();
+        if (isComment) {
+            equipment.append("comm|" + name);
+        }
+        else {
+            equipment.append("0|mat#" + quantity + "#" + name);
+        }
+
+    }
+
+    //Instructions:
+    QVariantList r_instrs = recipe["instructions"].toList();
+    QList<int> nb_level;
+    int current_level = 0;
+    foreach (QVariant instr_v, r_instrs) {
+        QVariantMap instr = instr_v.toMap();
+        int level = instr["level"].toInt();
+        QString text = instr["text_inst"].toString();
+        nbLien = Functions::restoreLinks(&text, &liens, nbLien);
+        if (level > 0) {
+            if (nb_level.length() < level) {
+                for (int i=nb_level.length(); i < level; i++)
+                    nb_level.append(0);
+            }
+            else if(level < current_level) {
+                for (int i=level; i < nb_level.length(); i++) {
+                    nb_level[i] = 0;
+                }
+            }
+            nb_level[level-1]++;
+            //QString head = nb_level.mid(0, level).join(".");
+            QStringList head_l;
+            for (int i=0; i<level; i++) {
+                head_l.append(QString::number(nb_level[i]));
+            }
+            QString head = head_l.join(".") + ".0";
+            instructions.append(head + "|" + text);
+            current_level = level;
+        }
+        else {
+            instructions.append("comm|" + text);
+            current_level = 1;
+        }
+    }
+
+    //Proposals:
+    QVariantList r_props = recipe["proposals"].toList();
+    foreach (QVariant prop_v, r_props) {
+        QVariantMap prop = prop_v.toMap();
+        QString text = prop["text_prop"].toString();
+        nbLien = Functions::restoreLinks(&text, &liens, nbLien);
+        bool isComment = prop["is_comment"].toBool();
+        proposals.append((isComment ? "comm" : "0") + QString("|") + text);
+    }
+
+    //Description:
+    QString description = recipe["description"].toString();
+    nbLien = Functions::restoreLinks(&description, &liens, nbLien);
+
+    //Times:
+    int tpsPrep_s = recipe["tps_prep"].toInt();
+    int h_prep = tpsPrep_s / 60;
+    int min_prep = tpsPrep_s - (h_prep * 60);
+    QString tpsPrep = QString::number(h_prep) + "h" + QString::number(min_prep);
+    QString tpsCuis = "0h0";
+    if (!recipe["tps_cuis"].isNull()) {
+        int tpsCuis_s = recipe["tps_cuis"].toInt();
+        int h_cuis = tpsCuis_s / 60;
+        int min_cuis = tpsCuis_s - (h_cuis * 60);
+        tpsCuis = QString::number(h_cuis) + "h" + QString::number(min_cuis);
+    }
+    QString tpsRep = "0j0h0";
+    if (!recipe["tps_rep"].isNull()) {
+        int tpsRep_s = recipe["tps_rep"].toInt();
+        int j_rep = tpsRep_s / (60*24);
+        int h_rep = (tpsRep_s - (j_rep * 24 * 60)) / 60;
+        int min_rep = tpsRep_s - (j_rep * 24 * 60) - (h_rep * 60);
+        tpsRep = QString::number(j_rep) + "j" + QString::number(h_rep) + "h" + QString::number(min_rep);
+    }
+
+    //Main picture:
+    QString picture_url = "";
+    if (serverConfs[config]["addrSite"].endsWith("/")) {
+        picture_url = serverConfs[config]["addrSite"].left(serverConfs[config]["addrSite"].length() - 1);
+    }
+    else {
+        picture_url = serverConfs[config]["addrSite"];
+    }
+    picture_url += recipe["picture_url"].toString();
+
+    QStringList categories = recipe["categories"].toStringList();
+    for (int ii = 0; ii < categories.length(); ++ii) {
+        categories[ii] = categories[ii].replace("&", "&&");
+    }
+
+    return saveRecipeToFile(recipe["title"].toString(), categories, tpsPrep, tpsCuis, tpsRep, recipe["nb_people"].toString(),
+            recipe["precision"].toString(), description, ingredients, equipment, instructions, proposals, picture_url, liens, tmpFile, "", recipe["id"].toInt());
 }
 
 /**
@@ -1440,7 +1569,7 @@ bool Functions::removeDir(const QString &dirName)
 
 bool Functions::downloadPicture(QString url, QString fileName, QWidget *parent) {
     FileDownloader *fdower = new FileDownloader(url, QObject::tr("Récupération de l'image d'illustration de la recette..."), parent);
-             QByteArray resData = fdower->downloadedData();
+    QByteArray resData = fdower->downloadedData();
     resData = fdower->downloadedData();
     QString imgFileSave = fileName;
     QFile file(imgFileSave);

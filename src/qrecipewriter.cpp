@@ -1657,7 +1657,6 @@ void QRecipeWriter::on_envoyer_clicked()
 }
 
 void QRecipeWriter::received_categories(HttpRequestWorker *worker) {
-    qDebug() << "PASS HERE";
     if (worker->error_type == QNetworkReply::NoError) {
         QJsonParseError *error = new QJsonParseError();
         QJsonDocument jsondoc = QJsonDocument::fromJson(worker->response, error);
@@ -1686,9 +1685,7 @@ void QRecipeWriter::received_categories(HttpRequestWorker *worker) {
 
 void QRecipeWriter::on_sync_cats_clicked()
 {
-    qDebug() << "PASS";
     QString api_url = addrSite + (addrSite.endsWith("/") ? "" : "/") + "api/categories/";
-    qDebug() << api_url;
     HttpRequestInput input(api_url, "GET");
     HttpRequestWorker *worker = new HttpRequestWorker(this);
     connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(received_categories(HttpRequestWorker*)));
@@ -2360,41 +2357,92 @@ void QRecipeWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
 
         int idRecipeToOpen = openDistant->idRecipeToOpen;
         int idConf = openDistant->config;
+        QString user = openDistant->user;
+        QString passwd = openDistant->passwd;
         //Delete pointer after close event:
         delete openDistant;
         openDistant = NULL;
 
         if (idRecipeToOpen > -1) {
-             FileDownloader *fdower = new FileDownloader(serverConfs[idConf]["addrSite"] + "/requests/getPost.php?p=" + QString::number(idRecipeToOpen), tr("Récupération de la recette..."), this);
-             QByteArray resData = fdower->downloadedData();
-             QJsonParseError ok;
-             QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
-             if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
-                 QJsonObject json = jsonDoc.object();
-                 QVariantMap result = json.toVariantMap();
-                 if (result["success"].toString() == "true") {
-                     QString imgFileDist = result["thumbnailFile"].toString();
-                     QFile *tmpFile = new QFile(dirTmp + "/recipe" + QString::number(QDateTime::currentMSecsSinceEpoch()) + ".rct");
-                     tmpFile->remove(".");
-                     bool success = Functions::saveRecipeFromDist(result["title"].toString(), result["cats"].toStringList(), result["content"].toString(), imgFileDist, result["coupDeCoeur"].toString(), tmpFile, idRecipeToOpen);
-                     if (success) {
-                         loadRecipe(tmpFile->fileName(), true);
-                     }
-                     else {
-                         QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
-                                                       QMessageBox::Ok);
-                     }
-                 }
-                 else {
-                     QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
-                                                   QMessageBox::Ok);
-                 }
+            if (serverConfs[idConf]["typeServer"] == "wordpress") {
+                this->openDistRecipeWp(idConf, idRecipeToOpen);
+            }
+            else if (serverConfs[idConf]["typeServer"] == "pywebcooking") {
+                this->openDistRecipePwc(idConf, idRecipeToOpen, user, passwd);
+            }
+        }
+    }
+}
+
+void QRecipeWriter::openDistRecipeWp(int idConf, int idRecipeToOpen) {
+    FileDownloader *fdower = new FileDownloader(serverConfs[idConf]["addrSite"] + "/requests/getPost.php?p=" + QString::number(idRecipeToOpen), tr("Récupération de la recette..."), this);
+    QByteArray resData = fdower->downloadedData();
+    QJsonParseError ok;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
+    if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
+        QJsonObject json = jsonDoc.object();
+        QVariantMap result = json.toVariantMap();
+        if (result["success"].toString() == "true") {
+            QString imgFileDist = result["thumbnailFile"].toString();
+            QFile *tmpFile = new QFile(dirTmp + "/recipe" + QString::number(QDateTime::currentMSecsSinceEpoch()) + ".rct");
+            tmpFile->remove(".");
+            bool success = Functions::saveRecipeFromDist(result["title"].toString(), result["cats"].toStringList(), result["content"].toString(), imgFileDist, result["coupDeCoeur"].toString(), tmpFile, idRecipeToOpen);
+            if (success) {
+                loadRecipe(tmpFile->fileName(), true);
             }
             else {
-                 QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
-                                               QMessageBox::Ok);
-                 qCritical() << "Error while parsing JSON: " + ok.errorString();
+                QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
+                                              QMessageBox::Ok);
             }
+        }
+        else {
+            QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
+                                          QMessageBox::Ok);
+        }
+   }
+   else {
+        QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
+                                      QMessageBox::Ok);
+        qCritical() << "Error while parsing JSON: " + ok.errorString();
+   }
+}
+
+void QRecipeWriter::openDistRecipePwc(int idConf, int idRecipeToOpen, QString user, QString passwd) {
+    HttpRequestInput input(serverConfs[idConf]["addrSite"] + "/api/recipe/by-id/" + QString::number(idRecipeToOpen), "GET", user, passwd);
+    HttpRequestWorker *worker = new HttpRequestWorker(this);
+    tmp_idconf = idConf;
+    connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(received_recipe(HttpRequestWorker*)));
+    worker->execute(&input);
+}
+
+void QRecipeWriter::received_recipe(HttpRequestWorker *worker) {
+    if (worker->error_type == QNetworkReply::NoError) {
+        // communication was successful
+        QJsonParseError *error = new QJsonParseError();
+        QJsonDocument jsondoc = QJsonDocument::fromJson(worker->response, error);
+        if (error->error == QJsonParseError::NoError) {
+            QJsonObject jsonobj = jsondoc.object();
+            QVariantMap recipe_r = jsonobj.toVariantMap();
+            QFile *tmpFile = new QFile(dirTmp + "/recipe" + QString::number(QDateTime::currentMSecsSinceEpoch()) + ".rct");
+            tmpFile->remove(".");
+            bool success = Functions::saveRecipeFromPwcJson(recipe_r, tmp_idconf, tmpFile);
+            if (success) {
+                loadRecipe(tmpFile->fileName(), true);
+            }
+        }
+        else {
+            qDebug() << worker->response;
+            qCritical() << "Error while parsing JSON: " + error->errorString();
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
+        }
+    }
+    else {
+        // an error occurred
+        if (worker->error_type == QNetworkReply::ContentOperationNotPermittedError) {
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), "Votre identificant ou vote mot de passe est incorrect");
+        }
+        else {
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), worker->error_str);
         }
     }
 }
@@ -5393,4 +5441,8 @@ void QRecipeWriter::on_tab_mats_currentChanged(int index)
     else if (index == 1) {
         ui->comment_mat->setFocus();
     }
+}
+
+void QRecipeWriter::setIdLink(int my_IdLink) {
+    idLien = my_IdLink;
 }

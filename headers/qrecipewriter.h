@@ -81,6 +81,7 @@ public:
     bool isMax;
     void setLogoWindow();
     QString openStartupFile;
+    void setIdLink(int my_idLink);
 
 private slots:
 
@@ -218,6 +219,8 @@ private slots:
 
     void received_categories(HttpRequestWorker *worker);
 
+    void received_recipe(HttpRequestWorker *worker);
+
 public slots:
     void init();
     void config();
@@ -251,6 +254,7 @@ private:
     QString balise; //Stores the tag that will be deleted
     QStringList balises; //Stores tags that will be deleted
     int resetPosCaret; //Stores position of the cursot at which we must set cursor after deleting tags
+    int tmp_idconf;
     int roundValueToFive(double value);
     bool askSaveFile();
     void toggleEditPict();
@@ -308,6 +312,8 @@ private:
     void loadRecipe(QString fileName, bool testReadyToSend);
     void searchUpdate();
     void startAbcCheck(bool silent);
+    void openDistRecipeWp(int idConf, int idRecipeToOpen);
+    void openDistRecipePwc(int idConf, int idRecipeToOpen, QString user, QString passwd);
 };
 
 #endif // CECWRITER_H

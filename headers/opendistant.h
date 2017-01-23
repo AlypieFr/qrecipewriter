@@ -15,10 +15,12 @@
 #define OPENDISTANT_H
 
 #include "filedownloader.h"
+#include "httprequestworker.h"
 #include "login.h"
 
 #include <QCheckBox>
 #include <QDialog>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QList>
@@ -27,6 +29,8 @@
 #include <QRegExp>
 #include <QScrollArea>
 #include <QVBoxLayout>
+#include <QVariantMap>
+#include <QVariantList>
 
 namespace Ui {
 class OpenDistant;
@@ -42,6 +46,7 @@ public:
     void init();
     int idRecipeToOpen;
     int config;
+    QString user, passwd;
 
 private slots:
     void on_search_textChanged(const QString &arg1);
@@ -55,6 +60,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void handle_result(HttpRequestWorker* worker);
+
 private:
     Ui::OpenDistant *ui;
     QWidget *parentWidget;
@@ -63,6 +70,11 @@ private:
     QMap<QString, QStringList > recipesByCats;
     void updateNbRecipes(int nbRecipes);
     QList<QCheckBox*> cboxes;
+    void openFromPwc(int config);
+    void openFromWp(int config);
+    void addRecipe(QVariantMap recipe);
+    void refreshRecipesList();
+    QDialog *openInProgress;
 };
 
 #endif // OPENDISTANT_H

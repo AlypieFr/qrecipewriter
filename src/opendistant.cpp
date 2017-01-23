@@ -35,7 +35,8 @@ void OpenDistant::init() {
     Login *login = new Login((QWidget*)this->parent());
     login->init(false);
     if (login->getAccepted()) {
-        QString pseudoWp = login->getUsername();
+        user = login->getUsername();
+        passwd = login->getPassword();
         config = login->getConfig();
 
         ui->categoriesBox->setContentsMargins(0,10,0,0);
@@ -52,47 +53,117 @@ void OpenDistant::init() {
             cboxes.append(catI);
             connect(catI, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));;
         }
-        FileDownloader *fdower = new FileDownloader(serverConfs[config]["addrSite"] + "/requests/getPostsJson.php?user=" + \
-                pseudoWp, tr("Récupération de la liste des recettes..."), parentWidget);
-        QByteArray resData = fdower->downloadedData();
-        QJsonParseError ok;
 
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
-        if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
-            QJsonObject json = jsonDoc.object();
-            QVariantMap result = json.toVariantMap();
-            if (result["success"].toString() == "true") {
-                QList<QVariant> recipesRaw = result["recettes"].toList();
-                foreach (QVariant recipeRaw, recipesRaw) {
-                    QMap<QString, QVariant> recipe = recipeRaw.toMap();
-                    QStringList catsOld = recipe["cats"].toStringList();
-                    QStringList catsNew;
-                    foreach (QString catO, catsOld) {
-                        catsNew.append(catO.replace("&", ""));
-                    }
-                    recipe["cats"] = catsNew;
-                    recipes[recipe["title"].toString()] = recipe;
-                    foreach (QString cat, recipe["cats"].toStringList()) {
-                        recipesByCats[cat].append(recipe["title"].toString());
-                    }
-                    items.append(recipe["title"].toString());
-                }
-                ui->listRecipes->addItems(items);
-                ui->listRecipes->sortItems();
-                updateNbRecipes(items.count());
+        if (serverConfs[config]["typeServer"] == "wordpress") {
+            this->openFromWp(config);
+        }
+        else if (serverConfs[config]["typeServer"] == "pywebcooking") {
+            this->openFromPwc(config);
+        }
+    }
+}
+
+void OpenDistant::addRecipe(QVariantMap recipe) {
+    QStringList catsOld = recipe["categories"].toStringList();
+    QStringList catsNew;
+    foreach (QString catO, catsOld) {
+        catsNew.append(catO.replace("&", ""));
+    }
+    recipe["categories"] = catsNew;
+    recipes[recipe["title"].toString()] = recipe;
+    foreach (QString cat, recipe["categories"].toStringList()) {
+        recipesByCats[cat].append(recipe["title"].toString());
+    }
+    items.append(recipe["title"].toString());
+}
+
+void OpenDistant::refreshRecipesList() {
+    ui->listRecipes->clear();
+    ui->listRecipes->addItems(items);
+    ui->listRecipes->sortItems();
+    updateNbRecipes(items.count());
+}
+
+void OpenDistant::openFromWp(int config) {
+    FileDownloader *fdower = new FileDownloader(serverConfs[config]["addrSite"] + "/requests/getPostsJson.php?user=" + \
+            user, tr("Récupération de la liste des recettes..."), parentWidget);
+    QByteArray resData = fdower->downloadedData();
+    QJsonParseError ok;
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
+    if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
+        QJsonObject json = jsonDoc.object();
+        QVariantMap result = json.toVariantMap();
+        if (result["success"].toString() == "true") {
+            QList<QVariant> recipesRaw = result["recettes"].toList();
+            foreach (QVariant recipeRaw, recipesRaw) {
+                QVariantMap recipe = recipeRaw.toMap();
+                recipe["categories"] = recipe["cats"];
+                this->addRecipe(recipe);
             }
-            else {
-                QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
-                                          QMessageBox::Ok);
-            }
+            this->refreshRecipesList();
+            this->exec();
         }
         else {
             QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
-                                          QMessageBox::Ok);
-            qCritical() << "Error while parsing JSON: " + ok.errorString();
+                                      QMessageBox::Ok);
         }
+    }
+    else {
+        QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
+                                      QMessageBox::Ok);
+        qCritical() << "Error while parsing JSON: " + ok.errorString();
+    }
+}
 
-        this->exec();
+void OpenDistant::openFromPwc(int config) {
+    openInProgress = new QDialog((QWidget*)this->parent());
+    openInProgress->setModal(true);
+    QLabel *lab = new QLabel("<b>" + tr("Récupération des recettes...") + "</b>");
+    lab->setAlignment(Qt::AlignCenter);
+    openInProgress->setWindowTitle("QRecipeWriter");
+    QHBoxLayout *layEnvoiEnCours = new QHBoxLayout();
+    layEnvoiEnCours->addWidget(lab);
+    openInProgress->setLayout(layEnvoiEnCours);
+    openInProgress->setFixedSize(300,50);
+    openInProgress->setModal(false);
+    HttpRequestInput input(serverConfs[config]["addrSite"] + "/api/", "GET", user, passwd);
+    HttpRequestWorker *worker = new HttpRequestWorker(this);
+    connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(handle_result(HttpRequestWorker*)));
+    worker->execute(&input);
+    openInProgress->exec();
+}
+
+void OpenDistant::handle_result(HttpRequestWorker *worker) {
+    openInProgress->close();
+    if (worker->error_type == QNetworkReply::NoError) {
+        // communication was successful
+        QJsonParseError *error = new QJsonParseError();
+        QJsonDocument jsondoc = QJsonDocument::fromJson(worker->response, error);
+        if (error->error == QJsonParseError::NoError) {
+            QJsonArray jsonobj = jsondoc.array();
+            QVariantList recipes_r = jsonobj.toVariantList();
+            foreach (QVariant recipe_raw, recipes_r) {
+                QVariantMap recipe = recipe_raw.toMap();
+                this->addRecipe(recipe);
+            }
+            this->refreshRecipesList();
+            this->exec();
+        }
+        else {
+            qDebug() << worker->response;
+            qCritical() << "Error while parsing JSON: " + error->errorString();
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
+        }
+    }
+    else {
+        // an error occurred
+        if (worker->error_type == QNetworkReply::ContentOperationNotPermittedError) {
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), "Votre identificant ou vote mot de passe est incorrect");
+        }
+        else {
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), worker->error_str);
+        }
     }
 }
 
