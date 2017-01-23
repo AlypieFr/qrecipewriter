@@ -1670,6 +1670,8 @@ void QRecipeWriter::received_categories(HttpRequestWorker *worker) {
             }
             Functions::write_categories_file(categories_loaded);
             this->resetCats();
+            ui->state->setText(tr("Catégories mises à jour !"));
+            QTimer::singleShot(4000, this, SLOT(refreshState()));
         }
         else {
             qDebug() << worker->response;
