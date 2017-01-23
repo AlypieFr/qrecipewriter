@@ -167,7 +167,7 @@ left: 10px; padding: 0 3px;}</string>
                 <widget class="QWidget" name="scrollAreaWidgetContents_2">
                  <property name="geometry">
                   <rect>
-                   <x>0</x>
+                   <x>-11</x>
                    <y>0</y>
                    <width>355</width>
                    <height>460</height>
@@ -297,8 +297,23 @@ left: 10px; padding: 0 3px;}</string>
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_33">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <item>
                      <widget class="QPushButton" name="mainPicture">
+                      <property name="minimumSize">
+                       <size>
+                        <width>310</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>310</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">QPushButton { text-align: left; padding-left:6px}</string>
                       </property>
@@ -324,7 +339,7 @@ left: 10px; padding: 0 3px;}</string>
                      <widget class="QLabel" name="editPicture">
                       <property name="maximumSize">
                        <size>
-                        <width>30</width>
+                        <width>25</width>
                         <height>16777215</height>
                        </size>
                       </property>
