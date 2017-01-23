@@ -14,6 +14,7 @@
 #include <QWidget>
 
 #include "filenotfoundexception.h"
+#include "functions.h"
 #include "globalexception.h"
 #include "httprequestworker.h"
 

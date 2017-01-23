@@ -19,7 +19,7 @@ void SendPyWebCooking::init(QString title_lu, QString mainPicture_lu, QString ma
     mainPicture = mainPicture_lu;
     mainPictureName = mainPictureName_lu;
     precision = precision_lu;
-    description = description_lu;
+    description = Functions::insertLinks(description_lu);
     coupDeCoeur = coupDeCoeur_lu;
     tpsPrep = tpsPrep_lu[0] * 60 + tpsPrep_lu[1];
     tpsCuis = tpsCuis_lu[0] * 60 + tpsCuis_lu[1];
@@ -103,7 +103,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
                 QVariantMap ingr_obj;
                 ingr_obj["quantity"] = qte;
                 ingr_obj["unit"] = unit;
-                ingr_obj["name"] = name;
+                ingr_obj["name"] = Functions::insertLinks(name);
                 ingr_obj["nb"] = nb_ingr;
                 ingredients[QString::number(id_ingr)] = ingr_obj;
 
@@ -130,7 +130,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
                 QVariantMap ig_group;
                 ig_group["level"] = level;
                 ig_group["nb"] = nb_group;
-                ig_group["title"] = ingr_base;
+                ig_group["title"] = Functions::insertLinks(ingr_base);
                 ingredients_groups[QString::number(id_group)] = ig_group;
                 current_ig_group = id_group;
                 id_group++;
@@ -144,7 +144,7 @@ void SendPyWebCooking::buildIngredients(QStringList ingrsList) {
             QVariantMap ig_group;
             ig_group["level"] = 0;
             ig_group["nb"] = nb_group;
-            ig_group["title"] = comm;
+            ig_group["title"] = Functions::insertLinks(comm);
             ingredients_groups[QString::number(id_group)] = ig_group;
             id_group++;
             nb_group++;
@@ -167,7 +167,7 @@ QVariantList SendPyWebCooking::buildMaterial(QStringList mats) {
                 QString name = mat_parts.mid(2).join("#");
                 QVariantMap mat_obj;
                 mat_obj["nb"] = nb;
-                mat_obj["name"] = name;
+                mat_obj["name"] = Functions::insertLinks(name);
                 mat_obj["quantity"] = qte;
                 mat_obj["is_comment"] = false;
                 objs.append(mat_obj);
@@ -175,7 +175,7 @@ QVariantList SendPyWebCooking::buildMaterial(QStringList mats) {
             else {
                 QVariantMap mat_obj;
                 mat_obj["nb"] = nb;
-                mat_obj["name"] = exp.cap(2);
+                mat_obj["name"] = Functions::insertLinks(exp.cap(2));
                 mat_obj["quantity"] = -1;
                 mat_obj["is_comment"] = true;
                 objs.append(mat_obj);
@@ -198,14 +198,14 @@ QVariantList SendPyWebCooking::buildInstructions(QStringList instrsList) {
             QVariantMap instr_obj;
             instr_obj["nb"] = nb;
             instr_obj["level"] = level;
-            instr_obj["text_inst"] = insertPictures(exp.cap(2));
+            instr_obj["text_inst"] = Functions::insertLinks(Functions::insertMovies(insertPictures(exp.cap(2))));
             instrs.append(instr_obj);
         }
         else if (instr.contains(exp_comm)) {
             QVariantMap instr_obj;
             instr_obj["nb"] = nb;
             instr_obj["level"] = 0;
-            instr_obj["text_inst"] = insertPictures(exp_comm.cap(1));
+            instr_obj["text_inst"] = Functions::insertLinks(Functions::insertMovies(insertPictures(exp_comm.cap(1))));
             instrs.append(instr_obj);
         }
         nb++;
@@ -221,7 +221,7 @@ QVariantList SendPyWebCooking::buildProposal(QStringList props) {
         if (prop.contains(exp)) {
             QVariantMap prop_obj;
             prop_obj["nb"] = nb;
-            prop_obj["text_prop"] = insertPictures(exp.cap(2));
+            prop_obj["text_prop"] = Functions::insertLinks(Functions::insertMovies(insertPictures(exp.cap(2))));
             prop_obj["is_comment"] = exp.cap(1) == "comm";
             objs.append(prop_obj);
             nb++;
@@ -284,7 +284,6 @@ void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
 
 void SendPyWebCooking::sendRecipe() {
     //INIT CONNEXION TO WEBSITE:
-    qDebug() << serverConfs[config]["addrSite"] + "/api/";
     HttpRequestInput input(serverConfs[config]["addrSite"] + "/api/", "POST", user, passwd);
 
     //ADD DATA:
