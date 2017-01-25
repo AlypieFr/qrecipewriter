@@ -284,7 +284,11 @@ void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
 
 void SendPyWebCooking::sendRecipe() {
     //INIT CONNEXION TO WEBSITE:
-    HttpRequestInput input(serverConfs[config]["addrSite"] + "/api/", "POST", user, passwd);
+    HttpRequestInput input;
+    if (idRecipe == -1)
+        input = HttpRequestInput(serverConfs[config]["addrSite"] + "/api/", "POST", user, passwd);
+    else
+        input = HttpRequestInput(serverConfs[config]["addrSite"] + "/api/recipe/by-id/" + QString::number(idRecipe), "PUT", user, passwd);
 
     //ADD DATA:
     input.add_var("title", title);
@@ -304,7 +308,8 @@ void SendPyWebCooking::sendRecipe() {
     input.add_var("instructions", QString(QJsonDocument(QJsonArray::fromVariantList(instructions)).toJson()));
     input.add_var("proposals", QString(QJsonDocument(QJsonArray::fromVariantList(proposals)).toJson()));
     input.add_var("published", publish ? "1" : "0");
-    input.add_file("main_picture", mainPicture, mainPictureName, "image/jpg");
+    if (!mainPicture.startsWith("http"))
+        input.add_file("main_picture", mainPicture, mainPictureName, "image/jpg");
     if (otherPicts.length() > 0) {
         foreach (QString opict, otherPicts) {
             QString opict_name = opict.mid(opict.lastIndexOf("/") + 1);
