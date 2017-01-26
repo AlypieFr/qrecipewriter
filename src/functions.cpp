@@ -917,6 +917,9 @@ QString Functions::getSimpleListWithSubLists(QStringList items, int config)
 {
     QString htmlCode = "";
     int nivList = -1;
+    QRegExp *exp = new QRegExp("^\\d+/\\d+$");
+    QStringList voyelles;
+    voyelles << "a" << "e" << "i" << "o" << "u" << "y" << "é" << "è" << "â" << "ê" << "î" << "ô" << "û" << "ŷ" << "ä" << "ë" << "ï" << "ö" << "ü" << "ÿ";
     foreach (QString item, items) {
         QStringList parts = item.split("|");
         if (parts[0] == "comm")
@@ -938,11 +941,29 @@ QString Functions::getSimpleListWithSubLists(QStringList items, int config)
                 QString unit = ingrParts[2];
                 QString name = ingrParts.mid(3).join("#");
                 if (unit == "") {
-                    line = qte + " " + name;
+                    if (exp->exactMatch(qte) && qte != "1/2") {
+                        if (voyelles.indexOf(name.toLower().left(1)) > -1) {
+                            //: For the ingredients
+                            line = qte + " " + QObject::tr("d'", "ingr") + name;
+                        }
+                        else {
+                            line = qte + " " + QObject::tr(" de ", "ingr") + name;
+                        }
+                    }
+                    else {
+                        line = qte + " " + name;
+                    }
                 }
                 else {
-                    QStringList voyelles;
-                    voyelles << "a" << "e" << "i" << "o" << "u" << "y" << "é" << "è" << "â" << "ê" << "î" << "ô" << "û" << "ŷ" << "ä" << "ë" << "ï" << "ö" << "ü" << "ÿ";
+                    if (exp->exactMatch(qte) && qte != "1/2" && unit.length() > 2) {
+                        if (voyelles.indexOf(unit.toLower().left(1)) > -1) {
+                            //: For the ingredients
+                            unit = QObject::tr("d'", "ingr") + unit;
+                        }
+                        else {
+                            unit = QObject::tr(" de ", "ingr") + unit;
+                        }
+                    }
                     if (voyelles.indexOf(name.toLower().left(1)) > -1) {
                         //: For the ingredients
                         line = qte + " " + unit + " " + QObject::tr("d'", "ingr") + name;

@@ -59,21 +59,42 @@ void ListViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
                 QString qte = ingrParts[1];
                 QString unit = ingrParts[2];
                 QString name = ingrParts.mid(3).join("#");
+                QRegExp *exp = new QRegExp("^\\d+/\\d+$");
+                QStringList voyelles;
+                voyelles << "a" << "e" << "i" << "o" << "u" << "y" << "é" << "è" << "â" << "ê" << "î" << "ô" << "û" << "ŷ" << "ä" << "ë" << "ï" << "ö" << "ü" << "ÿ";
                 if (qte == "" && unit == "") {
                     line = name;
                 }
                 else if (unit == "") {
-                    line = qte + " " + name;
-                }
-                else {
-                    QStringList voyelles;
-                    voyelles << "a" << "e" << "i" << "o" << "u" << "y" << "é" << "è" << "â" << "ê" << "î" << "ô" << "û" << "ŷ" << "ä" << "ë" << "ï" << "ö" << "ü" << "ÿ";
-                    if (voyelles.indexOf(name.toLower().left(1)) > -1) {
-                        //: For the ingredients
-                        line = qte + " " + unit + " " + tr("d'", "ingr") + name;
+                    if (exp->exactMatch(qte) && qte != "1/2") {
+                        if (voyelles.indexOf(name.toLower().left(1)) > -1) {
+                            //: For the ingredients
+                            line = qte + " " + QObject::tr("d'", "ingr") + name;
+                        }
+                        else {
+                            line = qte + " " + QObject::tr(" de ", "ingr") + name;
+                        }
                     }
                     else {
-                        line = qte + " " + unit + tr(" de ", "ingr") + name;
+                        line = qte + " " + name;
+                    }
+                }
+                else {
+                    if (exp->exactMatch(qte) && qte != "1/2" && unit.length() > 2) {
+                        if (voyelles.indexOf(unit.toLower().left(1)) > -1) {
+                            //: For the ingredients
+                            unit = QObject::tr("d'", "ingr") + unit;
+                        }
+                        else {
+                            unit = QObject::tr(" de ", "ingr") + unit;
+                        }
+                    }
+                    if (voyelles.indexOf(name.toLower().left(1)) > -1) {
+                        //: For the ingredients
+                        line = qte + " " + unit + " " + QObject::tr("d'", "ingr") + name;
+                    }
+                    else {
+                        line = qte + " " + unit + QObject::tr(" de ", "ingr") + name;
                     }
                 }
             }
