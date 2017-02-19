@@ -857,28 +857,37 @@ QMap<QString, QStringList> Functions::loadRecipe(QString fileName)
         return result;
     }
 
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(file->readAll());
-    QJsonObject json = jsonDoc.object();
-    map = json.toVariantMap();
+    QJsonParseError *error = new QJsonParseError();
 
-    result["titre"] = QStringList(map["title"].toString());
-    result["categories"] = map["categories"].toStringList();
-    result["image"] = QStringList(map["picture"].toString());
-    result["tpsPrep"] = map["tpsPrep"].toString().split("h");
-    result["tpsCuis"] = map["tpsCuis"].toString().split("h");
-    result["tpsRep"] = map["tpsRep"].toString().split(QRegExp("[jh]"));
-    result["nbPers"] = QStringList(map["nbPers"].toString());
-    result["precision"] = QStringList(map["precision"].toString());
-    result["description"] = QStringList(map["description"].toString());
-    result["ingredients"] = map["ingredients"].toStringList();
-    result["materiel"] = map["materiel"].toStringList();
-    result["preparation"] = map["preparation"].toStringList();
-    result["conseils"] = map["conseils"].toStringList();
-    result["coupDeCoeur"] = QStringList(map["coupDeCoeur"].toString());
-    result["idRecipe"] = QStringList(map["idRecipe"].toString());
-    result["liens"] = map["liens"].toStringList();
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(file->readAll(), error);
+    if (jsonDoc.isObject()) {
+        QJsonObject json = jsonDoc.object();
+        map = json.toVariantMap();
 
-    return result;
+        result["titre"] = QStringList(map["title"].toString());
+        result["categories"] = map["categories"].toStringList();
+        result["image"] = QStringList(map["picture"].toString());
+        result["tpsPrep"] = map["tpsPrep"].toString().split("h");
+        result["tpsCuis"] = map["tpsCuis"].toString().split("h");
+        result["tpsRep"] = map["tpsRep"].toString().split(QRegExp("[jh]"));
+        result["nbPers"] = QStringList(map["nbPers"].toString());
+        result["precision"] = QStringList(map["precision"].toString());
+        result["description"] = QStringList(map["description"].toString());
+        result["ingredients"] = map["ingredients"].toStringList();
+        result["materiel"] = map["materiel"].toStringList();
+        result["preparation"] = map["preparation"].toStringList();
+        result["conseils"] = map["conseils"].toStringList();
+        result["coupDeCoeur"] = QStringList(map["coupDeCoeur"].toString());
+        result["idRecipe"] = QStringList(map["idRecipe"].toString());
+        result["liens"] = map["liens"].toStringList();
+
+        return result;
+    }
+    else {
+        QMessageBox::critical(NULL, QDialog::tr("Une erreur est survenue"),
+                              QDialog::tr("Impossible d'ouvrir la recette : ") + error->errorString());
+        return QMap<QString, QStringList>();
+    }
 }
 
 /**

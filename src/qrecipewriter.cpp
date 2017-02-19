@@ -2090,7 +2090,7 @@ void QRecipeWriter::saveVariables(QString ingr, QString mat, QString prep, QStri
 void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
     QStringList ingrdt, matl, prept, consl;
     QMap<QString, QStringList> rct = Functions::loadRecipe(fileName);
-    if (rct.size() > 0)
+    if (!rct.isEmpty())
     {
         //Load titre:
         if (rct.keys().contains("titre"))
