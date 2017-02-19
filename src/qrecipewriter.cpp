@@ -2757,11 +2757,15 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         {
             if (object == ui->editIngr || object == ui->qte_ingr || object == ui->unit_ingr) {
                 if (ui->editIngr->text() != "") {
-                    //this->insertIngredient(ui->qte_ingr->text() + " " + ui->unit_ingr->currentText() + " : " + ui->editIngr->text());
-                    this->insertIngredient(ui->qte_ingr->text(), ui->unit_ingr->currentText(), ui->editIngr->text());
-                    this->resetIngrFields();
-                    ui->qte_ingr->setFocus();
-                    return true;
+                    if (Functions::validate_quantity(ui->qte_ingr->text())) {
+                        this->insertIngredient(ui->qte_ingr->text(), ui->unit_ingr->currentText(), ui->editIngr->text());
+                        this->resetIngrFields();
+                        ui->qte_ingr->setFocus();
+                        return true;
+                    }
+                    else {
+                        QMessageBox::critical(this, tr("Quantité incorrecte"), tr("La quantité mentionnée est invalide"));
+                    }
                 }
                 ui->state->setText(tr("Vous devez renseigner un nom d'ingrédient' !"));
                 QTimer::singleShot(4000, this, SLOT(refreshState()));
@@ -2934,10 +2938,15 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         {
             if (object == ui->editMat || object == ui->qte_mat) {
                 if (ui->editMat->text() != "" && ui->qte_mat->text() != "") {
-                    this->insertMateriel(ui->qte_mat->text(), ui->editMat->text());
-                    this->resetMatFields();
-                    ui->qte_mat->setFocus();
-                    return true;
+                    if (Functions::validate_quantity(ui->qte_mat->text())) {
+                        this->insertMateriel(ui->qte_mat->text(), ui->editMat->text());
+                        this->resetMatFields();
+                        ui->qte_mat->setFocus();
+                        return true;
+                    }
+                    else {
+                        QMessageBox::critical(this, tr("Quantité incorrecte"), tr("La quantité mentionnée est invalide"));
+                    }
                 }
                 ui->state->setText(tr("Vous devez renseigner une quantité et un nom !"));
                 QTimer::singleShot(4000, this, SLOT(refreshState()));

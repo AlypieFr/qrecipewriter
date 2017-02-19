@@ -1711,3 +1711,8 @@ QString Functions::get_ingredient_type(QString ingr) {
     else
         return "comment";
 }
+
+bool Functions::validate_quantity(QString qte) {
+    QRegExp expQte("\\d+([/.,]\\d+)?");
+    return qte.isEmpty() || expQte.exactMatch(qte);
+}

@@ -103,6 +103,7 @@ public:
     static bool is_config_valid(int id);
     static void write_categories_file(QStringList new_cats);
     static QString get_ingredient_type(QString ingr);
+    static bool validate_quantity(QString qte);
 };
 
 #endif // FUNCTIONS_H
