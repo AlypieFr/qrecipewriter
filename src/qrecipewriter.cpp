@@ -3521,7 +3521,7 @@ void QRecipeWriter::modifierIngr(const QModelIndex &index)
     }
     else {
         idIngr = parts[0].toInt();
-        QRegExp expIngr("ingr#(.+)?#(.*)#(.+)");
+        QRegExp expIngr("ingr#(.+)?#(.*)#(.*)");
         if (parts[1].contains(expIngr)) {
              QString quantity = expIngr.cap(1);
              QString unit = expIngr.cap(2);
@@ -3925,9 +3925,14 @@ void QRecipeWriter::on_listIngr_customContextMenuRequested(const QPoint &pos)
                 {
                     //Insérer un élément après is handled
                     ingrEdit = ui->listIngr->selectionModel()->selectedIndexes().at(0).row();
-                    int puce = model1->item(ingrEdit)->text().split("|").at(0).toInt();
+                    QString ingr_to_edit = model1->item(ingrEdit)->text();
+                    QString puce = ingr_to_edit.split("|").at(0);
                     ingrEdit++;
-                    model1->insertRow(ingrEdit, new QStandardItem(QString::number(puce) + "|"));
+                    QString typeIngr = Functions::get_ingredient_type(ingr_to_edit);
+                    if (typeIngr == "ingredient")
+                        model1->insertRow(ingrEdit, new QStandardItem(puce + "|ingr###"));
+                    else
+                        model1->insertRow(ingrEdit, new QStandardItem(puce + "|"));
                     modifierIngr(model1->index(ingrEdit, 0));
                 }
                 else if (s == cont_menu.at(3))

@@ -102,6 +102,7 @@ public:
     static void downloadUpdate(QString adresse, QWidget *parent);
     static bool is_config_valid(int id);
     static void write_categories_file(QStringList new_cats);
+    static QString get_ingredient_type(QString ingr);
 };
 
 #endif // FUNCTIONS_H

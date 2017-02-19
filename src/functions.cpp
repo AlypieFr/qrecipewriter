@@ -1700,3 +1700,14 @@ void Functions::write_categories_file(QStringList new_cats) {
     writer.writeEndElement();
     confCatFile->close();
 }
+
+QString Functions::get_ingredient_type(QString ingr) {
+    QRegExp expIngr("\\d+\\|ingr#.+");
+    QRegExp expIngrGrp("\\d+\\|.+");
+    if (expIngr.exactMatch(ingr))
+        return "ingredient";
+    else if (expIngrGrp.exactMatch(ingr))
+        return "ingredient_group";
+    else
+        return "comment";
+}
