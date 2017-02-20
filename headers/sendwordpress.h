@@ -1,28 +1,22 @@
-/*
- * © 2013-2016 Flo-Art.fr
- *
- * QRecipeWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
- * Toutes les modifications et la redistribution sont autorisés pour une utilisation NON COMMERCIALE.
- * Par ailleurs, les modifications et la reproduction doivent respecter les règles ci-dessous :
- *    - Cette en-tête doit être maintenue.
- *    - Vous devez redistribuer la version modifiée ou non sous licence Creative Common au moins autant
- *      restrictive.
- *    - Flo-Art.fr ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
- *    - Toute utilisation commerciale partielle ou complète est interdite.
- */
+#ifndef SENDWORDPRESS_H
+#define SENDWORDPRESS_H
 
-#ifndef SENDAUTOMATIC_H
-#define SENDAUTOMATIC_H
-
-#include "functions.h"
-#include "login.h"
-
-#include <QCoreApplication>
-#include <QDataStream>
 #include <QDialog>
-#include <QKeyEvent>
-#include <QPlainTextEdit>
+#include <QDebug>
+#include <QHash>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QMessageBox>
+#include <QNetworkReply>
 #include <QProcess>
+#include <QRegExp>
+#include <QWidget>
+
+#include "filenotfoundexception.h"
+#include "functions.h"
+#include "globalexception.h"
+#include "httprequestworker.h"
 
 class SendWordpress : public QDialog
 {
@@ -30,37 +24,26 @@ class SendWordpress : public QDialog
 
 public:
     explicit SendWordpress(QWidget *parent = 0);
-    ~SendWordpress();
-    void init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
-              QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu,
-              QString user_lu, QString passwd_lu, int config_lu, bool publier_lu, QDialog *envoiEnCours_lu);
-
-private slots:
-    void errorDetails_clicked();
-
-    void errorOk_clicked();
+    void init(QString htmlCode_lu, QString title_lu, QString mainPicture_lu, QString mainPictureName_lu,
+              QString excerpt_lu, QString coupDeCoeur_lu,
+              QList<int> tpsPrep_lu, QList<int> tpsCuis_lu, QList<int> tpsRep_lu, QStringList categories_lu,
+              bool publish_lu, QString user_lu, QString password_lu, int config_lu, QDialog *envoiEnCours_lu);
 
 private:
-    QString htmlCode, excerpt, titre, mainPicture, tags;
+    QString htmlCode, title, mainPicture, mainPictureName, precision, description, excerpt, coupDeCoeur, tags;
+    int tpsPrep, tpsCuis, tpsRep;
     QStringList categories;
     QString user, passwd;
     int config;
-    bool publier;
-    QString resultSend;
+    bool publish;
     QDialog *envoiEnCours;
-    QDialog *errorShow;
-    QVBoxLayout *verrorShowContent;
-    QPlainTextEdit *showError;
-    bool isErrorDetailsOpened;
-    QLabel *mainError;
-    QSize errorSize;
-    QPushButton *details;
-    bool isSending;
+
+private slots:
+    void handle_result(HttpRequestWorker *worker);
 
 private:
-    QString makeExcerpt (QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep);
-    QString makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<int> tpsRep);
     void sendRecipe();
+    QString makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<int> tpsRep);
 };
 
-#endif // SENDAUTOMATIC_H
+#endif // SENDWORDPRESS_H

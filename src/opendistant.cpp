@@ -54,12 +54,7 @@ void OpenDistant::init() {
             connect(catI, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));;
         }
 
-        if (serverConfs[config]["typeServer"] == "wordpress") {
-            this->openFromWp(config);
-        }
-        else if (serverConfs[config]["typeServer"] == "pywebcooking") {
-            this->openFromPwc(config);
-        }
+        this->open(config, serverConfs[config]["typeServer"]);
     }
 }
 
@@ -84,39 +79,7 @@ void OpenDistant::refreshRecipesList() {
     updateNbRecipes(items.count());
 }
 
-void OpenDistant::openFromWp(int config) {
-    FileDownloader *fdower = new FileDownloader(serverConfs[config]["addrSite"] + "/requests/getPostsJson.php?user=" + \
-            user, tr("Récupération de la liste des recettes..."), parentWidget);
-    QByteArray resData = fdower->downloadedData();
-    QJsonParseError ok;
-
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
-    if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
-        QJsonObject json = jsonDoc.object();
-        QVariantMap result = json.toVariantMap();
-        if (result["success"].toString() == "true") {
-            QList<QVariant> recipesRaw = result["recettes"].toList();
-            foreach (QVariant recipeRaw, recipesRaw) {
-                QVariantMap recipe = recipeRaw.toMap();
-                recipe["categories"] = recipe["cats"];
-                this->addRecipe(recipe);
-            }
-            this->refreshRecipesList();
-            this->exec();
-        }
-        else {
-            QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
-                                      QMessageBox::Ok);
-        }
-    }
-    else {
-        QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la liste des recettes\nVeuillez contacter le support."),
-                                      QMessageBox::Ok);
-        qCritical() << "Error while parsing JSON: " + ok.errorString();
-    }
-}
-
-void OpenDistant::openFromPwc(int config) {
+void OpenDistant::open(int config, QString typeServer) {
     openInProgress = new QDialog((QWidget*)this->parent());
     openInProgress->setModal(true);
     QLabel *lab = new QLabel("<b>" + tr("Récupération des recettes...") + "</b>");
@@ -127,7 +90,13 @@ void OpenDistant::openFromPwc(int config) {
     openInProgress->setLayout(layEnvoiEnCours);
     openInProgress->setFixedSize(300,50);
     openInProgress->setModal(false);
-    HttpRequestInput input(serverConfs[config]["addrSite"] + "/api/", "GET", user, passwd);
+    HttpRequestInput input;
+    if (typeServer == "pywebcooking") {
+        input = HttpRequestInput(serverConfs[config]["addrSite"] + "/api/", "GET", user, passwd);
+    }
+    else { // IS wordpress
+         input = HttpRequestInput(serverConfs[config]["addrSite"] + "/wp-json/qrecipewriter/v1/posts/" + user, "GET");
+    }
     HttpRequestWorker *worker = new HttpRequestWorker(this);
     connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(handle_result(HttpRequestWorker*)));
     worker->execute(&input);

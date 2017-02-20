@@ -70,8 +70,7 @@ private:
     QMap<QString, QStringList > recipesByCats;
     void updateNbRecipes(int nbRecipes);
     QList<QCheckBox*> cboxes;
-    void openFromPwc(int config);
-    void openFromWp(int config);
+    void open(int config, QString typeServer);
     void addRecipe(QVariantMap recipe);
     void refreshRecipesList();
     QDialog *openInProgress;

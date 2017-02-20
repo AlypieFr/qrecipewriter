@@ -1702,16 +1702,14 @@ void QRecipeWriter::on_sync_cats_clicked()
 void QRecipeWriter::sendWordpress(QString user, QString password, int config, bool publier, QDialog *envoiEnCours)
 {
     makeHtmlCode(config);
-    SendWordpress *sendWp = new SendWordpress(this);
     QStringList cats = Functions::getSelectedCategories(categories);
     QList<int> tpsPrep, tpsCuis, tpsRep;
     tpsPrep << ui->hPrep->value() << ui->minPrep->value();
     tpsCuis << ui->hCuis->value() << ui->minCuis->value();
     tpsRep << ui->jRep->value() << ui->hRep->value() << ui->minRep->value();
-    sendWp->init(htmlCode, ui->titre->text(), cats, tpsPrep, tpsCuis, tpsRep, imgFile, excerpt, coupDeCoeur,
-                 user, password, config, publier, envoiEnCours);
-    delete sendWp;
-    sendWp = NULL;
+    SendWordpress *sendWp = new SendWordpress(this);
+    sendWp->init(htmlCode, ui->titre->text(), imgFile, imgFileName, excerpt, coupDeCoeur, tpsPrep, tpsCuis,
+                  tpsRep, cats, publier, user, password, config, envoiEnCours);
 }
 
 void QRecipeWriter::sendPyWebCooking(QString user, QString password, int config, bool publier, QDialog *envoiEnCours) {
@@ -2377,37 +2375,14 @@ void QRecipeWriter::on_actionOuvrir_une_recette_en_ligne_triggered()
 }
 
 void QRecipeWriter::openDistRecipeWp(int idConf, int idRecipeToOpen) {
-    FileDownloader *fdower = new FileDownloader(serverConfs[idConf]["addrSite"] + "/requests/getPost.php?p=" + QString::number(idRecipeToOpen), tr("Récupération de la recette..."), this);
-    QByteArray resData = fdower->downloadedData();
-    QJsonParseError ok;
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(resData, &ok);
-    if (!jsonDoc.isNull() && ! jsonDoc.isEmpty()) {
-        QJsonObject json = jsonDoc.object();
-        QVariantMap result = json.toVariantMap();
-        if (result["success"].toString() == "true") {
-            QString imgFileDist = result["thumbnailFile"].toString();
-            QFile *tmpFile = new QFile(dirTmp + "/recipe" + QString::number(QDateTime::currentMSecsSinceEpoch()) + ".rct");
-            tmpFile->remove(".");
-            bool success = Functions::saveRecipeFromDist(result["title"].toString(), result["cats"].toStringList(), result["content"].toString(), imgFileDist, result["coupDeCoeur"].toString(), tmpFile, idRecipeToOpen);
-            if (success) {
-                loadRecipe(tmpFile->fileName(), true);
-            }
-            else {
-                QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
-                                              QMessageBox::Ok);
-            }
-        }
-        else {
-            QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
-                                          QMessageBox::Ok);
-        }
-   }
-   else {
-        QMessageBox::critical(this, tr("Erreur !"), tr("Une erreur est survenue lors de la récupération de la recette\nVeuillez contacter le support."),
-                                      QMessageBox::Ok);
-        qCritical() << "Error while parsing JSON: " + ok.errorString();
-   }
+    HttpRequestInput input(serverConfs[idConf]["addrSite"] + "/wp-json/qrecipewriter/v1/post/" + QString::number(idRecipeToOpen), "GET");
+    HttpRequestWorker *worker = new HttpRequestWorker(this);
+    tmp_idconf = idConf;
+    connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(received_recipe_wp(HttpRequestWorker*)));
+    worker->execute(&input);
 }
+
+
 
 void QRecipeWriter::openDistRecipePwc(int idConf, int idRecipeToOpen, QString user, QString passwd) {
     HttpRequestInput input(serverConfs[idConf]["addrSite"] + "/api/recipe/by-id/" + QString::number(idRecipeToOpen), "GET", user, passwd);
@@ -2415,6 +2390,43 @@ void QRecipeWriter::openDistRecipePwc(int idConf, int idRecipeToOpen, QString us
     tmp_idconf = idConf;
     connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(received_recipe(HttpRequestWorker*)));
     worker->execute(&input);
+}
+
+void QRecipeWriter::received_recipe_wp(HttpRequestWorker *worker) {
+    if (worker->error_type == QNetworkReply::NoError) {
+        QJsonParseError *error = new QJsonParseError();
+        QJsonDocument jsondoc = QJsonDocument::fromJson(worker->response, error);
+        if (error->error == QJsonParseError::NoError) {
+            QJsonObject jsonobj = jsondoc.object();
+            QVariantMap recipe_r = jsonobj.toVariantMap();
+            QString imgFileDist = recipe_r["thumbnailFile"].toString();
+            QFile *tmpFile = new QFile(dirTmp + "/recipe" + QString::number(QDateTime::currentMSecsSinceEpoch()) + ".rct");
+            tmpFile->remove(".");
+            QString cdc_lu = "no_coup_de_coeur";
+            QStringList tags = Functions::get_wp_tags(recipe_r["tags"].toList());
+            if (tags.contains("coup_de_coeur_1")) {
+                cdc_lu = "coup_de_coeur_1";
+            }
+            else if (tags.contains("coup_de_coeur_2")) {
+                cdc_lu = "coup_de_coeur_2";
+            }
+            else if (tags.contains("coup_de_coeur_3")) {
+                cdc_lu = "coup_de_coeur_3";
+            }
+            bool success = Functions::saveRecipeFromDist(recipe_r["title"].toString(), recipe_r["categories"].toStringList(), recipe_r["content"].toString(), imgFileDist, cdc_lu, tmpFile, recipe_r["id"].toInt());
+            if (success) {
+                loadRecipe(tmpFile->fileName(), true);
+            }
+        }
+        else {
+            qDebug() << worker->response;
+            qCritical() << "Error while parsing JSON: " + error->errorString();
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
+        }
+    }
+    else {
+         QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), worker->error_str);
+    }
 }
 
 void QRecipeWriter::received_recipe(HttpRequestWorker *worker) {

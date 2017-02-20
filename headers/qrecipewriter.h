@@ -53,6 +53,7 @@
 #include <qmath.h>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPlainTextEdit>
 #include <QPixmap>
 #include <QRegExp>
 #include <QStandardItem>
@@ -220,6 +221,8 @@ private slots:
     void received_categories(HttpRequestWorker *worker);
 
     void received_recipe(HttpRequestWorker *worker);
+
+    void received_recipe_wp(HttpRequestWorker *worker);
 
 public slots:
     void init();

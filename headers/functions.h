@@ -104,6 +104,7 @@ public:
     static void write_categories_file(QStringList new_cats);
     static QString get_ingredient_type(QString ingr);
     static bool validate_quantity(QString qte);
+    static QStringList get_wp_tags(QVariantList tags);
 };
 
 #endif // FUNCTIONS_H

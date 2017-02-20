@@ -1,25 +1,9 @@
-/*
- * © 2013-2016 Flo-Art.fr
- *
- * QRecipeWriter et l'ensemble de ses putils est fournit sous la licence Creative Common BY-NC-SA.
- * Toutes les modifications et la redistribution sont autorisés pour une utilisation NON COMMERCIALE.
- * Par ailleurs, les modifications et la reproduction doivent respecter les règles ci-dessous :
- *    - Cette en-tête doit être maintenue.
- *    - Vous devez redistribuer la version modifiée ou non sous licence Creative Common au moins autant
- *      restrictive.
- *    - Flo-Art.fr ne peut être tenu pour responsable des versions modifiées et/ou redistribuées.
- *    - Toute utilisation commerciale partielle ou complète est interdite.
- */
-
 #include "sendwordpress.h"
-#include <QTextStream>
 
-extern QString shareDir;
-extern QStringList otherPicts;
-extern QString cmdNav; //Command to launch navigator
-extern QString dirTmp;
 extern QHash<int,QHash<QString, QString>> serverConfs;
+extern QString cmdNav; //Command to launch navigator
 extern int idRecipe;
+extern QStringList otherPicts;
 
 SendWordpress::SendWordpress(QWidget *parent) :
     QDialog(parent)
@@ -27,51 +11,28 @@ SendWordpress::SendWordpress(QWidget *parent) :
 
 }
 
-SendWordpress::~SendWordpress()
-{
-
-}
-
-/**
- * @brief SendWordpress::init Initialize send to Wordpress
- * @param htmlCode_lu
- * @param titre_lu
- * @param categories_lu
- * @param tpsPrep
- * @param tpsCuis
- * @param tpsRep
- * @param mainPicture_lu
- * @param excerpt_lu
- * @param coupDeCoeur_lu
- * @param user_lu: username
- * @param passwd_lu: password
- * @param config_lu: id of the server config to use
- * @param publier_lu: publish the recipe (bool)
- * @param envoiEnCours_lu: "Envoi en cours" wainting window already opened (to be closed at the end)
- */
-void SendWordpress::init(QString htmlCode_lu, QString titre_lu, QStringList categories_lu, QList<int> tpsPrep, QList<int> tpsCuis,
-                         QList<int> tpsRep, QString mainPicture_lu, QString excerpt_lu, QString coupDeCoeur_lu,
-                         QString user_lu, QString passwd_lu, int config_lu, bool publier_lu, QDialog *envoiEnCours_lu)
-{
-    isSending = false;
-    QString categ = categories_lu[0];
-    isErrorDetailsOpened = false;
+void SendWordpress::init(QString htmlCode_lu, QString title_lu, QString mainPicture_lu, QString mainPictureName_lu,
+                         QString excerpt_lu, QString coupDeCoeur_lu,
+                         QList<int> tpsPrep_lu, QList<int> tpsCuis_lu, QList<int> tpsRep_lu, QStringList categories_lu,
+                         bool publish_lu, QString user_lu, QString password_lu, int config_lu,
+                         QDialog *envoiEnCours_lu) {
     htmlCode = htmlCode_lu;
-    titre = titre_lu;
-    //categories = categories_lu;
-    foreach (QString cat, categories_lu) {
-        categories.append(cat.replace("&amp;&amp;", "&amp;"));
-    }
+    title = title_lu;
     mainPicture = mainPicture_lu;
+    mainPictureName = mainPictureName_lu;
     excerpt = excerpt_lu;
-    envoiEnCours = envoiEnCours_lu;
+    foreach (QString cat, categories_lu) {
+        categories.append(cat.replace("&amp;&amp;", "&").replace("&amp;", "&"));
+    }
+    publish = publish_lu;
     user = user_lu;
-    passwd = passwd_lu;
+    passwd = password_lu;
     config = config_lu;
-    publier = publier_lu;
+    envoiEnCours = envoiEnCours_lu;
+
     tags = "";
     if (serverConfs[config]["recSearch"] == "1" && (categories.size() > 1 || categories[0] != "Base")) {
-        tags = makeTags(tpsPrep, tpsCuis, tpsRep);
+        tags = makeTags(tpsPrep_lu, tpsCuis_lu, tpsRep_lu);
         if (serverConfs[config]["recCoupDeCoeur"] == "1") {
             tags += ",";
         }
@@ -79,24 +40,7 @@ void SendWordpress::init(QString htmlCode_lu, QString titre_lu, QStringList cate
     if (serverConfs[config]["recCoupDeCoeur"] == "1") {
         tags += coupDeCoeur_lu;
     }
-    if (tags.isEmpty()) {
-        tags = "null";
-    }
     this->sendRecipe();
-}
-
-QString SendWordpress::makeExcerpt(QStringList descWords, QString tpsPrep, QString tpsCuis, QString tpsRep)
-{
-    QString descExpt = "";
-    for(int i=0; i<qMin(descWords.length(),20); ++i)
-        descExpt = descExpt + " " + descWords[i];
-    QString expt = "<b>Préparation : "+tpsPrep+".";
-    if(tpsRep !="")
-        expt = expt + " Repos : "+tpsRep+".";
-    if(tpsCuis !="")
-        expt = expt + "<br/> Cuisson : "+tpsCuis+".";
-    expt = expt + "</b> <br/> " + descExpt + "...";
-    return expt;
 }
 
 QString SendWordpress::makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<int> tpsRep)
@@ -112,152 +56,100 @@ QString SendWordpress::makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<in
     return tags;
 }
 
-void SendWordpress::sendRecipe()
-{
-    isSending = true;
-    //Save htmlCode to tmpFile:
-    QFile htmlFile(dirTmp + "/htmlCode.txt");
-    if (htmlFile.exists())
-        htmlFile.remove();
-    htmlFile.open(QIODevice::WriteOnly);
-    QTextStream stream (&htmlFile);
-    stream.setCodec("UTF-8"); //Not useful on linux system as it's a default, but Windows has its own defaults....
-    stream << user << "\n" << passwd << "\n" << titre << "\n" << excerpt << "\n<htmlCode>\n" << htmlCode << endl;
-    htmlFile.close();
-    QString cats = categories.join("|");
-    QString oPicts = "null";
-    if (otherPicts.size() > 0)
-        oPicts = otherPicts.join("|");
-    QString isPublier = "false";
-    if (publier)
-        isPublier = "true";
-    QString path = QCoreApplication::applicationDirPath();
-    //Starting java program to send recipe to the website. Don't worry, the java part
-    //is very small and will take only few seconds (depending on the internet connexion
-    //only) :
-    QString stwPath = "";
-    if (QDir(path + "/wordpress").exists()) {
-        stwPath = path + "/wordpress";
-    }
-    else {
-        stwPath = shareDir + "/wordpress";
-    }
-    QString program = "java -jar \"" + stwPath + "/SendToWordpress.jar\" \""
-            + serverConfs[config]["addrPub"] + "\" \"" + cats + "\" \"" + tags + "\" \"" + mainPicture + "\" \"" + htmlFile.fileName()
-            + "\" \"" + oPicts + "\" \"" + isPublier + "\" \"" + QString::number(idRecipe) + "\"";
-    QProcess *myProcess = new QProcess();
-    myProcess->setProcessChannelMode(QProcess::MergedChannels);
-    myProcess->start(program);
-    myProcess->waitForFinished(-1); //-1 to wait until program has not finished, without any limit of time
-    //Uuuh, it's finished, keeping if java program has send successfully or not the recipe:
-    resultSend = myProcess->readAll();
-    //Delete temp file:
-    htmlFile.remove();
-    //Take it in account and continue ;) :
-    envoiEnCours->close();
-    isSending = false;
-    QStringList lines = resultSend.split("\n");
-    int i = 0; bool messFound = false;
-    while (i < lines.size() && !messFound) {
-        if (lines[i].replace("\r", "") == "!!!Send recipe SUCCEEDED!!!" || lines[i].replace("\r", "") == "ERROR : send recipe failed.") {
-            messFound = true;
+
+void SendWordpress::handle_result(HttpRequestWorker *worker) {
+    if (worker->error_type == QNetworkReply::NoError) {
+        QJsonParseError *error = new QJsonParseError();
+        QJsonDocument jsondoc = QJsonDocument::fromJson(worker->response, error);
+        QJsonObject jsonobj = jsondoc.object();
+        QVariantMap map = jsonobj.toVariantMap();
+        if (error->error == QJsonParseError::NoError) {
+            if (map["success"].toInt() == 1) {
+                int rep = QMessageBox::information((QWidget*)this->parent(), tr("Envoi terminé"), tr("Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?"), QMessageBox::Yes, QMessageBox::No);
+                if (rep == QMessageBox::Yes)
+                {
+                    QString program = "\"" + cmdNav + "\" " + map["url"].toString();
+                    QProcess *myProcess = new QProcess();
+                    myProcess->setProcessChannelMode(QProcess::MergedChannels);
+                    myProcess->start(program);
+                }
+            }
+            else {
+                QString message = map["message"].toString();
+                if (!message.isNull() && !message.isEmpty()) {
+                    QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), message);
+                }
+                else {
+                    QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"),
+                                          tr("Une erreur inconnue s'est produite. Veuillez rapporter le bug."));
+                }
+            }
         }
         else {
-            i++;
+            qDebug() << worker->response;
+            qCritical() << "Error while parsing JSON: " + error->errorString();
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
         }
     }
-    if (i < lines.size() && lines[i].replace("\r", "") == "!!!Send recipe SUCCEEDED!!!")
-    {
-        int rep = QMessageBox::information((QWidget*)this->parent(), tr("Envoi terminé"), tr("Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?"), QMessageBox::Yes, QMessageBox::No);
-        if (rep == QMessageBox::Yes)
-        {
-            QString program = "\"" + cmdNav + "\" " + serverConfs[config]["addrSite"] + "/?p=" + lines[i+1].replace("\r", "");
-            QProcess *myProcess = new QProcess();
-            myProcess->setProcessChannelMode(QProcess::MergedChannels);
-            myProcess->start(program);
+    else {
+        // an error occurred
+        if (worker->error_type == QNetworkReply::ContentOperationNotPermittedError) {
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), "Votre identificant ou vote mot de passe est incorrect");
+        }
+        else {
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), worker->error_str);
         }
     }
-    else
-    {
-        errorShow = new QDialog((QWidget*)this->parent());
-        QVBoxLayout *vlay = new QVBoxLayout();
-        mainError = new QLabel();
-        verrorShowContent = new QVBoxLayout();
-        verrorShowContent->addWidget(mainError);
-        vlay->addLayout(verrorShowContent);
-        details = new QPushButton(tr("Détails >>"));
-        details->setFixedSize(100,30);
-        connect(details, SIGNAL(clicked()), this, SLOT(errorDetails_clicked()));
-        QPushButton *ok = new QPushButton("Ok");
-        ok->setFixedSize(100,30);
-        connect(ok, SIGNAL(clicked()), this, SLOT(errorOk_clicked()));
-        QSpacerItem *hspacer = new QSpacerItem(10, 30, QSizePolicy::Expanding, QSizePolicy::Minimum);
-        QHBoxLayout *butLay = new QHBoxLayout();
-        butLay->addWidget(details);
-        butLay->addSpacerItem(hspacer);
-        butLay->addWidget(ok);
-        QSpacerItem *vspacer = new QSpacerItem(10,20, QSizePolicy::Expanding, QSizePolicy::Fixed);
-        vlay->addSpacerItem(vspacer);
-        vlay->addLayout(butLay);
-        errorShow->setLayout(vlay);
-        ok->setFocus();
-        if (i < lines.size() &&lines[i].replace("\r", "") == "ERROR : send recipe failed.")
-        {
-            if (lines[i+3].replace("\r", "") == "redstone.xmlrpc.XmlRpcFault: Identifiant ou mot de passe incorrect.")
-            {
-                mainError->setText(tr("L'envoi a échoué : identifiant ou mot de passe incorrect !"));
-            }
-            else if (lines[i+3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: A network error occurred.")
-            {
-                mainError->setText(tr("L'envoi a échoué : impossible de se connecter au site web. Vérifiez votre connexion internet."));
-            }
-            else if (lines[i+3].replace("\r", "") == "redstone.xmlrpc.XmlRpcException: The response could not be parsed.")
-            {
-                mainError->setText(tr("L'envoi a échoué : l'adresse de publication est-elle correcte ?"));
-            }
-            else if(lines[i+3].replace("\r", "").contains(QRegExp("redstone.xmlrpc.XmlRpcFault: D.+sol.+, vous n.+avez pas l.+autorisation de modifier cet article."))) {
-                mainError->setText(tr("L'envoi a échoué : vous n'avez pas l'autorisation de modifier cette recette !"));
-            }
 
-            else
-            {
-                mainError->setText(tr("L'envoi a échoué. Cliquez sur Détails pour en savoir plus."));
-            }
-            errorShow->setWindowTitle(tr("L'envoi a échoué"));
-            errorSize = errorShow->size();
-            errorShow->exec();
-        }
-        else
-        {
-            mainError->setText(tr("L'envoi a échoué pour une raison inconnue. Cliquez sur Détails pour en savoir plus."));
-            errorShow->setWindowTitle(tr("L'envoi a échoué"));
-            errorSize = errorShow->size();
-            errorShow->exec();
-        }
-    }
+    envoiEnCours->close();
 }
 
-void SendWordpress::errorDetails_clicked()
-{
-    if (!isErrorDetailsOpened)
-    {
-        showError = new QPlainTextEdit(resultSend);
-        showError->setReadOnly(true);
-        showError->setMinimumSize(600,200);
-        verrorShowContent->addWidget(showError);
-        isErrorDetailsOpened = true;
-        details->setText(tr("<< Détails"));
+void SendWordpress::sendRecipe() {
+    //INIT CONNEXION TO WEBSITE:
+    HttpRequestInput input;
+    input = HttpRequestInput(serverConfs[config]["addrSite"] + "/wp-json/qrecipewriter/v1/posts/", "POST", user, passwd);
+    if (idRecipe == -1) {
+        input.add_var("author", user);
     }
-    else
-    {
-        delete showError;
-        errorShow->setMaximumSize(errorSize);
-        isErrorDetailsOpened = false;
-        details->setText(tr("Détails >>"));
+    else {
+        input.add_var("id", QString::number(idRecipe));
     }
-}
 
-void SendWordpress::errorOk_clicked()
-{
-    errorShow->close();
+    //ADD DATA:
+    input.add_var("title", title);
+    input.add_var("content", htmlCode);
+    input.add_var("excerpt", excerpt);
+    input.add_var("categories", categories.join(","));
+    input.add_var("tags", tags);
+    input.add_var("thumbnail", mainPicture);
+    input.add_var("published", publish ? "1" : "0");
+
+    if (!mainPicture.startsWith("http"))
+        input.add_file("main_picture", mainPicture, mainPictureName, "image/jpg");
+    if (otherPicts.length() > 0) {
+        foreach (QString opict, otherPicts) {
+            QString opict_name = opict.mid(opict.lastIndexOf("/") + 1);
+            QString ext = opict.mid(opict.lastIndexOf(".") + 1);
+            QString format = "jpg";
+            if (ext.toLower() == "png") {
+                format = "png";
+            }
+            input.add_file("other_pictures", opict, opict_name, "image/" + format);
+        }
+    }
+
+    //SEND POST
+    HttpRequestWorker *worker = new HttpRequestWorker(this);
+    connect(worker, SIGNAL(on_execution_finished(HttpRequestWorker*)), this, SLOT(handle_result(HttpRequestWorker*)));
+    try {
+        worker->execute(&input);
+    }
+    catch (const FileNotFoundException &e) {
+        QMessageBox::critical((QWidget*)parent(), tr("Fichier non trouvé"), tr("Fichier image non trouvé : ") + e.getMessage());
+        envoiEnCours->close();
+    }
+    catch (const GlobalException &e) {
+        QMessageBox::critical((QWidget*)parent(), tr("Une erreur est survenue"), e.getMessage().isEmpty() ? tr("Une erreur inconnue est survenue. Veuillez rapporter le bug.") : e.getMessage());
+        envoiEnCours->close();
+    }
 }

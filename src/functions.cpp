@@ -1716,3 +1716,13 @@ bool Functions::validate_quantity(QString qte) {
     QRegExp expQte("\\d+([/.,]\\d+)?");
     return qte.isEmpty() || expQte.exactMatch(qte);
 }
+
+
+QStringList Functions::get_wp_tags(QVariantList tags) {
+    QStringList tags_list;
+    foreach (QVariant tag_v, tags) {
+        QVariantMap tag = tag_v.toMap();
+        tags_list.append(tag["name"].toString());
+    }
+    return tags_list;
+}

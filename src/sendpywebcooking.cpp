@@ -3,6 +3,7 @@
 extern QHash<int,QHash<QString, QString>> serverConfs;
 extern QString cmdNav; //Command to launch navigator
 extern int idRecipe;
+extern QStringList otherPicts;
 
 SendPyWebCooking::SendPyWebCooking(QWidget *parent) :
     QDialog(parent)
