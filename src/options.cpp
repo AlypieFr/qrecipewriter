@@ -117,6 +117,14 @@ void Options::init()
     {
         ui->radioButtonLinuxArch->setChecked(true);
     }
+    else if (systExp=="linuxFedora")
+    {
+        ui->radioButtonLinuxFedora->setChecked(true);
+    }
+    else if (systExp=="linuxNeon")
+    {
+        ui->radioButtonLinuxNeon->setChecked(true);
+    }
 
     QFile *idFile = new QFile(idfile + ".1");
     if(idFile->exists())
@@ -259,7 +267,8 @@ void Options::on_buttonBox_accepted()
     }
     if(ui->lineEditCommandeNavigateur->text()==""||ui->lineEditDossierTemp->text()==""\
             ||(!ui->radioButtonLinuxAutre->isChecked()&&!ui->radioButtonLinuxSlack->isChecked()&&!ui->radioButtonLinuxUbuntu->isChecked()\
-            &&!ui->radioButtonLinuxArch->isChecked()&&!ui->radioButtonWindows->isChecked()))
+            &&!ui->radioButtonLinuxArch->isChecked()&&!ui->radioButtonLinuxNeon->isChecked()&&!ui->radioButtonLinuxFedora->isChecked()\
+            &&!ui->radioButtonWindows->isChecked()))
     {
         QMessageBox::critical(this,tr("Préférences"),tr("Veuillez remplir tous les champs obligatoires des paramètres client"),QMessageBox::Ok);
     }
@@ -322,6 +331,18 @@ void Options::on_buttonBox_accepted()
             else if (ui->radioButtonLinuxUbuntu->isChecked())
             {
                 systExp="linuxDebian";
+            }
+            else if (ui->radioButtonLinuxArch->isChecked())
+            {
+                systExp="linuxArch";
+            }
+            else if (ui->radioButtonLinuxFedora->isChecked())
+            {
+                systExp="linuxFedora";
+            }
+            else if (ui->radioButtonLinuxNeon->isChecked())
+            {
+                systExp="linuxNeon";
             }
             else if(ui->radioButtonWindows->isChecked())
             {
@@ -556,22 +577,7 @@ void Options::saveXML(int activeServerConfig)
     writer.writeTextElement("corrOrtho", ui->lineEditDictionnairePath->text());
     writer.writeTextElement("editPict",ui->lineEditEditeurImages->text());
     writer.writeTextElement("appI18n", appI18n);
-    if(ui->radioButtonLinuxAutre->isChecked())
-    {
-        writer.writeTextElement("systExp","linuxAutre");
-    }
-    else if(ui->radioButtonLinuxSlack->isChecked())
-    {
-        writer.writeTextElement("systExp","linuxSlackware");
-    }
-    else if(ui->radioButtonLinuxUbuntu->isChecked())
-    {
-        writer.writeTextElement("systExp","linuxDebian");
-    }
-    else if(ui->radioButtonWindows->isChecked())
-    {
-        writer.writeTextElement("systExp","windows");
-    }
+    writer.writeTextElement("systExp", systExp);
     writer.writeTextElement("activeServerConfig", QString::number(activeServerConfig));
     QString openlast_s = ui->backup_useLastOne->isChecked() ? "1" : "0";
     writer.writeTextElement("openLastDir_Sauvegarde", openlast_s);

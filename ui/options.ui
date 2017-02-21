@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -197,8 +197,8 @@
      <widget class="QRadioButton" name="radioButtonWindows">
       <property name="geometry">
        <rect>
-        <x>530</x>
-        <y>348</y>
+        <x>170</x>
+        <y>366</y>
         <width>101</width>
         <height>17</height>
        </rect>
@@ -211,7 +211,7 @@
       <property name="geometry">
        <rect>
         <x>530</x>
-        <y>330</y>
+        <y>348</y>
         <width>121</width>
         <height>17</height>
        </rect>
@@ -224,7 +224,7 @@
       <property name="geometry">
        <rect>
         <x>380</x>
-        <y>330</y>
+        <y>348</y>
         <width>141</width>
         <height>17</height>
        </rect>
@@ -486,14 +486,27 @@
      <widget class="QRadioButton" name="radioButtonLinuxFedora">
       <property name="geometry">
        <rect>
-        <x>380</x>
-        <y>348</y>
+        <x>530</x>
+        <y>330</y>
         <width>141</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
        <string>Linux Fedora</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButtonLinuxNeon">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>330</y>
+        <width>141</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Linux KDE Neon</string>
       </property>
      </widget>
     </widget>
@@ -511,7 +524,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="config1">
        <attribute name="title">
