@@ -54,9 +54,7 @@ QString dirTmp = userDir + "/AppData/Local/Temp/QRecipeWriter";
 #endif
 QString cmdNav = ""; //Command to launch navigator
 QString dirSav; //Directory used to save recipes or "conseils & technics"
-QString dirDistPict = ""; //Distant directory where pictures are saved in server
 QString addrSite = ""; //Address of the website
-QString addrPub = ""; //Address of publication (XML-RPC)
 QString typeServer = "wordpress";
 QString editPict = ""; //Program for advanced picture editor
 QString corrOrtho = ""; //Main dictionnary path

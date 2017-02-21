@@ -33,9 +33,7 @@ extern QString dirPict; //Default local directory of pictures
 extern QString dirTmp; //Temp directory
 extern QString cmdNav; //Command to launch navigator
 extern QString dirSav; //Directory used to save recipes or "conseils & technics"
-extern QString dirDistPict; //Distant directory where pictures are saved in server
 extern QString addrSite; //Address of the website
-extern QString addrPub; //Address of publication (XML-RPC)
 extern QString typeServer;
 extern QString systExp; //Operating system of the user
 extern QString editPict; //Program for advanced picture editor
@@ -80,7 +78,6 @@ void Options::init()
     ui->lineEditDossierDefautImages->setText(dirPict);
     ui->lineEditDossierDefautImages->setDisabled(openLastDir_Img);
     ui->img_useLastOne->setChecked(openLastDir_Img);
-    ui->lineEditDossierDistantImages->setText(dirDistPict);
     ui->lineEditDossierSauvegardes->setText(dirSav);
     ui->lineEditDossierSauvegardes->setDisabled(openLastDir_sauvegarde);
     ui->backup_useLastOne->setChecked(openLastDir_sauvegarde);
@@ -89,7 +86,6 @@ void Options::init()
     ui->lineEditEditeurImages->setText(editPict);
     ui->lineEditDictionnairePath->setText(corrOrtho);
     ui->lineEditAdresseSite->setText(addrSite);
-    ui->lineEditAdressePublication->setText(addrPub);
     ui->recPrinter->setChecked(recPrinter);
     ui->recSearch->setChecked(recSearch);
     ui->recCoupDeCoeur->setChecked(recCoupDeCoeur);
@@ -289,37 +285,17 @@ void Options::on_buttonBox_accepted()
             QMessageBox::critical(this, tr("Préférences"), tr("Le dictionnaire path indiqué est incorrect : les fichiers (avec extension .dic et/ou .aff) n'existe(nt) pas"), QMessageBox::Ok);
             proceed = false;
         }
-        if (proceed && ((ui->configActive->isChecked() && (ui->lineEditAdresseSite->text()==""||(!ui->typeServer_wordpress->isChecked() && !ui->typeServer_pywebcooking->isChecked())||(ui->typeServer_wordpress->isChecked() && (ui->lineEditAdressePublication->text()==""||ui->lineEditDossierDistantImages->text()==""))))\
-            || (ui->configActive_2->isChecked() && (ui->lineEditAdresseSite_2->text()==""||(!ui->typeServer_wordpress_2->isChecked() && !ui->typeServer_pywebcooking_2->isChecked())||(ui->typeServer_wordpress_2->isChecked() && (ui->lineEditAdressePublication_2->text()==""||ui->lineEditDossierDistantImages_2->text()==""))))\
-            || (ui->configActive_3->isChecked() && (ui->lineEditAdresseSite_3->text()==""||(!ui->typeServer_wordpress_3->isChecked() && !ui->typeServer_pywebcooking_3->isChecked())||(ui->typeServer_wordpress_3->isChecked() && (ui->lineEditAdressePublication_3->text()==""||ui->lineEditDossierDistantImages_3->text()==""))))\
-            || (ui->configActive_4->isChecked() && (ui->lineEditAdresseSite_4->text()==""||(!ui->typeServer_wordpress_4->isChecked() && !ui->typeServer_pywebcooking_4->isChecked())||(ui->typeServer_wordpress_4->isChecked() && (ui->lineEditAdressePublication_4->text()==""||ui->lineEditDossierDistantImages_4->text()==""))))\
-            || (ui->configActive_5->isChecked() && (ui->lineEditAdresseSite_5->text()==""||(!ui->typeServer_wordpress_5->isChecked() && !ui->typeServer_pywebcooking_5->isChecked())||(ui->typeServer_wordpress_5->isChecked() && (ui->lineEditAdressePublication_5->text()==""||ui->lineEditDossierDistantImages_5->text()=="")))))) {
+        if (proceed && ((ui->configActive->isChecked() && (ui->lineEditAdresseSite->text()==""||(!ui->typeServer_wordpress->isChecked() && !ui->typeServer_pywebcooking->isChecked())))\
+            || (ui->configActive_2->isChecked() && (ui->lineEditAdresseSite_2->text()==""||(!ui->typeServer_wordpress_2->isChecked() && !ui->typeServer_pywebcooking_2->isChecked())))\
+            || (ui->configActive_3->isChecked() && (ui->lineEditAdresseSite_3->text()==""||(!ui->typeServer_wordpress_3->isChecked() && !ui->typeServer_pywebcooking_3->isChecked())))\
+            || (ui->configActive_4->isChecked() && (ui->lineEditAdresseSite_4->text()==""||(!ui->typeServer_wordpress_4->isChecked() && !ui->typeServer_pywebcooking_4->isChecked())))\
+            || (ui->configActive_5->isChecked() && (ui->lineEditAdresseSite_5->text()==""||(!ui->typeServer_wordpress_5->isChecked() && !ui->typeServer_pywebcooking_5->isChecked()))))) {
             QMessageBox::critical(this,tr("Préférences"),tr("Veuillez remplir tous les champs des paramètres serveur de la configuration active"),QMessageBox::Ok);
         }
         else if (proceed && !ui->configActive->isChecked() && !ui->configActive_2->isChecked() && !ui->configActive_3->isChecked() && !ui->configActive_4->isChecked() && !ui->configActive_5->isChecked()) {
             QMessageBox::critical(this,tr("Préférences"),tr("Vous devez avoir une configuration serveur active"),QMessageBox::Ok);
         }
         else if(proceed) {
-            if (ui->lineEditDossierDistantImages->text() != "" && ui->lineEditDossierDistantImages->text().right(1) != "/")
-            {
-                ui->lineEditDossierDistantImages->setText(ui->lineEditDossierDistantImages->text().append("/"));
-            }
-            if (ui->lineEditDossierDistantImages_2->text() != "" && ui->lineEditDossierDistantImages_2->text().right(1) != "/")
-            {
-                ui->lineEditDossierDistantImages_2->setText(ui->lineEditDossierDistantImages_2->text().append("/"));
-            }
-            if (ui->lineEditDossierDistantImages_3->text() != "" && ui->lineEditDossierDistantImages_3->text().right(1) != "/")
-            {
-                ui->lineEditDossierDistantImages_3->setText(ui->lineEditDossierDistantImages_3->text().append("/"));
-            }
-            if (ui->lineEditDossierDistantImages_4->text() != "" && ui->lineEditDossierDistantImages_4->text().right(1) != "/")
-            {
-                ui->lineEditDossierDistantImages_4->setText(ui->lineEditDossierDistantImages_4->text().append("/"));
-            }
-            if (ui->lineEditDossierDistantImages_5->text() != "" && ui->lineEditDossierDistantImages_5->text().right(1) != "/")
-            {
-                ui->lineEditDossierDistantImages_5->setText(ui->lineEditDossierDistantImages_5->text().append("/"));
-            }
             //Test should restart the app:
             QString oldAppI18n = appI18n;
             appI18n=ui->radioButton_lang_fr->isChecked() ? "fr" : "en";
@@ -355,8 +331,6 @@ void Options::on_buttonBox_accepted()
             updateServerConfs();
             if (ui->configActive->isChecked()) {
                 addrSite=serverConfs[1]["addrSite"];
-                addrPub=serverConfs[1]["addrPub"];
-                dirDistPict=serverConfs[1]["dirDistPict"];
                 typeServer=serverConfs[1]["typeServer"];
                 richSnippets = serverConfs[1]["richSnippets"] == "1";
                 recPrinter = serverConfs[1]["recPrinter"] == "1";
@@ -366,8 +340,6 @@ void Options::on_buttonBox_accepted()
             }
             else if (ui->configActive_2->isChecked()) {
                 addrSite=serverConfs[2]["addrSite"];
-                addrPub=serverConfs[2]["addrPub"];
-                dirDistPict=serverConfs[2]["dirDistPict"];
                 typeServer=serverConfs[2]["typeServer"];
                 richSnippets = serverConfs[2]["richSnippets"] == "1";
                 recPrinter = serverConfs[2]["recPrinter"] == "1";
@@ -377,8 +349,6 @@ void Options::on_buttonBox_accepted()
             }
             else if (ui->configActive_3->isChecked()) {
                 addrSite=serverConfs[3]["addrSite"];
-                addrPub=serverConfs[3]["addrPub"];
-                dirDistPict=serverConfs[3]["dirDistPict"];
                 typeServer=serverConfs[3]["typeServer"];
                 richSnippets = serverConfs[3]["richSnippets"] == "1";
                 recPrinter = serverConfs[3]["recPrinter"] == "1";
@@ -388,8 +358,6 @@ void Options::on_buttonBox_accepted()
             }
             else if (ui->configActive_4->isChecked()) {
                 addrSite=serverConfs[4]["addrSite"];
-                addrPub=serverConfs[4]["addrPub"];
-                dirDistPict=serverConfs[4]["dirDistPict"];
                 typeServer=serverConfs[4]["typeServer"];
                 richSnippets = serverConfs[4]["richSnippets"] == "1";
                 recPrinter = serverConfs[4]["recPrinter"] == "1";
@@ -399,8 +367,6 @@ void Options::on_buttonBox_accepted()
             }
             else if (ui->configActive_5->isChecked()) {
                 addrSite=serverConfs[5]["addrSite"];
-                addrPub=serverConfs[5]["addrPub"];
-                dirDistPict=serverConfs[5]["dirDistPict"];
                 typeServer=serverConfs[5]["typeServer"];
                 richSnippets = serverConfs[5]["richSnippets"] == "1";
                 recPrinter = serverConfs[5]["recPrinter"] == "1";
@@ -421,8 +387,6 @@ void Options::on_buttonBox_accepted()
 void Options::updateServerConfs() {
     //Server 1
     serverConfs[1]["addrSite"] = ui->lineEditAdresseSite->text();
-    serverConfs[1]["addrPub"] = ui->lineEditAdressePublication->text();
-    serverConfs[1]["dirDistPict"] = ui->lineEditDossierDistantImages->text();
     serverConfs[1]["typeServer"] = (ui->typeServer_wordpress->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking->isChecked() ? "pywebcooking" : ""));
     serverConfs[1]["richSnippets"] = ui->richSnippets->isChecked() ? "1" : "0";
     serverConfs[1]["recPrinter"] = ui->recPrinter->isChecked() ? "1" : "0";
@@ -430,8 +394,6 @@ void Options::updateServerConfs() {
     serverConfs[1]["recCoupDeCoeur"] = ui->recCoupDeCoeur->isChecked() ? "1" : "0";
     //Server 2
     serverConfs[2]["addrSite"] = ui->lineEditAdresseSite_2->text();
-    serverConfs[2]["addrPub"] = ui->lineEditAdressePublication_2->text();
-    serverConfs[2]["dirDistPict"] = ui->lineEditDossierDistantImages_2->text();
     serverConfs[2]["typeServer"] = (ui->typeServer_wordpress_2->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_2->isChecked() ? "pywebcooking" : ""));
     serverConfs[2]["richSnippets"] = ui->richSnippets_2->isChecked() ? "1" : "0";
     serverConfs[2]["recPrinter"] = ui->recPrinter_2->isChecked() ? "1" : "0";
@@ -439,8 +401,6 @@ void Options::updateServerConfs() {
     serverConfs[2]["recCoupDeCoeur"] = ui->recCoupDeCoeur_2->isChecked() ? "1" : "0";
     //Server 3
     serverConfs[3]["addrSite"] = ui->lineEditAdresseSite_3->text();
-    serverConfs[3]["addrPub"] = ui->lineEditAdressePublication_3->text();
-    serverConfs[3]["dirDistPict"] = ui->lineEditDossierDistantImages_3->text();
     serverConfs[3]["typeServer"] = (ui->typeServer_wordpress_3->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_3->isChecked() ? "pywebcooking" : ""));
     serverConfs[3]["richSnippets"] = ui->richSnippets_3->isChecked() ? "1" : "0";
     serverConfs[3]["recPrinter"] = ui->recPrinter_3->isChecked() ? "1" : "0";
@@ -448,8 +408,6 @@ void Options::updateServerConfs() {
     serverConfs[3]["recCoupDeCoeur"] = ui->recCoupDeCoeur_3->isChecked() ? "1" : "0";
     //Server 4
     serverConfs[4]["addrSite"] = ui->lineEditAdresseSite_4->text();
-    serverConfs[4]["addrPub"] = ui->lineEditAdressePublication_4->text();
-    serverConfs[4]["dirDistPict"] = ui->lineEditDossierDistantImages_4->text();
     serverConfs[4]["typeServer"] = (ui->typeServer_wordpress_4->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_4->isChecked() ? "pywebcooking" : ""));
     serverConfs[4]["richSnippets"] = ui->richSnippets_4->isChecked() ? "1" : "0";
     serverConfs[4]["recPrinter"] = ui->recPrinter_4->isChecked() ? "1" : "0";
@@ -457,8 +415,6 @@ void Options::updateServerConfs() {
     serverConfs[4]["recCoupDeCoeur"] = ui->recCoupDeCoeur_4->isChecked() ? "1" : "0";
     //Server 5
     serverConfs[5]["addrSite"] = ui->lineEditAdresseSite_5->text();
-    serverConfs[5]["addrPub"] = ui->lineEditAdressePublication_5->text();
-    serverConfs[5]["dirDistPict"] = ui->lineEditDossierDistantImages_5->text();
     serverConfs[5]["typeServer"] = (ui->typeServer_wordpress_5->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_5->isChecked() ? "pywebcooking" : ""));
     serverConfs[5]["richSnippets"] = ui->richSnippets_5->isChecked() ? "1" : "0";
     serverConfs[5]["recPrinter"] = ui->recPrinter_5->isChecked() ? "1" : "0";
@@ -479,10 +435,6 @@ void Options::loadConfigsServer() {
     if (serverConfs.contains(1)) {
         if (serverConfs[1]["typeServer"] == "pywebcooking") {
             ui->typeServer_pywebcooking->setChecked(true);
-            ui->lineEditAdressePublication->setVisible(false);
-            ui->labelAddressePublication->setVisible(false);
-            ui->lineEditDossierDistantImages->setVisible(false);
-            ui->labelDossierDistantImages->setVisible(false);
             ui->richSnippets->setVisible(false);
             ui->recPrinter->setVisible(false);
             ui->recSearch->setVisible(false);
@@ -490,16 +442,10 @@ void Options::loadConfigsServer() {
         }
         else {
             ui->typeServer_wordpress->setChecked(true);
-            ui->lineEditAdressePublication->setVisible(true);
-            ui->labelAddressePublication->setVisible(true);
-            ui->lineEditDossierDistantImages->setVisible(true);
-            ui->labelDossierDistantImages->setVisible(true);
             ui->richSnippets->setVisible(true);
             ui->recPrinter->setVisible(true);
             ui->recSearch->setVisible(true);
             ui->recCoupDeCoeur->setVisible(true);
-            ui->lineEditAdressePublication->setText(serverConfs[1]["addrPub"]);
-            ui->lineEditDossierDistantImages->setText(serverConfs[1]["dirDistPict"]);
             ui->richSnippets->setChecked(serverConfs[1]["richSnippets"] == "1");
             ui->recPrinter->setChecked(serverConfs[1]["recPrinter"] == "1");
             ui->recSearch->setChecked(serverConfs[1]["recSearch"] == "1");
@@ -510,10 +456,6 @@ void Options::loadConfigsServer() {
     if (serverConfs.contains(2)) {
         if (serverConfs[2]["typeServer"] == "pywebcooking") {
             ui->typeServer_pywebcooking_2->setChecked(true);
-            ui->lineEditAdressePublication_2->setVisible(false);
-            ui->labelAddressePublication_2->setVisible(false);
-            ui->lineEditDossierDistantImages_2->setVisible(false);
-            ui->labelDossierDistantImages_2->setVisible(false);
             ui->richSnippets_2->setVisible(false);
             ui->recPrinter_2->setVisible(false);
             ui->recSearch_2->setVisible(false);
@@ -521,16 +463,10 @@ void Options::loadConfigsServer() {
         }
         else {
             ui->typeServer_wordpress_2->setChecked(true);
-            ui->lineEditAdressePublication_2->setVisible(true);
-            ui->labelAddressePublication_2->setVisible(true);
-            ui->lineEditDossierDistantImages_2->setVisible(true);
-            ui->labelDossierDistantImages_2->setVisible(true);
             ui->richSnippets_2->setVisible(true);
             ui->recPrinter_2->setVisible(true);
             ui->recSearch_2->setVisible(true);
             ui->recCoupDeCoeur_2->setVisible(true);
-            ui->lineEditAdressePublication_2->setText(serverConfs[2]["addrPub"]);
-            ui->lineEditDossierDistantImages_2->setText(serverConfs[2]["dirDistPict"]);
             ui->richSnippets_2->setChecked(serverConfs[2]["richSnippets"] == "1");
             ui->recPrinter_2->setChecked(serverConfs[2]["recPrinter"] == "1");
             ui->recSearch_2->setChecked(serverConfs[2]["recSearch"] == "1");
@@ -541,10 +477,6 @@ void Options::loadConfigsServer() {
     if (serverConfs.contains(3)) {
         if (serverConfs[3]["typeServer"] == "pywebcooking") {
             ui->typeServer_pywebcooking_3->setChecked(true);
-            ui->lineEditAdressePublication_3->setVisible(false);
-            ui->labelAddressePublication_3->setVisible(false);
-            ui->lineEditDossierDistantImages_3->setVisible(false);
-            ui->labelDossierDistantImages_3->setVisible(false);
             ui->richSnippets_3->setVisible(false);
             ui->recPrinter_3->setVisible(false);
             ui->recSearch_3->setVisible(false);
@@ -552,16 +484,10 @@ void Options::loadConfigsServer() {
         }
         else {
             ui->typeServer_wordpress_3->setChecked(true);
-            ui->lineEditAdressePublication_3->setVisible(true);
-            ui->labelAddressePublication_3->setVisible(true);
-            ui->lineEditDossierDistantImages_3->setVisible(true);
-            ui->labelDossierDistantImages_3->setVisible(true);
             ui->richSnippets_3->setVisible(true);
             ui->recPrinter_3->setVisible(true);
             ui->recSearch_3->setVisible(true);
             ui->recCoupDeCoeur_3->setVisible(true);
-            ui->lineEditAdressePublication_3->setText(serverConfs[3]["addrPub"]);
-            ui->lineEditDossierDistantImages_3->setText(serverConfs[3]["dirDistPict"]);
             ui->richSnippets_3->setChecked(serverConfs[3]["richSnippets"] == "1");
             ui->recPrinter_3->setChecked(serverConfs[3]["recPrinter"] == "1");
             ui->recSearch_3->setChecked(serverConfs[3]["recSearch"] == "1");
@@ -572,10 +498,6 @@ void Options::loadConfigsServer() {
     if (serverConfs.contains(4)) {
         if (serverConfs[4]["typeServer"] == "pywebcooking") {
             ui->typeServer_pywebcooking_4->setChecked(true);
-            ui->lineEditAdressePublication_4->setVisible(false);
-            ui->labelAddressePublication_4->setVisible(false);
-            ui->lineEditDossierDistantImages_4->setVisible(false);
-            ui->labelDossierDistantImages_4->setVisible(false);
             ui->richSnippets_4->setVisible(false);
             ui->recPrinter_4->setVisible(false);
             ui->recSearch_4->setVisible(false);
@@ -583,16 +505,10 @@ void Options::loadConfigsServer() {
         }
         else {
             ui->typeServer_wordpress_4->setChecked(true);
-            ui->lineEditAdressePublication_4->setVisible(true);
-            ui->labelAddressePublication_4->setVisible(true);
-            ui->lineEditDossierDistantImages_4->setVisible(true);
-            ui->labelDossierDistantImages_4->setVisible(true);
             ui->richSnippets_4->setVisible(true);
             ui->recPrinter_4->setVisible(true);
             ui->recSearch_4->setVisible(true);
             ui->recCoupDeCoeur_4->setVisible(true);
-            ui->lineEditAdressePublication_4->setText(serverConfs[4]["addrPub"]);
-            ui->lineEditDossierDistantImages_4->setText(serverConfs[4]["dirDistPict"]);
             ui->richSnippets_4->setChecked(serverConfs[4]["richSnippets"] == "1");
             ui->recPrinter_4->setChecked(serverConfs[4]["recPrinter"] == "1");
             ui->recSearch_4->setChecked(serverConfs[4]["recSearch"] == "1");
@@ -603,10 +519,6 @@ void Options::loadConfigsServer() {
     if (serverConfs.contains(5)) {
         if (serverConfs[5]["typeServer"] == "pywebcooking") {
             ui->typeServer_pywebcooking_5->setChecked(true);
-            ui->lineEditAdressePublication_5->setVisible(false);
-            ui->labelAddressePublication_5->setVisible(false);
-            ui->lineEditDossierDistantImages_5->setVisible(false);
-            ui->labelDossierDistantImages_5->setVisible(false);
             ui->richSnippets_5->setVisible(false);
             ui->recPrinter_5->setVisible(false);
             ui->recSearch_5->setVisible(false);
@@ -614,16 +526,10 @@ void Options::loadConfigsServer() {
         }
         else {
             ui->typeServer_wordpress_5->setChecked(true);
-            ui->lineEditAdressePublication_5->setVisible(true);
-            ui->labelAddressePublication_5->setVisible(true);
-            ui->lineEditDossierDistantImages_5->setVisible(true);
-            ui->labelDossierDistantImages_5->setVisible(true);
             ui->richSnippets_5->setVisible(true);
             ui->recPrinter_5->setVisible(true);
             ui->recSearch_5->setVisible(true);
             ui->recCoupDeCoeur_5->setVisible(true);
-            ui->lineEditAdressePublication_5->setText(serverConfs[5]["addrPub"]);
-            ui->lineEditDossierDistantImages_5->setText(serverConfs[5]["dirDistPict"]);
             ui->richSnippets_5->setChecked(serverConfs[5]["richSnippets"] == "1");
             ui->recPrinter_5->setChecked(serverConfs[5]["recPrinter"] == "1");
             ui->recSearch_5->setChecked(serverConfs[5]["recSearch"] == "1");
@@ -688,8 +594,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeStartDocument("1.0");
     writerS->writeStartElement("parameters");
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite->text());
-    writerS->writeTextElement("addrPub",ui->lineEditAdressePublication->text());
-    writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages->text());
     writerS->writeTextElement("typeServer", (ui->typeServer_wordpress->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking->isChecked() ? "pywebcooking" : "none")));
     QString activeRichSnippets = ui->richSnippets->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
@@ -709,8 +613,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeStartDocument("1.0");
     writerS->writeStartElement("parameters");
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_2->text());
-    writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_2->text());
-    writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_2->text());
     writerS->writeTextElement("typeServer", (ui->typeServer_wordpress_2->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_2->isChecked() ? "pywebcooking" : "none")));
     activeRichSnippets = ui->richSnippets_2->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
@@ -730,8 +632,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeStartDocument("1.0");
     writerS->writeStartElement("parameters");
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_3->text());
-    writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_3->text());
-    writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_3->text());
     writerS->writeTextElement("typeServer", (ui->typeServer_wordpress_3->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_3->isChecked() ? "pywebcooking" : "none")));
     activeRichSnippets = ui->richSnippets_3->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
@@ -751,8 +651,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeStartDocument("1.0");
     writerS->writeStartElement("parameters");
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_4->text());
-    writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_4->text());
-    writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_4->text());
     writerS->writeTextElement("typeServer", (ui->typeServer_wordpress_4->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_4->isChecked() ? "pywebcooking" : "none")));
     activeRichSnippets = ui->richSnippets_4->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
@@ -772,8 +670,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeStartDocument("1.0");
     writerS->writeStartElement("parameters");
     writerS->writeTextElement("addrSite",ui->lineEditAdresseSite_5->text());
-    writerS->writeTextElement("addrPub",ui->lineEditAdressePublication_5->text());
-    writerS->writeTextElement("dirDistPict",ui->lineEditDossierDistantImages_5->text());
     writerS->writeTextElement("typeServer", (ui->typeServer_wordpress_5->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_5->isChecked() ? "pywebcooking" : "none")));
     activeRichSnippets = ui->richSnippets_5->isChecked() ? "1" : "0";
     writerS->writeTextElement("richSnippets", activeRichSnippets);
@@ -865,20 +761,12 @@ void Options::on_img_useLastOne_clicked()
 void Options::on_typeServer_pywebcooking_toggled(bool checked)
 {
     if (checked) {
-        ui->lineEditAdressePublication->setVisible(false);
-        ui->labelAddressePublication->setVisible(false);
-        ui->lineEditDossierDistantImages->setVisible(false);
-        ui->labelDossierDistantImages->setVisible(false);
         ui->richSnippets->setVisible(false);
         ui->recPrinter->setVisible(false);
         ui->recSearch->setVisible(false);
         ui->recCoupDeCoeur->setVisible(false);
     }
     else {
-        ui->lineEditAdressePublication->setVisible(true);
-        ui->labelAddressePublication->setVisible(true);
-        ui->lineEditDossierDistantImages->setVisible(true);
-        ui->labelDossierDistantImages->setVisible(true);
         ui->richSnippets->setVisible(true);
         ui->recPrinter->setVisible(true);
         ui->recSearch->setVisible(true);
@@ -889,20 +777,12 @@ void Options::on_typeServer_pywebcooking_toggled(bool checked)
 void Options::on_typeServer_pywebcooking_2_toggled(bool checked)
 {
     if (checked) {
-        ui->lineEditAdressePublication_2->setVisible(false);
-        ui->labelAddressePublication_2->setVisible(false);
-        ui->lineEditDossierDistantImages_2->setVisible(false);
-        ui->labelDossierDistantImages_2->setVisible(false);
         ui->richSnippets_2->setVisible(false);
         ui->recPrinter_2->setVisible(false);
         ui->recSearch_2->setVisible(false);
         ui->recCoupDeCoeur_2->setVisible(false);
     }
     else {
-        ui->lineEditAdressePublication_2->setVisible(true);
-        ui->labelAddressePublication_2->setVisible(true);
-        ui->lineEditDossierDistantImages_2->setVisible(true);
-        ui->labelDossierDistantImages_2->setVisible(true);
         ui->richSnippets_2->setVisible(true);
         ui->recPrinter_2->setVisible(true);
         ui->recSearch_2->setVisible(true);
@@ -913,20 +793,12 @@ void Options::on_typeServer_pywebcooking_2_toggled(bool checked)
 void Options::on_typeServer_pywebcooking_3_toggled(bool checked)
 {
     if (checked) {
-        ui->lineEditAdressePublication_3->setVisible(false);
-        ui->labelAddressePublication_3->setVisible(false);
-        ui->lineEditDossierDistantImages_3->setVisible(false);
-        ui->labelDossierDistantImages_3->setVisible(false);
         ui->richSnippets_3->setVisible(false);
         ui->recPrinter_3->setVisible(false);
         ui->recSearch_3->setVisible(false);
         ui->recCoupDeCoeur_3->setVisible(false);
     }
     else {
-        ui->lineEditAdressePublication_3->setVisible(true);
-        ui->labelAddressePublication_3->setVisible(true);
-        ui->lineEditDossierDistantImages_3->setVisible(true);
-        ui->labelDossierDistantImages_3->setVisible(true);
         ui->richSnippets_3->setVisible(true);
         ui->recPrinter_3->setVisible(true);
         ui->recSearch_3->setVisible(true);
@@ -937,20 +809,12 @@ void Options::on_typeServer_pywebcooking_3_toggled(bool checked)
 void Options::on_typeServer_pywebcooking_4_toggled(bool checked)
 {
     if (checked) {
-        ui->lineEditAdressePublication_4->setVisible(false);
-        ui->labelAddressePublication_4->setVisible(false);
-        ui->lineEditDossierDistantImages_4->setVisible(false);
-        ui->labelDossierDistantImages_4->setVisible(false);
         ui->richSnippets_4->setVisible(false);
         ui->recPrinter_4->setVisible(false);
         ui->recSearch_4->setVisible(false);
         ui->recCoupDeCoeur_4->setVisible(false);
     }
     else {
-        ui->lineEditAdressePublication_4->setVisible(true);
-        ui->labelAddressePublication_4->setVisible(true);
-        ui->lineEditDossierDistantImages_4->setVisible(true);
-        ui->labelDossierDistantImages_4->setVisible(true);
         ui->richSnippets_4->setVisible(true);
         ui->recPrinter_4->setVisible(true);
         ui->recSearch_4->setVisible(true);
@@ -961,20 +825,12 @@ void Options::on_typeServer_pywebcooking_4_toggled(bool checked)
 void Options::on_typeServer_pywebcooking_5_toggled(bool checked)
 {
     if (checked) {
-        ui->lineEditAdressePublication_5->setVisible(false);
-        ui->labelAddressePublication_5->setVisible(false);
-        ui->lineEditDossierDistantImages_5->setVisible(false);
-        ui->labelDossierDistantImages_5->setVisible(false);
         ui->richSnippets_5->setVisible(false);
         ui->recPrinter_5->setVisible(false);
         ui->recSearch_5->setVisible(false);
         ui->recCoupDeCoeur_5->setVisible(false);
     }
     else {
-        ui->lineEditAdressePublication_5->setVisible(true);
-        ui->labelAddressePublication_5->setVisible(true);
-        ui->lineEditDossierDistantImages_5->setVisible(true);
-        ui->labelDossierDistantImages_5->setVisible(true);
         ui->richSnippets_5->setVisible(true);
         ui->recPrinter_5->setVisible(true);
         ui->recSearch_5->setVisible(true);

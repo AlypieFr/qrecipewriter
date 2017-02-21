@@ -36,9 +36,7 @@ extern QString dirPict;
 extern QString dirTmp;
 extern QString cmdNav;
 extern QString dirSav;
-extern QString dirDistPict;
 extern QString addrSite;
-extern QString addrPub;
 extern QString typeServer;
 extern QString systExp;
 extern QString editPict;
@@ -1755,28 +1753,28 @@ void QRecipeWriter::makeHtmlCode(int config)
     }
     QString ingredients = "";
     if (allIngr.size() > 0)
-        ingredients = Functions::getSimpleListWithSubLists(allIngr, config);
+        ingredients = Functions::getSimpleListWithSubLists(allIngr);
     QStringList allMat;
     for (int it = 0; it < model2->rowCount(); ++it) {
         allMat.append(model2->item(it)->text());
     }
     QString materiel = "";
     if (allMat.size() != 0)
-        materiel = Functions::getSimpleList(allMat, config);
+        materiel = Functions::getSimpleList(allMat);
     QStringList allPrep;
     for (int it = 0; it < model3->rowCount(); ++it) {
         allPrep.append(model3->item(it)->text());
     }
     QString preparation = "";
     if (allPrep.size() > 0)
-        preparation = Functions::getNumberedList(allPrep, config);
+        preparation = Functions::getNumberedList(allPrep);
     QStringList allCons;
     for (int it = 0; it < model4->rowCount(); ++it) {
         allCons.append(model4->item(it)->text());
     }
     QString conseils = "";
     if (allCons.size() > 0)
-        conseils = Functions::getSimpleList(allCons, config);
+        conseils = Functions::getSimpleList(allCons);
     QString description = Functions::insertLinks(ui->description->toPlainText());
     QString descTmp = description;
     QRegExp exp ("<a href=\"[^\"]+\" target=\"[^\"]+\">");
@@ -1794,7 +1792,7 @@ void QRecipeWriter::makeHtmlCode(int config)
     htmlCode = Functions::generateHtmlCode(ui->titre->text(), imgFileName, ui->hPrep->value(), ui->minPrep->value(),
                                                    ui->hCuis->value(), ui->minCuis->value(), ui->jRep->value(), ui->hRep->value(),
                                                    ui->minRep->value(), ui->nbPersonnes->value(), ui->nbPersonnes_2->value(), ui->precision->text(),
-                                                   description, ingredients, materiel, preparation, conseils, config);
+                                                   description, ingredients, materiel, preparation, conseils);
     if (serverConfs[config]["richSnippets"] == "1") {
         htmlCode = Functions::makeRichSnippets(ui->titre->text(), imgFileName, ui->hPrep->value(), ui->minPrep->value(),
                                                ui->hCuis->value(), ui->minCuis->value(), ui->jRep->value(), ui->hRep->value(),

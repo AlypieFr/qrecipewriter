@@ -24,9 +24,7 @@ extern QString dirPict;
 extern QString dirTmp;
 extern QString cmdNav;
 extern QString dirSav;
-extern QString dirDistPict;
 extern QString addrSite;
-extern QString addrPub;
 extern QString systExp;
 extern QString editPict;
 extern QString corrOrtho;
@@ -150,8 +148,6 @@ void Functions::loadConfig()
 
     serverConfs = loadServerConfigs();
     addrSite = serverConfs[configActive]["addrSite"];
-    addrPub = serverConfs[configActive]["addrPub"];
-    dirDistPict = serverConfs[configActive]["dirDistPict"];
     typeServer = serverConfs[configActive]["typeServer"];
     richSnippets = serverConfs[configActive]["richSnippets"] == "1";
     recPrinter = serverConfs[configActive]["recPrinter"] == "1";
@@ -177,16 +173,6 @@ QHash<int, QHash<QString, QString>> Functions::loadServerConfigs() {
                     if(xml.name() == "addrSite") {
                         xml.readNext();
                         configServer[i]["addrSite"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "addrPub") {
-                        xml.readNext();
-                        configServer[i]["addrPub"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "dirDistPict") {
-                        xml.readNext();
-                        configServer[i]["dirDistPict"] = xml.text().toString();
                         continue;
                     }
                     if(xml.name() == "typeServer") {
@@ -922,7 +908,7 @@ QStringList Functions::loadCategories()
  * @return htmlCode corresponding to the list
  * Transform a list into HtmlCode, in the case of simple list (without numbers), that can include sublists (Ingrédents)
  */
-QString Functions::getSimpleListWithSubLists(QStringList items, int config)
+QString Functions::getSimpleListWithSubLists(QStringList items)
 {
     QString htmlCode = "";
     int nivList = -1;
@@ -936,7 +922,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items, int config)
             for (int var = -1; var < nivList; ++var) {
                 htmlCode.append("</ul>\n");
             }
-            htmlCode.append(insertLinks(insertPictures(parts[1], config)) + "<br/>\n");
+            htmlCode.append(insertLinks(insertPictures(parts[1])) + "<br/>\n");
             nivList = -1;
         }
         else
@@ -988,7 +974,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items, int config)
             int puce = parts[0].toInt();
             if (puce == nivList)
             {
-                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
+                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 nivList = puce;
             }
             else if (puce > nivList)
@@ -996,7 +982,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items, int config)
                 for (int var = nivList; var < puce; ++var) {
                     htmlCode.append("<ul>\n");
                 }
-                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
+                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 nivList = puce;
             }
             else if (puce < nivList)
@@ -1004,7 +990,7 @@ QString Functions::getSimpleListWithSubLists(QStringList items, int config)
                 for (int var = nivList; var > puce; --var) {
                     htmlCode.append("</ul>\n");
                 }
-                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
+                htmlCode.append("<li" + (QString)(isIngr ? " class='ingredient'" : "") + ">" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 nivList = puce;
             }
         }
@@ -1019,12 +1005,12 @@ QString Functions::getSimpleListWithSubLists(QStringList items, int config)
 }
 
 /**
- * @brief Functions::getSimpleListWithSubLists
+ * @brief Functions::getSimpleList
  * @param items : elements of the list
  * @return htmlCode corresponding to the list
  * Transform a list into HtmlCode, in the case of simple list (without numbers), that can't include sublists (Matériel, Conseils)
  */
-QString Functions::getSimpleList(QStringList items, int config)
+QString Functions::getSimpleList(QStringList items)
 {
     QString htmlCode = "";
     bool inList = false;
@@ -1034,12 +1020,12 @@ QString Functions::getSimpleList(QStringList items, int config)
         {
             if (inList)
             {
-                htmlCode.append("</ul>\n" + insertLinks(insertPictures(parts[1], config)) + "<br/>\n");
+                htmlCode.append("</ul>\n" + insertLinks(insertPictures(parts[1])) + "<br/>\n");
                 inList = false;
             }
             else
             {
-                htmlCode.append(insertLinks(insertPictures(parts[1], config)) + "<br/>\n");
+                htmlCode.append(insertLinks(insertPictures(parts[1])) + "<br/>\n");
             }
         }
         else {
@@ -1053,11 +1039,11 @@ QString Functions::getSimpleList(QStringList items, int config)
             }
             if (inList)
             {
-                htmlCode.append("<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
+                htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
             }
             else
             {
-                htmlCode.append("<ul>\n<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
+                htmlCode.append("<ul>\n<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 inList = true;
             }
         }
@@ -1068,12 +1054,12 @@ QString Functions::getSimpleList(QStringList items, int config)
 }
 
 /**
- * @brief Functions::getSimpleListWithSubLists
+ * @brief Functions::getNumberedList
  * @param items : elements of the list
  * @return htmlCode corresponding to the list
  * Transform a list into HtmlCode, in the case of numbered lists
  */
-QString Functions::getNumberedList(QStringList items, int config)
+QString Functions::getNumberedList(QStringList items)
 {
     QString htmlCode = "";
     int nivList = -1;
@@ -1085,7 +1071,7 @@ QString Functions::getNumberedList(QStringList items, int config)
                 htmlCode.append("</span></ul>\n");
             }
             htmlCode.append("</ol>\n");
-            htmlCode.append(insertLinks(insertPictures(parts[1], config)) + "<br/>\n");
+            htmlCode.append(insertLinks(insertPictures(parts[1])) + "<br/>\n");
             nivList = -1;
         }
         else
@@ -1095,11 +1081,11 @@ QString Functions::getNumberedList(QStringList items, int config)
             {
                 if (puce == 0)
                 {
-                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1], config)) + "</span></li>\n");
+                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1])) + "</span></li>\n");
                 }
                 else
                 {
-                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
+                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 }
                 nivList = puce;
             }
@@ -1115,11 +1101,11 @@ QString Functions::getNumberedList(QStringList items, int config)
                 }
                 if (puce == 0)
                 {
-                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1], config)) + "</span></li>\n");
+                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1])) + "</span></li>\n");
                 }
                 else
                 {
-                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
+                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 }
                 nivList = puce;
             }
@@ -1130,11 +1116,11 @@ QString Functions::getNumberedList(QStringList items, int config)
                 }
                 if (puce == 0)
                 {
-                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1], config)) + "</span></li>\n");
+                    htmlCode.append("<li><span>" + insertLinks(insertPictures(parts[1])) + "</span></li>\n");
                 }
                 else
                 {
-                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1], config)) + "</li>\n");
+                    htmlCode.append("<li>" + insertLinks(insertPictures(parts[1])) + "</li>\n");
                 }
                 nivList = puce;
             }
@@ -1187,7 +1173,7 @@ QString Functions::insertLinks(QString data)
  * @return htmlCode of the picture
  * Transform picture tags to HTML pictures tags, and add corresponding pictures to otherPictures list
  */
-QString Functions::insertPictures(QString data, int config)
+QString Functions::insertPictures(QString data)
 {
     QRegExp exp ("\\[IMG:(\\w+):(\\d+):(\\d+):([^\\]]+)\\]");
     while (data.contains(exp))
@@ -1208,7 +1194,7 @@ QString Functions::insertPictures(QString data, int config)
         }
         QString centerBegin = center ? "<center>" : "";
         QString centerEnd = center ? "</center>" : "";
-        data.replace(imgBal, centerBegin + "<img src=\"" + serverConfs[config]["dirDistPict"] + img.split("/").last() + "\" alt=\"" + QObject::tr("Image d'illustration") + "\" width=\"" + largeur + "\" height=\"" + hauteur + "\"" + classDef + " />" + centerEnd + "<br/>");
+        data.replace(imgBal, centerBegin + "<img src=\"" + Functions::get_img_wp_tag(img.split("/").last()) + "\" alt=\"" + QObject::tr("Image d'illustration") + "\" width=\"" + largeur + "\" height=\"" + hauteur + "\"" + classDef + " />" + centerEnd + "<br/>");
         if (!otherPicts.contains(img))
             otherPicts.append(img);
     }
@@ -1319,11 +1305,6 @@ QString Functions::setPrintTags(QString text)
 QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep, int hRep, int minRep,
                                     int nbPersonnes, QString precision, QString description, QStringList ingredients, QStringList preparation)
 {
-    QString photo = addrSite;
-    if (!photo.endsWith("/")) {
-        photo += "/";
-    }
-    photo += dirDistPict;
 
     QRegExp exp ("<a href=\"[^\"]+\" target=\"[^\"]+\">");
     description.replace(exp, "");
@@ -1378,7 +1359,7 @@ QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPre
               \"@context\": \"http://schema.org/\",\n\
               \"@type\": \"Recipe\",\n\
               \"name\": \"" + title.replace("\"", "\\\"") + "\",\n\
-              \"image\": \"" + photo + mainPicture + "\",\n\
+              \"image\": \"" + Functions::get_img_wp_tag(mainPicture) + "\",\n\
               \"author\": {\n\
                 \"@type\":\"Person\",\n\
                 \"name\":\"QRecipeWriter\"\n\
@@ -1396,6 +1377,10 @@ QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPre
     snippet += "              \"ingredients\": \n              [  \"" + ingrs.join("\",\n                \"") + "\"\n              ],\n";
     snippet += "              \"recipeInstructions\": \"" + preps.join("\\n") + "\"\n        }\n</script>\n\n";
     return snippet;
+}
+
+QString Functions::get_img_wp_tag(QString img) {
+    return "[###IMG-SRC###|" + img + "]";
 }
 
 /**
@@ -1422,7 +1407,7 @@ QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPre
 QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
                                     int hRep, int minRep, int nbPersonnes, int nbPersonnes2, QString precision,
                                     QString description, QString ingredients, QString materiel, QString preparation,
-                                    QString conseils, int config)
+                                    QString conseils)
 {
     QString htmlCode = "";
     description = "<p>"+description.replace("\n", "<br/>\n")+"</p>";
@@ -1434,9 +1419,9 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
     QString tpsRep = temps[2];
 
     //Generation of the complete code :
-    htmlCode = "<div id='masquer'><div><a href=\"" + serverConfs[config]["dirDistPict"] + mainPicture + "\"><photo><img style=\"float: left; "
+    htmlCode = "<div id='masquer'><div><a href=\"" + Functions::get_img_wp_tag(mainPicture) + "\"><photo><img style=\"float: left; "
              + "margin-right: 6px;\" class=shadow alt=\"Image d'illustation de la recette\" title=\""
-             + titre+"\" src=\"" + serverConfs[config]["dirDistPict"] + mainPicture + "\" width=\"254\" height=\"190\"></photo></a></div><description>"
+             + titre+"\" src=\"" + Functions::get_img_wp_tag(mainPicture) + "\" width=\"254\" height=\"190\"></photo></a></div><description>"
              + description+ "</description></div><div id=\"detail\"><temps><b>" + QObject::tr("Temps de Préparation :") + " " +tpsPrep;
     //Adding temps de repos if used:
     if (tpsRep != "")
@@ -1678,7 +1663,7 @@ void Functions::downloadUpdate(QString adresse, QWidget *parent) {
 
 bool Functions::is_config_valid(int id) {
     QHash<QString, QString> conf = serverConfs[id];
-    return conf["addrSite"] != "" && conf["typeServer"] != "" && ((conf["typeServer"] == "wordpress" && conf["addrPub"] != "" && conf["dirDistPict"] != "") || conf["typeServer"] == "pywebcooking");
+    return conf["addrSite"] != "" && conf["typeServer"] != "";
 }
 
 void Functions::write_categories_file(QStringList new_cats) {
