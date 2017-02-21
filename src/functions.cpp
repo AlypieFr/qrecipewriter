@@ -1375,7 +1375,7 @@ QString Functions::makeRichSnippets(QString title, QString mainPicture, int hPre
     }
     snippet += "\",\n";
     snippet += "              \"ingredients\": \n              [  \"" + ingrs.join("\",\n                \"") + "\"\n              ],\n";
-    snippet += "              \"recipeInstructions\": \"" + preps.join("\\n") + "\"\n        }\n</script>\n\n";
+    snippet += "              \"recipeInstructions\": \"" + Functions::insertMovies(Functions::insertPictures(preps.join("\\n"))) + "\"\n        }\n</script>\n\n";
     return snippet;
 }
 
