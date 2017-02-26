@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -524,73 +524,12 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="config1">
        <attribute name="title">
         <string>Config 1</string>
        </attribute>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>350</y>
-          <width>621</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recSearch">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>180</y>
-          <width>211</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Search *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recPrinter">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>150</y>
-          <width>201</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Printer</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recCoupDeCoeur">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>210</y>
-          <width>261</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Coup de Coeur *</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso">
         <property name="geometry">
          <rect>
@@ -626,22 +565,6 @@
         </property>
         <property name="checked">
          <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="richSnippets">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>120</y>
-          <width>431</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer les extraits enrichis dans les recherches Google</string>
         </property>
        </widget>
        <widget class="QWidget" name="layoutWidget">
@@ -728,72 +651,66 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>381</width>
+          <height>89</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QCheckBox" name="richSnippets">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer les extraits enrichis dans les recherches Google</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recPrinter">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Printer</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recCoupDeCoeur">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Coup de Coeur</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="config2">
        <attribute name="title">
         <string>Config 2</string>
        </attribute>
-       <widget class="QLabel" name="label_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>350</y>
-          <width>621</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recSearch_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>180</y>
-          <width>211</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Search *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recCoupDeCoeur_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>210</y>
-          <width>261</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Coup de Coeur *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="richSnippets_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>120</y>
-          <width>431</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer les extraits enrichis dans les recherches Google</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_2">
         <property name="geometry">
          <rect>
@@ -829,22 +746,6 @@
         </property>
         <property name="checked">
          <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recPrinter_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>150</y>
-          <width>201</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Printer</string>
         </property>
        </widget>
        <widget class="QWidget" name="layoutWidget_5">
@@ -931,72 +832,66 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>381</width>
+          <height>89</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QCheckBox" name="richSnippets_2">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer les extraits enrichis dans les recherches Google</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recPrinter_2">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Printer</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recCoupDeCoeur_2">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Coup de Coeur</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="config3">
        <attribute name="title">
         <string>Config 3</string>
        </attribute>
-       <widget class="QLabel" name="label_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>350</y>
-          <width>621</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recSearch_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>180</y>
-          <width>211</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Search *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recCoupDeCoeur_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>210</y>
-          <width>261</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Coup de Coeur *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="richSnippets_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>120</y>
-          <width>431</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer les extraits enrichis dans les recherches Google</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_3">
         <property name="geometry">
          <rect>
@@ -1032,22 +927,6 @@
         </property>
         <property name="checked">
          <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recPrinter_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>150</y>
-          <width>201</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Printer</string>
         </property>
        </widget>
        <widget class="QWidget" name="layoutWidget_9">
@@ -1134,40 +1013,66 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>381</width>
+          <height>89</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QCheckBox" name="richSnippets_3">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer les extraits enrichis dans les recherches Google</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recPrinter_3">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Printer</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recCoupDeCoeur_3">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Coup de Coeur</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="config4">
        <attribute name="title">
         <string>Config 4</string>
        </attribute>
-       <widget class="QLabel" name="label_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>350</y>
-          <width>621</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recPrinter_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>150</y>
-          <width>201</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Printer</string>
-        </property>
-       </widget>
        <widget class="QCheckBox" name="configActive_4">
         <property name="geometry">
          <rect>
@@ -1190,54 +1095,6 @@
         </property>
         <property name="checked">
          <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="richSnippets_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>120</y>
-          <width>431</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer les extraits enrichis dans les recherches Google</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recCoupDeCoeur_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>210</y>
-          <width>261</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Coup de Coeur *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recSearch_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>180</y>
-          <width>211</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Search *</string>
         </property>
        </widget>
        <widget class="QPushButton" name="buttonOptionsSupprimerDonneesPerso_4">
@@ -1337,94 +1194,66 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>381</width>
+          <height>89</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QCheckBox" name="richSnippets_4">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer les extraits enrichis dans les recherches Google</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recPrinter_4">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Printer</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recCoupDeCoeur_4">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Coup de Coeur</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="config5">
        <attribute name="title">
         <string>Config 5</string>
        </attribute>
-       <widget class="QLabel" name="label_6">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>350</y>
-          <width>621</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recPrinter_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>150</y>
-          <width>201</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Printer</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="richSnippets_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>120</y>
-          <width>431</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer les extraits enrichis dans les recherches Google</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recSearch_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>180</y>
-          <width>211</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Search *</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="recCoupDeCoeur_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>210</y>
-          <width>261</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Activer Recipes Coup de Coeur *</string>
-        </property>
-       </widget>
        <widget class="QCheckBox" name="configActive_5">
         <property name="geometry">
          <rect>
@@ -1546,6 +1375,67 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>120</y>
+          <width>381</width>
+          <height>89</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QCheckBox" name="richSnippets_5">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer les extraits enrichis dans les recherches Google</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recPrinter_5">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Printer</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="recCoupDeCoeur_5">
+           <property name="styleSheet">
+            <string notr="true">font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string>Activer Recipes Coup de Coeur</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </widget>
@@ -1602,7 +1492,6 @@
   <tabstop>lineEditAdresseSite</tabstop>
   <tabstop>richSnippets</tabstop>
   <tabstop>recPrinter</tabstop>
-  <tabstop>recSearch</tabstop>
   <tabstop>recCoupDeCoeur</tabstop>
   <tabstop>configActive</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso</tabstop>
@@ -1611,7 +1500,6 @@
   <tabstop>lineEditAdresseSite_2</tabstop>
   <tabstop>richSnippets_2</tabstop>
   <tabstop>recPrinter_2</tabstop>
-  <tabstop>recSearch_2</tabstop>
   <tabstop>recCoupDeCoeur_2</tabstop>
   <tabstop>configActive_2</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_2</tabstop>
@@ -1620,7 +1508,6 @@
   <tabstop>lineEditAdresseSite_3</tabstop>
   <tabstop>richSnippets_3</tabstop>
   <tabstop>recPrinter_3</tabstop>
-  <tabstop>recSearch_3</tabstop>
   <tabstop>recCoupDeCoeur_3</tabstop>
   <tabstop>configActive_3</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_3</tabstop>
@@ -1630,7 +1517,6 @@
   <tabstop>richSnippets_4</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_5</tabstop>
   <tabstop>recPrinter_4</tabstop>
-  <tabstop>recSearch_4</tabstop>
   <tabstop>recCoupDeCoeur_4</tabstop>
   <tabstop>configActive_4</tabstop>
   <tabstop>buttonOptionsSupprimerDonneesPerso_4</tabstop>
@@ -1639,7 +1525,6 @@
   <tabstop>lineEditAdresseSite_5</tabstop>
   <tabstop>richSnippets_5</tabstop>
   <tabstop>recPrinter_5</tabstop>
-  <tabstop>recSearch_5</tabstop>
   <tabstop>recCoupDeCoeur_5</tabstop>
   <tabstop>configActive_5</tabstop>
  </tabstops>

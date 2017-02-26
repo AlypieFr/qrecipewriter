@@ -64,7 +64,6 @@ QStringList units;
 bool cancel = false; //Keep if user cancel orthographical correction
 bool richSnippets = false; //Active rich snippets for recipes in google search results
 bool recPrinter = false; //CeC Printer status
-bool recSearch = false; //Activate or not search module
 bool recCoupDeCoeur = false; //Activate or not "coups de coeur"
 int configActive = 1;
 QHash<int,QHash<QString, QString>> serverConfs; //Store config for all server configurations

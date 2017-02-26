@@ -48,7 +48,6 @@ extern QString appI18n;
 extern bool cancel;
 extern bool richSnippets;
 extern bool recPrinter;
-extern bool recSearch;
 extern bool recCoupDeCoeur;
 extern int idRecipe;
 extern bool openLastDir_sauvegarde;
@@ -398,8 +397,8 @@ void QRecipeWriter::init()
         ui->abcButton->setEnabled(false);
         ui->actionCorrection_orthographique->setEnabled(false);
     }
-    //CeC Coup de coeur ? :
-    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur || typeServer == "pywebcooking");
+    //Coup de coeur ? :
+    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur);
     ui->sync_cats->setVisible(typeServer == "pywebcooking");
     //Initialize ident variables:
     idIngr = 0;
@@ -688,7 +687,7 @@ void QRecipeWriter::on_actionOptions_triggered()
         ui->noPrint->setToolTip(tr("Ne pas imprimer une partie de texte"));
         ui->printOnly->setToolTip(tr("Imprimer une partie de texte mais ne pas l'afficher"));
     }
-    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur || typeServer == "pywebcooking");
+    ui->setCoupDeCoeur->setVisible(recCoupDeCoeur);
     ui->sync_cats->setVisible(typeServer == "pywebcooking");
     toggleEditPict();
 }

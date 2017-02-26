@@ -31,7 +31,6 @@ extern QString corrOrtho;
 extern QString appI18n;
 extern bool richSnippets;
 extern bool recPrinter;
-extern bool recSearch;
 extern bool recCoupDeCoeur;
 extern int configActive;
 extern QHash<int,QHash<QString, QString>> serverConfs;
@@ -151,7 +150,6 @@ void Functions::loadConfig()
     typeServer = serverConfs[configActive]["typeServer"];
     richSnippets = serverConfs[configActive]["richSnippets"] == "1";
     recPrinter = serverConfs[configActive]["recPrinter"] == "1";
-    recSearch = serverConfs[configActive]["recSearch"] == "1";
     recCoupDeCoeur = serverConfs[configActive]["recCoupDeCoeur"] == "1";
 }
 
@@ -188,11 +186,6 @@ QHash<int, QHash<QString, QString>> Functions::loadServerConfigs() {
                     if(xml.name() == "recPrinter") {
                         xml.readNext();
                         configServer[i]["recPrinter"] = xml.text().toString();
-                        continue;
-                    }
-                    if(xml.name() == "recSearch") {
-                        xml.readNext();
-                        configServer[i]["recSearch"] = xml.text().toString();
                         continue;
                     }
                     if(xml.name() == "recCoupDeCoeur") {

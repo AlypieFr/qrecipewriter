@@ -43,7 +43,6 @@ private slots:
 
 private:
     void sendRecipe();
-    QString makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<int> tpsRep);
 };
 
 #endif // SENDWORDPRESS_H

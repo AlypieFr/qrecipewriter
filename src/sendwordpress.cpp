@@ -31,29 +31,15 @@ void SendWordpress::init(QString htmlCode_lu, QString title_lu, QString mainPict
     envoiEnCours = envoiEnCours_lu;
 
     tags = "";
-    if (serverConfs[config]["recSearch"] == "1" && (categories.size() > 1 || categories[0] != "Base")) {
-        tags = makeTags(tpsPrep_lu, tpsCuis_lu, tpsRep_lu);
-        if (serverConfs[config]["recCoupDeCoeur"] == "1") {
-            tags += ",";
-        }
-    }
     if (serverConfs[config]["recCoupDeCoeur"] == "1") {
         tags += coupDeCoeur_lu;
     }
-    this->sendRecipe();
-}
 
-QString SendWordpress::makeTags(QList<int> tpsPrep, QList<int> tpsCuis, QList<int> tpsRep)
-{
-    int tPrep = tpsPrep[0] * 60 + tpsPrep[1];
-    int tCuis = tpsCuis[0] * 60 + tpsCuis[1];
-    int tRepos = tpsRep[0] * 24 * 60 + tpsRep[1] * 60 + tpsRep[2];
-    int tTotal = tPrep + tCuis + tRepos;
-    QString tags = "tpsPrep=" + QString::number(tPrep) + ",tpsCuis="
-            + QString::number(tCuis) + ",tpsRepos="
-            + QString::number(tRepos) + ",tpsTotal="
-            + QString::number(tTotal);
-    return tags;
+    tpsPrep = tpsPrep_lu[0] * 60 + tpsPrep_lu[1];
+    tpsCuis = tpsCuis_lu[0] * 60 + tpsCuis_lu[1];
+    tpsRep = tpsRep_lu[0] * 24 * 60 + tpsRep_lu[1] * 60 + tpsRep_lu[2];
+
+    this->sendRecipe();
 }
 
 
@@ -123,6 +109,9 @@ void SendWordpress::sendRecipe() {
     input.add_var("tags", tags);
     input.add_var("thumbnail", mainPicture);
     input.add_var("published", publish ? "1" : "0");
+    input.add_var("tps_prep", QString::number(tpsPrep));
+    input.add_var("tps_cuis", QString::number(tpsCuis));
+    input.add_var("tps_rep", QString::number(tpsRep));
 
     if (!mainPicture.startsWith("http"))
         input.add_file("main_picture", mainPicture, mainPictureName, "image/jpg");

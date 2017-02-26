@@ -41,7 +41,6 @@ extern QString corrOrtho; //Use orthograph correction when typing
 extern QString appI18n; //App language
 extern bool richSnippets;
 extern bool recPrinter; //CeC Printer status
-extern bool recSearch;
 extern bool recCoupDeCoeur;
 extern int configActive;
 extern QHash<int,QHash<QString, QString>> serverConfs;
@@ -85,10 +84,6 @@ void Options::init()
     ui->lineEditCommandeNavigateur->setText(cmdNav);
     ui->lineEditEditeurImages->setText(editPict);
     ui->lineEditDictionnairePath->setText(corrOrtho);
-    ui->lineEditAdresseSite->setText(addrSite);
-    ui->recPrinter->setChecked(recPrinter);
-    ui->recSearch->setChecked(recSearch);
-    ui->recCoupDeCoeur->setChecked(recCoupDeCoeur);
     ui->autoSearchUpdt->setChecked(autoCheckUpdt);
     ui->checkF7Send->setChecked(checkF7beforeSend);
     if (appI18n == "fr") {
@@ -355,7 +350,6 @@ void Options::on_buttonBox_accepted()
                 typeServer=serverConfs[1]["typeServer"];
                 richSnippets = serverConfs[1]["richSnippets"] == "1";
                 recPrinter = serverConfs[1]["recPrinter"] == "1";
-                recSearch = serverConfs[1]["recSearch"] == "1";
                 recCoupDeCoeur = serverConfs[1]["recCoupDeCoeur"] == "1";
                 activeServerConfig = 1;
             }
@@ -364,7 +358,6 @@ void Options::on_buttonBox_accepted()
                 typeServer=serverConfs[2]["typeServer"];
                 richSnippets = serverConfs[2]["richSnippets"] == "1";
                 recPrinter = serverConfs[2]["recPrinter"] == "1";
-                recSearch = serverConfs[2]["recSearch"] == "1";
                 recCoupDeCoeur = serverConfs[2]["recCoupDeCoeur"] == "1";
                 activeServerConfig = 2;
             }
@@ -373,7 +366,6 @@ void Options::on_buttonBox_accepted()
                 typeServer=serverConfs[3]["typeServer"];
                 richSnippets = serverConfs[3]["richSnippets"] == "1";
                 recPrinter = serverConfs[3]["recPrinter"] == "1";
-                recSearch = serverConfs[3]["recSearch"] == "1";
                 recCoupDeCoeur = serverConfs[3]["recCoupDeCoeur"] == "1";
                 activeServerConfig = 3;
             }
@@ -382,7 +374,6 @@ void Options::on_buttonBox_accepted()
                 typeServer=serverConfs[4]["typeServer"];
                 richSnippets = serverConfs[4]["richSnippets"] == "1";
                 recPrinter = serverConfs[4]["recPrinter"] == "1";
-                recSearch = serverConfs[4]["recSearch"] == "1";
                 recCoupDeCoeur = serverConfs[4]["recCoupDeCoeur"] == "1";
                 activeServerConfig = 4;
             }
@@ -391,7 +382,6 @@ void Options::on_buttonBox_accepted()
                 typeServer=serverConfs[5]["typeServer"];
                 richSnippets = serverConfs[5]["richSnippets"] == "1";
                 recPrinter = serverConfs[5]["recPrinter"] == "1";
-                recSearch = serverConfs[5]["recSearch"] == "1";
                 recCoupDeCoeur = serverConfs[5]["recCoupDeCoeur"] == "1";
                 activeServerConfig = 5;
             }
@@ -411,35 +401,30 @@ void Options::updateServerConfs() {
     serverConfs[1]["typeServer"] = (ui->typeServer_wordpress->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking->isChecked() ? "pywebcooking" : ""));
     serverConfs[1]["richSnippets"] = ui->richSnippets->isChecked() ? "1" : "0";
     serverConfs[1]["recPrinter"] = ui->recPrinter->isChecked() ? "1" : "0";
-    serverConfs[1]["recSearch"] = ui->recSearch->isChecked() ? "1" : "0";
     serverConfs[1]["recCoupDeCoeur"] = ui->recCoupDeCoeur->isChecked() ? "1" : "0";
     //Server 2
     serverConfs[2]["addrSite"] = ui->lineEditAdresseSite_2->text();
     serverConfs[2]["typeServer"] = (ui->typeServer_wordpress_2->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_2->isChecked() ? "pywebcooking" : ""));
     serverConfs[2]["richSnippets"] = ui->richSnippets_2->isChecked() ? "1" : "0";
     serverConfs[2]["recPrinter"] = ui->recPrinter_2->isChecked() ? "1" : "0";
-    serverConfs[2]["recSearch"] = ui->recSearch_2->isChecked() ? "1" : "0";
     serverConfs[2]["recCoupDeCoeur"] = ui->recCoupDeCoeur_2->isChecked() ? "1" : "0";
     //Server 3
     serverConfs[3]["addrSite"] = ui->lineEditAdresseSite_3->text();
     serverConfs[3]["typeServer"] = (ui->typeServer_wordpress_3->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_3->isChecked() ? "pywebcooking" : ""));
     serverConfs[3]["richSnippets"] = ui->richSnippets_3->isChecked() ? "1" : "0";
     serverConfs[3]["recPrinter"] = ui->recPrinter_3->isChecked() ? "1" : "0";
-    serverConfs[3]["recSearch"] = ui->recSearch_3->isChecked() ? "1" : "0";
     serverConfs[3]["recCoupDeCoeur"] = ui->recCoupDeCoeur_3->isChecked() ? "1" : "0";
     //Server 4
     serverConfs[4]["addrSite"] = ui->lineEditAdresseSite_4->text();
     serverConfs[4]["typeServer"] = (ui->typeServer_wordpress_4->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_4->isChecked() ? "pywebcooking" : ""));
     serverConfs[4]["richSnippets"] = ui->richSnippets_4->isChecked() ? "1" : "0";
     serverConfs[4]["recPrinter"] = ui->recPrinter_4->isChecked() ? "1" : "0";
-    serverConfs[4]["recSearch"] = ui->recSearch_4->isChecked() ? "1" : "0";
     serverConfs[4]["recCoupDeCoeur"] = ui->recCoupDeCoeur_4->isChecked() ? "1" : "0";
     //Server 5
     serverConfs[5]["addrSite"] = ui->lineEditAdresseSite_5->text();
     serverConfs[5]["typeServer"] = (ui->typeServer_wordpress_5->isChecked() ? "wordpress" : (ui->typeServer_pywebcooking_5->isChecked() ? "pywebcooking" : ""));
     serverConfs[5]["richSnippets"] = ui->richSnippets_5->isChecked() ? "1" : "0";
     serverConfs[5]["recPrinter"] = ui->recPrinter_5->isChecked() ? "1" : "0";
-    serverConfs[5]["recSearch"] = ui->recSearch_5->isChecked() ? "1" : "0";
     serverConfs[5]["recCoupDeCoeur"] = ui->recCoupDeCoeur_5->isChecked() ? "1" : "0";
 }
 
@@ -458,20 +443,15 @@ void Options::loadConfigsServer() {
             ui->typeServer_pywebcooking->setChecked(true);
             ui->richSnippets->setVisible(false);
             ui->recPrinter->setVisible(false);
-            ui->recSearch->setVisible(false);
-            ui->recCoupDeCoeur->setVisible(false);
         }
         else {
             ui->typeServer_wordpress->setChecked(true);
             ui->richSnippets->setVisible(true);
             ui->recPrinter->setVisible(true);
-            ui->recSearch->setVisible(true);
-            ui->recCoupDeCoeur->setVisible(true);
             ui->richSnippets->setChecked(serverConfs[1]["richSnippets"] == "1");
             ui->recPrinter->setChecked(serverConfs[1]["recPrinter"] == "1");
-            ui->recSearch->setChecked(serverConfs[1]["recSearch"] == "1");
-            ui->recCoupDeCoeur->setChecked(serverConfs[1]["recCoupDeCoeur"] == "1");
         }
+        ui->recCoupDeCoeur->setChecked(serverConfs[1]["recCoupDeCoeur"] == "1");
         ui->lineEditAdresseSite->setText(serverConfs[1]["addrSite"]);
     }
     if (serverConfs.contains(2)) {
@@ -479,20 +459,15 @@ void Options::loadConfigsServer() {
             ui->typeServer_pywebcooking_2->setChecked(true);
             ui->richSnippets_2->setVisible(false);
             ui->recPrinter_2->setVisible(false);
-            ui->recSearch_2->setVisible(false);
-            ui->recCoupDeCoeur_2->setVisible(false);
         }
         else {
             ui->typeServer_wordpress_2->setChecked(true);
             ui->richSnippets_2->setVisible(true);
             ui->recPrinter_2->setVisible(true);
-            ui->recSearch_2->setVisible(true);
-            ui->recCoupDeCoeur_2->setVisible(true);
             ui->richSnippets_2->setChecked(serverConfs[2]["richSnippets"] == "1");
             ui->recPrinter_2->setChecked(serverConfs[2]["recPrinter"] == "1");
-            ui->recSearch_2->setChecked(serverConfs[2]["recSearch"] == "1");
-            ui->recCoupDeCoeur_2->setChecked(serverConfs[2]["recCoupDeCoeur"] == "1");
         }
+        ui->recCoupDeCoeur_2->setChecked(serverConfs[2]["recCoupDeCoeur"] == "1");
         ui->lineEditAdresseSite_2->setText(serverConfs[2]["addrSite"]);
     }
     if (serverConfs.contains(3)) {
@@ -500,20 +475,15 @@ void Options::loadConfigsServer() {
             ui->typeServer_pywebcooking_3->setChecked(true);
             ui->richSnippets_3->setVisible(false);
             ui->recPrinter_3->setVisible(false);
-            ui->recSearch_3->setVisible(false);
-            ui->recCoupDeCoeur_3->setVisible(false);
         }
         else {
             ui->typeServer_wordpress_3->setChecked(true);
             ui->richSnippets_3->setVisible(true);
             ui->recPrinter_3->setVisible(true);
-            ui->recSearch_3->setVisible(true);
-            ui->recCoupDeCoeur_3->setVisible(true);
             ui->richSnippets_3->setChecked(serverConfs[3]["richSnippets"] == "1");
             ui->recPrinter_3->setChecked(serverConfs[3]["recPrinter"] == "1");
-            ui->recSearch_3->setChecked(serverConfs[3]["recSearch"] == "1");
-            ui->recCoupDeCoeur_3->setChecked(serverConfs[3]["recCoupDeCoeur"] == "1");
         }
+        ui->recCoupDeCoeur_3->setChecked(serverConfs[3]["recCoupDeCoeur"] == "1");
         ui->lineEditAdresseSite_3->setText(serverConfs[3]["addrSite"]);
     }
     if (serverConfs.contains(4)) {
@@ -521,20 +491,15 @@ void Options::loadConfigsServer() {
             ui->typeServer_pywebcooking_4->setChecked(true);
             ui->richSnippets_4->setVisible(false);
             ui->recPrinter_4->setVisible(false);
-            ui->recSearch_4->setVisible(false);
-            ui->recCoupDeCoeur_4->setVisible(false);
         }
         else {
             ui->typeServer_wordpress_4->setChecked(true);
             ui->richSnippets_4->setVisible(true);
             ui->recPrinter_4->setVisible(true);
-            ui->recSearch_4->setVisible(true);
-            ui->recCoupDeCoeur_4->setVisible(true);
             ui->richSnippets_4->setChecked(serverConfs[4]["richSnippets"] == "1");
             ui->recPrinter_4->setChecked(serverConfs[4]["recPrinter"] == "1");
-            ui->recSearch_4->setChecked(serverConfs[4]["recSearch"] == "1");
-            ui->recCoupDeCoeur_4->setChecked(serverConfs[4]["recCoupDeCoeur"] == "1");
         }
+        ui->recCoupDeCoeur_4->setChecked(serverConfs[4]["recCoupDeCoeur"] == "1");
         ui->lineEditAdresseSite_4->setText(serverConfs[4]["addrSite"]);
     }
     if (serverConfs.contains(5)) {
@@ -542,20 +507,15 @@ void Options::loadConfigsServer() {
             ui->typeServer_pywebcooking_5->setChecked(true);
             ui->richSnippets_5->setVisible(false);
             ui->recPrinter_5->setVisible(false);
-            ui->recSearch_5->setVisible(false);
-            ui->recCoupDeCoeur_5->setVisible(false);
         }
         else {
             ui->typeServer_wordpress_5->setChecked(true);
             ui->richSnippets_5->setVisible(true);
             ui->recPrinter_5->setVisible(true);
-            ui->recSearch_5->setVisible(true);
-            ui->recCoupDeCoeur_5->setVisible(true);
             ui->richSnippets_5->setChecked(serverConfs[5]["richSnippets"] == "1");
             ui->recPrinter_5->setChecked(serverConfs[5]["recPrinter"] == "1");
-            ui->recSearch_5->setChecked(serverConfs[5]["recSearch"] == "1");
-            ui->recCoupDeCoeur_5->setChecked(serverConfs[5]["recCoupDeCoeur"] == "1");
         }
+        ui->recCoupDeCoeur_5->setChecked(serverConfs[5]["recCoupDeCoeur"] == "1");
         ui->lineEditAdresseSite_5->setText(serverConfs[5]["addrSite"]);
     }
 }
@@ -605,8 +565,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     QString activeCeCPrinter = ui->recPrinter->isChecked() ? "1": "0";
     writerS->writeTextElement("recPrinter",activeCeCPrinter);
-    QString cSearch = ui->recSearch->isChecked() ? "1" : "0";
-    writerS->writeTextElement("recSearch", cSearch);
     QString cCoupDeCoeur = ui->recCoupDeCoeur->isChecked() ? "1" : "0";
     writerS->writeTextElement("recCoupDeCoeur", cCoupDeCoeur);
     writerS->writeEndElement();
@@ -624,8 +582,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->recPrinter_2->isChecked() ? "1": "0";
     writerS->writeTextElement("recPrinter",activeCeCPrinter);
-    cSearch = ui->recSearch_2->isChecked() ? "1" : "0";
-    writerS->writeTextElement("recSearch", cSearch);
     cCoupDeCoeur = ui->recCoupDeCoeur_2->isChecked() ? "1" : "0";
     writerS->writeTextElement("recCoupDeCoeur", cCoupDeCoeur);
     writerS->writeEndElement();
@@ -643,8 +599,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->recPrinter_3->isChecked() ? "1": "0";
     writerS->writeTextElement("recPrinter",activeCeCPrinter);
-    cSearch = ui->recSearch_3->isChecked() ? "1" : "0";
-    writerS->writeTextElement("recSearch", cSearch);
     cCoupDeCoeur = ui->recCoupDeCoeur_3->isChecked() ? "1" : "0";
     writerS->writeTextElement("recCoupDeCoeur", cCoupDeCoeur);
     writerS->writeEndElement();
@@ -662,8 +616,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->recPrinter_4->isChecked() ? "1": "0";
     writerS->writeTextElement("recPrinter",activeCeCPrinter);
-    cSearch = ui->recSearch_4->isChecked() ? "1" : "0";
-    writerS->writeTextElement("recSearch", cSearch);
     cCoupDeCoeur = ui->recCoupDeCoeur_4->isChecked() ? "1" : "0";
     writerS->writeTextElement("recCoupDeCoeur", cCoupDeCoeur);
     writerS->writeEndElement();
@@ -681,8 +633,6 @@ void Options::saveXML(int activeServerConfig)
     writerS->writeTextElement("richSnippets", activeRichSnippets);
     activeCeCPrinter = ui->recPrinter_5->isChecked() ? "1": "0";
     writerS->writeTextElement("recPrinter",activeCeCPrinter);
-    cSearch = ui->recSearch_5->isChecked() ? "1" : "0";
-    writerS->writeTextElement("recSearch", cSearch);
     cCoupDeCoeur = ui->recCoupDeCoeur_5->isChecked() ? "1" : "0";
     writerS->writeTextElement("recCoupDeCoeur", cCoupDeCoeur);
     writerS->writeEndElement();
@@ -769,14 +719,10 @@ void Options::on_typeServer_pywebcooking_toggled(bool checked)
     if (checked) {
         ui->richSnippets->setVisible(false);
         ui->recPrinter->setVisible(false);
-        ui->recSearch->setVisible(false);
-        ui->recCoupDeCoeur->setVisible(false);
     }
     else {
         ui->richSnippets->setVisible(true);
         ui->recPrinter->setVisible(true);
-        ui->recSearch->setVisible(true);
-        ui->recCoupDeCoeur->setVisible(true);
     }
 }
 
@@ -785,14 +731,10 @@ void Options::on_typeServer_pywebcooking_2_toggled(bool checked)
     if (checked) {
         ui->richSnippets_2->setVisible(false);
         ui->recPrinter_2->setVisible(false);
-        ui->recSearch_2->setVisible(false);
-        ui->recCoupDeCoeur_2->setVisible(false);
     }
     else {
         ui->richSnippets_2->setVisible(true);
         ui->recPrinter_2->setVisible(true);
-        ui->recSearch_2->setVisible(true);
-        ui->recCoupDeCoeur_2->setVisible(true);
     }
 }
 
@@ -801,14 +743,10 @@ void Options::on_typeServer_pywebcooking_3_toggled(bool checked)
     if (checked) {
         ui->richSnippets_3->setVisible(false);
         ui->recPrinter_3->setVisible(false);
-        ui->recSearch_3->setVisible(false);
-        ui->recCoupDeCoeur_3->setVisible(false);
     }
     else {
         ui->richSnippets_3->setVisible(true);
         ui->recPrinter_3->setVisible(true);
-        ui->recSearch_3->setVisible(true);
-        ui->recCoupDeCoeur_3->setVisible(true);
     }
 }
 
@@ -817,14 +755,10 @@ void Options::on_typeServer_pywebcooking_4_toggled(bool checked)
     if (checked) {
         ui->richSnippets_4->setVisible(false);
         ui->recPrinter_4->setVisible(false);
-        ui->recSearch_4->setVisible(false);
-        ui->recCoupDeCoeur_4->setVisible(false);
     }
     else {
         ui->richSnippets_4->setVisible(true);
         ui->recPrinter_4->setVisible(true);
-        ui->recSearch_4->setVisible(true);
-        ui->recCoupDeCoeur_4->setVisible(true);
     }
 }
 
@@ -833,13 +767,9 @@ void Options::on_typeServer_pywebcooking_5_toggled(bool checked)
     if (checked) {
         ui->richSnippets_5->setVisible(false);
         ui->recPrinter_5->setVisible(false);
-        ui->recSearch_5->setVisible(false);
-        ui->recCoupDeCoeur_5->setVisible(false);
     }
     else {
         ui->richSnippets_5->setVisible(true);
         ui->recPrinter_5->setVisible(true);
-        ui->recSearch_5->setVisible(true);
-        ui->recCoupDeCoeur_5->setVisible(true);
     }
 }

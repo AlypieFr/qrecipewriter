@@ -295,7 +295,9 @@ void SendPyWebCooking::sendRecipe() {
     input.add_var("title", title);
     input.add_var("precision", precision);
     input.add_var("description", description);
-    input.add_var("coup_de_coeur", coupDeCoeur);
+    if (serverConfs[config]["recCoupDeCoeur"] == "1") {
+        input.add_var("coup_de_coeur", coupDeCoeur);
+    }
     input.add_var("nb_people", QString::number(nbPeople));
     input.add_var("nb_people_max", QString::number(nbPeopleMax));
     input.add_var("tps_prep", QString::number(tpsPrep));
