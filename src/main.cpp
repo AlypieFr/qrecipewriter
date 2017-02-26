@@ -75,7 +75,7 @@ bool autoCheckUpdt = true;
 QString updtUrl = "";
 QString appI18n = "en";
 
-QString VERSION = "3.2.0";
+QString VERSION = "4.0.0";
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe
 
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
         }
     }
     QSplashScreen *splash = new QSplashScreen;
-    splash -> setPixmap(QPixmap(":/images/splash.png"));
+    splash -> setPixmap(QPixmap(":/images/splash.jpg"));
     splash->show();
     QTimer::singleShot(2000,splash,SLOT(close())); //Start splash screen and keep it 2 seconds
 #ifdef Q_OS_LINUX
