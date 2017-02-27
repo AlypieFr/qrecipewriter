@@ -103,6 +103,9 @@ void SendWordpress::handle_result(HttpRequestWorker *worker) {
         if (worker->error_type == QNetworkReply::ContentOperationNotPermittedError) {
             QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), "Votre identificant ou vote mot de passe est incorrect");
         }
+        else if (worker->error_type == QNetworkReply::ContentNotFoundError) {
+            QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), "Impossible de se connecter. Le plugin Wordpress est-il installé et activé sur votre blog ?");
+        }
         else {
             QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), worker->error_str);
         }
