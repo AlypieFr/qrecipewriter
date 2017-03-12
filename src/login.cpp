@@ -138,8 +138,6 @@ void Login::on_config_nb_currentIndexChanged(int index)
 {
     int idConfig = index + 1;
     QFile idFile (confDir + ".id." + QString::number(idConfig));
-    qDebug() << index;
-    qDebug() << idFile.fileName();
     if (idFile.exists())
     {
         idFile.open(QFile::ReadOnly);

@@ -268,7 +268,6 @@ void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
                 if (rep == QMessageBox::Yes)
                 {
                     QString program = "\"" + cmdNav + "\" " + "http://" + map["url"].toString();
-                    qDebug() << program;
                     QProcess *myProcess = new QProcess();
                     myProcess->setProcessChannelMode(QProcess::MergedChannels);
                     myProcess->start(program);
@@ -286,7 +285,6 @@ void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
             }
         }
         else {
-            qDebug() << worker->response;
             qCritical() << "Error while parsing JSON: " + error->errorString();
             QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
         }

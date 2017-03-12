@@ -67,7 +67,7 @@ SpellChecker::SpellChecker(const QString &dictionaryPath, const QString &userDic
         for(QString line = stream.readLine(); !line.isEmpty(); line = stream.readLine()) {
             if (enc_detector.indexIn(line) > -1) {
                 _encoding = enc_detector.cap(1);
-                qDebug() << QString("Encoding set to ") + _encoding;
+                qInfo() << QString("Encoding set to ") + _encoding;
                 break;
             }
         }
@@ -86,7 +86,7 @@ SpellChecker::SpellChecker(const QString &dictionaryPath, const QString &userDic
             qWarning() << "User dictionary in " << _userDictionary << "could not be opened";
         }
     } else {
-        qDebug() << "User dictionary not set.";
+        qWarning() << "User dictionary not set.";
     }
 }
  
@@ -144,6 +144,6 @@ void SpellChecker::addToUserWordlist(const QString &word)
             qWarning() << "User dictionary in " << _userDictionary << "could not be opened for appending a new word";
         }
     } else {
-        qDebug() << "User dictionary not set.";
+        qWarning() << "User dictionary not set.";
     }
 }

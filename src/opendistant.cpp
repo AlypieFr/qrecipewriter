@@ -128,7 +128,6 @@ void OpenDistant::handle_result(HttpRequestWorker *worker) {
             this->exec();
         }
         else {
-            qDebug() << worker->response;
             qCritical() << "Error while parsing JSON: " + error->errorString();
             QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
         }

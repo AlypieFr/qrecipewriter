@@ -1679,7 +1679,6 @@ void QRecipeWriter::received_categories(HttpRequestWorker *worker) {
             QTimer::singleShot(4000, this, SLOT(refreshState()));
         }
         else {
-            qDebug() << worker->response;
             qCritical() << "Error while parsing JSON: " + error->errorString();
             QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
         }
@@ -2495,7 +2494,6 @@ void QRecipeWriter::received_recipe_wp(HttpRequestWorker *worker) {
             }
         }
         else {
-            qDebug() << worker->response;
             qCritical() << "Error while parsing JSON: " + error->errorString();
             QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
         }
@@ -2521,7 +2519,6 @@ void QRecipeWriter::received_recipe(HttpRequestWorker *worker) {
             }
         }
         else {
-            qDebug() << worker->response;
             qCritical() << "Error while parsing JSON: " + error->errorString();
             QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), tr("Impossible de lire la réponse du serveur. Merci de rapporter le bug."));
         }
