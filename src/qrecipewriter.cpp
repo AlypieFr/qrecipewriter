@@ -2095,6 +2095,8 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
     QMap<QString, QStringList> rct = Functions::loadRecipe(fileName);
     if (!rct.isEmpty())
     {
+        QRegExp re_int("\\d*");
+
         //Load titre:
         if (rct.keys().contains("titre"))
             ui->titre->setText(rct["titre"].at(0));
@@ -2170,8 +2172,26 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
         if (rct.keys().contains("ingredients"))
         {
             ingrdt = rct["ingredients"];
+            bool all_valid = true;
             foreach (QString ingr, ingrdt) {
-                model1->appendRow(new QStandardItem(ingr));
+                if (ingr.contains("|")) {
+                    QStringList ingr_parts = ingr.split("|");
+                    QString ingr_puce = ingr_parts[0];
+                    QString ingr_txt = ingr_parts[1];
+                    if (ingr_puce == "comm" || (re_int.exactMatch(ingr_puce) && (!ingr_txt.startsWith("ingr#") || ingr_txt.split("#").length() == 4))) {
+                        model1->appendRow(new QStandardItem(ingr));
+                    }
+                    else {
+                        all_valid = false;
+                    }
+                }
+                else {
+                    all_valid = false;
+                }
+            }
+            if (!all_valid) {
+                QMessageBox::warning(this, tr("Certaines données sont invalides"),
+                                     tr("Certains ingrédients sont incorrects, car votre recette a probablement été créée avec une ancienne version du logiciel. Ils ont été ignorés."));
             }
         }
 
@@ -2182,8 +2202,26 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
         if (rct.keys().contains("materiel"))
         {
             matl = rct["materiel"];
+            bool all_valid = true;
             foreach (QString mat, matl) {
-                model2->appendRow(new QStandardItem(mat));
+                if (mat.contains("|")) {
+                    QStringList mat_parts = mat.split("|");
+                    QString mat_puce = mat_parts[0];
+                    QString mat_txt = mat_parts[1];
+                    if (mat_puce == "comm" || (re_int.exactMatch(mat_puce) && mat_txt.startsWith("mat#"))) {
+                        model2->appendRow(new QStandardItem(mat));
+                    }
+                    else {
+                        all_valid = false;
+                    }
+                }
+                else {
+                    all_valid = false;
+                }
+            }
+            if (!all_valid) {
+                QMessageBox::warning(this, tr("Certaines données sont invalides"),
+                                     tr("Certains matériels sont incorrects, car votre recette a probablement été créée avec une ancienne version du logiciel. Ils ont été ignorés."));
             }
         }
 
@@ -2191,8 +2229,25 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
         if (rct.keys().contains("preparation") && !rct["preparation"].isEmpty())
         {
             prept = rct["preparation"];
+            bool all_valid = true;
+            QRegExp puce_exp ("(\\d+\\.)+\\d+");
             foreach (QString prep, prept) {
-                model3->appendRow(new QStandardItem(prep));
+                if (prep.contains("|")) {
+                    QString puce = prep.split("|")[0];
+                    if (puce_exp.exactMatch(puce) || puce == "comm") {
+                        model3->appendRow(new QStandardItem(prep));
+                    }
+                    else {
+                        all_valid = false;
+                    }
+                }
+                else {
+                    all_valid = false;
+                }
+            }
+            if (!all_valid) {
+                QMessageBox::warning(this, tr("Certaines données sont invalides"),
+                                     tr("Certaines instructions de préparation sont incorrectes, car votre recette a probablement été créée avec une ancienne version du logiciel. Ils ont été ignorés."));
             }
             idPrep = prept.last().split("|")[0].split(".")[0] + ".0";
         }
@@ -2201,8 +2256,24 @@ void QRecipeWriter::loadRecipe(QString fileName, bool testReadyToSend) {
         if (rct.keys().contains("conseils"))
         {
             consl = rct["conseils"];
+            bool all_valid = true;
             foreach (QString cons, consl) {
-                model4->appendRow(new QStandardItem(cons));
+                if (cons.contains("|")) {
+                    QString puce = cons.split("|")[0];
+                    if (puce == "0" || puce == "comm") {
+                        model4->appendRow(new QStandardItem(cons));
+                    }
+                    else {
+                        all_valid = false;
+                    }
+                }
+                else {
+                    all_valid = false;
+                }
+            }
+            if (!all_valid) {
+                QMessageBox::warning(this, tr("Certaines données sont invalides"),
+                                     tr("Certains conseils sont incorrects, car votre recette a probablement été créée avec une ancienne version du logiciel. Ils ont été ignorés."));
             }
         }
 

@@ -854,9 +854,15 @@ QMap<QString, QStringList> Functions::loadRecipe(QString fileName)
         result["titre"] = QStringList(map["title"].toString());
         result["categories"] = map["categories"].toStringList();
         result["image"] = QStringList(map["picture"].toString());
-        result["tpsPrep"] = map["tpsPrep"].toString().split("h");
-        result["tpsCuis"] = map["tpsCuis"].toString().split("h");
-        result["tpsRep"] = map["tpsRep"].toString().split(QRegExp("[jh]"));
+        QString tps_prep = map["tpsPrep"].toString();
+        if (tps_prep.contains("h"))
+            result["tpsPrep"] = tps_prep.split("h");
+        QString tps_cuis = map["tpsCuis"].toString();
+        if (tps_cuis.contains("h"))
+            result["tpsCuis"] = tps_cuis.split("h");
+        QString tps_rep = map["tpsRep"].toString();
+        if (tps_rep.contains("h") && tps_rep.contains("j"))
+            result["tpsRep"] = tps_rep.split(QRegExp("[jh]"));
         result["nbPers"] = QStringList(map["nbPers"].toString());
         result["precision"] = QStringList(map["precision"].toString());
         result["description"] = QStringList(map["description"].toString());
