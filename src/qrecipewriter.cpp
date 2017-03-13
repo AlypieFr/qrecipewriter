@@ -2887,7 +2887,8 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
         {
             if (ingrEdit != -1)
             {
-                if (model1->item(ingrEdit)->text().split("|").at(1) != "")
+                QString content = model1->item(ingrEdit)->text().split("|").at(1);
+                if (content != "" && content != "ingr###")
                 {
                     model1->setItem(ingrEdit, new QStandardItem(model1->item(ingrEdit)->text()));
                 }
@@ -4033,8 +4034,13 @@ void QRecipeWriter::on_listIngr_customContextMenuRequested(const QPoint &pos)
                 {
                     //Insérer un élément avant is handled
                     ingrEdit = ui->listIngr->selectionModel()->selectedIndexes().at(0).row();
-                    int puce = model1->item(ingrEdit)->text().split("|").at(0).toInt();
-                    model1->insertRow(ingrEdit, new QStandardItem(QString::number(puce) + "|"));
+                    QString ingr_to_edit = model1->item(ingrEdit)->text();
+                    QString typeIngr = Functions::get_ingredient_type(ingr_to_edit);
+                    QString puce = model1->item(ingrEdit)->text().split("|").at(0);
+                    if (typeIngr == "ingredient")
+                        model1->insertRow(ingrEdit, new QStandardItem(puce + "|ingr###"));
+                    else
+                        model1->insertRow(ingrEdit, new QStandardItem(puce + "|"));
                     modifierIngr(model1->index(ingrEdit, 0));
                 }
 
@@ -4100,15 +4106,18 @@ void QRecipeWriter::on_listMat_customContextMenuRequested(const QPoint &pos)
                 else if (s == cont_menu.at(2))
                 {
                     //Insérer un élément après is handled
-                    matEdit = ui->listMat->selectionModel()->selectedIndexes().at(0).row() + 1;
-                    model2->insertRow(matEdit, new QStandardItem("0|"));
+                    matEdit = ui->listMat->selectionModel()->selectedIndexes().at(0).row();
+                    QString puce = model2->item(matEdit)->text().split("|").at(0);
+                    matEdit++;
+                    model2->insertRow(matEdit, new QStandardItem(puce + "|"));
                     modifierMat(model2->index(matEdit, 0));
                 }
                 else if (s == cont_menu.at(3))
                 {
                     //Insérer un élément avant is handled
                     matEdit = ui->listMat->selectionModel()->selectedIndexes().at(0).row();
-                    model2->insertRow(matEdit, new QStandardItem("0|"));
+                    QString puce = model2->item(matEdit)->text().split("|").at(0);
+                    model2->insertRow(matEdit, new QStandardItem(puce + "|"));
                     modifierMat(model2->index(matEdit, 0));
                 }
 
