@@ -3270,18 +3270,18 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                 {
                     model4->setItem(consEdit, new QStandardItem(model4->item(consEdit)->text()));
                     consEdit = -1;
-                    ui->editMat->clear();
+                    ui->editCons->clear();
                 }
                 else
                 {
                     model4->removeRow(consEdit);
                     consEdit = -1;
-                    ui->editMat->clear();
+                    ui->editCons->clear();
                 }
-                matComm = false;
+                consComm = false;
                 ui->commButton->setStyleSheet("QPushButton {background-color: none;}");
             }
-            ui->listMat->setSelectionMode(QAbstractItemView::ExtendedSelection);
+            ui->listCons->setSelectionMode(QAbstractItemView::ExtendedSelection);
             return true;
         }
         else if (ke->key() == Qt::Key_Backspace)
