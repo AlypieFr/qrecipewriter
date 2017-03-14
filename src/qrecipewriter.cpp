@@ -1429,7 +1429,7 @@ void QRecipeWriter::startAbcCheck(bool silent) {
         QString item = model1->item(i)->text();
         correction = item.split("|")[1];
         QString head = "";
-        QRegExp expIngr("ingr#.+#.*#");
+        QRegExp expIngr("ingr#.*#.*#");
         if (correction.contains(expIngr)) {
             head = expIngr.cap(0);
             correction.replace(head, "");
