@@ -1414,7 +1414,7 @@ QString Functions::get_img_wp_tag(QString img) {
 QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
                                     int hRep, int minRep, int nbPersonnes, int nbPersonnes2, QString precision,
                                     QString description, QString ingredients, QString materiel, QString preparation,
-                                    QString conseils)
+                                    QString conseils, int config)
 {
     QString htmlCode = "";
     description = "<p>"+description.replace("\n", "<br/>\n")+"</p>";
@@ -1470,7 +1470,7 @@ QString Functions::generateHtmlCode(QString titre, QString mainPicture, int hPre
         htmlCode = htmlCode + "<conseils><p><b>" + QObject::tr("Conseils :") + "</b></p>"+conseils+"</conseils>";
     }
     //Adding "Version imprimable" balise, only if the website is Cool Cooking, because others might not use it:
-    if (recPrinter) {
+    if (serverConfs[config]["recPrinter"] == "1") {
         htmlCode = htmlCode + "<br/>[VERSION_IMPRIMABLE]";
     }
     //Replace oe by "e dans l'o", because we speak French :

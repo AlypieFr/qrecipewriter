@@ -1798,7 +1798,7 @@ void QRecipeWriter::makeHtmlCode(int config)
     htmlCode = Functions::generateHtmlCode(ui->titre->text(), imgFileName, ui->hPrep->value(), ui->minPrep->value(),
                                                    ui->hCuis->value(), ui->minCuis->value(), ui->jRep->value(), ui->hRep->value(),
                                                    ui->minRep->value(), ui->nbPersonnes->value(), ui->nbPersonnes_2->value(), ui->precision->text(),
-                                                   description, ingredients, materiel, preparation, conseils);
+                                                   description, ingredients, materiel, preparation, conseils, config);
     if (serverConfs[config]["richSnippets"] == "1") {
         htmlCode = Functions::makeRichSnippets(ui->titre->text(), imgFileName, ui->hPrep->value(), ui->minPrep->value(),
                                                ui->hCuis->value(), ui->minCuis->value(), ui->jRep->value(), ui->hRep->value(),

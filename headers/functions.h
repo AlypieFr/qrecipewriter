@@ -82,7 +82,7 @@ public:
     static QString generateHtmlCode(QString titre, QString mainPicture, int hPrep, int minPrep, int hCuis, int minCuis, int jRep,
                                     int hRep, int minRep, int nbPersonnes, int nbPersonnes2, QString precision,
                                     QString description, QString ingredients, QString materiel, QString preparation,
-                                    QString conseils);
+                                    QString conseils, int config);
     static QString getSimpleListWithSubLists(QStringList items);
     static QStringList makeSimpleList(QString text, bool isMat=false);
     static QStringList makeSimpleListWithSubLists(QString text);
