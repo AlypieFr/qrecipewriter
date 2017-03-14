@@ -4383,11 +4383,11 @@ void QRecipeWriter::on_editIngr_customContextMenuRequested(const QPoint &pos)
                         }
                     }
                     idIngr = idIngrOrig + indent;
-                    QRegExp ingrExp("^(\\d+) ((\\w+) ((de )|(d')))?(.+)$");
+                    QRegExp ingrExp("^(\\d+([,.]\\d+)?) ((\\w+) ((de )|(d['’])))?(.+)$");
                     if (ingrExp.exactMatch(txt)) {
                         QString qte = ingrExp.cap(1);
-                        QString unit = ingrExp.cap(3);
-                        QString name = ingrExp.cap(7);
+                        QString unit = ingrExp.cap(4);
+                        QString name = ingrExp.cap(8);
                         this->insertIngredient(qte, unit, name);
                     }
                     else {
