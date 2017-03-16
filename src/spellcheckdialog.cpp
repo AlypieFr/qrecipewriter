@@ -83,6 +83,8 @@ SpellCheckDialog::~SpellCheckDialog()
 void SpellCheckDialog::correctionOrtho()
 {
 
+    QRegExp end_bal("</[^>]+>");
+    QRegExp start_bal("<[^>]+>");
 
     QString dictPath = corrOrtho;
     QString userDict= confDir + ".userDict.txt";
@@ -140,7 +142,13 @@ void SpellCheckDialog::correctionOrtho()
                 close();
             }
             // ask the user what to do
-            SpellCheckAction spellResult = checkWord(word);
+            int cursor_position = cursor.position();
+            // CHECK, IGNORE TAGS:
+            SpellCheckAction spellResult = IgnoreOnce;
+            int len_word = word.length();
+            if (!end_bal.exactMatch(correction.mid(cursor_position-len_word-2, len_word+3))
+                    && !start_bal.exactMatch(correction.mid(cursor_position-len_word-1, len_word+2)))
+                spellResult = checkWord(word);
 
             // reset the word highlight
             esList.clear();
