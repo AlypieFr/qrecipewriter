@@ -114,6 +114,7 @@ public:
     static bool validate_quantity(QString qte);
     static QStringList get_wp_tags(QVariantList tags);
     static QString get_img_wp_tag(QString img);
+    static void loadUnits();
 };
 
 #endif // FUNCTIONS_H

@@ -38,6 +38,7 @@
 #include "coupdecoeur.h"
 #include "opendistant.h"
 #include "searchupdates.h"
+#include "units.h"
 
 #include <QMainWindow>
 
@@ -232,6 +233,8 @@ private slots:
 
     void received_recipe_wp(HttpRequestWorker *worker);
 
+    void on_actionG_rer_les_unit_s_triggered();
+
 public slots:
     void init();
     void config();
@@ -271,6 +274,7 @@ private:
     void toggleEditPict();
     void resetIngrFields();
     void resetMatFields();
+    void refreshUnits();
 
 private:
     void closeEvent (QCloseEvent *event);

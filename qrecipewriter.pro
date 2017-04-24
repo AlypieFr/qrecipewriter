@@ -39,7 +39,8 @@ SOURCES += src/main.cpp\
     src/sendwordpress.cpp \
     src/sendpywebcooking.cpp \
     src/filenotfoundexception.cpp \
-    src/globalexception.cpp
+    src/globalexception.cpp \
+    src/units.cpp
 
 HEADERS  += headers/qrecipewriter.h \
     headers/options.h \
@@ -64,7 +65,8 @@ HEADERS  += headers/qrecipewriter.h \
     headers/sendwordpress.h \
     headers/sendpywebcooking.h \
     headers/filenotfoundexception.h \
-    headers/globalexception.h
+    headers/globalexception.h \
+    headers/units.h
 
 FORMS    += ui/qrecipewriter.ui \
     ui/options.ui \
@@ -76,7 +78,8 @@ FORMS    += ui/qrecipewriter.ui \
     ui/qinputmultiline.ui \
     ui/coupdecoeur.ui \
     ui/opendistant.ui \
-    ui/login.ui
+    ui/login.ui \
+    ui/units.ui
 
 RESOURCES += \
     Ressources.qrc

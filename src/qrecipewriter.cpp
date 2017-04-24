@@ -463,6 +463,13 @@ void QRecipeWriter::init()
     updtUrl = "https://qrecipewriter.coolcooking.fr/files/LATEST-" + systExp;
 
     //Set units:
+    Functions::loadUnits();
+    this->refreshUnits();
+}
+
+void QRecipeWriter::refreshUnits() {
+    ui->unit_ingr->clear();
+    ui->unit_ingr->addItem("");
     ui->unit_ingr->addItems(units);
 }
 
@@ -724,6 +731,18 @@ void QRecipeWriter::on_actionGerer_les_categories_triggered()
     cat = NULL;
     if (confCatFile->exists())
         resetCats();
+}
+
+/**
+ * @brief QRecipeWriter::on_actionG_rer_les_unit_s_triggered
+ * Start to choose units used by the program
+ */
+void QRecipeWriter::on_actionG_rer_les_unit_s_triggered()
+{
+    Units *units = new Units(this);
+    units->init();
+    units->exec();
+    this->refreshUnits();
 }
 
 /**

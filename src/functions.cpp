@@ -48,6 +48,7 @@ extern bool checkF7beforeSend;
 extern bool autoCheckUpdt;
 
 extern QMap<QString, QString> liens;
+extern QStringList units;
 
 /**
  * @brief Functions::Functions
@@ -1717,4 +1718,16 @@ QStringList Functions::get_wp_tags(QVariantList tags) {
         tags_list.append(tag["name"].toString());
     }
     return tags_list;
+}
+
+void Functions::loadUnits() {
+    QFile file(confDir + "/.units");
+    if (file.exists()) {
+        if(!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::information(0, "Error reading units", file.errorString());
+        }
+        QTextStream in(&file);
+        QString my_units = in.readAll().replace("\n", "");
+        units = my_units.split(QRegExp("\\s*,\\s*"));
+    }
 }

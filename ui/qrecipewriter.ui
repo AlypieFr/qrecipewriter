@@ -167,9 +167,9 @@ left: 10px; padding: 0 3px;}</string>
                 <widget class="QWidget" name="scrollAreaWidgetContents_2">
                  <property name="geometry">
                   <rect>
-                   <x>-11</x>
+                   <x>0</x>
                    <y>0</y>
-                   <width>355</width>
+                   <width>348</width>
                    <height>460</height>
                   </rect>
                  </property>
@@ -270,7 +270,7 @@ left: 10px; padding: 0 3px;}</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>346</width>
+                       <width>340</width>
                        <height>92</height>
                       </rect>
                      </property>
@@ -1524,8 +1524,8 @@ left: 10px; padding: 0 3px;}</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>673</width>
-             <height>645</height>
+             <width>675</width>
+             <height>643</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -2586,7 +2586,7 @@ left: 10px; padding: 0 3px;}</string>
      <x>0</x>
      <y>0</y>
      <width>1149</width>
-     <height>19</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOutils">
@@ -2598,6 +2598,7 @@ left: 10px; padding: 0 3px;}</string>
     <addaction name="actionCorrection_orthographique"/>
     <addaction name="actionOptions"/>
     <addaction name="actionGerer_les_categories"/>
+    <addaction name="actionG_rer_les_unit_s"/>
     <addaction name="actionRechercher_une_mise_jour"/>
     <addaction name="actionAide"/>
     <addaction name="action_propos"/>
@@ -2730,6 +2731,14 @@ left: 10px; padding: 0 3px;}</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+O</string>
+   </property>
+  </action>
+  <action name="actionG_rer_les_unit_s">
+   <property name="text">
+    <string>Gérer les unités</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
    </property>
   </action>
  </widget>
