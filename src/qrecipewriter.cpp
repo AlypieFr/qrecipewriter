@@ -2871,7 +2871,7 @@ bool QRecipeWriter::eventFilter(QObject *object, QEvent *event)
                         QMessageBox::critical(this, tr("Quantité incorrecte"), tr("La quantité mentionnée est invalide"));
                     }
                 }
-                ui->state->setText(tr("Vous devez renseigner un nom d'ingrédient' !"));
+                ui->state->setText(tr("Vous devez renseigner un nom d'ingrédient !"));
                 QTimer::singleShot(4000, this, SLOT(refreshState()));
                 return true;
             }

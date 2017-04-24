@@ -65,7 +65,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/apropos.cpp" line="36"/>
+        <location filename="../src/apropos.cpp" line="44"/>
         <source>VERSION ACTUELLE :</source>
         <translation>CURRENT VERSION:</translation>
     </message>
@@ -93,42 +93,42 @@ p, li { white-space: pre-wrap; }
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../src/categories.cpp" line="48"/>
+        <location filename="../src/categories.cpp" line="56"/>
         <source>Entrée</source>
         <translation>Starter</translation>
     </message>
     <message>
-        <location filename="../src/categories.cpp" line="73"/>
+        <location filename="../src/categories.cpp" line="81"/>
         <source>Plat principal</source>
         <translation>Main course</translation>
     </message>
     <message>
-        <location filename="../src/categories.cpp" line="77"/>
+        <location filename="../src/categories.cpp" line="85"/>
         <source>Dessert</source>
         <translation>Dessert</translation>
     </message>
     <message>
-        <location filename="../src/categories.cpp" line="82"/>
+        <location filename="../src/categories.cpp" line="90"/>
         <source>Accompagnement</source>
         <translation>Side dish</translation>
     </message>
     <message>
-        <location filename="../src/categories.cpp" line="87"/>
+        <location filename="../src/categories.cpp" line="95"/>
         <source>Base</source>
         <translation>Basis</translation>
     </message>
     <message>
-        <location filename="../src/categories.cpp" line="92"/>
+        <location filename="../src/categories.cpp" line="100"/>
         <source>Biscuits &amp; Friandises</source>
         <translation>Biscuits &amp; Sweetmeats</translation>
     </message>
     <message>
-        <location filename="../src/categories.cpp" line="97"/>
+        <location filename="../src/categories.cpp" line="105"/>
         <source>Pain &amp; Viennoiserie</source>
         <translation>Bread &amp; Pastries</translation>
     </message>
     <message>
-        <location filename="../src/categories.cpp" line="102"/>
+        <location filename="../src/categories.cpp" line="110"/>
         <source>Divers</source>
         <translation>Miscellaneous</translation>
     </message>
@@ -171,6 +171,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Est un coup de coeur de niveau 3 (Une Tuerie !)</source>
         <translation type="vanished">Is a favorite dish level 3 (part of the bests)</translation>
+    </message>
+</context>
+<context>
+    <name>HttpRequestWorker</name>
+    <message>
+        <location filename="../src/httprequestworker.cpp" line="220"/>
+        <source>Une erreur est survenue lors de la préparation du fichier : </source>
+        <translation>An error has occurred while preparing file:</translation>
     </message>
 </context>
 <context>
@@ -237,28 +245,28 @@ p, li { white-space: pre-wrap; }
         <translation>Keep ratio</translation>
     </message>
     <message>
-        <location filename="../src/insertpicture.cpp" line="67"/>
-        <location filename="../src/insertpicture.cpp" line="69"/>
+        <location filename="../src/insertpicture.cpp" line="75"/>
+        <location filename="../src/insertpicture.cpp" line="77"/>
         <source>Nécessite d&apos;activer Recipe printer</source>
         <translation>Recipe printer is required</translation>
     </message>
     <message>
-        <location filename="../src/insertpicture.cpp" line="106"/>
+        <location filename="../src/insertpicture.cpp" line="114"/>
         <source>Fichier image requis</source>
         <translation>Picture file required</translation>
     </message>
     <message>
-        <location filename="../src/insertpicture.cpp" line="106"/>
+        <location filename="../src/insertpicture.cpp" line="114"/>
         <source>Veuillez entrer un nom de fichier image !</source>
         <translation>Please give a filename for a picture file!</translation>
     </message>
     <message>
-        <location filename="../src/insertpicture.cpp" line="131"/>
+        <location filename="../src/insertpicture.cpp" line="139"/>
         <source>Choisir une image</source>
         <translation>Choose a picture</translation>
     </message>
     <message>
-        <location filename="../src/insertpicture.cpp" line="133"/>
+        <location filename="../src/insertpicture.cpp" line="141"/>
         <source>Images :</source>
         <translation>Pictures:</translation>
     </message>
@@ -354,58 +362,96 @@ p, li { white-space: pre-wrap; }
         <translation>Enable privacy-enhanced mode</translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="104"/>
-        <location filename="../src/insertvideo.cpp" line="108"/>
+        <location filename="../src/insertvideo.cpp" line="112"/>
+        <location filename="../src/insertvideo.cpp" line="116"/>
         <source>URL incorrect</source>
         <translation>invalid URL</translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="104"/>
+        <location filename="../src/insertvideo.cpp" line="112"/>
         <source>Erreur : l&apos;URL de la vidéo que vous avez renseigné n&apos;est pas un lien youtube valide : 
 l&apos;id de la vidéo doit être de 11 caractères.</source>
         <translation>Error: the video URL you give is not a valid youtube link: 
 the video id must be 11 characters length.</translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="108"/>
+        <location filename="../src/insertvideo.cpp" line="116"/>
         <source>Erreur : l&apos;URL de la vidéo que vous avez renseigné n&apos;est pas un lien youtube valide !</source>
         <translation>Error: the video URL you give is not a valid youtube link!</translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="112"/>
+        <location filename="../src/insertvideo.cpp" line="120"/>
         <source>Champs vides</source>
         <translation>Empty fields</translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="112"/>
+        <location filename="../src/insertvideo.cpp" line="120"/>
         <source>Erreur : vous n&apos;avez pas renseigné d&apos;URL !</source>
         <translation>Error: you don&apos;t fill the URL field!</translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="123"/>
+        <location filename="../src/insertvideo.cpp" line="131"/>
         <source>HTML video tag</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="123"/>
+        <location filename="../src/insertvideo.cpp" line="131"/>
         <source>Entrez le code HTML youtube de la vidéo :</source>
         <translation>Type the youtube HTML code of the video: </translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="185"/>
-        <location filename="../src/insertvideo.cpp" line="189"/>
+        <location filename="../src/insertvideo.cpp" line="193"/>
+        <location filename="../src/insertvideo.cpp" line="197"/>
         <source>Données incorrect</source>
         <translation>Invalid data</translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="185"/>
+        <location filename="../src/insertvideo.cpp" line="193"/>
         <source>Erreur : le code HTML fournit contient un url non valide !</source>
         <translation>Error: the HTML code given contains an invalid URL!</translation>
     </message>
     <message>
-        <location filename="../src/insertvideo.cpp" line="189"/>
+        <location filename="../src/insertvideo.cpp" line="197"/>
         <source>Erreur : le code HTML fournit n&apos;est pas correct !</source>
         <translation>Error: the HTML code fiven is not correct!</translation>
+    </message>
+</context>
+<context>
+    <name>Login</name>
+    <message>
+        <location filename="../ui/login.ui" line="14"/>
+        <source>Connexion</source>
+        <translation>Login</translation>
+    </message>
+    <message>
+        <location filename="../ui/login.ui" line="45"/>
+        <source>Nom d&apos;utilisateur :</source>
+        <translation>Username:</translation>
+    </message>
+    <message>
+        <location filename="../ui/login.ui" line="86"/>
+        <source>Mot de passe :</source>
+        <translation>Password:</translation>
+    </message>
+    <message>
+        <location filename="../ui/login.ui" line="130"/>
+        <source>Publier</source>
+        <translation>Publish</translation>
+    </message>
+    <message>
+        <location filename="../ui/login.ui" line="152"/>
+        <source>Mémoriser les identifiants</source>
+        <translation>Remember credentials</translation>
+    </message>
+    <message>
+        <location filename="../ui/login.ui" line="217"/>
+        <source>Valider</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <location filename="../ui/login.ui" line="242"/>
+        <source>Annuler</source>
+        <translation>Cancel</translation>
     </message>
 </context>
 <context>
@@ -441,31 +487,43 @@ the video id must be 11 characters length.</translation>
         <translation>recipes</translation>
     </message>
     <message>
-        <location filename="../src/opendistant.cpp" line="50"/>
         <source>Récupération de la liste des recettes...</source>
-        <translation>Downloading the list of the recipes...</translation>
+        <translation type="vanished">Downloading the list of the recipes...</translation>
     </message>
     <message>
-        <location filename="../src/opendistant.cpp" line="79"/>
-        <location filename="../src/opendistant.cpp" line="84"/>
         <source>Erreur !</source>
-        <translation>Error!</translation>
+        <translation type="vanished">Error!</translation>
     </message>
     <message>
-        <location filename="../src/opendistant.cpp" line="79"/>
-        <location filename="../src/opendistant.cpp" line="84"/>
         <source>Une erreur est survenue lors de la récupération de la liste des recettes
 Veuillez contacter le support.</source>
-        <translation>An error has occurred while downloading the list of the recipes.
+        <translation type="vanished">An error has occurred while downloading the list of the recipes.
 Please contact us to report the bug.</translation>
     </message>
     <message>
-        <location filename="../src/opendistant.cpp" line="166"/>
+        <location filename="../src/opendistant.cpp" line="93"/>
+        <source>Récupération des recettes...</source>
+        <translation>Downloading recipes...</translation>
+    </message>
+    <message>
+        <location filename="../src/opendistant.cpp" line="132"/>
+        <location filename="../src/opendistant.cpp" line="138"/>
+        <location filename="../src/opendistant.cpp" line="141"/>
+        <source>Une erreur est survenue</source>
+        <translation>An error has occurred</translation>
+    </message>
+    <message>
+        <location filename="../src/opendistant.cpp" line="132"/>
+        <source>Impossible de lire la réponse du serveur. Merci de rapporter le bug.</source>
+        <translation>Unable to read server response. Please report the bug.</translation>
+    </message>
+    <message>
+        <location filename="../src/opendistant.cpp" line="220"/>
         <source>Aucune recette sélectionnée</source>
         <translation>None recipe is selected</translation>
     </message>
     <message>
-        <location filename="../src/opendistant.cpp" line="166"/>
+        <location filename="../src/opendistant.cpp" line="220"/>
         <source>Veuillez sélectionner une recette à ouvrir !</source>
         <translation>Please select a recipe to open!</translation>
     </message>
@@ -474,13 +532,13 @@ Please contact us to report the bug.</translation>
     <name>Options</name>
     <message>
         <location filename="../ui/options.ui" line="35"/>
-        <location filename="../src/options.cpp" line="270"/>
         <location filename="../src/options.cpp" line="276"/>
-        <location filename="../src/options.cpp" line="280"/>
+        <location filename="../src/options.cpp" line="282"/>
         <location filename="../src/options.cpp" line="286"/>
-        <location filename="../src/options.cpp" line="291"/>
-        <location filename="../src/options.cpp" line="299"/>
-        <location filename="../src/options.cpp" line="302"/>
+        <location filename="../src/options.cpp" line="292"/>
+        <location filename="../src/options.cpp" line="297"/>
+        <location filename="../src/options.cpp" line="305"/>
+        <location filename="../src/options.cpp" line="308"/>
         <source>Préférences</source>
         <translation>Configuration</translation>
     </message>
@@ -538,63 +596,55 @@ Please contact us to report the bug.</translation>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Operating system:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="278"/>
         <source>Méthode d&apos;envoi :</source>
-        <translation>Sending method:</translation>
+        <translation type="vanished">Sending method:</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="306"/>
         <source>Automatique (nécessite JA&amp;VA)</source>
-        <translation>Automatic (JA&amp;VA required)</translation>
+        <translation type="vanished">Automatic (JA&amp;VA required)</translation>
     </message>
     <message>
         <source>Manuelle</source>
         <translation type="vanished">Manual</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="319"/>
         <source>&amp;Manuelle</source>
-        <translation>&amp;Manual</translation>
+        <translation type="vanished">&amp;Manual</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="333"/>
+        <location filename="../ui/options.ui" line="288"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier temporaire* :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Temp directory*:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="369"/>
-        <location filename="../ui/options.ui" line="418"/>
+        <location filename="../ui/options.ui" line="324"/>
+        <location filename="../ui/options.ui" line="373"/>
         <source>Utiliser le dernier dossier sélectionné</source>
         <translatorcomment>Sélectionne le dernier dossier utilisé par l&apos;utilisateur</translatorcomment>
         <translation>Use the last used directory</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="392"/>
+        <location filename="../ui/options.ui" line="347"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier contenant les sauvegardes :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Folder containing the backups:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="434"/>
+        <location filename="../ui/options.ui" line="389"/>
         <source>* Champs obligatoires</source>
         <translation>* Required fields</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="447"/>
+        <location filename="../ui/options.ui" line="402"/>
         <source>Recherche de mises à jour au démarrage</source>
         <translation>Search updated of the program at startup</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="460"/>
+        <location filename="../ui/options.ui" line="415"/>
         <source>Vérification de l&apos;orthographe avant envoi</source>
         <translation>Do a spell check before send</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="473"/>
-        <source>Linux Archlinux / Manjaro</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../ui/options.ui" line="486"/>
+        <location filename="../ui/options.ui" line="441"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Langage de l&apos;application :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Application language:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -604,191 +654,225 @@ Please contact us to report the bug.</translation>
         <translation>Linux (o&amp;ther)</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="534"/>
+        <location filename="../ui/options.ui" line="428"/>
+        <source>Linux Archlinux / &amp;Manjaro</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/options.ui" line="496"/>
+        <source>Linux Fedora</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/options.ui" line="509"/>
+        <source>Linux KDE Neon</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/options.ui" line="515"/>
         <source>Paramètres Serveur</source>
         <translation>Server parameters</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="550"/>
+        <location filename="../ui/options.ui" line="531"/>
         <source>Config 1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="562"/>
-        <location filename="../ui/options.ui" line="773"/>
-        <location filename="../ui/options.ui" line="984"/>
-        <location filename="../ui/options.ui" line="1195"/>
-        <location filename="../ui/options.ui" line="1406"/>
+        <location filename="../ui/options.ui" line="583"/>
+        <location filename="../ui/options.ui" line="764"/>
+        <location filename="../ui/options.ui" line="945"/>
+        <location filename="../ui/options.ui" line="1126"/>
+        <location filename="../ui/options.ui" line="1307"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse du site :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Website URL:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="585"/>
-        <location filename="../ui/options.ui" line="842"/>
-        <location filename="../ui/options.ui" line="1053"/>
-        <location filename="../ui/options.ui" line="1264"/>
-        <location filename="../ui/options.ui" line="1475"/>
+        <location filename="../ui/options.ui" line="690"/>
+        <location filename="../ui/options.ui" line="871"/>
+        <location filename="../ui/options.ui" line="1052"/>
+        <location filename="../ui/options.ui" line="1233"/>
+        <location filename="../ui/options.ui" line="1420"/>
+        <source>Activer Recipes Coup de Coeur</source>
+        <translation>Enable Recipes Coup de Coeur</translation>
+    </message>
+    <message>
         <source>* Fonctionnalités présentes uniquement sur &lt;i&gt;Cool Cooking&lt;/i&gt;</source>
-        <translation>* Features only present on &lt;i&gt;Cool Cooking&lt;/i&gt;</translation>
+        <translation type="vanished">* Features only present on &lt;i&gt;Cool Cooking&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="598"/>
-        <location filename="../ui/options.ui" line="829"/>
-        <location filename="../ui/options.ui" line="1040"/>
-        <location filename="../ui/options.ui" line="1251"/>
-        <location filename="../ui/options.ui" line="1462"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dossier distant contenant les images :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Distant folder containing the pictures:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Distant folder containing the pictures:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="614"/>
-        <location filename="../ui/options.ui" line="858"/>
-        <location filename="../ui/options.ui" line="1069"/>
-        <location filename="../ui/options.ui" line="1352"/>
-        <location filename="../ui/options.ui" line="1529"/>
         <source>Activer Recipes Search *</source>
-        <translation>Enable Recipe Search *</translation>
+        <translation type="vanished">Enable Recipe Search *</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="637"/>
-        <location filename="../ui/options.ui" line="786"/>
-        <location filename="../ui/options.ui" line="997"/>
-        <location filename="../ui/options.ui" line="1208"/>
-        <location filename="../ui/options.ui" line="1419"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adresse de publication :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Publication URL:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Publication URL:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="663"/>
-        <location filename="../ui/options.ui" line="943"/>
-        <location filename="../ui/options.ui" line="1154"/>
-        <location filename="../ui/options.ui" line="1280"/>
-        <location filename="../ui/options.ui" line="1491"/>
+        <location filename="../ui/options.ui" line="680"/>
+        <location filename="../ui/options.ui" line="861"/>
+        <location filename="../ui/options.ui" line="1042"/>
+        <location filename="../ui/options.ui" line="1223"/>
+        <location filename="../ui/options.ui" line="1410"/>
         <source>Activer Recipes Printer</source>
         <translation>Enable Recipes Printer</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="679"/>
-        <location filename="../ui/options.ui" line="874"/>
-        <location filename="../ui/options.ui" line="1085"/>
-        <location filename="../ui/options.ui" line="1336"/>
-        <location filename="../ui/options.ui" line="1545"/>
         <source>Activer Recipes Coup de Coeur *</source>
-        <translation>Enable Favorits Recipes module *</translation>
+        <translation type="vanished">Enable Favorits Recipes module *</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="692"/>
-        <location filename="../ui/options.ui" line="903"/>
-        <location filename="../ui/options.ui" line="1114"/>
-        <location filename="../ui/options.ui" line="1365"/>
-        <location filename="../ui/options.ui" line="1582"/>
+        <location filename="../ui/options.ui" line="543"/>
+        <location filename="../ui/options.ui" line="724"/>
+        <location filename="../ui/options.ui" line="905"/>
+        <location filename="../ui/options.ui" line="1110"/>
+        <location filename="../ui/options.ui" line="1291"/>
         <source>Supprimer les données personnelles (identifiants)</source>
         <translation>Remove personal data (credentials)</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="713"/>
-        <location filename="../ui/options.ui" line="924"/>
-        <location filename="../ui/options.ui" line="1135"/>
-        <location filename="../ui/options.ui" line="1301"/>
-        <location filename="../ui/options.ui" line="1566"/>
+        <location filename="../ui/options.ui" line="564"/>
+        <location filename="../ui/options.ui" line="745"/>
+        <location filename="../ui/options.ui" line="926"/>
+        <location filename="../ui/options.ui" line="1094"/>
+        <location filename="../ui/options.ui" line="1275"/>
         <source>Configuration active</source>
         <translation>Active configuration</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="732"/>
-        <location filename="../ui/options.ui" line="890"/>
-        <location filename="../ui/options.ui" line="1101"/>
-        <location filename="../ui/options.ui" line="1320"/>
-        <location filename="../ui/options.ui" line="1513"/>
+        <location filename="../ui/options.ui" line="605"/>
+        <location filename="../ui/options.ui" line="786"/>
+        <location filename="../ui/options.ui" line="967"/>
+        <location filename="../ui/options.ui" line="1148"/>
+        <location filename="../ui/options.ui" line="1329"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Type de serveur :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Type of server :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/options.ui" line="628"/>
+        <location filename="../ui/options.ui" line="809"/>
+        <location filename="../ui/options.ui" line="990"/>
+        <location filename="../ui/options.ui" line="1171"/>
+        <location filename="../ui/options.ui" line="1352"/>
+        <source>Wordpress</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/options.ui" line="635"/>
+        <location filename="../ui/options.ui" line="816"/>
+        <location filename="../ui/options.ui" line="997"/>
+        <location filename="../ui/options.ui" line="1178"/>
+        <location filename="../ui/options.ui" line="1359"/>
+        <source>P&amp;yWebCooking</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/options.ui" line="670"/>
+        <location filename="../ui/options.ui" line="851"/>
+        <location filename="../ui/options.ui" line="1032"/>
+        <location filename="../ui/options.ui" line="1213"/>
+        <location filename="../ui/options.ui" line="1400"/>
         <source>Activer les extraits enrichis dans les recherches Google</source>
         <translation>Enable rich snippets on Google search results</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="755"/>
-        <location filename="../ui/options.ui" line="966"/>
-        <location filename="../ui/options.ui" line="1177"/>
-        <location filename="../ui/options.ui" line="1388"/>
-        <location filename="../ui/options.ui" line="1605"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pseudo Wordpress :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wordpress pseudo:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wordpress pseudo:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="761"/>
+        <location filename="../ui/options.ui" line="712"/>
         <source>Config 2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="972"/>
+        <location filename="../ui/options.ui" line="893"/>
         <source>Config 3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="1183"/>
+        <location filename="../ui/options.ui" line="1074"/>
         <source>Config 4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/options.ui" line="1394"/>
+        <location filename="../ui/options.ui" line="1255"/>
         <source>Config 5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="197"/>
-        <location filename="../src/options.cpp" line="221"/>
-        <location filename="../src/options.cpp" line="232"/>
+        <location filename="../src/options.cpp" line="202"/>
+        <location filename="../src/options.cpp" line="226"/>
+        <location filename="../src/options.cpp" line="237"/>
         <source>Choisir un dossier</source>
         <translation>Choose a folder</translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="210"/>
-        <location filename="../src/options.cpp" line="245"/>
+        <location filename="../src/options.cpp" line="215"/>
+        <location filename="../src/options.cpp" line="250"/>
         <source>Choisir un fichier</source>
         <translation>Choose a file</translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="270"/>
+        <location filename="../src/options.cpp" line="276"/>
         <source>Veuillez remplir tous les champs obligatoires des paramètres client</source>
         <translation>Please fill all required filled on client parameters</translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="276"/>
+        <location filename="../src/options.cpp" line="282"/>
         <source>Le dossier de sauvegardes indiqué n&apos;existe pas</source>
         <translation>The backup folder given does not exists</translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="280"/>
+        <location filename="../src/options.cpp" line="286"/>
         <source>Le dossier par défaut des images indiqué n&apos;existe pas</source>
         <translation>The given default folder for the pictures does not exists </translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="286"/>
+        <location filename="../src/options.cpp" line="292"/>
         <source>Le dossier temporaire indiqué n&apos;existe pas et ne peut être créé</source>
         <translation>The given temp folder does not exists and can&apos;t be created </translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="291"/>
+        <location filename="../src/options.cpp" line="297"/>
         <source>Le dictionnaire path indiqué est incorrect : les fichiers (avec extension .dic et/ou .aff) n&apos;existe(nt) pas</source>
         <translation>The given dictionnary path is invalid: the files (with .dic and/or .aff) does not exist</translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="299"/>
+        <location filename="../src/options.cpp" line="305"/>
         <source>Veuillez remplir tous les champs des paramètres serveur de la configuration active</source>
         <translation>Please fill all fields from server parameters for the active configuration</translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="302"/>
+        <location filename="../src/options.cpp" line="308"/>
         <source>Vous devez avoir une configuration serveur active</source>
         <translation>You must have an active configuration in the server parameters</translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="329"/>
+        <location filename="../src/options.cpp" line="315"/>
         <source>Redémarrage nécessaire</source>
         <translation>Restart required</translation>
     </message>
     <message>
-        <location filename="../src/options.cpp" line="329"/>
+        <location filename="../src/options.cpp" line="315"/>
         <source>Vous devez redémarrer l&apos;application pour prendre en compte le changement de langue.</source>
         <translation>You must restart the app to take in account the new selected language.</translation>
+    </message>
+</context>
+<context>
+    <name>QDialog</name>
+    <message>
+        <location filename="../src/functions.cpp" line="881"/>
+        <source>Une erreur est survenue</source>
+        <translation>An error has occurred</translation>
+    </message>
+    <message>
+        <location filename="../src/functions.cpp" line="882"/>
+        <source>Impossible d&apos;ouvrir la recette : </source>
+        <translation>Unable to open recipe: </translation>
     </message>
 </context>
 <context>
@@ -807,178 +891,236 @@ Please contact us to report the bug.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/functions.cpp" line="503"/>
-        <location filename="../src/functions.cpp" line="504"/>
-        <location filename="../src/functions.cpp" line="505"/>
-        <location filename="../src/functions.cpp" line="1212"/>
+        <location filename="../src/functions.cpp" line="352"/>
+        <source>Certains matériels de la recette ne sont pas correctes. Ils ont été ignorés.</source>
+        <translation>Some equipments of the recipe are not correct. They have been ignored.</translation>
+    </message>
+    <message>
+        <location filename="../src/functions.cpp" line="374"/>
+        <source>Erreur lors du chargement de la recette</source>
+        <translation>Error while loading recipe</translation>
+    </message>
+    <message>
+        <location filename="../src/functions.cpp" line="538"/>
+        <location filename="../src/functions.cpp" line="539"/>
+        <location filename="../src/functions.cpp" line="540"/>
+        <location filename="../src/functions.cpp" line="1445"/>
         <source>Ingrédients</source>
         <translation>ingredients</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="503"/>
-        <location filename="../src/functions.cpp" line="504"/>
-        <location filename="../src/functions.cpp" line="505"/>
-        <location filename="../src/functions.cpp" line="1212"/>
+        <location filename="../src/functions.cpp" line="538"/>
+        <location filename="../src/functions.cpp" line="539"/>
+        <location filename="../src/functions.cpp" line="540"/>
+        <location filename="../src/functions.cpp" line="1445"/>
         <source>pour</source>
         <translation>for</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="503"/>
-        <location filename="../src/functions.cpp" line="504"/>
-        <location filename="../src/functions.cpp" line="505"/>
+        <location filename="../src/functions.cpp" line="538"/>
+        <location filename="../src/functions.cpp" line="539"/>
+        <location filename="../src/functions.cpp" line="540"/>
         <source>personnes</source>
         <translation>persons</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="504"/>
+        <location filename="../src/functions.cpp" line="539"/>
         <source>à</source>
         <translation>to</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="535"/>
-        <location filename="../src/functions.cpp" line="537"/>
-        <location filename="../src/functions.cpp" line="547"/>
+        <location filename="../src/functions.cpp" line="570"/>
+        <location filename="../src/functions.cpp" line="572"/>
+        <location filename="../src/functions.cpp" line="582"/>
         <source>Matériel nécessaire</source>
         <translation>Required material</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="569"/>
+        <location filename="../src/functions.cpp" line="599"/>
         <source>Pr[ée]paration[^:]*:</source>
         <translation>Preparation[^:]*:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="589"/>
+        <location filename="../src/functions.cpp" line="614"/>
         <source>Conseils</source>
         <translation>Proposals</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="602"/>
+        <location filename="../src/functions.cpp" line="627"/>
         <source>(\d+)\s?j</source>
         <translation>(\d+)\s?d</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="605"/>
+        <location filename="../src/functions.cpp" line="630"/>
         <source>Temps de Préparation</source>
         <translation>Preparation time</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="620"/>
+        <location filename="../src/functions.cpp" line="645"/>
         <source>Temps de Cuisson</source>
         <translation>Cooking time</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="635"/>
+        <location filename="../src/functions.cpp" line="660"/>
         <source>Temps de Repos</source>
         <translation>Break time</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="936"/>
+        <location filename="../src/functions.cpp" line="950"/>
+        <location filename="../src/functions.cpp" line="964"/>
+        <location filename="../src/functions.cpp" line="972"/>
+        <location filename="../src/listviewdelegate.cpp" line="80"/>
+        <location filename="../src/listviewdelegate.cpp" line="94"/>
+        <location filename="../src/listviewdelegate.cpp" line="102"/>
+        <source>d&apos;</source>
+        <comment>ingr</comment>
+        <extracomment>For the ingredients</extracomment>
+        <translation> </translation>
+    </message>
+    <message>
+        <location filename="../src/functions.cpp" line="953"/>
+        <location filename="../src/functions.cpp" line="967"/>
+        <location filename="../src/functions.cpp" line="975"/>
+        <location filename="../src/listviewdelegate.cpp" line="83"/>
+        <location filename="../src/listviewdelegate.cpp" line="97"/>
+        <location filename="../src/listviewdelegate.cpp" line="105"/>
+        <source> de </source>
+        <comment>ingr</comment>
+        <translation> </translation>
+    </message>
+    <message>
+        <location filename="../src/functions.cpp" line="1170"/>
         <source>Lien introuvable</source>
         <translation>Link not found</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="936"/>
+        <location filename="../src/functions.cpp" line="1170"/>
         <source>Le lien</source>
         <translation>The link</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="936"/>
+        <location filename="../src/functions.cpp" line="1170"/>
         <source> est introuvable. Veuillez corriger la balise. Si ceci est un bug, merci de nous le rapporter.</source>
         <translation> is not found. Please fix the tag. If it&apos;s a bug, please rapport it to us.</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="971"/>
+        <location filename="../src/functions.cpp" line="1205"/>
         <source>Image d&apos;illustration</source>
         <translation>Illustration picture</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1200"/>
+        <location filename="../src/functions.cpp" line="1433"/>
         <source>Temps de Préparation :</source>
         <translation>Preparation time:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1204"/>
+        <location filename="../src/functions.cpp" line="1437"/>
         <source>Temps de Repos :</source>
         <translation>Break time:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1209"/>
+        <location filename="../src/functions.cpp" line="1442"/>
         <source>Temps de Cuisson :</source>
         <translation>Cooking time:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1215"/>
+        <location filename="../src/functions.cpp" line="1448"/>
         <source> à </source>
         <translation> to</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1215"/>
-        <location filename="../src/functions.cpp" line="1218"/>
+        <location filename="../src/functions.cpp" line="1448"/>
+        <location filename="../src/functions.cpp" line="1451"/>
         <source> personnes</source>
         <translation> persons</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1220"/>
+        <location filename="../src/functions.cpp" line="1453"/>
         <source> personne</source>
         <translation>person</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1231"/>
+        <location filename="../src/functions.cpp" line="1464"/>
         <source>Matériel nécessaire :</source>
         <translation>Required material:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1234"/>
-        <location filename="../src/functions.cpp" line="1288"/>
+        <location filename="../src/functions.cpp" line="1467"/>
+        <location filename="../src/functions.cpp" line="1521"/>
         <source>Préparation :</source>
         <translation>Preparation:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1238"/>
+        <location filename="../src/functions.cpp" line="1471"/>
         <source>Conseils :</source>
         <translation>Proposals:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1290"/>
+        <location filename="../src/functions.cpp" line="1523"/>
         <source> Repos :</source>
         <translation> Break:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1292"/>
+        <location filename="../src/functions.cpp" line="1525"/>
         <source>Cuisson :</source>
         <translation>Cook:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1361"/>
+        <location filename="../src/functions.cpp" line="1594"/>
         <source>Récupération de l&apos;image d&apos;illustration de la recette...</source>
         <translation>Downloading the illustration picture of the recipe...</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1425"/>
+        <location filename="../src/functions.cpp" line="1658"/>
         <source>Enregistrer l&apos;archive sous...</source>
         <translation>Save package to...</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1425"/>
+        <location filename="../src/functions.cpp" line="1658"/>
         <source>Package d&apos;installation  :</source>
         <translation>Installation package:</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1428"/>
+        <location filename="../src/functions.cpp" line="1661"/>
         <source>Téléchargement de la mise à jour...</source>
         <translation>Downloading update...</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1434"/>
+        <location filename="../src/functions.cpp" line="1667"/>
         <source>Téléchargement terminé !</source>
         <translation>Download finished!</translation>
     </message>
     <message>
-        <location filename="../src/functions.cpp" line="1434"/>
+        <location filename="../src/functions.cpp" line="1667"/>
         <source>Vous pouvez maintenant installer
 le package d&apos;installation téléchargé !</source>
         <translation>You can now install the installation
 package just dowloaded!</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="138"/>
+        <source>tasse</source>
+        <translation>cup</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="138"/>
+        <source>verre</source>
+        <translation>glass</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="138"/>
+        <source>bol</source>
+        <translation>bowl</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="138"/>
+        <source>sachet</source>
+        <translation>sachet</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="138"/>
+        <source>pincée</source>
+        <translation>pinch</translation>
     </message>
 </context>
 <context>
@@ -994,117 +1136,122 @@ package just dowloaded!</translation>
         <translation>Parameters</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="203"/>
+        <location filename="../ui/qrecipewriter.ui" line="238"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;CATÉGORIES :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;CATEGORIES :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="231"/>
+        <location filename="../ui/qrecipewriter.ui" line="294"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;IMAGE ILLUSTRANT LA RECETTE :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;MAIN PICTURE OF THE RECIPE :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="292"/>
+        <location filename="../ui/qrecipewriter.ui" line="812"/>
         <source>POUR :</source>
         <translation>FOR:</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="327"/>
+        <location filename="../ui/qrecipewriter.ui" line="847"/>
         <source>à</source>
         <translation>to</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="370"/>
+        <location filename="../ui/qrecipewriter.ui" line="893"/>
         <source>personne(s)</source>
         <translation>person(s)</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="515"/>
+        <location filename="../ui/qrecipewriter.ui" line="406"/>
         <source> Temps de préparation :</source>
         <translation> Preparation time:</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="533"/>
+        <location filename="../ui/qrecipewriter.ui" line="524"/>
         <source> Temps de cuisson :</source>
         <translation>Cooking time:</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="567"/>
-        <location filename="../ui/qrecipewriter.ui" line="653"/>
-        <location filename="../ui/qrecipewriter.ui" line="718"/>
+        <location filename="../ui/qrecipewriter.ui" line="447"/>
+        <location filename="../ui/qrecipewriter.ui" line="562"/>
+        <location filename="../ui/qrecipewriter.ui" line="716"/>
         <source>H</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="585"/>
-        <location filename="../ui/qrecipewriter.ui" line="635"/>
-        <location filename="../ui/qrecipewriter.ui" line="700"/>
+        <location filename="../ui/qrecipewriter.ui" line="485"/>
+        <location filename="../ui/qrecipewriter.ui" line="600"/>
+        <location filename="../ui/qrecipewriter.ui" line="754"/>
         <source>MIN</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="749"/>
+        <location filename="../ui/qrecipewriter.ui" line="681"/>
         <source>J</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="780"/>
+        <location filename="../ui/qrecipewriter.ui" line="643"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Temps de repos :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Breaking time:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="797"/>
-        <location filename="../src/qrecipewriter.cpp" line="486"/>
+        <location filename="../ui/qrecipewriter.ui" line="321"/>
+        <location filename="../src/qrecipewriter.cpp" line="510"/>
         <source>Sélectionner une image...</source>
         <translation>Select a picture...</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="828"/>
+        <location filename="../ui/qrecipewriter.ui" line="1005"/>
         <source>Précisions :</source>
         <translation>Precision:</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="846"/>
+        <location filename="../ui/qrecipewriter.ui" line="212"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;TITRE DE LA RECETTE :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;TITLE OF THE RECIPE:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="882"/>
+        <location filename="../ui/qrecipewriter.ui" line="251"/>
+        <source>Sync</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/qrecipewriter.ui" line="1048"/>
         <source>Général</source>
         <translation>General</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="919"/>
+        <location filename="../ui/qrecipewriter.ui" line="1085"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;DESCRIPTION :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;DESCRIPTION:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1026"/>
+        <location filename="../ui/qrecipewriter.ui" line="1192"/>
         <source>Gras</source>
         <translation>Bold</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1032"/>
+        <location filename="../ui/qrecipewriter.ui" line="1198"/>
         <source>G</source>
         <translation>B</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1054"/>
+        <location filename="../ui/qrecipewriter.ui" line="1220"/>
         <source>Italique</source>
         <translation>Italic</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1060"/>
+        <location filename="../ui/qrecipewriter.ui" line="1226"/>
         <source>I</source>
         <translation>I</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1083"/>
+        <location filename="../ui/qrecipewriter.ui" line="1249"/>
         <source>Souligné</source>
         <translation>Underlined</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1089"/>
+        <location filename="../ui/qrecipewriter.ui" line="1255"/>
         <source>S</source>
         <translation>U</translation>
     </message>
@@ -1113,415 +1260,463 @@ package just dowloaded!</translation>
         <translation type="obsolete">Comment (row without bullets) </translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1111"/>
+        <location filename="../ui/qrecipewriter.ui" line="1277"/>
         <source>Commentaire (ligne sans puce), dans une liste à puce</source>
         <translation>Comment (line without bullets)  into the list</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1149"/>
+        <location filename="../ui/qrecipewriter.ui" line="1315"/>
         <source>Insérer un lien à partir de la sélection</source>
         <translation>Insert a link from the selection</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1155"/>
+        <location filename="../ui/qrecipewriter.ui" line="1321"/>
         <source>Lien</source>
         <translation>Link</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1187"/>
+        <location filename="../ui/qrecipewriter.ui" line="1353"/>
         <source>Insérer une image</source>
         <translation>Insert a picture</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1193"/>
+        <location filename="../ui/qrecipewriter.ui" line="1359"/>
         <source>IMG</source>
         <translation>PICT</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1222"/>
+        <location filename="../ui/qrecipewriter.ui" line="1388"/>
         <source>Correction orthographique</source>
         <translation>Spell checking</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1228"/>
+        <location filename="../ui/qrecipewriter.ui" line="1394"/>
         <source>ABC</source>
         <extracomment>Correction orthographique</extracomment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1254"/>
-        <location filename="../src/qrecipewriter.cpp" line="678"/>
+        <location filename="../ui/qrecipewriter.ui" line="1420"/>
+        <location filename="../src/qrecipewriter.cpp" line="702"/>
         <source>Ne pas imprimer une partie de texte</source>
         <translation>Do not print a part of text</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1257"/>
+        <location filename="../ui/qrecipewriter.ui" line="1423"/>
         <source>NoPrint</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1277"/>
-        <location filename="../src/qrecipewriter.cpp" line="679"/>
+        <location filename="../ui/qrecipewriter.ui" line="1443"/>
+        <location filename="../src/qrecipewriter.cpp" line="703"/>
         <source>Imprimer une partie de texte mais ne pas l&apos;afficher</source>
         <translation>Print a part of text but don&apos;t show it</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1280"/>
+        <location filename="../ui/qrecipewriter.ui" line="1446"/>
         <source>PrintOnly</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1306"/>
+        <location filename="../ui/qrecipewriter.ui" line="1472"/>
         <source>Insérer une vidéo</source>
         <translation>Insert a video</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1556"/>
+        <location filename="../ui/qrecipewriter.ui" line="1722"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;INGRÉDIENTS :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;INGREDIENTS:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1663"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;MATÉRIEL :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;MATERIAL:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <location filename="../ui/qrecipewriter.ui" line="1769"/>
+        <source>Ingrédient</source>
+        <translation>Ingredient</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1834"/>
+        <location filename="../ui/qrecipewriter.ui" line="1792"/>
+        <location filename="../ui/qrecipewriter.ui" line="2056"/>
+        <source>Q:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/qrecipewriter.ui" line="1815"/>
+        <source>U:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/qrecipewriter.ui" line="1838"/>
+        <location filename="../ui/qrecipewriter.ui" line="2079"/>
+        <source>N:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/qrecipewriter.ui" line="1858"/>
+        <source>Titre de groupe</source>
+        <translation>Name of group</translation>
+    </message>
+    <message>
+        <location filename="../ui/qrecipewriter.ui" line="1896"/>
+        <location filename="../ui/qrecipewriter.ui" line="2096"/>
+        <source>Commentaire</source>
+        <translation>Comment</translation>
+    </message>
+    <message>
+        <location filename="../ui/qrecipewriter.ui" line="1991"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;MATÉRIEL :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;EQUIPMENT:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/qrecipewriter.ui" line="2033"/>
+        <source>Matériel</source>
+        <translation>Equipment</translation>
+    </message>
+    <message>
+        <location filename="../ui/qrecipewriter.ui" line="2263"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;DÉTAILS DE LA PRÉPARATION :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;PREPARATION DETAILS:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="1954"/>
+        <location filename="../ui/qrecipewriter.ui" line="2383"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;CONSEILS :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;PROPOSALS:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2066"/>
+        <location filename="../ui/qrecipewriter.ui" line="2495"/>
         <source>Envoyer</source>
         <translation>Send</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2085"/>
+        <location filename="../ui/qrecipewriter.ui" line="2514"/>
         <source>Aperçu</source>
         <translation>Preview</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2104"/>
+        <location filename="../ui/qrecipewriter.ui" line="2533"/>
         <source>Enregistrer</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2136"/>
-        <location filename="../src/qrecipewriter.cpp" line="3985"/>
+        <location filename="../ui/qrecipewriter.ui" line="2565"/>
+        <location filename="../src/qrecipewriter.cpp" line="4601"/>
         <source>Prêt.</source>
         <translation>Ready.</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2165"/>
+        <location filename="../ui/qrecipewriter.ui" line="2594"/>
         <source>Outi&amp;ls</source>
         <translation>Too&amp;ls</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2178"/>
+        <location filename="../ui/qrecipewriter.ui" line="2608"/>
         <source>Fic&amp;hier</source>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2186"/>
+        <location filename="../ui/qrecipewriter.ui" line="2616"/>
         <source>&amp;Recette</source>
         <translation>&amp;Recipe</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2199"/>
+        <location filename="../ui/qrecipewriter.ui" line="2629"/>
         <source>&amp;Préférences</source>
         <translation>&amp;Configuration</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2202"/>
+        <location filename="../ui/qrecipewriter.ui" line="2632"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2207"/>
+        <location filename="../ui/qrecipewriter.ui" line="2637"/>
         <source>&amp;Nouvelle Recette</source>
         <translation>&amp;New recipe</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2210"/>
+        <location filename="../ui/qrecipewriter.ui" line="2640"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2215"/>
+        <location filename="../ui/qrecipewriter.ui" line="2645"/>
         <source>&amp;Ouvrir une recette existante</source>
         <translation>&amp;Open existing recipe</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2218"/>
+        <location filename="../ui/qrecipewriter.ui" line="2648"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2223"/>
+        <location filename="../ui/qrecipewriter.ui" line="2653"/>
         <source>&amp;Enregistrer</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2226"/>
+        <location filename="../ui/qrecipewriter.ui" line="2656"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2231"/>
+        <location filename="../ui/qrecipewriter.ui" line="2661"/>
         <source>E&amp;nregistrer sous...</source>
         <translation>S&amp;ave as...</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2234"/>
+        <location filename="../ui/qrecipewriter.ui" line="2664"/>
         <source>Ctrl+Shift+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2239"/>
+        <location filename="../ui/qrecipewriter.ui" line="2669"/>
         <source>&amp;Aperçu</source>
         <translation>&amp;Preview</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2242"/>
+        <location filename="../ui/qrecipewriter.ui" line="2672"/>
         <source>F6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2247"/>
+        <location filename="../ui/qrecipewriter.ui" line="2677"/>
         <source>En&amp;voyer</source>
         <translation>Se&amp;nd</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2250"/>
+        <location filename="../ui/qrecipewriter.ui" line="2680"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2255"/>
+        <location filename="../ui/qrecipewriter.ui" line="2685"/>
         <source>&amp;Gérer les catégories</source>
         <translation>&amp;Manage categories</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2258"/>
+        <location filename="../ui/qrecipewriter.ui" line="2688"/>
         <source>F3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2263"/>
+        <location filename="../ui/qrecipewriter.ui" line="2693"/>
         <source>Recherche de mise à jour...</source>
         <translation>Search for updates...</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2266"/>
+        <location filename="../ui/qrecipewriter.ui" line="2696"/>
         <source>F10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2271"/>
+        <location filename="../ui/qrecipewriter.ui" line="2701"/>
         <source>&amp;Aide</source>
         <translation>&amp;Help</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2274"/>
+        <location filename="../ui/qrecipewriter.ui" line="2704"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2279"/>
+        <location filename="../ui/qrecipewriter.ui" line="2709"/>
         <source>&amp;À propos</source>
         <translation>&amp;About</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2282"/>
+        <location filename="../ui/qrecipewriter.ui" line="2712"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2287"/>
+        <location filename="../ui/qrecipewriter.ui" line="2717"/>
         <source>&amp;Correction orthographique</source>
         <translation>S&amp;pell checking</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2290"/>
+        <location filename="../ui/qrecipewriter.ui" line="2720"/>
         <source>F7</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2295"/>
+        <location filename="../ui/qrecipewriter.ui" line="2725"/>
         <source>&amp;Rechercher une mise à jour</source>
         <translation>Search for an &amp;update</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2300"/>
+        <location filename="../ui/qrecipewriter.ui" line="2730"/>
         <source>Ouvrir &amp;une recette en ligne</source>
         <translation>Open a &amp;recipe online</translation>
     </message>
     <message>
-        <location filename="../ui/qrecipewriter.ui" line="2303"/>
+        <location filename="../ui/qrecipewriter.ui" line="2733"/>
         <source>Ctrl+Shift+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="91"/>
-        <location filename="../src/qrecipewriter.cpp" line="2141"/>
-        <location filename="../src/qrecipewriter.cpp" line="2180"/>
-        <location filename="../src/qrecipewriter.cpp" line="2244"/>
+        <location filename="../ui/qrecipewriter.ui" line="2738"/>
+        <source>Gérer les unités</source>
+        <translation>Manage units</translation>
+    </message>
+    <message>
+        <location filename="../ui/qrecipewriter.ui" line="2741"/>
+        <source>F9</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="98"/>
+        <location filename="../src/qrecipewriter.cpp" line="2397"/>
+        <location filename="../src/qrecipewriter.cpp" line="2436"/>
+        <location filename="../src/qrecipewriter.cpp" line="2564"/>
         <source>Enregistrer avant de quitter ?</source>
         <translation>Save before exit?</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="91"/>
+        <location filename="../src/qrecipewriter.cpp" line="98"/>
         <source>La recette a été modifiée. Voulez-vous enregistrer la recette avant de quitter le programme ?</source>
         <translation>The recipe has changed. Do you want to save the recipe before exit the software?</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="163"/>
+        <location filename="../src/qrecipewriter.cpp" line="170"/>
         <source>Configuration introuvable !</source>
         <translation>Configuration not found!</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="163"/>
+        <location filename="../src/qrecipewriter.cpp" line="170"/>
         <source>C&apos;est la première fois que vous lancez l&apos;application. Vous allez être invité à configurer le logiciel.</source>
         <translation>It&apos;s the first time you launch the application. You will be prompted to configure the software.</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="323"/>
-        <location filename="../src/qrecipewriter.cpp" line="350"/>
-        <location filename="../src/qrecipewriter.cpp" line="351"/>
+        <location filename="../src/qrecipewriter.cpp" line="330"/>
+        <location filename="../src/qrecipewriter.cpp" line="357"/>
+        <location filename="../src/qrecipewriter.cpp" line="358"/>
         <source>Plat principal</source>
         <translation>Main course</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="325"/>
-        <location filename="../src/qrecipewriter.cpp" line="352"/>
-        <location filename="../src/qrecipewriter.cpp" line="353"/>
+        <location filename="../src/qrecipewriter.cpp" line="332"/>
+        <location filename="../src/qrecipewriter.cpp" line="359"/>
+        <location filename="../src/qrecipewriter.cpp" line="360"/>
         <source>Entrée</source>
         <translation>Starter</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="327"/>
-        <location filename="../src/qrecipewriter.cpp" line="354"/>
-        <location filename="../src/qrecipewriter.cpp" line="355"/>
+        <location filename="../src/qrecipewriter.cpp" line="334"/>
+        <location filename="../src/qrecipewriter.cpp" line="361"/>
+        <location filename="../src/qrecipewriter.cpp" line="362"/>
         <source>Dessert</source>
         <translation>Dessert</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="329"/>
-        <location filename="../src/qrecipewriter.cpp" line="356"/>
-        <location filename="../src/qrecipewriter.cpp" line="357"/>
+        <location filename="../src/qrecipewriter.cpp" line="336"/>
+        <location filename="../src/qrecipewriter.cpp" line="363"/>
+        <location filename="../src/qrecipewriter.cpp" line="364"/>
         <source>Accompagnement</source>
         <translation>Side dish</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="335"/>
-        <location filename="../src/qrecipewriter.cpp" line="358"/>
-        <location filename="../src/qrecipewriter.cpp" line="359"/>
+        <location filename="../src/qrecipewriter.cpp" line="342"/>
+        <location filename="../src/qrecipewriter.cpp" line="365"/>
+        <location filename="../src/qrecipewriter.cpp" line="366"/>
         <source>Base</source>
         <translation>Basis</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="337"/>
+        <location filename="../src/qrecipewriter.cpp" line="344"/>
         <source>Biscuits &amp;&amp; Friandises</source>
         <translation>Biscuits &amp;&amp; Sweetmeats</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="339"/>
+        <location filename="../src/qrecipewriter.cpp" line="346"/>
         <source>Pain &amp;&amp; Viennoiserie</source>
         <translation>Bread &amp;&amp; Pastries</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="341"/>
-        <location filename="../src/qrecipewriter.cpp" line="364"/>
-        <location filename="../src/qrecipewriter.cpp" line="365"/>
+        <location filename="../src/qrecipewriter.cpp" line="348"/>
+        <location filename="../src/qrecipewriter.cpp" line="371"/>
+        <location filename="../src/qrecipewriter.cpp" line="372"/>
         <source>Divers</source>
         <translation>Miscellaneous</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="360"/>
-        <location filename="../src/qrecipewriter.cpp" line="361"/>
+        <location filename="../src/qrecipewriter.cpp" line="367"/>
+        <location filename="../src/qrecipewriter.cpp" line="368"/>
         <source>Biscuits &amp; Friandises</source>
         <translation>Biscuits &amp; Sweetmeats</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="362"/>
-        <location filename="../src/qrecipewriter.cpp" line="363"/>
+        <location filename="../src/qrecipewriter.cpp" line="369"/>
+        <location filename="../src/qrecipewriter.cpp" line="370"/>
         <source>Pain &amp; Viennoiserie</source>
         <translation>Bread &amp; Pastries</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="392"/>
-        <location filename="../src/qrecipewriter.cpp" line="674"/>
+        <location filename="../src/qrecipewriter.cpp" line="399"/>
+        <location filename="../src/qrecipewriter.cpp" line="698"/>
         <source>Ne pas imprimer une partie de texte
 [NÉCESSITE D&apos;ACTIVER RECIPES PRINTER]</source>
         <translation>Do not print a part of text
 [RECIPES PRINTER IS REQUIRED]</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="393"/>
-        <location filename="../src/qrecipewriter.cpp" line="675"/>
+        <location filename="../src/qrecipewriter.cpp" line="400"/>
+        <location filename="../src/qrecipewriter.cpp" line="699"/>
         <source>Imprimer une partie de texte mais ne pas l&apos;afficher
 [NÉCESSITE D&apos;ACTIVER RECIPES PRINTER]</source>
         <translation>Print a part of text but don&apos;t show it
 [RECIPES PRINTER IS REQUIRED]</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="465"/>
+        <location filename="../src/qrecipewriter.cpp" line="489"/>
         <source>Fichier non reconnu</source>
         <translation>Unrecognized file</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="465"/>
+        <location filename="../src/qrecipewriter.cpp" line="489"/>
         <source>Le fichier n&apos;est pas un fichier de recette (extension .rct)</source>
         <translation>The file is not a recipe file (extension .rct)</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="727"/>
-        <location filename="../src/qrecipewriter.cpp" line="1158"/>
+        <location filename="../src/qrecipewriter.cpp" line="764"/>
+        <location filename="../src/qrecipewriter.cpp" line="1254"/>
         <source>Choisir une image</source>
         <translation>Choose a picture</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="991"/>
+        <location filename="../src/qrecipewriter.cpp" line="1063"/>
         <source>Insérer un lien</source>
         <translation>Insert a link</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="993"/>
+        <location filename="../src/qrecipewriter.cpp" line="1065"/>
         <source>Entrez l&apos;adresse du lien :</source>
         <translation>Type the link URL:</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1026"/>
+        <location filename="../src/qrecipewriter.cpp" line="1098"/>
         <source>Valider</source>
         <translation>Apply</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1030"/>
+        <location filename="../src/qrecipewriter.cpp" line="1102"/>
         <source>Annuler</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1419"/>
+        <location filename="../src/qrecipewriter.cpp" line="1529"/>
         <source>Terminé</source>
         <translation>Done</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1420"/>
+        <location filename="../src/qrecipewriter.cpp" line="1530"/>
         <source>La correction est terminé.</source>
         <translation>Spell checking is done.</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1501"/>
+        <location filename="../src/qrecipewriter.cpp" line="1611"/>
         <source>Tout n&apos;est pas prêt !</source>
         <translation>That&apos;s not all ready!</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1501"/>
+        <location filename="../src/qrecipewriter.cpp" line="1611"/>
         <source>L&apos;ensemble des paramètres requis de la recette ne sont pas renseignés. Veullez les renseigner.
 Paramètres requis :
       - Titre
@@ -1544,247 +1739,348 @@ Required parameters:
       - Preparation instructions</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1526"/>
+        <location filename="../src/qrecipewriter.cpp" line="1636"/>
         <source>Erreur dans le nombre de personnes</source>
         <translation>Error in persons number</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1526"/>
+        <location filename="../src/qrecipewriter.cpp" line="1636"/>
         <source>Erreur: la borne inférieure du nombre de personnes indiqué est supérieure à la borne supérieure.</source>
         <translation>Error: the lower bound of persons number is higher than the upper bound.</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1532"/>
+        <location filename="../src/qrecipewriter.cpp" line="1642"/>
         <source>Vérification orthogaphique en cours...</source>
         <translation>Spell checking in progress...</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1805"/>
+        <location filename="../src/qrecipewriter.cpp" line="1653"/>
+        <source>Envoi en cours...</source>
+        <translation>Upload recipe...</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="1697"/>
+        <source>Catégories mises à jour !</source>
+        <translation>Categories updated!</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="1702"/>
+        <location filename="../src/qrecipewriter.cpp" line="1707"/>
+        <location filename="../src/qrecipewriter.cpp" line="1721"/>
+        <location filename="../src/qrecipewriter.cpp" line="2517"/>
+        <location filename="../src/qrecipewriter.cpp" line="2521"/>
+        <location filename="../src/qrecipewriter.cpp" line="2542"/>
+        <location filename="../src/qrecipewriter.cpp" line="2548"/>
+        <location filename="../src/qrecipewriter.cpp" line="2551"/>
+        <source>Une erreur est survenue</source>
+        <translation>An error has occurred</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="1702"/>
+        <location filename="../src/qrecipewriter.cpp" line="2517"/>
+        <location filename="../src/qrecipewriter.cpp" line="2542"/>
+        <source>Impossible de lire la réponse du serveur. Merci de rapporter le bug.</source>
+        <translation>Unable to load server response. Please report the bug.</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="1707"/>
+        <source>Impossible de récupérer les catégories : </source>
+        <translation>Unable to get categories: </translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="1721"/>
+        <source>Une erreur inconnue est survenue. Veuillez rapporter le bug.</source>
+        <translation>An unkown error has occurred. Please report the bug.</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="1990"/>
         <source>Enregistrer la recette sous...</source>
         <translation>Save recipe as...</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1807"/>
-        <location filename="../src/qrecipewriter.cpp" line="2166"/>
+        <location filename="../src/qrecipewriter.cpp" line="1992"/>
+        <location filename="../src/qrecipewriter.cpp" line="2422"/>
         <source>Recettes : *.rct (*.rct)</source>
         <translation>Recipes: *.rct (*.rct)</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="1883"/>
+        <location filename="../src/qrecipewriter.cpp" line="2068"/>
         <source>Enregistrement terminé !</source>
         <translation>Recipe successfully saved!</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2102"/>
+        <location filename="../src/qrecipewriter.cpp" line="2211"/>
+        <location filename="../src/qrecipewriter.cpp" line="2241"/>
+        <location filename="../src/qrecipewriter.cpp" line="2267"/>
+        <location filename="../src/qrecipewriter.cpp" line="2293"/>
+        <source>Certaines données sont invalides</source>
+        <translation>Some data are not valid</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="2212"/>
+        <source>Certains ingrédients sont incorrects, car votre recette a probablement été créée avec une ancienne version du logiciel. Ils ont été ignorés.</source>
+        <translation>Some ingredients are not correct, beceause your recipe was probably created with an old version of the software. They has beed ignored.</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="2242"/>
+        <source>Certains matériels sont incorrects, car votre recette a probablement été créée avec une ancienne version du logiciel. Ils ont été ignorés.</source>
+        <translation>Some equipments are not correct, beceause your recipe was probably created with an old version of the software. They has beed ignored.</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="2268"/>
+        <source>Certaines instructions de préparation sont incorrectes, car votre recette a probablement été créée avec une ancienne version du logiciel. Ils ont été ignorés.</source>
+        <translation>Some preparation instructions are not correct, beceause your recipe was probably created with an old version of the software. They has beed ignored.</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="2294"/>
+        <source>Certains conseils sont incorrects, car votre recette a probablement été créée avec une ancienne version du logiciel. Ils ont été ignorés.</source>
+        <translation>Some proposals are not correct, beceause your recipe was probably created with an old version of the software. They has beed ignored.</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="2358"/>
         <source>Recette chargée !</source>
         <translation>Recipe loaded!</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2111"/>
+        <location filename="../src/qrecipewriter.cpp" line="2367"/>
         <source>Import partiel</source>
         <translation>incomplete import</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2111"/>
+        <location filename="../src/qrecipewriter.cpp" line="2367"/>
         <source>Certains champs n&apos;ont pas pu être récupérés car le formatage de la recette était incorrecte. Vous avez probablement modifié le code source manuellement, ou publié la recette avec une version ancienne du logiciel.
  Veuillez vous assurer de remplir les champs manquants avant de renvoyer la recette en ligne.</source>
         <translation>Some fields have not been recovered because the recipe format was not correct. You probably have change the source code manually, or published the recipe with an older version of the software.
 Please ensure you fill the missing fields before send back the recipe online.</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2124"/>
+        <location filename="../src/qrecipewriter.cpp" line="2380"/>
         <source>Vous devez indiquer un éditeur d&apos;images dans
 les préférences pour pouvoir éditer l&apos;image</source>
         <translation>You must specify a picture editor into the
 configuration to be able to edit the picture</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2128"/>
+        <location filename="../src/qrecipewriter.cpp" line="2384"/>
         <source>Vous ne pouvez pas éditer une image en ligne</source>
         <translation>You can&apos;t edit an online picture</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2141"/>
-        <location filename="../src/qrecipewriter.cpp" line="2180"/>
-        <location filename="../src/qrecipewriter.cpp" line="2244"/>
+        <location filename="../src/qrecipewriter.cpp" line="2397"/>
+        <location filename="../src/qrecipewriter.cpp" line="2436"/>
+        <location filename="../src/qrecipewriter.cpp" line="2564"/>
         <source>La recette a été modifiée. Voulez-vous enregistrer la recette avant de continuer ?</source>
         <translation>The recipe has changed. Do you want to save the recipe before continue?</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2164"/>
+        <location filename="../src/qrecipewriter.cpp" line="2420"/>
         <source>Ouvrir une recette</source>
         <translation>Open a recipe</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2202"/>
-        <source>Récupération de la recette...</source>
-        <translation>Downloading the recipe...</translation>
+        <location filename="../src/qrecipewriter.cpp" line="2874"/>
+        <source>Vous devez renseigner un nom d&apos;ingrédient !</source>
+        <translation>You must specify an ingredient name!</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2218"/>
-        <location filename="../src/qrecipewriter.cpp" line="2223"/>
-        <location filename="../src/qrecipewriter.cpp" line="2228"/>
+        <source>Récupération de la recette...</source>
+        <translation type="vanished">Downloading the recipe...</translation>
+    </message>
+    <message>
         <source>Une erreur est survenue lors de la récupération de la recette
 Veuillez contacter le support.</source>
-        <translation>An error has occurred while downloading the recipe.
+        <translation type="vanished">An error has occurred while downloading the recipe.
 Please contact us to report the bug.</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2296"/>
+        <location filename="../src/qrecipewriter.cpp" line="2616"/>
         <source>Recherche d&apos;une mise à jour...</source>
         <translation>Searching for an update...</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2322"/>
+        <location filename="../src/qrecipewriter.cpp" line="2642"/>
         <source>Mise à jour disponible</source>
         <translation>Update available</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2322"/>
+        <location filename="../src/qrecipewriter.cpp" line="2642"/>
         <source>Une mise à jour du logicielle est disponible, voulez-vous </source>
         <translation>An update of the software is available, do you want to </translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2323"/>
+        <location filename="../src/qrecipewriter.cpp" line="2643"/>
         <source>mettre à jour votre version </source>
         <translation>update your version </translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2323"/>
+        <location filename="../src/qrecipewriter.cpp" line="2643"/>
         <source> à la dernière version</source>
         <translation> to the last version</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2323"/>
+        <location filename="../src/qrecipewriter.cpp" line="2643"/>
         <source>) ?</source>
         <translation>)?</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2332"/>
+        <location filename="../src/qrecipewriter.cpp" line="2652"/>
         <source>Aucune mise à jour disponible</source>
         <translation>None updates found</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2332"/>
+        <location filename="../src/qrecipewriter.cpp" line="2652"/>
         <source>Vous possédez la dernière version du logiciel !</source>
         <translation>You already have the last version of the software!</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2218"/>
-        <location filename="../src/qrecipewriter.cpp" line="2223"/>
-        <location filename="../src/qrecipewriter.cpp" line="2228"/>
-        <location filename="../src/qrecipewriter.cpp" line="2337"/>
-        <location filename="../src/qrecipewriter.cpp" line="2343"/>
+        <location filename="../src/qrecipewriter.cpp" line="2657"/>
+        <location filename="../src/qrecipewriter.cpp" line="2663"/>
         <source>Erreur !</source>
         <translation>Error!</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2337"/>
+        <location filename="../src/qrecipewriter.cpp" line="2657"/>
         <source>Une erreur est survenue lors de la recherche de la mise à jour
 Veuillez contacter le support.</source>
         <translation>An error has occurred while searching for an update.
 Please contact us to report the bug.</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="2343"/>
+        <location filename="../src/qrecipewriter.cpp" line="2663"/>
         <source>Impossible de déterminer la dernière version du logiciel.
 Veuillez vérifier votre connexion internet.</source>
         <translation>We are unable to determine the last version of the software.
 Please check your internet connection.</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3429"/>
-        <location filename="../src/qrecipewriter.cpp" line="3506"/>
-        <location filename="../src/qrecipewriter.cpp" line="3580"/>
-        <location filename="../src/qrecipewriter.cpp" line="3703"/>
+        <location filename="../src/qrecipewriter.cpp" line="2871"/>
+        <location filename="../src/qrecipewriter.cpp" line="3053"/>
+        <source>Quantité incorrecte</source>
+        <translation>Quantity not valid</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="2871"/>
+        <location filename="../src/qrecipewriter.cpp" line="3053"/>
+        <source>La quantité mentionnée est invalide</source>
+        <translation>Quantity mentionned not valid</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="2890"/>
+        <location filename="../src/qrecipewriter.cpp" line="2900"/>
+        <location filename="../src/qrecipewriter.cpp" line="3066"/>
+        <location filename="../src/qrecipewriter.cpp" line="3179"/>
+        <location filename="../src/qrecipewriter.cpp" line="3280"/>
+        <source>Le champs est vide !</source>
+        <translation>Field is empty!</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="3056"/>
+        <source>Vous devez renseigner une quantité et un nom !</source>
+        <translation>You must specify a quantity and a name!</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="4012"/>
+        <location filename="../src/qrecipewriter.cpp" line="4099"/>
+        <location filename="../src/qrecipewriter.cpp" line="4176"/>
+        <location filename="../src/qrecipewriter.cpp" line="4299"/>
         <source>Modifier l&apos;élément</source>
         <translation>Edit item</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3430"/>
-        <location filename="../src/qrecipewriter.cpp" line="3507"/>
-        <location filename="../src/qrecipewriter.cpp" line="3581"/>
-        <location filename="../src/qrecipewriter.cpp" line="3704"/>
+        <location filename="../src/qrecipewriter.cpp" line="4013"/>
+        <location filename="../src/qrecipewriter.cpp" line="4100"/>
+        <location filename="../src/qrecipewriter.cpp" line="4177"/>
+        <location filename="../src/qrecipewriter.cpp" line="4300"/>
         <source>Supprimer l&apos;élément</source>
         <translation>Delete item</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3431"/>
-        <location filename="../src/qrecipewriter.cpp" line="3508"/>
-        <location filename="../src/qrecipewriter.cpp" line="3582"/>
-        <location filename="../src/qrecipewriter.cpp" line="3705"/>
+        <location filename="../src/qrecipewriter.cpp" line="4014"/>
+        <location filename="../src/qrecipewriter.cpp" line="4101"/>
+        <location filename="../src/qrecipewriter.cpp" line="4178"/>
+        <location filename="../src/qrecipewriter.cpp" line="4301"/>
         <source>Insérer un élément après</source>
         <translation>Insert item after</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3432"/>
-        <location filename="../src/qrecipewriter.cpp" line="3509"/>
-        <location filename="../src/qrecipewriter.cpp" line="3583"/>
-        <location filename="../src/qrecipewriter.cpp" line="3706"/>
+        <location filename="../src/qrecipewriter.cpp" line="4015"/>
+        <location filename="../src/qrecipewriter.cpp" line="4102"/>
+        <location filename="../src/qrecipewriter.cpp" line="4179"/>
+        <location filename="../src/qrecipewriter.cpp" line="4302"/>
         <source>Insérer un élément avant</source>
         <translation>Insert item before</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3477"/>
-        <location filename="../src/qrecipewriter.cpp" line="3551"/>
-        <location filename="../src/qrecipewriter.cpp" line="3674"/>
-        <location filename="../src/qrecipewriter.cpp" line="3748"/>
+        <location filename="../src/qrecipewriter.cpp" line="4070"/>
+        <location filename="../src/qrecipewriter.cpp" line="4147"/>
+        <location filename="../src/qrecipewriter.cpp" line="4270"/>
+        <location filename="../src/qrecipewriter.cpp" line="4344"/>
         <source>Supprimer les éléments</source>
         <translation>Delete items</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3773"/>
+        <location filename="../src/qrecipewriter.cpp" line="4369"/>
         <source>Importer des ingrédients</source>
         <translation>Import some ingredients</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3784"/>
+        <location filename="../src/qrecipewriter.cpp" line="4380"/>
         <source>Importer une liste d&apos;ingrédients</source>
         <translation>Import a list of ingredients</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3784"/>
+        <location filename="../src/qrecipewriter.cpp" line="4380"/>
         <source>Entrez les ingrédients (1 par ligne)</source>
         <translation>Type the ingredients (1 by line)</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3822"/>
+        <location filename="../src/qrecipewriter.cpp" line="4427"/>
         <source>Importer du matériel</source>
         <translation>Import some material</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3833"/>
+        <location filename="../src/qrecipewriter.cpp" line="4439"/>
         <source>Importer une liste de matériel</source>
         <translation>Import a list of material</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3833"/>
+        <location filename="../src/qrecipewriter.cpp" line="4439"/>
         <source>Entrez le matériel (1 par ligne)</source>
         <translation>Type the material (1 by line)</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3860"/>
-        <location filename="../src/qrecipewriter.cpp" line="3871"/>
+        <location filename="../src/qrecipewriter.cpp" line="4461"/>
+        <source>Certaines lignes ne sont pas correctes. Elles ont été ignorées.</source>
+        <translation>Some lines are not correct. They has been ignored.</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="4469"/>
+        <source>Erreur lors de l&apos;importation du matériel</source>
+        <translation>Error while importing equipment</translation>
+    </message>
+    <message>
+        <location filename="../src/qrecipewriter.cpp" line="4476"/>
+        <location filename="../src/qrecipewriter.cpp" line="4487"/>
         <source>Importer des instructions de préparation</source>
         <translation>Import some preparation instructions</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3871"/>
+        <location filename="../src/qrecipewriter.cpp" line="4487"/>
         <source>Entrez les instructions de préparation (1 par ligne)</source>
         <translation>Type the preparation instructions (1 by line)</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3922"/>
+        <location filename="../src/qrecipewriter.cpp" line="4538"/>
         <source>Importer des conseils</source>
         <translation>import some proposals</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3933"/>
+        <location filename="../src/qrecipewriter.cpp" line="4549"/>
         <source>Importer une liste de conseils</source>
         <translation>import a list of proposals</translation>
     </message>
     <message>
-        <location filename="../src/qrecipewriter.cpp" line="3933"/>
+        <location filename="../src/qrecipewriter.cpp" line="4549"/>
         <source>Entrez les conseils (1 par ligne)</source>
         <translation>Type the proposals (1 by line)</translation>
     </message>
@@ -1792,27 +2088,27 @@ Please check your internet connection.</translation>
 <context>
     <name>SearchUpdates</name>
     <message>
-        <location filename="../src/searchupdates.cpp" line="66"/>
+        <location filename="../src/searchupdates.cpp" line="74"/>
         <source>Mise à jour disponible</source>
         <translation>Update available</translation>
     </message>
     <message>
-        <location filename="../src/searchupdates.cpp" line="66"/>
+        <location filename="../src/searchupdates.cpp" line="74"/>
         <source>Une mise à jour du logicielle est disponible, voulez-vous </source>
         <translation>An update of the software is available, do you want to </translation>
     </message>
     <message>
-        <location filename="../src/searchupdates.cpp" line="67"/>
+        <location filename="../src/searchupdates.cpp" line="75"/>
         <source>mettre à jour votre version </source>
         <translation>update your version </translation>
     </message>
     <message>
-        <location filename="../src/searchupdates.cpp" line="67"/>
+        <location filename="../src/searchupdates.cpp" line="75"/>
         <source> à la dernière version</source>
         <translation> to the last version</translation>
     </message>
     <message>
-        <location filename="../src/searchupdates.cpp" line="67"/>
+        <location filename="../src/searchupdates.cpp" line="75"/>
         <source>) ?</source>
         <translation>)?</translation>
     </message>
@@ -1820,203 +2116,254 @@ Please check your internet connection.</translation>
 <context>
     <name>SendAutomatic</name>
     <message>
-        <location filename="../ui/sendautomatic.ui" line="32"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../ui/sendautomatic.ui" line="63"/>
         <source>Nom d&apos;utilisateur :</source>
-        <translation>Username:</translation>
+        <translation type="vanished">Username:</translation>
     </message>
     <message>
-        <location filename="../ui/sendautomatic.ui" line="104"/>
         <source>Mot de passe :</source>
-        <translation>Password:</translation>
+        <translation type="vanished">Password:</translation>
     </message>
     <message>
-        <location filename="../ui/sendautomatic.ui" line="148"/>
         <source>Publier</source>
-        <translation>Publish</translation>
+        <translation type="vanished">Publish</translation>
     </message>
     <message>
-        <location filename="../ui/sendautomatic.ui" line="170"/>
         <source>Mémoriser les identifiants</source>
-        <translation>Remember credentials</translation>
+        <translation type="vanished">Remember credentials</translation>
     </message>
     <message>
-        <location filename="../ui/sendautomatic.ui" line="197"/>
         <source>Config : </source>
-        <translation>Config:</translation>
+        <translation type="vanished">Config:</translation>
     </message>
     <message>
-        <location filename="../ui/sendautomatic.ui" line="235"/>
         <source>Valider</source>
-        <translation>Apply</translation>
+        <translation type="vanished">Apply</translation>
     </message>
     <message>
-        <location filename="../ui/sendautomatic.ui" line="260"/>
         <source>Annuler</source>
-        <translation>Cancel</translation>
+        <translation type="vanished">Cancel</translation>
     </message>
     <message>
-        <location filename="../src/sendautomatic.cpp" line="103"/>
         <source>Envoi en cours...</source>
-        <translation>Upload recipe...</translation>
+        <translation type="vanished">Upload recipe...</translation>
     </message>
     <message>
-        <location filename="../src/sendautomatic.cpp" line="222"/>
+        <source>Envoi terminé</source>
+        <translation type="vanished">Upload finished</translation>
+    </message>
+    <message>
+        <source>Envoi terminé avec succès !
+Voulez-vous afficher la recette en ligne ?</source>
+        <translation type="vanished">Upload finished successful!
+Do you want to see the recipe online?</translation>
+    </message>
+    <message>
+        <source>Détails &gt;&gt;</source>
+        <translation type="vanished">Details &gt;&gt;</translation>
+    </message>
+    <message>
+        <source>L&apos;envoi a échoué : identifiant ou mot de passe incorrect !</source>
+        <translation type="vanished">Upload failed: username or password not correct!</translation>
+    </message>
+    <message>
+        <source>L&apos;envoi a échoué : impossible de se connecter au site web. Vérifiez votre connexion internet.</source>
+        <translation type="vanished">Upload failed: unable to connect to the website. Please check your internet connection.</translation>
+    </message>
+    <message>
+        <source>L&apos;envoi a échoué : l&apos;adresse de publication est-elle correcte ?</source>
+        <translation type="vanished">Upload failed: is the publish address correct?</translation>
+    </message>
+    <message>
+        <source>L&apos;envoi a échoué : vous n&apos;avez pas l&apos;autorisation de modifier cette recette !</source>
+        <translation type="vanished">Upload failed: you are not allowed to edit this recipe!</translation>
+    </message>
+    <message>
+        <source>L&apos;envoi a échoué. Cliquez sur Détails pour en savoir plus.</source>
+        <translation type="vanished">Upload failed. Click on Details to see more.</translation>
+    </message>
+    <message>
+        <source>L&apos;envoi a échoué</source>
+        <translation type="vanished">Upload failed</translation>
+    </message>
+    <message>
+        <source>L&apos;envoi a échoué pour une raison inconnue. Cliquez sur Détails pour en savoir plus.</source>
+        <translation type="vanished">Upload failed for an unkown reason. Click on Details to see more.</translation>
+    </message>
+    <message>
+        <source>&lt;&lt; Détails</source>
+        <translation type="vanished">&lt;&lt; Details</translation>
+    </message>
+</context>
+<context>
+    <name>SendManual</name>
+    <message>
+        <source>Titre :</source>
+        <translation type="vanished">Title:</translation>
+    </message>
+    <message>
+        <source>Copier</source>
+        <translation type="vanished">Copy</translation>
+    </message>
+    <message>
+        <source>Code HTML (corps) :</source>
+        <translation type="vanished">HTML code (body):</translation>
+    </message>
+    <message>
+        <source>Extrait :</source>
+        <translation type="vanished">Excerpt:</translation>
+    </message>
+    <message>
+        <source>Images à ajouter :</source>
+        <translation type="vanished">Pictures to add:</translation>
+    </message>
+    <message>
+        <source>Catégories :</source>
+        <translation type="vanished">Categories:</translation>
+    </message>
+    <message>
+        <source>Enregistrer dans un fichier</source>
+        <translation type="vanished">Save into a file</translation>
+    </message>
+    <message>
+        <source>Ouvrir l&apos;éditeur en ligne</source>
+        <translation type="vanished">Open into the online editor</translation>
+    </message>
+    <message>
+        <source>Fermer</source>
+        <translation type="vanished">Close</translation>
+    </message>
+    <message>
+        <source> - Envoi Manuel</source>
+        <translation type="vanished"> - Manual posting</translation>
+    </message>
+    <message>
+        <source>Enregistrer</source>
+        <translation type="vanished">Save</translation>
+    </message>
+    <message>
+        <source>Fichier texte (*.txt) (*.txt)</source>
+        <translation type="vanished">Text file (*.txt) (*.txt)</translation>
+    </message>
+    <message>
+        <source>TITRE :</source>
+        <translation type="vanished">TITLE:</translation>
+    </message>
+    <message>
+        <source>CATEGORIES :</source>
+        <translation type="vanished">CATEGORIES:</translation>
+    </message>
+    <message>
+        <source>IMAGES A AJOUTER :</source>
+        <translation type="vanished">PICTURES TO ADD:</translation>
+    </message>
+    <message>
+        <source>EXTRAIT :</source>
+        <translation type="vanished">EXCERPT:</translation>
+    </message>
+    <message>
+        <source>CODE HTML (corps) :</source>
+        <translation type="vanished">HTML CODE (body):</translation>
+    </message>
+</context>
+<context>
+    <name>SendPyWebCooking</name>
+    <message>
+        <location filename="../src/sendpywebcooking.cpp" line="267"/>
         <source>Envoi terminé</source>
         <translation>Upload finished</translation>
     </message>
     <message>
-        <location filename="../src/sendautomatic.cpp" line="222"/>
+        <location filename="../src/sendpywebcooking.cpp" line="267"/>
         <source>Envoi terminé avec succès !
 Voulez-vous afficher la recette en ligne ?</source>
         <translation>Upload finished successful!
 Do you want to see the recipe online?</translation>
     </message>
     <message>
-        <location filename="../src/sendautomatic.cpp" line="239"/>
-        <location filename="../src/sendautomatic.cpp" line="307"/>
-        <source>Détails &gt;&gt;</source>
-        <translation>Details &gt;&gt;</translation>
+        <location filename="../src/sendpywebcooking.cpp" line="279"/>
+        <location filename="../src/sendpywebcooking.cpp" line="282"/>
+        <location filename="../src/sendpywebcooking.cpp" line="289"/>
+        <location filename="../src/sendpywebcooking.cpp" line="295"/>
+        <location filename="../src/sendpywebcooking.cpp" line="298"/>
+        <location filename="../src/sendpywebcooking.cpp" line="358"/>
+        <source>Une erreur est survenue</source>
+        <translation>An error has occurred</translation>
     </message>
     <message>
-        <location filename="../src/sendautomatic.cpp" line="259"/>
-        <source>L&apos;envoi a échoué : identifiant ou mot de passe incorrect !</source>
-        <translation>Upload failed: username or password not correct!</translation>
+        <location filename="../src/sendpywebcooking.cpp" line="283"/>
+        <source>Une erreur inconnue s&apos;est produite. Veuillez rapporter le bug.</source>
+        <translation>An unknown error has occured. Please report the bug.</translation>
     </message>
     <message>
-        <location filename="../src/sendautomatic.cpp" line="263"/>
-        <source>L&apos;envoi a échoué : impossible de se connecter au site web. Vérifiez votre connexion internet.</source>
-        <translation>Upload failed: unable to connect to the website. Please check your internet connection.</translation>
+        <location filename="../src/sendpywebcooking.cpp" line="289"/>
+        <source>Impossible de lire la réponse du serveur. Merci de rapporter le bug.</source>
+        <translation>Unable to read server response. Please report the bug.</translation>
     </message>
     <message>
-        <location filename="../src/sendautomatic.cpp" line="267"/>
-        <source>L&apos;envoi a échoué : l&apos;adresse de publication est-elle correcte ?</source>
-        <translation>Upload failed: is the publish address correct?</translation>
+        <location filename="../src/sendpywebcooking.cpp" line="354"/>
+        <source>Fichier non trouvé</source>
+        <translation>File not found</translation>
     </message>
     <message>
-        <location filename="../src/sendautomatic.cpp" line="270"/>
-        <source>L&apos;envoi a échoué : vous n&apos;avez pas l&apos;autorisation de modifier cette recette !</source>
-        <translation>Upload failed: you are not allowed to edit this recipe!</translation>
+        <location filename="../src/sendpywebcooking.cpp" line="354"/>
+        <source>Fichier image non trouvé : </source>
+        <translation>Picture file not found: </translation>
     </message>
     <message>
-        <location filename="../src/sendautomatic.cpp" line="275"/>
-        <source>L&apos;envoi a échoué. Cliquez sur Détails pour en savoir plus.</source>
-        <translation>Upload failed. Click on Details to see more.</translation>
-    </message>
-    <message>
-        <location filename="../src/sendautomatic.cpp" line="277"/>
-        <location filename="../src/sendautomatic.cpp" line="284"/>
-        <source>L&apos;envoi a échoué</source>
-        <translation>Upload failed</translation>
-    </message>
-    <message>
-        <location filename="../src/sendautomatic.cpp" line="283"/>
-        <source>L&apos;envoi a échoué pour une raison inconnue. Cliquez sur Détails pour en savoir plus.</source>
-        <translation>Upload failed for an unkown reason. Click on Details to see more.</translation>
-    </message>
-    <message>
-        <location filename="../src/sendautomatic.cpp" line="300"/>
-        <source>&lt;&lt; Détails</source>
-        <translation>&lt;&lt; Details</translation>
+        <location filename="../src/sendpywebcooking.cpp" line="358"/>
+        <source>Une erreur inconnue est survenue. Veuillez rapporter le bug.</source>
+        <translation>An unkown error has occurred. Please report the bug.</translation>
     </message>
 </context>
 <context>
-    <name>SendManual</name>
+    <name>SendWordpress</name>
     <message>
-        <location filename="../ui/sendmanual.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
+        <location filename="../src/sendwordpress.cpp" line="75"/>
+        <source>Envoi terminé</source>
+        <translation>Upload finished</translation>
     </message>
     <message>
-        <location filename="../ui/sendmanual.ui" line="49"/>
-        <source>Titre :</source>
-        <translation>Title:</translation>
+        <location filename="../src/sendwordpress.cpp" line="75"/>
+        <source>Envoi terminé avec succès !
+Voulez-vous afficher la recette en ligne ?</source>
+        <translation>Upload finished successful!
+Do you want to see the recipe online?</translation>
     </message>
     <message>
-        <location filename="../ui/sendmanual.ui" line="74"/>
-        <location filename="../ui/sendmanual.ui" line="148"/>
-        <location filename="../ui/sendmanual.ui" line="222"/>
-        <source>Copier</source>
-        <translation>Copy</translation>
+        <location filename="../src/sendwordpress.cpp" line="87"/>
+        <location filename="../src/sendwordpress.cpp" line="90"/>
+        <location filename="../src/sendwordpress.cpp" line="97"/>
+        <location filename="../src/sendwordpress.cpp" line="103"/>
+        <location filename="../src/sendwordpress.cpp" line="106"/>
+        <location filename="../src/sendwordpress.cpp" line="109"/>
+        <location filename="../src/sendwordpress.cpp" line="164"/>
+        <source>Une erreur est survenue</source>
+        <translation>An error has occurred</translation>
     </message>
     <message>
-        <location filename="../ui/sendmanual.ui" line="123"/>
-        <source>Code HTML (corps) :</source>
-        <translation>HTML code (body):</translation>
+        <location filename="../src/sendwordpress.cpp" line="91"/>
+        <source>Une erreur inconnue s&apos;est produite. Veuillez rapporter le bug.</source>
+        <translation>An unkown error has occurred. Please report the bug.</translation>
     </message>
     <message>
-        <location filename="../ui/sendmanual.ui" line="197"/>
-        <source>Extrait :</source>
-        <translation>Excerpt:</translation>
+        <location filename="../src/sendwordpress.cpp" line="97"/>
+        <source>Impossible de lire la réponse du serveur. Merci de rapporter le bug.</source>
+        <translation>Unable to read server response. Please report the bug.</translation>
     </message>
     <message>
-        <location filename="../ui/sendmanual.ui" line="282"/>
-        <source>Images à ajouter :</source>
-        <translation>Pictures to add:</translation>
+        <location filename="../src/sendwordpress.cpp" line="160"/>
+        <source>Fichier non trouvé</source>
+        <translation>File not found</translation>
     </message>
     <message>
-        <location filename="../ui/sendmanual.ui" line="340"/>
-        <source>Catégories :</source>
-        <translation>Categories:</translation>
+        <location filename="../src/sendwordpress.cpp" line="160"/>
+        <source>Fichier image non trouvé : </source>
+        <translation>Picture file not found: </translation>
     </message>
     <message>
-        <location filename="../ui/sendmanual.ui" line="387"/>
-        <source>Enregistrer dans un fichier</source>
-        <translation>Save into a file</translation>
-    </message>
-    <message>
-        <location filename="../ui/sendmanual.ui" line="425"/>
-        <source>Ouvrir l&apos;éditeur en ligne</source>
-        <translation>Open into the online editor</translation>
-    </message>
-    <message>
-        <location filename="../ui/sendmanual.ui" line="463"/>
-        <source>Fermer</source>
-        <translation>Close</translation>
-    </message>
-    <message>
-        <location filename="../src/sendmanual.cpp" line="40"/>
-        <source> - Envoi Manuel</source>
-        <translation> - Manual posting</translation>
-    </message>
-    <message>
-        <location filename="../src/sendmanual.cpp" line="77"/>
-        <source>Enregistrer</source>
-        <translation>Save</translation>
-    </message>
-    <message>
-        <location filename="../src/sendmanual.cpp" line="79"/>
-        <source>Fichier texte (*.txt) (*.txt)</source>
-        <translation>Text file (*.txt) (*.txt)</translation>
-    </message>
-    <message>
-        <location filename="../src/sendmanual.cpp" line="96"/>
-        <source>TITRE :</source>
-        <translation>TITLE:</translation>
-    </message>
-    <message>
-        <location filename="../src/sendmanual.cpp" line="96"/>
-        <source>CATEGORIES :</source>
-        <translation>CATEGORIES:</translation>
-    </message>
-    <message>
-        <location filename="../src/sendmanual.cpp" line="96"/>
-        <source>IMAGES A AJOUTER :</source>
-        <translation>PICTURES TO ADD:</translation>
-    </message>
-    <message>
-        <location filename="../src/sendmanual.cpp" line="96"/>
-        <source>EXTRAIT :</source>
-        <translation>EXCERPT:</translation>
-    </message>
-    <message>
-        <location filename="../src/sendmanual.cpp" line="96"/>
-        <source>CODE HTML (corps) :</source>
-        <translation>HTML CODE (body):</translation>
+        <location filename="../src/sendwordpress.cpp" line="164"/>
+        <source>Une erreur inconnue est survenue. Veuillez rapporter le bug.</source>
+        <translation>An unkown error has occurred. Please report the bug.</translation>
     </message>
 </context>
 <context>
@@ -2070,6 +2417,29 @@ Do you want to see the recipe online?</translation>
         <location filename="../ui/spellcheckdialog.ui" line="131"/>
         <source>Suggestions : </source>
         <translation>Suggestions:</translation>
+    </message>
+</context>
+<context>
+    <name>Units</name>
+    <message>
+        <location filename="../ui/units.ui" line="26"/>
+        <source>Unités disponibles pour les ingrédients</source>
+        <translation>Units available for ingredients</translation>
+    </message>
+    <message>
+        <location filename="../ui/units.ui" line="34"/>
+        <source>Liste des unités (séparées par une virgule) :</source>
+        <translation>List of units (comma separated):</translation>
+    </message>
+    <message>
+        <location filename="../src/units.cpp" line="37"/>
+        <source>Sauvegarde impossible</source>
+        <translation>Unable to save</translation>
+    </message>
+    <message>
+        <location filename="../src/units.cpp" line="37"/>
+        <source>Impossible de sauvegarder les unités.</source>
+        <translation>Unable to save units.</translation>
     </message>
 </context>
 </TS>
