@@ -74,7 +74,7 @@ bool richSnippets = false; //Active rich snippets for recipes in google search r
 bool recPrinter = false; //CeC Printer status
 bool recCoupDeCoeur = false; //Activate or not "coups de coeur"
 int configActive = 1;
-QHash<int,QHash<QString, QString>> serverConfs; //Store config for all server configurations
+QHash<int,QHash<QString, QString> > serverConfs; //Store config for all server configurations
 int idRecipe = -1;
 bool openLastDir_sauvegarde = false;
 bool openLastDir_Img = false;

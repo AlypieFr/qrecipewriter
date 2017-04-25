@@ -64,7 +64,7 @@ public:
 
 public:
     static void loadConfig();
-    static QHash<int, QHash<QString, QString>> loadServerConfigs();
+    static QHash<int, QHash<QString, QString> > loadServerConfigs();
     static bool saveRecipeToFile(QString title, QStringList categories, QString tpsPrep,
                                  QString tpsCuis, QString tpsRep, QString nbPers, QString precision,
                                  QString description, QStringList ingredients, QStringList materiel,

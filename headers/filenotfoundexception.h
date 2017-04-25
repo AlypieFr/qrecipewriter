@@ -31,7 +31,7 @@ public:
         message(message)
     {}
 
-    virtual ~FileNotFoundException()
+    virtual ~FileNotFoundException() throw()
     {
 
     }

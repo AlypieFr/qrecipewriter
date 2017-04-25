@@ -22,7 +22,7 @@
 #include "opendistant.h"
 #include "ui_opendistant.h"
 
-extern QHash<int,QHash<QString, QString>> serverConfs;
+extern QHash<int,QHash<QString, QString> > serverConfs;
 extern QStringList namesCats;
 
 OpenDistant::OpenDistant(QWidget *parent) :

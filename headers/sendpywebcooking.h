@@ -22,6 +22,8 @@
 #ifndef SENDPYWEBCOOKING_H
 #define SENDPYWEBCOOKING_H
 
+#include <math.h>
+
 #include <QDialog>
 #include <QDebug>
 #include <QHash>

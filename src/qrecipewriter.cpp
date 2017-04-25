@@ -36,7 +36,7 @@ extern QString userDir;
 extern QString confDir;
 extern QString confFile;
 extern QFile *confCatFile;
-extern QHash<int,QHash<QString, QString>> serverConfs;
+extern QHash<int,QHash<QString, QString> > serverConfs;
 extern int configActive;
 
 extern QStringList otherPicts;

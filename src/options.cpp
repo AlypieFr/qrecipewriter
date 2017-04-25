@@ -51,7 +51,7 @@ extern bool richSnippets;
 extern bool recPrinter; //CeC Printer status
 extern bool recCoupDeCoeur;
 extern int configActive;
-extern QHash<int,QHash<QString, QString>> serverConfs;
+extern QHash<int,QHash<QString, QString> > serverConfs;
 extern bool openLastDir_sauvegarde;
 extern bool openLastDir_Img;
 extern bool checkF7beforeSend;

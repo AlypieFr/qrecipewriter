@@ -33,7 +33,7 @@ public:
         message(message)
     {}
 
-    virtual ~GlobalException()
+    virtual ~GlobalException() throw()
     {
 
     }

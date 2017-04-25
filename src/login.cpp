@@ -24,7 +24,7 @@
 
 extern QString confDir;
 extern int configActive;
-extern QHash<int,QHash<QString, QString>> serverConfs;
+extern QHash<int,QHash<QString, QString> > serverConfs;
 
 Login::Login(QWidget *parent) :
     QDialog(parent),

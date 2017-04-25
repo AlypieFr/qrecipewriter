@@ -41,7 +41,7 @@ extern bool richSnippets;
 extern bool recPrinter;
 extern bool recCoupDeCoeur;
 extern int configActive;
-extern QHash<int,QHash<QString, QString>> serverConfs;
+extern QHash<int,QHash<QString, QString> > serverConfs;
 extern bool openLastDir_sauvegarde;
 extern bool openLastDir_Img;
 extern bool checkF7beforeSend;
@@ -162,7 +162,7 @@ void Functions::loadConfig()
     recCoupDeCoeur = serverConfs[configActive]["recCoupDeCoeur"] == "1";
 }
 
-QHash<int, QHash<QString, QString>> Functions::loadServerConfigs() {
+QHash<int, QHash<QString, QString> > Functions::loadServerConfigs() {
     QHash<int, QHash<QString, QString> > configServer;
     for (int i = 1; i <= 5; i++) {
         QFile *file = new QFile(confFile + ".serv" + QString::number(i));
