@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -197,8 +197,8 @@
      <widget class="QRadioButton" name="radioButtonWindows">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>366</y>
+        <x>530</x>
+        <y>350</y>
         <width>101</width>
         <height>17</height>
        </rect>
@@ -211,26 +211,13 @@
       <property name="geometry">
        <rect>
         <x>530</x>
-        <y>348</y>
+        <y>330</y>
         <width>121</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
        <string>Linux (au&amp;tre)</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="radioButtonLinuxSlack">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>348</y>
-        <width>141</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Linux Slac&amp;kware</string>
       </property>
      </widget>
      <widget class="QRadioButton" name="radioButtonLinuxUbuntu">
@@ -257,22 +244,6 @@
       </property>
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Système d'exploitation :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QGroupBox" name="groupBox">
-      <property name="geometry">
-       <rect>
-        <x>140</x>
-        <y>382</y>
-        <width>371</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: none;</string>
-      </property>
-      <property name="title">
-       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="labelDossierTemporaire">
@@ -486,8 +457,8 @@
      <widget class="QRadioButton" name="radioButtonLinuxFedora">
       <property name="geometry">
        <rect>
-        <x>530</x>
-        <y>330</y>
+        <x>380</x>
+        <y>350</y>
         <width>141</width>
         <height>17</height>
        </rect>
@@ -506,7 +477,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Linux KDE Neon</string>
+       <string>Linux &amp;KDE Neon</string>
       </property>
      </widget>
     </widget>
@@ -806,7 +777,7 @@
          <item>
           <widget class="QRadioButton" name="typeServer_wordpress_2">
            <property name="text">
-            <string>Wordpress</string>
+            <string>Wo&amp;rdpress</string>
            </property>
           </widget>
          </item>
@@ -1482,7 +1453,6 @@
   <tabstop>checkF7Send</tabstop>
   <tabstop>radioButtonLinuxUbuntu</tabstop>
   <tabstop>radioButtonLinuxArch</tabstop>
-  <tabstop>radioButtonLinuxSlack</tabstop>
   <tabstop>radioButtonLinuxFedora</tabstop>
   <tabstop>radioButtonLinuxAutre</tabstop>
   <tabstop>radioButtonWindows</tabstop>

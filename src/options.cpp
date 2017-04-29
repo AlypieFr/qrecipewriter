@@ -108,10 +108,6 @@ void Options::init()
     {
         ui->radioButtonWindows->setChecked(1);
     }
-    else if(systExp=="linuxSlackware")
-    {
-        ui->radioButtonLinuxSlack->setChecked(1);
-    }
     else if(systExp=="linuxDebian")
     {
         ui->radioButtonLinuxUbuntu->setChecked(1);
@@ -269,7 +265,7 @@ void Options::on_buttonBox_accepted()
         ui->lineEditDossierSauvegardes->setEnabled(false);
     }
     if(ui->lineEditCommandeNavigateur->text()==""||ui->lineEditDossierTemp->text()==""\
-            ||(!ui->radioButtonLinuxAutre->isChecked()&&!ui->radioButtonLinuxSlack->isChecked()&&!ui->radioButtonLinuxUbuntu->isChecked()\
+            ||(!ui->radioButtonLinuxAutre->isChecked()&&!ui->radioButtonLinuxUbuntu->isChecked()\
             &&!ui->radioButtonLinuxArch->isChecked()&&!ui->radioButtonLinuxNeon->isChecked()&&!ui->radioButtonLinuxFedora->isChecked()\
             &&!ui->radioButtonWindows->isChecked()))
     {
@@ -326,10 +322,6 @@ void Options::on_buttonBox_accepted()
             if(ui->radioButtonLinuxAutre->isChecked())
             {
                 systExp="linuxAutre";
-            }
-            else if(ui->radioButtonLinuxSlack->isChecked())
-            {
-                systExp="linuxSlackware";
             }
             else if (ui->radioButtonLinuxUbuntu->isChecked())
             {

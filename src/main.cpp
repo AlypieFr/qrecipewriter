@@ -116,10 +116,7 @@ int main(int argc, char *argv[])
         fileOs.open(QFile::ReadOnly);
         QTextStream stream (&fileOs);
         QString osTxt = stream.readAll();
-        if (osTxt.contains("ID=slackware")) {
-            systExp = "linuxSlackware";
-        }
-        else if (osTxt.contains("ID=ubuntu") || osTxt.contains("ID=debian")) {
+        if (osTxt.contains("ID=ubuntu") || osTxt.contains("ID=debian")) {
             systExp = "linuxDebian";
         }
         else if (osTxt.contains("ID=neon")) {
@@ -127,6 +124,9 @@ int main(int argc, char *argv[])
         }
         else if (osTxt.contains("ID=arch") || osTxt.contains("ID=manjaro")) {
             systExp = "linuxArch";
+        }
+        else if (osTxt.contains("ID=fedora")) {
+            systExp = "linuxFedora";
         }
         fileOs.close();
     }
