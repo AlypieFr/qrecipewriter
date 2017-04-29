@@ -267,7 +267,7 @@ void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
                 int rep = QMessageBox::information((QWidget*)this->parent(), tr("Envoi terminé"), tr("Envoi terminé avec succès !\nVoulez-vous afficher la recette en ligne ?"), QMessageBox::Yes, QMessageBox::No);
                 if (rep == QMessageBox::Yes)
                 {
-                    QString program = "\"" + cmdNav + "\" " + "http://" + map["url"].toString();
+                    QString program = "\"" + cmdNav + "\" " + (serverConfs[config]["addrSite"].startsWith("https://") ? "https://" : "http://") + map["url"].toString();
                     QProcess *myProcess = new QProcess();
                     myProcess->setProcessChannelMode(QProcess::MergedChannels);
                     myProcess->start(program);
