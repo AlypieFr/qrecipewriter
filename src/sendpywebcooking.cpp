@@ -315,7 +315,12 @@ void SendPyWebCooking::sendRecipe() {
     input.add_var("precision", precision);
     input.add_var("description", description);
     if (serverConfs[config]["recCoupDeCoeur"] == "1") {
-        input.add_var("coup_de_coeur", coupDeCoeur);
+        QHash<QString,QString> coup_de_coeur_conv;
+        coup_de_coeur_conv["no_coup_de_coeur"] = "0";
+        coup_de_coeur_conv["coup_de_coeur_1"] = "1";
+        coup_de_coeur_conv["coup_de_coeur_2"] = "2";
+        coup_de_coeur_conv["coup_de_coeur_3"] = "3";
+        input.add_var("coup_de_coeur", coup_de_coeur_conv[coupDeCoeur]);
     }
     input.add_var("nb_people", QString::number(nbPeople));
     input.add_var("nb_people_max", QString::number(nbPeopleMax));

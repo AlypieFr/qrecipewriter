@@ -820,8 +820,24 @@ bool Functions::saveRecipeFromPwcJson(QVariantMap recipe, int config, QFile *tmp
         categories[ii] = categories[ii].replace("&", "&&");
     }
 
+    QString coup_de_coeur = "";
+    if (recipe.contains("coup_de_coeur")) {
+        int coup_de_coeur_read = recipe["coup_de_coeur"].toInt();
+        switch (coup_de_coeur_read) {
+            case 1:
+                coup_de_coeur = "coup_de_coeur_1";
+                break;
+            case 2:
+                coup_de_coeur = "coup_de_coeur_2";
+                break;
+            case 3:
+                coup_de_coeur = "coup_de_coeur_3";
+                break;
+        }
+    }
+
     return saveRecipeToFile(recipe["title"].toString(), categories, tpsPrep, tpsCuis, tpsRep, recipe["nb_people"].toString(),
-            recipe["precision"].toString(), description, ingredients, equipment, instructions, proposals, picture_url, liens, tmpFile, "", recipe["id"].toInt());
+            recipe["precision"].toString(), description, ingredients, equipment, instructions, proposals, picture_url, liens, tmpFile, coup_de_coeur, recipe["id"].toInt());
 }
 
 /**
