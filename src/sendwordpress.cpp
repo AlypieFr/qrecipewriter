@@ -65,6 +65,9 @@ void SendWordpress::init(QString htmlCode_lu, QString title_lu, QString mainPict
 
 
 void SendWordpress::handle_result(HttpRequestWorker *worker) {
+
+    envoiEnCours->close();
+
     if (worker->error_type == QNetworkReply::NoError) {
         QJsonParseError *error = new QJsonParseError();
         QJsonDocument jsondoc = QJsonDocument::fromJson(worker->response, error);
@@ -109,8 +112,6 @@ void SendWordpress::handle_result(HttpRequestWorker *worker) {
             QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), worker->error_str);
         }
     }
-
-    envoiEnCours->close();
 }
 
 void SendWordpress::sendRecipe() {

@@ -255,6 +255,8 @@ QVariantList SendPyWebCooking::buildProposal(QStringList props) {
 void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
     QString msg;
 
+    envoiEnCours->close();
+
     if (worker->error_type == QNetworkReply::NoError) {
         // communication was successful
         //msg = "Success - Response: " + worker->response;
@@ -298,8 +300,6 @@ void SendPyWebCooking::handle_result(HttpRequestWorker *worker) {
             QMessageBox::critical((QWidget*)this->parent(), tr("Une erreur est survenue"), worker->error_str);
         }
     }
-
-    envoiEnCours->close();
 }
 
 void SendPyWebCooking::sendRecipe() {
