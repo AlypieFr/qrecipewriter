@@ -1,0 +1,5 @@
+all_tests:
+  script:
+    - qmake
+    - make
+  when: on_success
