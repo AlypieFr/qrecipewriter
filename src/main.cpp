@@ -83,7 +83,7 @@ bool autoCheckUpdt = true;
 QString updtUrl = "";
 QString appI18n = "en";
 
-QString VERSION = "4.0.0";
+QString VERSION = "4.0.1";
 
 QMap<QString, QString> liens; //Contains all links registered for one recipe
 
